@@ -172,7 +172,7 @@ to get the desired effect
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link text-sm navbar-primary">
                 <!-- image -->
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
+                <span class="brand-text font-weight-light">GYM IS</span>
             </a>
 
             <!-- Sidebar -->
