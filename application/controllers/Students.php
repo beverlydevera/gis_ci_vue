@@ -73,13 +73,13 @@ class Students extends CI_Controller {
 
         $datas = $this->input->post();
         $student_id = $this->input->post('student_id');
-        $updateresult = $this->Main->update("tbl_students",['student_id'=>$student_id],$datas);
+        $result = $this->Main->update("tbl_students",['student_id'=>$student_id],$datas);
 
-        if(!empty($updateresult)){
+        if(!empty($result)){
             $response = array(
                 "success"   => true,
                 "message"   => "Profile changes saved successfully.",
-                "data"      => $updateresult
+                "data"      => $result
             );
         }else{
             $response = array(
@@ -98,5 +98,36 @@ class Students extends CI_Controller {
         $data['vfile'] = "page/students/enroll";
         $data['js'] = array('pages/students.js');
         $this->load->view('layout/main', $data);
+    }
+
+    public function saveEnrollment(){
+        
+        $curyear = date('Y');
+        $data = $this->input->post();
+        $result = $this->Main->insert("tbl_students", $data, true);
+
+        if(!empty($result)){
+            $reference_id = $curyear."-".$data['sex'].$result['lastid'];
+            $this->Main->update("tbl_students",['student_id'=>$result['lastid']],['reference_id'=>$reference_id]);
+            
+            // $name="";
+            // $name = str.replace(' ', '', $name.$data['firstname']);
+            // $name = str.replace(' ', '', $name.$data['lastname']);
+            // $redirect = base_url('students/profile/'.$name."-".$result['lastid']);
+            $response = array(
+                "success"   => true,
+                "message"   => "Application was saved successfully.",
+                "data"      => $result,
+                // "redirect"  => $redirect
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "message"   => "Application was not saved.",
+                "data"      => "",
+                // "redirect"  => ""
+            );
+        }
+        response_json($response);
     }
 }

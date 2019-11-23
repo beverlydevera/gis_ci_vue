@@ -187,4 +187,112 @@ if($('#students_page').length){
         },
     })
 
+}else if($('#studentenroll_page').length){
+
+	var profile = new Vue({
+        el: '#studentenroll_page',
+        data: {
+            studentinfo:{
+                student_id: "",
+                reference_id: "",
+                lastname: "",
+                firstname: "",
+                middlename: "",
+                birthdate: "",
+                sex: "",
+                mobileno: "",
+                telephoneno: "",
+                emailadd: "",
+                address: "",
+                height: "",
+                weight: "",
+                insurance: "",
+                religion: "",
+                school: "",
+                company: "",
+                fatherinfo: "",
+                motherinfo: "",
+                guardianinfo: "",
+                emergencyinfo: "",
+                status: "",
+                archived: "",
+                date_added: "",
+                date_updated: "",
+            },
+            derivedinfo:{
+                studentage: 0,
+                schoolname: "",
+                schoolyear: "",
+                schoolcourse: "",
+                companyname: "",
+                companyaddress: "",
+                father_name: "",
+                father_officeadd: "",
+                father_occupation: "",
+                father_officeadd: "",
+                father_contactno: "",
+                mother_name: "",
+                mother_officeadd: "",
+                mother_occupation: "",
+                mother_officeadd: "",
+                mother_contactno: "",
+                guardian_name: "",
+                guardian_officeadd: "",
+                guardian_occupation: "",
+                guardian_officeadd: "",
+                guardian_contactno: "",
+                emergency_name: "",
+                emergency_relationship: "",
+                emergency_address: "",
+                emergency_mobilenum: "",
+            }
+        },
+        methods: {
+            calculate_age() {
+                var dob = this.studentinfo.birthdate;
+                var dob = dob.split("-");
+                var dob = new Date(dob[0], dob[1], dob[2]);
+                var diff_ms = Date.now() - dob.getTime();
+                var age_dt = new Date(diff_ms);
+                this.derivedinfo.studentage = Math.abs(age_dt.getUTCFullYear() - 1970);
+            },
+            saveEnrollment(){
+                this.studentinfo.school = this.derivedinfo.schoolname+"/"+this.derivedinfo.schoolyear+"/"+this.derivedinfo.schoolcourse;
+                this.studentinfo.company = this.derivedinfo.companyname+"/"+this.derivedinfo.companyaddress;
+                this.studentinfo.fatherinfo = this.derivedinfo.father_name+"/"+this.derivedinfo.father_occupation+"/"+this.derivedinfo.father_officeadd+"/"+this.derivedinfo.father_contactno;
+                this.studentinfo.motherinfo = this.derivedinfo.mother_name+"/"+this.derivedinfo.mother_occupation+"/"+this.derivedinfo.mother_officeadd+"/"+this.derivedinfo.mother_contactno;
+                this.studentinfo.guardianinfo = this.derivedinfo.guardian_name+"/"+this.derivedinfo.guardian_occupation+"/"+this.derivedinfo.guardian_officeadd+"/"+this.derivedinfo.guardian_contactno;
+                this.studentinfo.emergencyinfo = this.derivedinfo.emergency_name+"/"+this.derivedinfo.emergency_relationship+"/"+this.derivedinfo.emergency_address+"/"+this.derivedinfo.emergency_mobilenum;
+                
+                var currentdate = new Date(); 
+                var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + (currentdate.getDate()) + " " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+                this.studentinfo.date_added = datetime;
+                this.studentinfo.date_updated = datetime;
+                
+                var datas = frmdata(this.studentinfo);
+                var urls = window.App.baseUrl + "students/saveEnrollment";
+                axios.post(urls, datas)
+                    .then(function (e) {
+                        console.log(e);
+                        if (e.data.success) {
+                            Toast.fire({
+                                type: "success",
+                                title: e.data.message
+                            })
+                        }else{
+                            Toast.fire({
+                                type: "warning",
+                                title: e.data.message
+                            })
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+            }
+        }, mounted: function () {
+            //firstrun
+        },
+    })
+
 }

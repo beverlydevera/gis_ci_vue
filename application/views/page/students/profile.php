@@ -157,8 +157,8 @@
                                                 <th>
                                                     <select class="form-control select2 smallerinput" style="width: 100%;" data-select2-id="12" tabindex="-1" aria-hidden="true" v-model="studentinfo.sex">
                                                         <option selected disabled></option>
-                                                        <option>Male</option>
-                                                        <option>Female</option>
+                                                        <option value="M">Male</option>
+                                                        <option value="F">Female</option>
                                                     </select>
                                                 </th>
                                             </tr>
