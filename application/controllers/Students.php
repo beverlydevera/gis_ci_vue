@@ -116,7 +116,7 @@ class Students extends CI_Controller {
             // $redirect = base_url('students/profile/'.$name."-".$result['lastid']);
             $response = array(
                 "success"   => true,
-                "message"   => "Application was saved successfully.",
+                "message"   => "Application was saved successfully.\nContinue by adding the student to a class.",
                 "data"      => $result,
                 // "redirect"  => $redirect
             );

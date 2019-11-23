@@ -44,13 +44,13 @@
                         <a class="nav-link active" id="personalinfo-tab" data-toggle="pill" href="#personalinfo" role="tab" aria-controls="personalinfo" aria-selected="true">Personal Information</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" id="schedulinginfo-tab" data-toggle="pill" href="#schedulinginfo" role="tab" aria-controls="schedulinginfo" aria-selected="false">Scheduling</a>
+                        <a class="nav-link disabled" id="schedulinginfo-tab" data-toggle="pill" href="#schedulinginfo" role="tab" aria-controls="schedulinginfo" aria-selected="false">Scheduling</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" id="billinginfo-tab" data-toggle="pill" href="#billinginfo" role="tab" aria-controls="billinginfo" aria-selected="false">Billing</a>
+                        <a class="nav-link disabled" id="billinginfo-tab" data-toggle="pill" href="#billinginfo" role="tab" aria-controls="billinginfo" aria-selected="false">Billing</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" id="completeinfo-tab" data-toggle="pill" href="#completeinfo" role="tab" aria-controls="completeinfo" aria-selected="false">Complete</a>
+                        <a class="nav-link disabled" id="completeinfo-tab" data-toggle="pill" href="#completeinfo" role="tab" aria-controls="completeinfo" aria-selected="false">Complete</a>
                         </li>
                     </ul>
                 </div>
@@ -271,13 +271,36 @@
                             </form>
                         </div>
                         <div class="tab-pane fade" id="schedulinginfo" role="tabpanel" aria-labelledby="schedulinginfo-tab">
-                            abc
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Student Reference ID: </label>
+                                <div class="col-sm-10">
+                                    <input type="hidden" v-model="studentinfo.student_id">
+                                    <input type="text" class="form-control smallerinput" :disabled="disabled_everything" :readonly = "disabled_everything" name="apprefcode" style="font-weight: 500" value="1" v-model="studentinfo.reference_id">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Student Full Name: </label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control smallerinput" :disabled="disabled_everything" :readonly = "disabled_everything" placeholder="Last Name" v-model="studentinfo.lastname" required>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control smallerinput" :disabled="disabled_everything" :readonly = "disabled_everything" placeholder="First Name" v-model="studentinfo.firstname" required>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control smallerinput" :disabled="disabled_everything" :readonly = "disabled_everything" placeholder="Middle Name" v-model="studentinfo.middlename">
+                                </div>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control smallerinput" :disabled="disabled_everything" :readonly = "disabled_everything" placeholder="Ext Name" v-model="studentinfo.extname">
+                                </div>
+                            </div>
+                            <hr>
+                            Adding to Class here
                         </div>
                         <div class="tab-pane fade" id="billinginfo" role="tabpanel" aria-labelledby="billinginfo-tab">
-                            asd
+                            Computation of payment here
                         </div>
                         <div class="tab-pane fade" id="completeinfo" role="tabpanel" aria-labelledby="completeinfo-tab">
-                            Complete
+                            Printing of Form and Receipt
                         </div>
                     </div>
                 </div>

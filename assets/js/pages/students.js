@@ -189,9 +189,10 @@ if($('#students_page').length){
 
 }else if($('#studentenroll_page').length){
 
-	var profile = new Vue({
+	var enroll = new Vue({
         el: '#studentenroll_page',
         data: {
+            disabled_everything: false,
             studentinfo:{
                 student_id: "",
                 reference_id: "",
@@ -279,6 +280,12 @@ if($('#students_page').length){
                                 type: "success",
                                 title: e.data.message
                             })
+                            enroll.disabled_everything = true;
+                            $('.active').removeClass('active');
+                            $('.disabled').removeClass('disabled');
+    
+                            $('#schedulinginfo-tab').addClass('active');
+                            $('#schedulinginfo').addClass('active show')
                         }else{
                             Toast.fire({
                                 type: "warning",
