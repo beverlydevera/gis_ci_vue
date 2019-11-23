@@ -41,3 +41,21 @@ function checkOffset($data = array()){
 	return $result;
 
 }
+
+function checkLogin($type = false){
+	$_CI =& get_instance();
+	if ($type) {
+		if (!empty($_CI->session->userdata('loggedin'))) {
+			$status = getUser('active_status',array('id'=>sesdata('id')),'row')->active_status;
+			if ($status == 0) {
+				redirect(base_url('users/inactivestat'),'refresh');
+			}else{
+				redirect(base_url('dashboard/index'),'refresh');
+			}
+		}
+	}else{
+		if (empty($_CI->session->userdata('loggedin'))) {
+			redirect(base_url('login'),'refresh');
+		}
+	}
+}

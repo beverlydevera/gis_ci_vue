@@ -8,6 +8,7 @@ class Classes extends CI_Controller {
         parent::__construct();
         $this->load->model("Main");
         $this->load->model("Classes_model", "classes");
+        checkLogin();
 	}
 	
 	public function index()

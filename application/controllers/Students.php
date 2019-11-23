@@ -8,6 +8,7 @@ class Students extends CI_Controller {
         parent::__construct();
         $this->load->model("Main");
         $this->load->model("Students_model", "student");
+        checkLogin();
 	}
 	
 	public function index()
