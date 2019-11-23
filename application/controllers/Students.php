@@ -90,4 +90,13 @@ class Students extends CI_Controller {
         }
         response_json($response);
     }
+
+    public function enroll()
+	{
+        $data['title'] = "Enroll Student";
+        $data['vueid'] = "student_enroll";
+        $data['vfile'] = "page/students/enroll";
+        $data['js'] = array('pages/students.js');
+        $this->load->view('layout/main', $data);
+    }
 }

@@ -17,7 +17,7 @@
         </p>
       </a>
     </li>
-    <li class="nav-item has-treeview">
+    <li class="nav-item has-treeview menu-open">
       <a href="#" class="nav-link " >
         <i class="nav-icon fas fa-users"></i>
         <p>
@@ -34,12 +34,28 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="<?= base_url('stduent/enroll') ?>" class="nav-link" v-bind:class="checkactive('division')">
+          <a href="<?= base_url('students/enroll') ?>" class="nav-link" v-bind:class="checkactive('division')">
             <i class="fas fa-address-card nav-icon"></i>
             <p>Enroll New Student</p>
           </a>
         </li>
       </ul>
+    </li>
+    <li class="nav-item">
+      <a href="<?= base_url('cashier/index') ?>" class="nav-link">
+        <i class="nav-icon fas fa-cash-register"></i>
+        <p>
+          Cashier
+        </p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="<?= base_url('users/logs') ?>" class="nav-link">
+        <i class="nav-icon fas fa-history"></i>
+        <p>
+          User Logs
+        </p>
+      </a>
     </li>
     <li class="nav-item">
       <a href="<?= base_url('users/logout') ?>" class="nav-link">

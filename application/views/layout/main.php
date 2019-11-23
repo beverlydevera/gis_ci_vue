@@ -183,7 +183,8 @@ to get the desired effect
                         <!-- image -->
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="#" class="d-block">Beverly De Vera</a>
+                        <!-- <span>Admin</span> -->
                     </div>
                 </div>
 
