@@ -26,6 +26,7 @@
               <th>Names</th>
               <th>Sex</th>
               <th>Birthdate</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -36,6 +37,10 @@
               <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
               <td>{{list.sex}}</td>
               <td>{{list.birthdate}}</td>
+              <td>
+                <span v-if="list.status" class="badge bg-success">Active</span>
+                <span v-else class="badge bg-danger">Inactive</span>
+              </td>
               <td>
                   <a v-bind:href="'students/profile/'+(list.firstname).replace(/ /g,'')+(list.lastname).replace(/ /g,'')+'-'+list.student_id" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i></a>
                   <button type="button" class="btn btn-danger btn-xs"><i class="fas fa-archive"></i></i></button>

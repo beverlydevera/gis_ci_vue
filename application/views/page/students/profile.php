@@ -8,7 +8,7 @@
         font-size: 10pt !important;
         height: 20pt !important;
         padding: 0 0 0 3%;
-        color: #000;
+        color: blue;
         font-weight: bold;
     }
 
@@ -34,6 +34,7 @@
     }
 </style>
 <section class="content" id="studentprofile_page">
+    <form @submit.prevent="updateProfile">
     <input type="hidden" value="<?=$student_id?>" id="student_id">
     <div class="container-fluid">
         <div class="row">
@@ -100,14 +101,14 @@
                                     <div class="form-group row">
                                         <table class="table table-bordered">
                                             <tr>
-                                                <th width="20%">Full Name:</th>
+                                                <th width="20%"><span class="requiredspan">*</span>Full Name:</th>
                                                 <th colspan=3>
                                                     <div class="row">
                                                         <div class="col-sm-3">
-                                                            <input type="text" class="form-control smallerinput" placeholder="Last Name" v-model="studentinfo.lastname">
+                                                            <input type="text" class="form-control smallerinput" placeholder="Last Name" v-model="studentinfo.lastname" required>
                                                         </div>
                                                         <div class="col-sm-4">
-                                                            <input type="text" class="form-control smallerinput" placeholder="First Name" v-model="studentinfo.firstname">
+                                                            <input type="text" class="form-control smallerinput" placeholder="First Name" v-model="studentinfo.firstname" required>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <input type="text" class="form-control smallerinput" placeholder="Middle Name" v-model="studentinfo.middlename">
@@ -119,7 +120,7 @@
                                                 </th>
                                             </tr>
                                             <tr>
-                                                <th width="20%">Sex:</th>
+                                                <th width="20%"><span class="requiredspan">*</span>Sex:</th>
                                                 <th>
                                                     <select class="form-control select2 smallerinput" style="width: 100%;" data-select2-id="12" tabindex="-1" aria-hidden="true" v-model="studentinfo.sex">
                                                         <option selected disabled></option>
@@ -127,57 +128,57 @@
                                                         <option>Female</option>
                                                     </select>
                                                 </th>
-                                                <th width="20%">Citizenship:</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.citizenship"></th>
+                                                <th width="20%"><span class="requiredspan">*</span>Citizenship:</th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.citizenship" required></th>
                                             </tr>
                                             <tr>
-                                                <th width="20%">Date of Birth:</th>
+                                                <th width="20%"><span class="requiredspan">*</span>Date of Birth:</th>
                                                 <th>
                                                     <div class="row">
                                                         <div class="col-sm-8">
-                                                            <input type="date" class="form-control datepicker smallerinput" v-model="studentinfo.birthdate" @change="calculate_age()">
+                                                            <input type="date" class="form-control datepicker smallerinput" v-model="studentinfo.birthdate" @change="calculate_age()" required>
                                                         </div>
                                                         <div class="col-sm-4">
-                                                            <input type="number" class="form-control smallerinput" v-model="studentinfo.studentage" disabled>
+                                                            <input type="number" class="form-control smallerinput" v-model="derivedinfo.studentage" disabled>
                                                         </div>
                                                     </div>
                                                 </th>
-                                                <th width="20%">Place of Birth:</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.birthplace"></th>
+                                                <th width="20%"><span class="requiredspan">*</span>Place of Birth:</th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.birthplace" required></th>
                                             </tr>
                                             <tr>
-                                                <th width="20%">Home Address:</th>
+                                                <th width="20%"><span class="requiredspan">*</span>Home Address:</th>
                                                 <th colspan=3>
-                                                    <input type="text" class="form-control smallerinput" v-model="studentinfo.address">
+                                                    <input type="text" class="form-control smallerinput" v-model="studentinfo.address" required>
                                                 </th>
                                             </tr>
                                             <tr>
-                                                <th width="20%">Mobile Number:</th>
-                                                <th><input type="text" class="form-control smallerinput" placeholder="(09)xx-xxxx-xxx" v-model="studentinfo.mobileno"></th>
+                                                <th width="20%"><span class="requiredspan">*</span>Mobile Number:</th>
+                                                <th><input type="text" class="form-control smallerinput" placeholder="(09)xx-xxxx-xxx" v-model="studentinfo.mobileno" required></th>
                                                 <th width="20%">Telephone Number</th>
                                                 <th><input type="text" class="form-control smallerinput" placeholder="(09)xx-xxxx-xxx" v-model="studentinfo.telephoneno"></th>
                                             </tr>
                                             <tr>
-                                                <th width="20%">Email Address:</th>
-                                                <th colspan=3><input type="email" class="form-control smallerinput" placeholder="abc@email.com" v-model="studentinfo.emailadd"></th>
+                                                <th width="20%"><span class="requiredspan">*</span>Email Address:</th>
+                                                <th colspan=3><input type="email" class="form-control smallerinput" placeholder="abc@email.com" v-model="studentinfo.emailadd" required></th>
                                             </tr>
                                             <tr>
-                                                <th width="20%">Height (m):</th>
-                                                <th><input type="number" class="form-control smallerinput" v-model="studentinfo.height"></th>
-                                                <th width="20%">Weight (kg):</th>
-                                                <th><input type="number" class="form-control smallerinput" v-model="studentinfo.weight"></th>
+                                                <th width="20%"><span class="requiredspan">*</span>Height (m):</th>
+                                                <th><input type="number" class="form-control smallerinput" v-model="studentinfo.height" required></th>
+                                                <th width="20%"><span class="requiredspan">*</span>Weight (kg):</th>
+                                                <th><input type="number" class="form-control smallerinput" v-model="studentinfo.weight" required></th>
                                             </tr>
                                             <tr>
-                                                <th width="20%">Insurance:</th>
+                                                <th width="20%"><span class="requiredspan">*</span>Insurance:</th>
                                                 <th>
                                                     <div class="row">
                                                         <div class="col-sm-2"></div>
                                                         <div class="col-sm-3">
-                                                            <input type="radio" class="form-check-input" :value="1" v-model="studentinfo.insurance">
+                                                            <input type="radio" class="form-check-input" :value="1" v-model="studentinfo.insurance" required>
                                                             <label class="form-check-label" for="">Yes</label>
                                                         </div>
                                                         <div class="col-sm-7">
-                                                            <input type="radio" class="form-check-input" :value="0" v-model="studentinfo.insurance">
+                                                            <input type="radio" class="form-check-input" :value="0" v-model="studentinfo.insurance" required>
                                                             <label class="form-check-label" for="">No</label>
                                                         </div>
                                                     </div>
@@ -193,33 +194,33 @@
                                         <table class="table table-bordered">
                                             <tr>
                                                 <th width="20%"></th>
-                                                <th width="20%">Father</th>
-                                                <th width="20%">Mother</th>
+                                                <th width="20%"><span class="requiredspan">*</span>Father</th>
+                                                <th width="20%"><span class="requiredspan">*</span>Mother</th>
                                                 <th width="20%">Guardian</th>
                                             </tr>
                                             <tr>
-                                                <th width="20%">Name:</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.father_name"></th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.mother_name"></th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.guardian_name"></th>
+                                                <th width="20%"><span class="requiredspan">*</span>Name:</th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.father_name" required></th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.mother_name" required></th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.guardian_name"></th>
                                             </tr>
                                             <tr>
-                                                <th width="20%">Date of Birth:</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.father_birthdate"></th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.mother_birthdate"></th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.guardian_birthdate"></th>
+                                                <th width="20%"><span class="requiredspan">*</span>Date of Birth:</th>
+                                                <th><input type="date" class="form-control datepicker smallerinput" v-model="derivedinfo.father_birthdate" required></th>
+                                                <th><input type="date" class="form-control datepicker smallerinput" v-model="derivedinfo.mother_birthdate" required></th>
+                                                <th><input type="date" class="form-control datepicker smallerinput" v-model="derivedinfo.guardian_birthdate"></th>
                                             </tr>
                                             <tr>
                                                 <th width="20%">Occupation:</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.father_occupation"></th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.mother_occupation"></th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.guardian_occupation"></th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.father_occupation"></th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.mother_occupation"></th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.guardian_occupation"></th>
                                             </tr>
                                             <tr>
-                                                <th width="20%">Contact No:</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.father_contactno"></th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.mother_contactno"></th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.guardian_contactno"></th>
+                                                <th width="20%"><span class="requiredspan">*</span>Contact No:</th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.father_contactno" required></th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.mother_contactno" required></th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.guardian_contactno"></th>
                                             </tr>
                                         </table>
                                     </div>
@@ -228,16 +229,16 @@
                                     <div class="form-group row">
                                         <table class="table table-bordered">
                                             <tr>
-                                                <th width="20%">Name:</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.emergency_name"></th>
-                                                <th width="20%">Relationship</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.emergency_relationship"></th>
+                                                <th width="20%"><span class="requiredspan">*</span>Name:</th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.emergency_name" required></th>
+                                                <th width="20%"><span class="requiredspan">*</span>Relationship</th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.emergency_relationship" required></th>
                                             </tr>
                                             <tr>
-                                                <th width="20%">Address:</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.emergency_address"></th>
-                                                <th width="20%">Mobile Number:</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.emergency_mobilenum"></th>
+                                                <th width="20%"><span class="requiredspan">*</span>Address:</th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.emergency_address" required></th>
+                                                <th width="20%"><span class="requiredspan">*</span>Mobile Number:</th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.emergency_mobilenum" required></th>
                                             </tr>
                                         </table>
                                     </div>
@@ -246,14 +247,14 @@
                                     <div class="form-group row">
                                         <table class="table table-bordered">
                                             <tr>
-                                                <th width="20%">Name of School:</th>
-                                                <th colspan=3><input type="text" class="form-control smallerinput" v-model="studentinfo.schoolname"></th>
+                                                <th width="20%"><span class="requiredspan">*</span>Name of School:</th>
+                                                <th colspan=3><input type="text" class="form-control smallerinput" v-model="derivedinfo.schoolname" required></th>
                                             </tr>
                                             <tr>
                                                 <th width="20%">Year / Grade:</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.schoolyear"></th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.schoolyear"></th>
                                                 <th width="20%">School Course</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.schoolcourse"></th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.schoolcourse"></th>
                                             </tr>
                                         </table>
                                     </div>
@@ -263,9 +264,9 @@
                                         <table class="table table-bordered">
                                             <tr>
                                                 <th width="20%">Name of Company:</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.companyname"></th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.companyname"></th>
                                                 <th width="20%">Company Address:</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.companyaddress"></th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.companyaddress"></th>
                                             </tr>
                                         </table>
                                     </div>
@@ -493,4 +494,5 @@
             </div>
         </div>
     </div>
+    </form>
 </section>

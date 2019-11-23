@@ -68,4 +68,26 @@ class Students extends CI_Controller {
         }
         response_json($response);
     }
+
+    public function UpdateProfile(){
+
+        $datas = $this->input->post();
+        $student_id = $this->input->post('student_id');
+        $updateresult = $this->Main->update("tbl_students",['student_id'=>$student_id],$datas);
+
+        if(!empty($updateresult)){
+            $response = array(
+                "success"   => true,
+                "message"   => "Profile changes saved successfully.",
+                "data"      => $updateresult
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "message"   => "Profile changes were not saved.",
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
 }
