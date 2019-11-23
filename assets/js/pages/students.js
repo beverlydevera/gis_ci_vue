@@ -42,7 +42,6 @@ if($('#students_page').length){
                 telephoneno: "",
                 emailadd: "",
                 address: "",
-                citizenship: "",
                 height: "",
                 weight: "",
                 insurance: "",
@@ -66,16 +65,19 @@ if($('#students_page').length){
                 companyname: "",
                 companyaddress: "",
                 father_name: "",
-                father_birthdate: "",
+                father_officeadd: "",
                 father_occupation: "",
+                father_officeadd: "",
                 father_contactno: "",
                 mother_name: "",
-                mother_birthdate: "",
+                mother_officeadd: "",
                 mother_occupation: "",
+                mother_officeadd: "",
                 mother_contactno: "",
                 guardian_name: "",
-                guardian_birthdate: "",
+                guardian_officeadd: "",
                 guardian_occupation: "",
+                guardian_officeadd: "",
                 guardian_contactno: "",
                 emergency_name: "",
                 emergency_relationship: "",
@@ -106,28 +108,31 @@ if($('#students_page').length){
                             profile.derivedinfo.schoolname=dat.school.split("/")['0'];
                             profile.derivedinfo.schoolyear=dat.school.split("/")['1'];
                             profile.derivedinfo.schoolcourse=dat.school.split("/")['2'];
+                        }
+
+                        if(dat.company!=null){
                             profile.derivedinfo.companyname=dat.company.split("/")['0'];
                             profile.derivedinfo.companyaddress=dat.company.split("/")['1'];
                         }
                         
                         if(dat.fatherinfo!=null){
                             profile.derivedinfo.father_name=dat.fatherinfo.split("/")['0'];
-                            profile.derivedinfo.father_birthdate=dat.fatherinfo.split("/")['1'];
-                            profile.derivedinfo.father_occupation=dat.fatherinfo.split("/")['2'];
+                            profile.derivedinfo.father_occupation=dat.fatherinfo.split("/")['1'];
+                            profile.derivedinfo.father_officeadd=dat.fatherinfo.split("/")['2'];
                             profile.derivedinfo.father_contactno=dat.fatherinfo.split("/")['3'];
                         }
                         
                         if(dat.motherinfo!=null){
                             profile.derivedinfo.mother_name=dat.motherinfo.split("/")['0'];
-                            profile.derivedinfo.mother_birthdate=dat.motherinfo.split("/")['1'];
-                            profile.derivedinfo.mother_occupation=dat.motherinfo.split("/")['2'];
+                            profile.derivedinfo.mother_occupation=dat.motherinfo.split("/")['1'];
+                            profile.derivedinfo.mother_officeadd=dat.motherinfo.split("/")['2'];
                             profile.derivedinfo.mother_contactno=dat.motherinfo.split("/")['3'];
                         }
                         
                         if(dat.guardianinfo!=null){
                             profile.derivedinfo.guardian_name=dat.guardianinfo.split("/")['0'];
-                            profile.derivedinfo.guardian_birthdate=dat.guardianinfo.split("/")['1'];
-                            profile.derivedinfo.guardian_occupation=dat.guardianinfo.split("/")['2'];
+                            profile.derivedinfo.guardian_occupation=dat.guardianinfo.split("/")['1'];
+                            profile.derivedinfo.guardian_officeadd=dat.guardianinfo.split("/")['2'];
                             profile.derivedinfo.guardian_contactno=dat.guardianinfo.split("/")['3'];
                         }
                         
@@ -147,9 +152,9 @@ if($('#students_page').length){
             updateProfile(){
                 this.studentinfo.school = this.derivedinfo.schoolname+"/"+this.derivedinfo.schoolyear+"/"+this.derivedinfo.schoolcourse;
                 this.studentinfo.company = this.derivedinfo.companyname+"/"+this.derivedinfo.companyaddress;
-                this.studentinfo.fatherinfo = this.derivedinfo.father_name+"/"+this.derivedinfo.father_birthdate+"/"+this.derivedinfo.father_occupation+"/"+this.derivedinfo.father_contactno;
-                this.studentinfo.motherinfo = this.derivedinfo.mother_name+"/"+this.derivedinfo.mother_birthdate+"/"+this.derivedinfo.mother_occupation+"/"+this.derivedinfo.mother_contactno;
-                this.studentinfo.guardianinfo = this.derivedinfo.guardian_name+"/"+this.derivedinfo.guardian_birthdate+"/"+this.derivedinfo.guardian_occupation+"/"+this.derivedinfo.guardian_contactno;
+                this.studentinfo.fatherinfo = this.derivedinfo.father_name+"/"+this.derivedinfo.father_occupation+"/"+this.derivedinfo.father_officeadd+"/"+this.derivedinfo.father_contactno;
+                this.studentinfo.motherinfo = this.derivedinfo.mother_name+"/"+this.derivedinfo.mother_occupation+"/"+this.derivedinfo.mother_officeadd+"/"+this.derivedinfo.mother_contactno;
+                this.studentinfo.guardianinfo = this.derivedinfo.guardian_name+"/"+this.derivedinfo.guardian_occupation+"/"+this.derivedinfo.guardian_officeadd+"/"+this.derivedinfo.guardian_contactno;
                 this.studentinfo.emergencyinfo = this.derivedinfo.emergency_name+"/"+this.derivedinfo.emergency_relationship+"/"+this.derivedinfo.emergency_address+"/"+this.derivedinfo.emergency_mobilenum;
                 
                 var currentdate = new Date(); 

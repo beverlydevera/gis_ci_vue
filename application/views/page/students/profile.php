@@ -38,7 +38,7 @@
     <input type="hidden" value="<?=$student_id?>" id="student_id">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
                         <div class="text-center">
@@ -48,27 +48,31 @@
                         <h3 class="profile-username text-center">
                             {{studentinfo.firstname}} {{studentinfo.lastname}}
                         </h3>
-                        <p class="text-muted text-center"><b>Student Reference ID: </b> {{studentinfo.reference_id}}</p>
+                        <p class="text-muted text-center"><b>" {{studentinfo.nickname}} "</b></p>
 
                         <ul class="list-group list-group-unbordered mb-3">
                             <li class="list-group-item">
-                                <b>Current Class: </b>
-                                <a class="float-right">Mighty Cubs Level 2</a>
+                                <b>Student Reference ID No: </b>
+                                <a>{{studentinfo.reference_id}}</a>
                             </li>
                             <li class="list-group-item">
-                                <b>Current Rank: </b> 
-                                <a class="float-right">7th Yellow</a>
+                                <b>Current Class: </b><br>
+                                <a >Mighty Cubs Level 2</a>
                             </li>
                             <li class="list-group-item">
-                                <b>Status: </b> 
-                                <a class="float-right"><span class="badge bg-success">Active</span></a>
+                                <b>Current Rank: </b> <br>
+                                <a >7th Yellow</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Status: </b> <br>
+                                <a ><span class="badge bg-success">Active</span></a>
                             </li>
                         </ul>
                     <!-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
                     </div>
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-10">
                 <div class="card">
                     <div class="card-header p-2">
                     <ul class="nav nav-pills">
@@ -101,7 +105,7 @@
                                     <div class="form-group row">
                                         <table class="table table-bordered">
                                             <tr>
-                                                <th width="20%"><span class="requiredspan">*</span>Full Name:</th>
+                                                <th width="15%"><span class="requiredspan">*</span>Full Name:</th>
                                                 <th colspan=3>
                                                     <div class="row">
                                                         <div class="col-sm-3">
@@ -118,21 +122,25 @@
                                                         </div>
                                                     </div>
                                                 </th>
+                                                <th width="15%">Nickname:</th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.nickname"></th>
                                             </tr>
                                             <tr>
-                                                <th width="20%"><span class="requiredspan">*</span>Sex:</th>
-                                                <th>
-                                                    <select class="form-control select2 smallerinput" style="width: 100%;" data-select2-id="12" tabindex="-1" aria-hidden="true" v-model="studentinfo.sex">
-                                                        <option selected disabled></option>
-                                                        <option>Male</option>
-                                                        <option>Female</option>
-                                                    </select>
+                                                <th width="15%"><span class="requiredspan">*</span>Home Address:</th>
+                                                <th colspan=5>
+                                                    <input type="text" class="form-control smallerinput" v-model="studentinfo.address" required>
                                                 </th>
-                                                <th width="20%"><span class="requiredspan">*</span>Citizenship:</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.citizenship" required></th>
                                             </tr>
                                             <tr>
-                                                <th width="20%"><span class="requiredspan">*</span>Date of Birth:</th>
+                                                <th width="15%"><span class="requiredspan">*</span>Cellphone Number:</th>
+                                                <th><input type="text" class="form-control smallerinput" placeholder="(09)xx-xxxx-xxx" v-model="studentinfo.mobileno" required></th>
+                                                <th width="15%">Telephone Number:</th>
+                                                <th><input type="text" class="form-control smallerinput" placeholder="(09)xx-xxxx-xxx" v-model="studentinfo.telephoneno"></th>
+                                                <th width="15%"><span class="requiredspan">*</span>Email Address:</th>
+                                                <th><input type="email" class="form-control smallerinput" placeholder="abc@email.com" v-model="studentinfo.emailadd" required></th>
+                                            </tr>
+                                            <tr>
+                                                <th width="15%"><span class="requiredspan">*</span>Date of Birth:</th>
                                                 <th>
                                                     <div class="row">
                                                         <div class="col-sm-8">
@@ -143,52 +151,69 @@
                                                         </div>
                                                     </div>
                                                 </th>
-                                                <th width="20%"><span class="requiredspan">*</span>Place of Birth:</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.birthplace" required></th>
-                                            </tr>
-                                            <tr>
-                                                <th width="20%"><span class="requiredspan">*</span>Home Address:</th>
-                                                <th colspan=3>
-                                                    <input type="text" class="form-control smallerinput" v-model="studentinfo.address" required>
+                                                <th width="15%">Religion:</th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.religion"></th>
+                                                <th width="15%"><span class="requiredspan">*</span>Sex:</th>
+                                                <th>
+                                                    <select class="form-control select2 smallerinput" style="width: 100%;" data-select2-id="12" tabindex="-1" aria-hidden="true" v-model="studentinfo.sex">
+                                                        <option selected disabled></option>
+                                                        <option>Male</option>
+                                                        <option>Female</option>
+                                                    </select>
                                                 </th>
                                             </tr>
                                             <tr>
-                                                <th width="20%"><span class="requiredspan">*</span>Mobile Number:</th>
-                                                <th><input type="text" class="form-control smallerinput" placeholder="(09)xx-xxxx-xxx" v-model="studentinfo.mobileno" required></th>
-                                                <th width="20%">Telephone Number</th>
-                                                <th><input type="text" class="form-control smallerinput" placeholder="(09)xx-xxxx-xxx" v-model="studentinfo.telephoneno"></th>
-                                            </tr>
-                                            <tr>
-                                                <th width="20%"><span class="requiredspan">*</span>Email Address:</th>
-                                                <th colspan=3><input type="email" class="form-control smallerinput" placeholder="abc@email.com" v-model="studentinfo.emailadd" required></th>
-                                            </tr>
-                                            <tr>
-                                                <th width="20%"><span class="requiredspan">*</span>Height (m):</th>
+                                                <th width="15%"><span class="requiredspan">*</span>Height (m):</th>
                                                 <th><input type="number" class="form-control smallerinput" v-model="studentinfo.height" required></th>
-                                                <th width="20%"><span class="requiredspan">*</span>Weight (kg):</th>
+                                                <th width="15%"><span class="requiredspan">*</span>Weight (kg):</th>
                                                 <th><input type="number" class="form-control smallerinput" v-model="studentinfo.weight" required></th>
-                                            </tr>
-                                            <tr>
-                                                <th width="20%"><span class="requiredspan">*</span>Insurance:</th>
+                                                <th width="15%"><span class="requiredspan">*</span>Insurance:</th>
                                                 <th>
                                                     <div class="row">
                                                         <div class="col-sm-2"></div>
-                                                        <div class="col-sm-3">
+                                                        <div class="col-sm-5">
                                                             <input type="radio" class="form-check-input" :value="1" v-model="studentinfo.insurance" required>
                                                             <label class="form-check-label" for="">Yes</label>
                                                         </div>
-                                                        <div class="col-sm-7">
+                                                        <div class="col-sm-5">
                                                             <input type="radio" class="form-check-input" :value="0" v-model="studentinfo.insurance" required>
                                                             <label class="form-check-label" for="">No</label>
                                                         </div>
                                                     </div>
                                                 </th>
-                                                <th width="20%">Religion:</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="studentinfo.religion"></th>
+                                                
                                             </tr>
                                         </table>
                                     </div>
                                     <hr/>
+                                    <h6>EDUCATION INFORMATION</h6>
+                                    <div class="form-group row">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th width="20%"><span class="requiredspan">*</span>Name of School:</th>
+                                                <th colspan=3><input type="text" class="form-control smallerinput" v-model="derivedinfo.schoolname" required></th>
+                                            </tr>
+                                            <tr>
+                                                <th width="20%">Year / Grade:</th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.schoolyear"></th>
+                                                <th width="20%">School Course</th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.schoolcourse"></th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <hr/>
+                                    <h6>WORK INFORMATION <small><i>(if working)</i></small></h6>
+                                    <div class="form-group row">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th width="20%">Name of Company:</th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.companyname"></th>
+                                                <th width="20%">Company Address:</th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.companyaddress"></th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <hr>
                                     <h6>PARENTS / GUARDIAN INFORMATION</h6>
                                     <div class="form-group row">
                                         <table class="table table-bordered">
@@ -196,7 +221,7 @@
                                                 <th width="20%"></th>
                                                 <th width="20%"><span class="requiredspan">*</span>Father</th>
                                                 <th width="20%"><span class="requiredspan">*</span>Mother</th>
-                                                <th width="20%">Guardian</th>
+                                                <th width="20%">Guardian <small><i>(if any)</i></small></th>
                                             </tr>
                                             <tr>
                                                 <th width="20%"><span class="requiredspan">*</span>Name:</th>
@@ -205,16 +230,16 @@
                                                 <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.guardian_name"></th>
                                             </tr>
                                             <tr>
-                                                <th width="20%"><span class="requiredspan">*</span>Date of Birth:</th>
-                                                <th><input type="date" class="form-control datepicker smallerinput" v-model="derivedinfo.father_birthdate" required></th>
-                                                <th><input type="date" class="form-control datepicker smallerinput" v-model="derivedinfo.mother_birthdate" required></th>
-                                                <th><input type="date" class="form-control datepicker smallerinput" v-model="derivedinfo.guardian_birthdate"></th>
+                                                <th width="20%"><span class="requiredspan">*</span>Occupation:</th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.father_occupation" required></th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.mother_occupation" required></th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.guardian_occupation"></th>
                                             </tr>
                                             <tr>
-                                                <th width="20%">Occupation:</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.father_occupation"></th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.mother_occupation"></th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.guardian_occupation"></th>
+                                                <th width="20%"><span class="requiredspan">*</span>Office Address:</th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.father_officeadd" required></th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.mother_officeadd" required></th>
+                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.guardian_officeadd"></th>
                                             </tr>
                                             <tr>
                                                 <th width="20%"><span class="requiredspan">*</span>Contact No:</th>
@@ -243,34 +268,6 @@
                                         </table>
                                     </div>
                                     <hr/>
-                                    <h6>EDUCATION INFORMATION</h6>
-                                    <div class="form-group row">
-                                        <table class="table table-bordered">
-                                            <tr>
-                                                <th width="20%"><span class="requiredspan">*</span>Name of School:</th>
-                                                <th colspan=3><input type="text" class="form-control smallerinput" v-model="derivedinfo.schoolname" required></th>
-                                            </tr>
-                                            <tr>
-                                                <th width="20%">Year / Grade:</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.schoolyear"></th>
-                                                <th width="20%">School Course</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.schoolcourse"></th>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <hr/>
-                                    <h6>WORK INFORMATION</h6>
-                                    <div class="form-group row">
-                                        <table class="table table-bordered">
-                                            <tr>
-                                                <th width="20%">Name of Company:</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.companyname"></th>
-                                                <th width="20%">Company Address:</th>
-                                                <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.companyaddress"></th>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <hr>
                                     <div class="text-right">
                                         <button type="submit" class="btn btn-primary" style="width: 20%;">Update Profile</button>
                                     </div>
