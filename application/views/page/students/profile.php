@@ -26,7 +26,7 @@
     
     th, td{
         padding: 1% !important;
-        margin: 1% !important;
+        /* vertical-align: middle; */
     }
 
     hr{
