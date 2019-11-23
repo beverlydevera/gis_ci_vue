@@ -1,3 +1,8 @@
+<style>
+.nav-treeview{
+  margin-left:12%;
+}
+</style>
 <nav class="mt-2" id = "navigationpanel">
   <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-compact" data-widget="treeview" role="menu" data-accordion="false">
 
@@ -23,7 +28,6 @@
         <p>
           Students
           <i class="right fas fa-angle-left"></i>
-          <i class="fas fa-users-class"></i>
         </p>
       </a>
       <ul class="nav nav-treeview">
