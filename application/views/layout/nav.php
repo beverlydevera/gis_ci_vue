@@ -10,7 +10,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a href="<?= base_url('examination/t') ?>" class="nav-link" v-bind:class="checkactive('examination/t')">
+      <a href="<?= base_url('classes/') ?>" class="nav-link" v-bind:class="checkactive('examination/t')">
         <i class="nav-icon fas fa-tasks"></i>
         <p>
           Classes
@@ -28,21 +28,21 @@
       </a>
       <ul class="nav nav-treeview">
         <li class="nav-item">
-          <a href="<?= base_url('libraries/office') ?>" class="nav-link "  v-bind:class="checkactive('office')">
+          <a href="<?= base_url('students') ?>" class="nav-link"  v-bind:class="checkactive('office')">
             <i class="fas fa-list-alt nav-icon"></i>
-            <p>Masterlist</p>
+            <p>Student Masterlist</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="<?= base_url('libraries/division') ?>" class="nav-link" v-bind:class="checkactive('division')">
+          <a href="<?= base_url('stduent/enroll') ?>" class="nav-link" v-bind:class="checkactive('division')">
             <i class="fas fa-address-card nav-icon"></i>
-            <p>Register New Student</p>
+            <p>Enroll New Student</p>
           </a>
         </li>
       </ul>
     </li>
     <li class="nav-item">
-      <a href="<?= base_url('dashboard') ?>" class="nav-link" v-bind:class="checkactive('dashboard')">
+      <a href="<?= base_url('users/logout') ?>" class="nav-link">
         <i class="nav-icon fas fa-sign-out-alt"></i>
         <p>
           Logout

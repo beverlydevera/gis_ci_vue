@@ -170,9 +170,9 @@ to get the desired effect
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar elevation-4 sidebar-no-expand ">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link text-sm navbar-primary">
+            <a class="brand-link text-sm navbar-primary">
                 <!-- image -->
-                <span class="brand-text font-weight-light">GYM IS</span>
+                <span class="brand-text font-weight-light">Bravehearts Martial Arts Institute</span>
             </a>
 
             <!-- Sidebar -->

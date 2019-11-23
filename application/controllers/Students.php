@@ -40,19 +40,20 @@ class Students extends CI_Controller {
     public function profile($string = "")
     {
         $string = explode("-", $string);
-        $studentid = end($string);
+        $student_id = end($string);
+        $data['student_id'] = $student_id;
 
-        $data['title'] = "Students";
-        $data['vueid'] = "students";
+        $data['title'] = "Students Profile";
+        $data['vueid'] = "students_profile";
         $data['vfile'] = "page/students/profile";
         $data['js'] = array('pages/students.js');
         $this->load->view('layout/main', $data);
     }
 
-    public function getProfile()
+    public function getStudentProfile()
     {
-        $studentid = $this->input->post('studentid');
-        $studentinfo = $this->student->getStudents("*","tbl_students",["student_id"=>$studentid],"","row");
+        $student_id = $this->input->post('student_id');
+        $studentinfo = $this->student->getStudents("*","tbl_students",["student_id"=>$student_id],"","row");
         
         if(!empty($studentinfo)){
             $response = array(
