@@ -9,12 +9,11 @@ class Login extends CI_Controller {
 		$this->load->model('Main');
 		$this->load->library('bcrypt');
 		$this->load->library('session');
+        checkLogin($type = true);
 	}
 	
 	public function index()
 	{
-        checkLogin($type = true);
-
         $data['title'] = "Login";
         $data['vueid'] = "login";
         $data['js'] = array('pages/login.js');
@@ -23,11 +22,10 @@ class Login extends CI_Controller {
 
     public function checkuser()
     {
-        $username = $this->input->post['username'];
-        $password = $this->input->post['password'];
-
-        $r=array();
-
+        $username = $this->input->post('username');
+        $password = $this->input->post('password');
+        $data="";
+        
 		$qry  = array(
 			'select'           => "*",
 			'table'            => 'tbl_users',
@@ -39,6 +37,7 @@ class Login extends CI_Controller {
         if(!empty($r)){
             if($this->bcrypt->check_password($password, $r->password)){
                 $sessiondata = array(
+                    'loggedin' => true,
                     'username' => $r->username,
                     'first_name' => $r->firstname,
                     'last_name' => $r->lastname,
@@ -48,9 +47,10 @@ class Login extends CI_Controller {
                     'id' => $r->user_id,
                 );
                 $this->session->set_userdata($sessiondata);
+                $data = $sessiondata;
 
                 $success = true;
-                $message = "Success";
+                $message = "Successfully logged in";
             } else{
                 $success = false;
                 $message = "Incorrect Username or Password.";
@@ -60,7 +60,11 @@ class Login extends CI_Controller {
             $message = "Username does not exist.";
         }
 
-		$response = array('success' => $success,'message' => $message);
+		$response = array(
+            'success' => $success,
+            'message' => $message,
+            'data'    => $data
+        );
 		response_json($response);
     }
 
