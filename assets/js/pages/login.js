@@ -7,9 +7,6 @@ var login = new Vue({
         },
     },
     methods: {
-        // firstrun(){
-        //     alert();
-        // },
         checkUser(){
             var datas = frmdata(this.userdata);
             var urls = window.App.baseUrl + "login/checkUser";
@@ -36,6 +33,6 @@ var login = new Vue({
                 });
         },
     }, mounted: function () {
-// this.firstrun();
+        //a
     },
 })

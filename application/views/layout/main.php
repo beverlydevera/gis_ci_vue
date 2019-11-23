@@ -183,7 +183,7 @@ to get the desired effect
                         <!-- image -->
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Beverly De Vera</a>
+                        <a href="#" class="d-block"><?=sesdata('fullname')?></a>
                         <!-- <span>Admin</span> -->
                     </div>
                 </div>

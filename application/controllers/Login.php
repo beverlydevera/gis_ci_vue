@@ -42,7 +42,7 @@ class Login extends CI_Controller {
                     'first_name' => $r->firstname,
                     'last_name' => $r->lastname,
                     'middle_name' => $r->middlename,
-                    'fullname' => $r->lastname . ", " .$r->firstname . " " . $r->middlename . ".",
+                    'fullname' => $r->firstname . " " .$r->lastname,
                     'role' => $r->role,
                     'id' => $r->user_id,
                 );
