@@ -93,7 +93,9 @@ if($('#students_page').length){
                 package_id: "",
                 payment: "",
                 amounttopay: "",
-            }
+            },
+            studentclasses:{},
+            studentclassdetails:{},
         },
         methods: {
             calculate_age() {
@@ -150,6 +152,18 @@ if($('#students_page').length){
                         console.log(error)
                     });
             },
+            getStudentClassDetails(studpack_id){
+                var datas = { studpack_id: studpack_id };
+                var datas = frmdata(datas);
+                var urls = window.App.baseUrl + "students/getStudentClassDetails";
+                axios.post(urls, datas)
+                    .then(function (e) {
+                        profile.studentclassdetails=e.data.data;
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+            },
             getStudentProfile(){
                 var datas = { student_id:this.student_id };
                 var datas = frmdata(datas);
@@ -158,7 +172,8 @@ if($('#students_page').length){
                     .then(function (e) {
                         // console.log(e);
                         dat = e.data.data;
-                        profile.studentinfo=dat;
+                        profile.studentinfo=dat.studentprofile;
+                        profile.studentclasses=dat.studentclasses;
                         
                         if(dat.school!=null){
                             profile.derivedinfo.schoolname=dat.school.split("/")['0'];
@@ -254,6 +269,7 @@ if($('#students_page').length){
                                 type: "success",
                                 title: e.data.message
                             })
+                            profile.getStudentProfile();
                         }else{
                             Toast.fire({
                                 type: "warning",

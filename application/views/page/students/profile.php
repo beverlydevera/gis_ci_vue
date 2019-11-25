@@ -274,15 +274,35 @@
                                         </div>
                                     </form>
                                 </div>
-                                <!-- /.tab-pane -->
 
                                 <div class="tab-pane" id="activity">
                                     <h6>MY CLASSES
                                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#enrollToClassModal" style="float:right;" @click="getClassScheds">Enroll to a Class</button>
                                     </h6>
-                                    <!-- aaa -->
+                                    <br>
+                                    <table class="table table-bordered">
+                                        <thead>                  
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Class Title</th>
+                                                <th>Class Schedule</th>
+                                                <th>Remaining Sessions</th>
+                                                <th>View</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(list,index) in studentclasses" :value="list.studpack_id">
+                                                <td>{{index+1}}</td>
+                                                <td>{{list.class_title}}</td>
+                                                <td>{{list.sched_day}} / {{list.sched_time}}</td>
+                                                <td>00 (from attendance)</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#StudentClassDetailsModal" style="float:right;" @click="getStudentClassDetails(list.studpack_id)"><i class="fas fa-eye"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <!-- /.tab-pane -->
 
                                 <div class="tab-pane" id="timeline">
                                     <!-- The timeline -->
@@ -378,7 +398,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- /.tab-pane -->
                             </div>
                         </div>
                     </div>
@@ -466,6 +485,66 @@
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="StudentClassDetailsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">My Class Details</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th colspan=2>Class Title</th>
+                            <th colspan=2>{{studentclassdetails.class_title}}</th>
+                        </tr>
+                        <tr>
+                            <th colspan=2>Class Schedule</th>
+                            <td colspan=2>{{studentclassdetails.sched_day}} / {{studentclassdetails.sched_time}}</td>
+                        </tr>
+                        <tr>
+                            <th colspan=2>Date Enrolled</th>
+                            <td colspan=2>{{studentclassdetails.date_added}}</td>
+                        </tr>
+                        <tr>
+                            <th colspan=4>Payment Details</th>
+                        </tr>
+                        <tr>
+                            <th>Payment Option</th>
+                            <td>{{studentclassdetails.payment_options}}</td>
+                            <th>Amount Paid</th>
+                            <td>00(from payment history)</td>
+                        </tr>
+                        <tr>
+                            <th colspan=4>Attendance Details</th>
+                        </tr>
+                        <tr>
+                            <th>Sessions Registered</th>
+                            <td>{{studentclassdetails.sessions}}</td>
+                            <th>Remaining Sessions</th>
+                            <td>00(from attendance)</td>
+                        </tr>
+                        <tr>
+                            <th colspan=4>Classes Facilitated</th>
+                        </tr>
+                        <tr>
+                            <td colspan=2>Dates</td>
+                            <td colspan=2>
+                                <span class="badge bg-success">Present</span>
+                                <span class="badge bg-danger">Absent</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>

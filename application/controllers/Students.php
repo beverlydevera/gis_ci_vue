@@ -56,10 +56,14 @@ class Students extends CI_Controller {
         $student_id = $this->input->post('student_id');
         $studentinfo = $this->student->getStudents("*","tbl_students",["student_id"=>$student_id],"","row");
         
+        $studentclasses = $this->student->getStudentClasses("*",["student_id"=>$student_id],"","");
+        
         if(!empty($studentinfo)){
             $response = array(
                 "success"   => true,
-                "data"      => $studentinfo
+                "data"      => [
+                    'studentprofile' => $studentinfo,
+                    'studentclasses' => $studentclasses],
             );
         }else{
             $response = array(
@@ -111,6 +115,25 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
+    public function getStudentClassDetails(){
+
+        $studpack_id = $this->input->post('studpack_id');
+        $studentclassdetails = $this->student->getStudentClasses("*",['studpack_id'=>$studpack_id],"","row");
+        
+        if(!empty($studentclassdetails)){
+            $response = array(
+                "success"   => true,
+                "data"      => $studentclassdetails
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
     public function checkPayment(){
 
         $package_id = $this->input->post('package_id');
@@ -133,7 +156,7 @@ class Students extends CI_Controller {
     public function enrollToClass(){
         
         $data = $this->input->post();
-        $data['date_added'] = date('Y');
+        $data['date_added'] = date('Y-m-d H:i:s');
         $result = $this->Main->insert("tbl_studentpackages", $data, true);
 
         if(!empty($result)){
@@ -152,8 +175,7 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
-    public function newStudentRegistration()
-	{
+    public function newStudentRegistration(){
         $data['title'] = "Enroll Student";
         $data['vueid'] = "student_enroll";
         $data['vfile'] = "page/students/enroll";
