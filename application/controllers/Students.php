@@ -174,6 +174,9 @@ class Students extends CI_Controller {
     public function deleteStudentClass(){
 
         $studpack_id = $this->input->post('studpack_id');
+        //check muna kung may payment history na bago magdelete
+        //kung wala, delete row, kung meron change status
+        // $result = $this->Main->delete("tbl_student_packages", ["studpack_id"=>$studpack_id]);
         $result = $this->Main->update("tbl_studentpackages", ["studpack_id"=>$studpack_id], ["deleted"=>1]);
         
         if(!empty($result)){

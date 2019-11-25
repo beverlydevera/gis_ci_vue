@@ -170,7 +170,6 @@ if($('#students_page').length){
                 var urls = window.App.baseUrl + "students/getStudentProfile";
                 axios.post(urls, datas)
                     .then(function (e) {
-                        // console.log(e);
                         dat = e.data.data;
                         profile.studentclasses=dat.studentclasses;
                         profile.studentinfo=dat.studentprofile;
@@ -237,7 +236,7 @@ if($('#students_page').length){
                 var urls = window.App.baseUrl + "students/UpdateProfile";
                 axios.post(urls, datas)
                     .then(function (e) {
-                        console.log(e);
+                        // console.log(e);
                         if (e.data.success) {
                             Toast.fire({
                                 type: "success",
@@ -264,7 +263,7 @@ if($('#students_page').length){
                 var urls = window.App.baseUrl + "students/enrollToClass";
                 axios.post(urls, datas)
                     .then(function (e) {
-                        console.log(e);
+                        // console.log(e);
                         if (e.data.success) {
                             Toast.fire({
                                 type: "success",
@@ -402,7 +401,7 @@ if($('#students_page').length){
                 var urls = window.App.baseUrl + "students/saveNewStudentRegistration";
                 axios.post(urls, datas)
                     .then(function (e) {
-                        console.log(e);
+                        // console.log(e);
                         if (e.data.success) {
                             Toast.fire({
                                 type: "success",
