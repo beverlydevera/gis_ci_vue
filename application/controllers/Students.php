@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Students extends CI_Controller {
 
-	public function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->load->model("Main");
@@ -11,8 +11,7 @@ class Students extends CI_Controller {
         checkLogin();
 	}
 	
-	public function index()
-	{
+	public function index(){
         $data['title'] = "Students";
         $data['vueid'] = "students";
         $data['vfile'] = "page/students/index";
@@ -20,8 +19,7 @@ class Students extends CI_Controller {
         $this->load->view('layout/main', $data);
     }
     
-    public function getStudents()
-    {
+    public function getStudents(){
         $students = $this->student->getStudents("*","tbl_students","","","");
         
         if(!empty($students)){
@@ -38,8 +36,7 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
-    public function profile($string = "")
-    {
+    public function profile($string = ""){
         $string = explode("-", $string);
         $student_id = end($string);
         $data['student_id'] = $student_id;
@@ -51,12 +48,11 @@ class Students extends CI_Controller {
         $this->load->view('layout/main', $data);
     }
 
-    public function getStudentProfile()
-    {
+    public function getStudentProfile(){
         $student_id = $this->input->post('student_id');
         $studentinfo = $this->student->getStudents("*","tbl_students",["student_id"=>$student_id],"","row");
         
-        $studentclasses = $this->student->getStudentClasses("*",["student_id"=>$student_id],"","");
+        $studentclasses = $this->student->getStudentClasses("*",["student_id"=>$student_id, "deleted"=>0],"","");
         
         if(!empty($studentinfo)){
             $response = array(
@@ -118,7 +114,7 @@ class Students extends CI_Controller {
     public function getStudentClassDetails(){
 
         $studpack_id = $this->input->post('studpack_id');
-        $studentclassdetails = $this->student->getStudentClasses("*",['studpack_id'=>$studpack_id],"","row");
+        $studentclassdetails = $this->student->getStudentClasses("*",['studpack_id'=>$studpack_id, 'deleted'=>0],"","row");
         
         if(!empty($studentclassdetails)){
             $response = array(
@@ -170,6 +166,25 @@ class Students extends CI_Controller {
                 "success"   => false,
                 "message"   => "Student enrollment was not saved.",
                 "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
+    public function deleteStudentClass(){
+
+        $studpack_id = $this->input->post('studpack_id');
+        $result = $this->Main->update("tbl_studentpackages", ["studpack_id"=>$studpack_id], ["deleted"=>1]);
+        
+        if(!empty($result)){
+            $response = array(
+                "success"   => true,
+                "message"   => "Student Class Schedule was deleted successfully"
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "message"   => "Student Class Schedule was not deleted"
             );
         }
         response_json($response);

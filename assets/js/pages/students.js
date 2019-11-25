@@ -172,8 +172,9 @@ if($('#students_page').length){
                     .then(function (e) {
                         // console.log(e);
                         dat = e.data.data;
-                        profile.studentinfo=dat.studentprofile;
                         profile.studentclasses=dat.studentclasses;
+                        profile.studentinfo=dat.studentprofile;
+                        dat = e.data.data.studentprofile;
                         
                         if(dat.school!=null){
                             profile.derivedinfo.schoolname=dat.school.split("/")['0'];
@@ -281,6 +282,29 @@ if($('#students_page').length){
                         profile.classenroll.payment = "";
                         profile.classenroll.amounttopay = "";
                         $('#enrollToClassModal').modal('hide');
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+            },
+            deleteStudentClass(studpack_id){
+                var datas = { studpack_id: studpack_id };
+                var datas = frmdata(datas);
+                var urls = window.App.baseUrl + "students/deleteStudentClass";
+                axios.post(urls, datas)
+                    .then(function (e) {
+                        if (e.data.success) {
+                            Toast.fire({
+                                type: "success",
+                                title: e.data.message
+                            })
+                            profile.getStudentProfile();
+                        }else{
+                            Toast.fire({
+                                type: "warning",
+                                title: e.data.message
+                            })
+                        }
                     })
                     .catch(function (error) {
                         console.log(error)

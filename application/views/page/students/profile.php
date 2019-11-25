@@ -58,7 +58,7 @@
                                 </li>
                                 <li class="list-group-item">
                                     <b>Current Class: </b><br>
-                                    <a >Mighty Cubs Level 2</a>
+                                    <a>Mighty Cubs Level 2</a>
                                 </li>
                                 <li class="list-group-item">
                                     <b>Current Rank: </b> <br>
@@ -92,7 +92,25 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#timeline" data-toggle="tab">
                                     <i class="fas fa-trophy"></i>
-                                    Promotion History
+                                    Promotion Timeline
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#balancepayments" data-toggle="tab">
+                                    <i class="far fa-credit-card"></i>
+                                    Balance and Payments
+                                </a>
+                            </li>
+                            <!-- <li class="nav-item">
+                                <a class="nav-link" href="#audittrail" data-toggle="tab">
+                                    <i class="fas fa-history"></i>
+                                    Audit Trail
+                                </a>
+                            </li> -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="#gallery" data-toggle="tab">
+                                    <i class="far fa-images"></i>
+                                    Gallery
                                 </a>
                             </li>
                         </ul>
@@ -287,7 +305,7 @@
                                                 <th>Class Title</th>
                                                 <th>Class Schedule</th>
                                                 <th>Remaining Sessions</th>
-                                                <th>View</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -295,9 +313,10 @@
                                                 <td>{{index+1}}</td>
                                                 <td>{{list.class_title}}</td>
                                                 <td>{{list.sched_day}} / {{list.sched_time}}</td>
-                                                <td>00 (from attendance)</td>
+                                                <td>00</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#StudentClassDetailsModal" style="float:right;" @click="getStudentClassDetails(list.studpack_id)"><i class="fas fa-eye"></i></button>
+                                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#StudentClassDetailsModal" @click="getStudentClassDetails(list.studpack_id)"><i class="fas fa-eye"></i></button>
+                                                    <button type="button" class="btn btn-danger btn-sm" @click="deleteStudentClass(list.studpack_id)"><i class="fas fa-trash-alt"></i></button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -490,7 +509,7 @@
     </div>
 
     <div class="modal fade" id="StudentClassDetailsModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">My Class Details</h4>
@@ -513,22 +532,24 @@
                             <td colspan=2>{{studentclassdetails.date_added}}</td>
                         </tr>
                         <tr>
-                            <th colspan=4>Payment Details</th>
+                            <th colspan=4>Payment History and Details</th>
                         </tr>
                         <tr>
-                            <th>Payment Option</th>
-                            <td>{{studentclassdetails.payment_options}}</td>
-                            <th>Amount Paid</th>
-                            <td>00(from payment history)</td>
+                            <th colspan=2>Payment Option</th>
+                            <td colspan=2>{{studentclassdetails.payment_options}}</td>
+                        </tr>
+                        <tr>
+                            <th colspan=2>Dates</th>
+                            <th colspan=2>Amount Paid</th>
                         </tr>
                         <tr>
                             <th colspan=4>Attendance Details</th>
                         </tr>
                         <tr>
-                            <th>Sessions Registered</th>
-                            <td>{{studentclassdetails.sessions}}</td>
-                            <th>Remaining Sessions</th>
-                            <td>00(from attendance)</td>
+                            <th width="30%">Sessions Registered</th>
+                            <td width="20%">{{studentclassdetails.sessions}}</td>
+                            <th width="30%">Remaining Sessions</th>
+                            <td width="20%">00</td>
                         </tr>
                         <tr>
                             <th colspan=4>Classes Facilitated</th>
