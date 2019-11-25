@@ -57,7 +57,7 @@
                 <div class="card-body">
                     <div class="tab-content" id="custom-tabs-one-tabContent">
                         <div class="tab-pane fade active show" id="personalinfo" role="tabpanel" aria-labelledby="personalinfo-tab">
-                            <form @submit.prevent="saveEnrollment">
+                            <form @submit.prevent="saveNewStudentRegistration">
                                 <h6>BASIC INFORMATION</h6>
                                 <div class="form-group row">
                                     <table class="table table-bordered">

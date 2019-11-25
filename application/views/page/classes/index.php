@@ -21,31 +21,31 @@
                             </div>
                         </div>
                         <table class="table table-bordered">
-                        <thead>                  
-                            <tr>
-                            <th style="width: 10px">#</th>
-                            <th>Class Name</th>
-                            <th>Class Schedule</th>
-                            <th>Current Students</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(list,index) in classschedlist" :value="list.class_id">
-                            <td>{{index+1}}</td>
-                            <td>{{list.class_name}}</td>
-                            <td>{{list.class_schedule}}</td>
-                            <td>000</td>
-                            <td>
-                                <span v-if="list.status" class="badge bg-success">Active</span>
-                                <span v-else class="badge bg-danger">Inactive</span>
-                            </td>
-                            <td>
-                                <a v-bind:href="'classSchedInfo/'+(list.class_name).replace(/ /g,'')+'-'+list.class_id" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></a>
-                            </td>
-                            </tr>
-                        </tbody>
+                            <thead>                  
+                                <tr>
+                                <th style="width: 10px">#</th>
+                                <th>Class Title</th>
+                                <th>Class Schedule</th>
+                                <th>Current Students</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(list,index) in classschedlist" :value="list.class_id">
+                                <td>{{index+1}}</td>
+                                <td>{{list.class_title}}</td>
+                                <td>{{list.sched_day}}/{{list.sched_time}}</td>
+                                <td>000</td>
+                                <td>
+                                    <span v-if="list.status" class="badge bg-success">Active</span>
+                                    <span v-else class="badge bg-danger">Inactive</span>
+                                </td>
+                                <td>
+                                    <a v-bind:href="'classSchedInfo/'+(list.class_title).replace(/ /g,'')+'-'+list.class_id" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></a>
+                                </td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>

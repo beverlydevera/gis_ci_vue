@@ -15,7 +15,7 @@ class Classes_model extends CI_Model {
         if(!empty($condition)){
             $this->db->where($condition);
         }
-        $this->db->order_by("class_name","ASC");
+        $this->db->order_by("class_title","ASC");
 
 		if (!empty($pager)) {
 		$this->db->limit($pager['limit'],$pager['offset']);

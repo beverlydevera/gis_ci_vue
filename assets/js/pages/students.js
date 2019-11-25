@@ -29,6 +29,8 @@ if($('#students_page').length){
 	var profile = new Vue({
         el: '#studentprofile_page',
         data: {
+            readonly_everything: true,
+            disabled_everything: true,
             student_id:$('#student_id').val(),
             studentinfo:{
                 student_id: "",
@@ -83,6 +85,14 @@ if($('#students_page').length){
                 emergency_relationship: "",
                 emergency_address: "",
                 emergency_mobilenum: "",
+            },
+            classschedlist: {},
+            classpackagelist: {},
+            classenroll: {
+                class_id: "",
+                package_id: "",
+                payment: "",
+                amounttopay: "",
             }
         },
         methods: {
@@ -93,6 +103,52 @@ if($('#students_page').length){
                 var diff_ms = Date.now() - dob.getTime();
                 var age_dt = new Date(diff_ms);
                 this.derivedinfo.studentage = Math.abs(age_dt.getUTCFullYear() - 1970);
+            },
+            getClassPackages(){
+                var datas = { class_id: this.classenroll.class_id };
+                var datas = frmdata(datas);
+                var urls = window.App.baseUrl + "students/getClassPackage";
+                axios.post(urls, datas)
+                    .then(function (e) {
+                        if (e.data.success) {
+                           profile.classpackagelist = e.data.data;
+                           profile.disabled_everything = false;
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+            },
+            checkPayment(){
+                    var datas = { package_id: this.classenroll.package_id };
+                    var datas = frmdata(datas);
+                    var urls = window.App.baseUrl + "students/checkPayment";
+                    axios.post(urls, datas)
+                        .then(function (e) {
+                            if (e.data.success) {
+                                if(profile.classenroll.payment=="fullPayment"){
+                                    profile.classenroll.amounttopay = e.data.data;
+                                    profile.readonly_everything = true;
+                                }else{
+                                    $("#amountpay").attr({ "max" : e.data.data, });
+                                    profile.classenroll.amounttopay = "";
+                                    profile.readonly_everything = false;
+                                }
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error)
+                        });
+            },
+            getClassScheds(){
+                var urls = window.App.baseUrl + "classes/getClassScheds";
+                axios.post(urls, "")
+                    .then(function (e) {
+                        profile.classschedlist=e.data.data;
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
             },
             getStudentProfile(){
                 var datas = { student_id:this.student_id };
@@ -181,6 +237,38 @@ if($('#students_page').length){
                     .catch(function (error) {
                         console.log(error)
                     });
+            },
+            enrollToClass(){
+                var datas = { 
+                    student_id: this.student_id,
+                    package_id: this.classenroll.package_id,
+                    payment_options: this.classenroll.payment
+                };
+                var datas = frmdata(datas);
+                var urls = window.App.baseUrl + "students/enrollToClass";
+                axios.post(urls, datas)
+                    .then(function (e) {
+                        console.log(e);
+                        if (e.data.success) {
+                            Toast.fire({
+                                type: "success",
+                                title: e.data.message
+                            })
+                        }else{
+                            Toast.fire({
+                                type: "warning",
+                                title: e.data.message
+                            })
+                        }
+                        profile.classenroll.class_id = "";
+                        profile.classenroll.package_id = "";
+                        profile.classenroll.payment = "";
+                        profile.classenroll.amounttopay = "";
+                        $('#enrollToClassModal').modal('hide');
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
             }
         }, mounted: function () {
             this.getStudentProfile();
@@ -257,7 +345,7 @@ if($('#students_page').length){
                 var age_dt = new Date(diff_ms);
                 this.derivedinfo.studentage = Math.abs(age_dt.getUTCFullYear() - 1970);
             },
-            saveEnrollment(){
+            saveNewStudentRegistration(){
                 this.studentinfo.school = this.derivedinfo.schoolname+"/"+this.derivedinfo.schoolyear+"/"+this.derivedinfo.schoolcourse;
                 this.studentinfo.company = this.derivedinfo.companyname+"/"+this.derivedinfo.companyaddress;
                 this.studentinfo.fatherinfo = this.derivedinfo.father_name+"/"+this.derivedinfo.father_occupation+"/"+this.derivedinfo.father_officeadd+"/"+this.derivedinfo.father_contactno;
@@ -271,7 +359,7 @@ if($('#students_page').length){
                 this.studentinfo.date_updated = datetime;
                 
                 var datas = frmdata(this.studentinfo);
-                var urls = window.App.baseUrl + "students/saveEnrollment";
+                var urls = window.App.baseUrl + "students/saveNewStudentRegistration";
                 axios.post(urls, datas)
                     .then(function (e) {
                         console.log(e);

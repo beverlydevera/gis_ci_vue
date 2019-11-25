@@ -1,6 +1,6 @@
 <style>
 .nav-treeview{
-  margin-left:12%;
+  margin-left:10%;
 }
 </style>
 <nav class="mt-2" id = "navigationpanel">
@@ -38,7 +38,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="<?= base_url('students/enroll') ?>" class="nav-link" v-bind:class="checkactive('division')">
+          <a href="<?= base_url('students/newStudentRegistration') ?>" class="nav-link" v-bind:class="checkactive('division')">
             <i class="fas fa-address-card nav-icon"></i>
             <p>Enroll New Student</p>
           </a>

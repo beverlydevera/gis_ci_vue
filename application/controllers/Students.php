@@ -92,7 +92,67 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
-    public function enroll()
+    public function getClassPackage(){
+
+        $class_id = $this->input->post('class_id');
+        $classpackages = $this->student->getClassPackages("*","tbl_packages",['class_id'=>$class_id],"","");
+        
+        if(!empty($classpackages)){
+            $response = array(
+                "success"   => true,
+                "data"      => $classpackages
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
+    public function checkPayment(){
+
+        $package_id = $this->input->post('package_id');
+        $classpackages = $this->student->getClassPackages("pricerate","tbl_packages",['package_id'=>$package_id],"","row");
+
+        if(!empty($classpackages)){
+            $response = array(
+                "success"   => true,
+                "data"      => $classpackages->pricerate
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
+    public function enrollToClass(){
+        
+        $data = $this->input->post();
+        $data['date_added'] = date('Y');
+        $result = $this->Main->insert("tbl_studentpackages", $data, true);
+
+        if(!empty($result)){
+            $response = array(
+                "success"   => true,
+                "message"   => "Student enrolled to class successfully.",
+                "data"      => $result
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "message"   => "Student enrollment was not saved.",
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
+    public function newStudentRegistration()
 	{
         $data['title'] = "Enroll Student";
         $data['vueid'] = "student_enroll";
@@ -101,7 +161,7 @@ class Students extends CI_Controller {
         $this->load->view('layout/main', $data);
     }
 
-    public function saveEnrollment(){
+    public function saveNewStudentRegistration(){
         
         $curyear = date('Y');
         $data = $this->input->post();
@@ -117,14 +177,14 @@ class Students extends CI_Controller {
             // $redirect = base_url('students/profile/'.$name."-".$result['lastid']);
             $response = array(
                 "success"   => true,
-                "message"   => "Application was saved successfully.\nContinue by adding the student to a class.",
+                "message"   => "Student Registration was saved successfully.\nContinue by adding the student to a class.",
                 "data"      => $result,
                 // "redirect"  => $redirect
             );
         }else{
             $response = array(
                 "success"   => false,
-                "message"   => "Application was not saved.",
+                "message"   => "Student Registration was not saved.",
                 "data"      => "",
                 // "redirect"  => ""
             );
