@@ -56,8 +56,6 @@ if($('#students_page').length){
                 emergencyinfo: "",
                 status: "",
                 archived: "",
-                date_added: "",
-                date_updated: "",
             },
             derivedinfo:{
                 studentage: 0,
@@ -228,10 +226,6 @@ if($('#students_page').length){
                 this.studentinfo.guardianinfo = this.derivedinfo.guardian_name+"/"+this.derivedinfo.guardian_occupation+"/"+this.derivedinfo.guardian_officeadd+"/"+this.derivedinfo.guardian_contactno;
                 this.studentinfo.emergencyinfo = this.derivedinfo.emergency_name+"/"+this.derivedinfo.emergency_relationship+"/"+this.derivedinfo.emergency_address+"/"+this.derivedinfo.emergency_mobilenum;
                 
-                var currentdate = new Date(); 
-                var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + (currentdate.getDate()) + " " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
-                this.studentinfo.date_updated = datetime;
-                
                 var datas = frmdata(this.studentinfo);
                 var urls = window.App.baseUrl + "students/UpdateProfile";
                 axios.post(urls, datas)
@@ -344,8 +338,6 @@ if($('#students_page').length){
                 emergencyinfo: "",
                 status: "",
                 archived: "",
-                date_added: "",
-                date_updated: "",
             },
             derivedinfo:{
                 studentage: 0,
@@ -391,12 +383,7 @@ if($('#students_page').length){
                 this.studentinfo.motherinfo = this.derivedinfo.mother_name+"/"+this.derivedinfo.mother_occupation+"/"+this.derivedinfo.mother_officeadd+"/"+this.derivedinfo.mother_contactno;
                 this.studentinfo.guardianinfo = this.derivedinfo.guardian_name+"/"+this.derivedinfo.guardian_occupation+"/"+this.derivedinfo.guardian_officeadd+"/"+this.derivedinfo.guardian_contactno;
                 this.studentinfo.emergencyinfo = this.derivedinfo.emergency_name+"/"+this.derivedinfo.emergency_relationship+"/"+this.derivedinfo.emergency_address+"/"+this.derivedinfo.emergency_mobilenum;
-                
-                var currentdate = new Date(); 
-                var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + (currentdate.getDate()) + " " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
-                this.studentinfo.date_added = datetime;
-                this.studentinfo.date_updated = datetime;
-                
+                            
                 var datas = frmdata(this.studentinfo);
                 var urls = window.App.baseUrl + "students/saveNewStudentRegistration";
                 axios.post(urls, datas)
