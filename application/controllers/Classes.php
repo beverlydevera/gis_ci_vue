@@ -50,4 +50,23 @@ class Classes extends CI_Controller {
         $data['js'] = array('pages/classes.js');
         $this->load->view('layout/main', $data);
     }
+
+    public function getClassSchedInfo()
+    {
+        $class_id = $this->input->post('class_id');
+        $classschedprofile = $this->classes->getClassSchedProfile("*",["tbl_classes.class_id"=>$class_id,"deleted"=>0],"","");
+
+        if(!empty($classschedprofile)){
+            $response = array(
+                "success"   => true,
+                "data"      => $classschedprofile,
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
 }

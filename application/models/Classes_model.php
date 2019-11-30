@@ -37,6 +37,38 @@ class Classes_model extends CI_Model {
 		return null;
 	}
 
+	public function getClassSchedProfile($select,$condition,$pager,$type){
+
+		$this->db->select($select);
+        $this->db->from("tbl_students");
+        $this->db->join("tbl_studentpackages","tbl_studentpackages.student_id = tbl_students.student_id","inner");
+        $this->db->join("tbl_packages","tbl_packages.package_id = tbl_studentpackages.package_id","inner");
+        $this->db->join("tbl_classes","tbl_classes.class_id = tbl_packages.class_id","inner");
+        if(!empty($condition)){
+            $this->db->where($condition);
+        }
+        $this->db->order_by("sessions","ASC");
+
+		if (!empty($pager)) {
+		$this->db->limit($pager['limit'],$pager['offset']);
+		}
+
+		$query = $this->db->get();
+		if ($query->num_rows()) {
+
+			if ($type =="row") {
+				return $query->row();
+			}elseif($type =="count_row"){
+				return $query->num_rows();
+			}elseif($type =="is_array") {
+				return $query->result_array();
+			}else{
+				return $query->result();
+			}
+		}
+		return null;
+	}
+
 }
 
 /* End of file Recruitment_model.php */

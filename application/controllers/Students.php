@@ -11,7 +11,8 @@ class Students extends CI_Controller {
         checkLogin();
 	}
 	
-	public function index(){
+    public function index()
+    {
         $data['title'] = "Students";
         $data['vueid'] = "students";
         $data['vfile'] = "page/students/index";
@@ -19,7 +20,8 @@ class Students extends CI_Controller {
         $this->load->view('layout/main', $data);
     }
     
-    public function getStudents(){
+    public function getStudents()
+    {
         $students = $this->student->getStudents("*","tbl_students","","","");
         
         if(!empty($students)){
@@ -36,7 +38,8 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
-    public function profile($string = ""){
+    public function profile($string = "")
+    {
         $string = explode("-", $string);
         $student_id = end($string);
         $data['student_id'] = $student_id;
@@ -48,7 +51,8 @@ class Students extends CI_Controller {
         $this->load->view('layout/main', $data);
     }
 
-    public function getStudentProfile(){
+    public function getStudentProfile()
+    {
         $student_id = $this->input->post('student_id');
         $studentinfo = $this->student->getStudents("*","tbl_students",["student_id"=>$student_id],"","row");
         
@@ -70,7 +74,8 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
-    public function UpdateProfile(){
+    public function UpdateProfile()
+    {
 
         $datas = $this->input->post();
         $student_id = $this->input->post('student_id');
@@ -92,7 +97,8 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
-    public function getClassPackage(){
+    public function getClassPackage()
+    {
 
         $class_id = $this->input->post('class_id');
         $classpackages = $this->student->getClassPackages("*","tbl_packages",['class_id'=>$class_id],"","");
@@ -111,7 +117,8 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
-    public function getStudentClassDetails(){
+    public function getStudentClassDetails()
+    {
 
         $studpack_id = $this->input->post('studpack_id');
         $studentclassdetails = $this->student->getStudentClasses("*",['studpack_id'=>$studpack_id, 'deleted'=>0],"","row");
@@ -130,7 +137,8 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
-    public function checkPayment(){
+    public function checkPayment()
+    {
 
         $package_id = $this->input->post('package_id');
         $classpackages = $this->student->getClassPackages("pricerate","tbl_packages",['package_id'=>$package_id],"","row");
@@ -149,7 +157,8 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
-    public function enrollToClass(){
+    public function enrollToClass()
+    {
         
         $data = $this->input->post();
         $data['date_added'] = date('Y-m-d H:i:s');
@@ -171,7 +180,8 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
-    public function deleteStudentClass(){
+    public function deleteStudentClass()
+    {
 
         $studpack_id = $this->input->post('studpack_id');
         //check muna kung may payment history na bago magdelete
@@ -193,7 +203,8 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
-    public function newStudentRegistration(){
+    public function newStudentRegistration()
+    {
         $data['title'] = "Enroll Student";
         $data['vueid'] = "student_enroll";
         $data['vfile'] = "page/students/enroll";
@@ -201,7 +212,8 @@ class Students extends CI_Controller {
         $this->load->view('layout/main', $data);
     }
 
-    public function saveNewStudentRegistration(){
+    public function saveNewStudentRegistration()
+    {
         
         $curyear = date('Y');
         $data = $this->input->post();
