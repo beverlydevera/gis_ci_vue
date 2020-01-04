@@ -301,7 +301,7 @@
                                     <table class="table table-bordered">
                                         <thead>                  
                                             <tr>
-                                                <th>#</th>
+                                                <th width="3%">#</th>
                                                 <th>Class Title</th>
                                                 <th>Class Schedule</th>
                                                 <th>Remaining Sessions</th>
