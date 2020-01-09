@@ -121,9 +121,9 @@
                                         </tr>
                                         <tr>
                                             <th width="15%"><span class="requiredspan">*</span>Height (m):</th>
-                                            <th><input type="number" class="form-control smallerinput" v-model="studentinfo.height" required></th>
+                                            <th><input type="number" class="form-control smallerinput" v-model="studentinfo.height" required step="any"></th>
                                             <th width="15%"><span class="requiredspan">*</span>Weight (kg):</th>
-                                            <th><input type="number" class="form-control smallerinput" v-model="studentinfo.weight" required></th>
+                                            <th><input type="number" class="form-control smallerinput" v-model="studentinfo.weight" required step="any"></th>
                                             <th width="15%"><span class="requiredspan">*</span>Insurance:</th>
                                             <th>
                                                 <div class="row">
