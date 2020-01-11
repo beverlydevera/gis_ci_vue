@@ -38,23 +38,49 @@ class Classes extends CI_Controller {
         response_json($response);
     }
 
-    public function classSchedInfo($string = "")
+    public function classHistoryInfo($string = "")
     {
         $string = explode("-", $string);
         $class_id = end($string);
         $data['class_id'] = $class_id;
 
-        $data['title'] = "Class Sched Information";
-        $data['vueid'] = "classes_profile";
-        $data['vfile'] = "page/classes/classprofile";
+        $data['title'] = "Classes History";
+        $data['vueid'] = "classes_page";
+        $data['vfile'] = "page/classes/classhistory";
         $data['js'] = array('pages/classes.js');
         $this->load->view('layout/main', $data);
+    }
+
+    public function getClassHistoryInfo()
+    {
+        $class_id = $this->input->post('class_id');
+        $classhistoryinfo = $this->classes->getClassHistoryInfo("*",["class_id"=>$class_id],"","");
+
+        if(!empty($classhistoryinfo)){
+            $response = array(
+                "success"   => true,
+                "data"      => $classhistoryinfo,
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
     }
 
     public function getClassSchedInfo()
     {
         $class_id = $this->input->post('class_id');
-        $classschedprofile = $this->classes->getClassSchedProfile("*",["tbl_classes.class_id"=>$class_id,"deleted"=>0],"","");
+        $attendance_id = $this->input->post('attendance_id');
+
+        $classschedInfo = $this->classes->getClassSchedInfo("*",["attendance_id"=>$attendance_id],"","row");
+        $condition_wherein = [
+            'col' => "tbl_students.student_id",
+            'arr' => "'".str_replace(',', "','", $classschedInfo->attendance)."'"
+        ];
+        $classschedprofile = $this->classes->getClassSchedStudents("*",["deleted"=>0],$condition_wherein,"","");
 
         if(!empty($classschedprofile)){
             $response = array(

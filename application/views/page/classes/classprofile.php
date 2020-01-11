@@ -1,5 +1,77 @@
+<style>
+/* The container */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+  border: 1px solid #000;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 8px;
+  top: 4px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+</style>
 <div class="row" id="classes_page">
 <input type="hidden" value="<?=$class_id?>" id="class_id"/>
+<input type="hidden" value="<?=$attendance_id?>" id="attendance_id"/>
+<input type="hidden" value="classprofile" id="currentpage"/>
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
@@ -19,15 +91,19 @@
                 <!-- filters -->
             </div>
             <div class="col-md-3">
-                <button type="button" class="btn bg-gradient-primary">Mark as Present</button>
-                <button type="button" class="btn bg-gradient-danger">Mark as Absent</button>
+                <button type="button" @click="markAsPresent" class="btn bg-gradient-primary">Mark as Present</button>
             </div>
         </div>
         <table class="table table-bordered">
           <thead>                  
             <tr>
               <th style="width: 10px">#</th>
-              <th style="width: 10px"><input type="checkbox"></th>
+              <th style="width: 10px">Present
+                <label class="container">
+                  <input type="checkbox"><span class="checkmark"></span>
+                </label>
+                <br/>
+              </th>
               <th>Student Reference ID</th>
               <th>Names</th>
               <th>Sex</th>
@@ -37,8 +113,14 @@
           <tbody>
             <tr v-for="(list,index) in classschedprofile" :value="list.student_id">
               <td>{{index+1}}</td>
-              <td><input type="checkbox"/></td>
-              <td>{{list.student_id}}</td>
+              <!-- <td><input type="checkbox" v-model="selectedStudents[list.student_id]"/></td> -->
+              <td>
+                <label class="container">
+                  <input type="checkbox" v-model="selectedStudents[list.student_id]"><span class="checkmark"></span>
+                </label>
+              </td>
+              <!-- <td>{{list.student_id}}</td> -->
+              <td>{{list.reference_id}}</td>
               <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
               <td>{{list.sex}}</td>
               <!-- <td>
