@@ -55,9 +55,6 @@ if($('#classes_page').length){
             markAsPresent(){
                 alert();
             },
-            addNewAttendance(){
-                alert();
-            }
         }, mounted: function () {
             this.getClassScheds();
             if(this.class_id.length){

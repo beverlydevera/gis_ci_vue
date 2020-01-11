@@ -36,7 +36,7 @@
                                 <td>{{index+1}}</td>
                                 <td>{{list.class_title}}</td>
                                 <td>{{list.sched_day}}/{{list.sched_time}}</td>
-                                <td>000</td>
+                                <td>000 (count of active na enrolled)</td>
                                 <td>
                                     <span v-if="list.status" class="badge bg-success">Active</span>
                                     <span v-else class="badge bg-danger">Inactive</span>
