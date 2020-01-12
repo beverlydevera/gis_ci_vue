@@ -1,4 +1,4 @@
-/*! pdfmake v0.1.59, @license MIT, @link http://pdfmake.org */
+/*! pdfmake v0.1.62, @license MIT, @link http://pdfmake.org */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -977,7 +977,7 @@ module.exports = {
 /* 2 */
 /***/ (function(module, exports) {
 
-var core = module.exports = { version: '2.6.9' };
+var core = module.exports = { version: '2.6.10' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
@@ -4763,7 +4763,7 @@ module.exports = function (fn, that, length) {
 /* 39 */
 /***/ (function(module, exports) {
 
-var core = module.exports = { version: '2.6.9' };
+var core = module.exports = { version: '2.6.10' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
@@ -10823,6 +10823,23 @@ TextTools.prototype.sizeOfString = function (text, styleContextStack) {
 		descender: font.descender / 1000 * fontSize
 	};
 };
+
+/**
+ * Returns size of the specified rotated string (without breaking it) using the current style
+ *
+ * @param  {string} text text to be measured
+ * @param  {number} angle
+ * @param  {object} styleContextStack current style stack
+ * @returns {object} size of the specified string
+ */
+TextTools.prototype.sizeOfRotatedText = function (text, angle, styleContextStack) {
+	var angleRad = angle * Math.PI / -180;
+	var size = this.sizeOfString(text, styleContextStack);
+	return {
+		width: Math.abs(size.height * Math.sin(angleRad)) + Math.abs(size.width * Math.cos(angleRad)),
+		height: Math.abs(size.width * Math.sin(angleRad)) + Math.abs(size.height * Math.cos(angleRad))
+	};
+}
 
 TextTools.prototype.widthOfString = function (text, font, fontSize, characterSpacing, fontFeatures) {
 	return widthOfString(text, font, fontSize, characterSpacing, fontFeatures);
@@ -19403,6 +19420,20 @@ var getSvgToPDF = function () {
 	}
 };
 
+var findFont = function (fonts, requiredFonts, defaultFont) {
+	for (var i = 0; i < requiredFonts.length; i++) {
+		var requiredFont = requiredFonts[i].toLowerCase();
+
+		for (var font in fonts) {
+			if (font.toLowerCase() === requiredFont) {
+				return font;
+			}
+		}
+	}
+
+	return defaultFont;
+};
+
 ////////////////////////////////////////
 // PdfPrinter
 
@@ -19755,7 +19786,7 @@ function renderPages(pages, fontProvider, pdfKitDoc, progressCallback) {
 					renderImage(item.item, item.item.x, item.item.y, pdfKitDoc);
 					break;
 				case 'svg':
-					renderSVG(item.item, item.item.x, item.item.y, pdfKitDoc);
+					renderSVG(item.item, item.item.x, item.item.y, pdfKitDoc, fontProvider);
 					break;
 				case 'beginClip':
 					beginClip(item.item, pdfKitDoc);
@@ -19870,14 +19901,13 @@ function renderWatermark(page, pdfKitDoc) {
 
 	pdfKitDoc.save();
 
-	var angle = Math.atan2(pdfKitDoc.page.height, pdfKitDoc.page.width) * -180 / Math.PI;
-	pdfKitDoc.rotate(angle, { origin: [pdfKitDoc.page.width / 2, pdfKitDoc.page.height / 2] });
+	pdfKitDoc.rotate(watermark.angle, { origin: [pdfKitDoc.page.width / 2, pdfKitDoc.page.height / 2] });
 
-	var x = pdfKitDoc.page.width / 2 - watermark.size.size.width / 2;
-	var y = pdfKitDoc.page.height / 2 - watermark.size.size.height / 4;
+	var x = pdfKitDoc.page.width / 2 - watermark._size.size.width / 2;
+	var y = pdfKitDoc.page.height / 2 - watermark._size.size.height / 2;
 
 	pdfKitDoc._font = watermark.font;
-	pdfKitDoc.fontSize(watermark.size.fontSize);
+	pdfKitDoc.fontSize(watermark.fontSize);
 	pdfKitDoc.text(watermark.text, x, y, { lineBreak: false });
 
 	pdfKitDoc.restore();
@@ -19976,8 +20006,25 @@ function renderImage(image, x, y, pdfKitDoc) {
 	}
 }
 
-function renderSVG(svg, x, y, pdfKitDoc) {
-	getSvgToPDF()(pdfKitDoc, svg.svg, svg.x, svg.y, Object.assign({ width: svg._width, height: svg._height, assumePt: true }, svg.options));
+function renderSVG(svg, x, y, pdfKitDoc, fontProvider) {
+	var options = Object.assign({ width: svg._width, height: svg._height, assumePt: true }, svg.options);
+	options.fontCallback = function (family, bold, italic, fontOptions) {
+		fontOptions.fauxBold = bold;
+		fontOptions.fauxItalic = italic;
+
+		var fontsFamily = family.split(',').map(function (f) { return f.trim().replace(/('|")/g, ''); });
+		var font = findFont(fontProvider.fonts, fontsFamily, svg.font || 'Roboto');
+
+		var fontFile = fontProvider.getFontFile(font, bold, italic);
+		if (fontFile === null) {
+			var type = fontProvider.getFontType(bold, italic);
+			throw new Error('Font \'' + font + '\' in style \'' + type + '\' is not defined in the font section of the document definition.');
+		}
+
+		return fontFile;
+	};
+
+	getSvgToPDF()(pdfKitDoc, svg.svg, svg.x, svg.y, options);
 }
 
 function beginClip(rect, pdfKitDoc) {
@@ -59918,9 +59965,22 @@ function FontProvider(fontDescriptors, pdfKitDoc) {
 	}
 }
 
-FontProvider.prototype.provideFont = function (familyName, bold, italics) {
-	var type = typeName(bold, italics);
+FontProvider.prototype.getFontType = function (bold, italics) {
+	return typeName(bold, italics);
+}
+
+FontProvider.prototype.getFontFile = function (familyName, bold, italics) {
+	var type = this.getFontType(bold, italics);
 	if (!this.fonts[familyName] || !this.fonts[familyName][type]) {
+		return null;
+	}
+
+	return this.fonts[familyName][type];
+}
+
+FontProvider.prototype.provideFont = function (familyName, bold, italics) {
+	var type = this.getFontType(bold, italics);
+	if (this.getFontFile(familyName, bold, italics) === null) {
 		throw new Error('Font \'' + familyName + '\' in style \'' + type + '\' is not defined in the font section of the document definition.');
 	}
 
@@ -59957,6 +60017,8 @@ var TableProcessor = __webpack_require__(449);
 var Line = __webpack_require__(211);
 var isString = __webpack_require__(0).isString;
 var isArray = __webpack_require__(0).isArray;
+var isUndefined = __webpack_require__(0).isUndefined;
+var isNull = __webpack_require__(0).isNull;
 var pack = __webpack_require__(0).pack;
 var offsetVector = __webpack_require__(0).offsetVector;
 var fontStringify = __webpack_require__(0).fontStringify;
@@ -60201,31 +60263,55 @@ LayoutBuilder.prototype.addWatermark = function (watermark, fontProvider, defaul
 	}
 
 	watermark.font = watermark.font || defaultStyle.font || 'Roboto';
+	watermark.fontSize = watermark.fontSize || 'auto';
 	watermark.color = watermark.color || 'black';
 	watermark.opacity = watermark.opacity || 0.6;
 	watermark.bold = watermark.bold || false;
 	watermark.italics = watermark.italics || false;
+	watermark.angle = !isUndefined(watermark.angle) && !isNull(watermark.angle) ? watermark.angle : null;
+
+	if (watermark.angle === null) {
+		watermark.angle = Math.atan2(this.pageSize.height, this.pageSize.width) * -180 / Math.PI;
+	}
+
+	if (watermark.fontSize === 'auto') {
+		watermark.fontSize = getWatermarkFontSize(this.pageSize, watermark, fontProvider);
+	}
 
 	var watermarkObject = {
 		text: watermark.text,
 		font: fontProvider.provideFont(watermark.font, watermark.bold, watermark.italics),
-		size: getSize(this.pageSize, watermark, fontProvider),
+		fontSize: watermark.fontSize,
 		color: watermark.color,
-		opacity: watermark.opacity
+		opacity: watermark.opacity,
+		angle: watermark.angle
 	};
+
+	watermarkObject._size = getWatermarkSize(watermark, fontProvider);
 
 	var pages = this.writer.context().pages;
 	for (var i = 0, l = pages.length; i < l; i++) {
 		pages[i].watermark = watermarkObject;
 	}
 
-	function getSize(pageSize, watermark, fontProvider) {
-		var width = pageSize.width;
-		var height = pageSize.height;
-		var targetWidth = Math.sqrt(width * width + height * height) * 0.8; /* page diagonal * sample factor */
+	function getWatermarkSize(watermark, fontProvider) {
 		var textTools = new TextTools(fontProvider);
 		var styleContextStack = new StyleContextStack(null, { font: watermark.font, bold: watermark.bold, italics: watermark.italics });
-		var size;
+
+		styleContextStack.push({
+			fontSize: watermark.fontSize
+		});
+
+		var size = textTools.sizeOfString(watermark.text, styleContextStack);
+		var rotatedSize = textTools.sizeOfRotatedText(watermark.text, watermark.angle, styleContextStack);
+
+		return { size: size, rotatedSize: rotatedSize };
+	}
+
+	function getWatermarkFontSize(pageSize, watermark, fontProvider) {
+		var textTools = new TextTools(fontProvider);
+		var styleContextStack = new StyleContextStack(null, { font: watermark.font, bold: watermark.bold, italics: watermark.italics });
+		var rotatedSize;
 
 		/**
 		 * Binary search the best font size.
@@ -60239,20 +60325,25 @@ LayoutBuilder.prototype.addWatermark = function (watermark, fontProvider, defaul
 			styleContextStack.push({
 				fontSize: c
 			});
-			size = textTools.sizeOfString(watermark.text, styleContextStack);
-			if (size.width > targetWidth) {
+			rotatedSize = textTools.sizeOfRotatedText(watermark.text, watermark.angle, styleContextStack);
+			if (rotatedSize.width > pageSize.width) {
 				b = c;
 				c = (a + b) / 2;
-			} else if (size.width < targetWidth) {
-				a = c;
-				c = (a + b) / 2;
+			} else if (rotatedSize.width < pageSize.width) {
+				if (rotatedSize.height > pageSize.height) {
+					b = c;
+					c = (a + b) / 2;
+				} else {
+					a = c;
+					c = (a + b) / 2;
+				}
 			}
 			styleContextStack.pop();
 		}
 		/*
 		 End binary search
 		 */
-		return { size: size, fontSize: c };
+		return c;
 	}
 };
 
@@ -61186,6 +61277,8 @@ DocMeasure.prototype.measureSVG = function (node) {
 	var dimensions = this.svgMeasure.measureSVG(node.svg);
 
 	this.measureImageWithDimensions(node, dimensions);
+
+	node.font = this.styleStack.getProperty('font');
 
 	// scale SVG based on final dimension
 	node.svg = this.svgMeasure.writeDimensions(node.svg, {
@@ -63591,7 +63684,7 @@ TableProcessor.prototype.drawHorizontalLine = function (lineIndex, writer, overr
 		for (var i = 0, l = this.rowSpanData.length; i < l; i++) {
 			var data = this.rowSpanData[i];
 			var shouldDrawLine = !data.rowSpan;
-			var borderColor;
+			var borderColor = null;
 
 			// draw only if the current cell requires a top border or the cell in the
 			// row above requires a bottom border
@@ -63602,7 +63695,7 @@ TableProcessor.prototype.drawHorizontalLine = function (lineIndex, writer, overr
 				if (lineIndex > 0) {
 					cellAbove = body[lineIndex - 1][i];
 					bottomBorder = cellAbove.border ? cellAbove.border[3] : this.layout.defaultBorder;
-					if (cellAbove.borderColor) {
+					if (bottomBorder && cellAbove.borderColor) {
 						borderColor = cellAbove.borderColor[3];
 					}
 				}
@@ -63611,7 +63704,7 @@ TableProcessor.prototype.drawHorizontalLine = function (lineIndex, writer, overr
 				if (lineIndex < body.length) {
 					currentCell = body[lineIndex][i];
 					topBorder = currentCell.border ? currentCell.border[1] : this.layout.defaultBorder;
-					if (borderColor == null && currentCell.borderColor) {
+					if (topBorder && borderColor == null && currentCell.borderColor) {
 						borderColor = currentCell.borderColor[1];
 					}
 				}
@@ -63622,7 +63715,7 @@ TableProcessor.prototype.drawHorizontalLine = function (lineIndex, writer, overr
 			if (cellAbove && cellAbove._rowSpanCurrentOffset) {
 				rowCellAbove = body[lineIndex - 1 - cellAbove._rowSpanCurrentOffset][i];
 				rowBottomBorder = rowCellAbove && rowCellAbove.border ? rowCellAbove.border[3] : this.layout.defaultBorder;
-				if (rowCellAbove && rowCellAbove.borderColor) {
+				if (rowBottomBorder && rowCellAbove && rowCellAbove.borderColor) {
 					borderColor = rowCellAbove.borderColor[3];
 				}
 			}
@@ -63705,7 +63798,9 @@ TableProcessor.prototype.drawVerticalLine = function (x, y0, y1, vLineColIndex, 
 	if (vLineColIndex > 0) {
 		cellBefore = body[vLineRowIndex][beforeVLineColIndex];
 		if (cellBefore && cellBefore.borderColor) {
-			borderColor = cellBefore.borderColor[2];
+			if (cellBefore.border ? cellBefore.border[2] : this.layout.defaultBorder) {
+				borderColor = cellBefore.borderColor[2];
+			}
 		}
 	}
 
@@ -63713,21 +63808,27 @@ TableProcessor.prototype.drawVerticalLine = function (x, y0, y1, vLineColIndex, 
 	if (borderColor == null && vLineColIndex < body.length) {
 		currentCell = body[vLineRowIndex][vLineColIndex];
 		if (currentCell && currentCell.borderColor) {
-			borderColor = currentCell.borderColor[0];
+			if (currentCell.border ? currentCell.border[0] : this.layout.defaultBorder) {
+				borderColor = currentCell.borderColor[0];
+			}
 		}
 	}
 
 	if (borderColor == null && cellBefore && cellBefore._rowSpanCurrentOffset) {
 		var rowCellBeforeAbove = body[vLineRowIndex - cellBefore._rowSpanCurrentOffset][beforeVLineColIndex];
 		if (rowCellBeforeAbove.borderColor) {
-			borderColor = rowCellBeforeAbove.borderColor[2];
+			if (rowCellBeforeAbove.border ? rowCellBeforeAbove.border[2] : this.layout.defaultBorder) {
+				borderColor = rowCellBeforeAbove.borderColor[2];
+			}
 		}
 	}
 
 	if (borderColor == null && currentCell && currentCell._rowSpanCurrentOffset) {
 		var rowCurrentCellAbove = body[vLineRowIndex - currentCell._rowSpanCurrentOffset][vLineColIndex];
 		if (rowCurrentCellAbove.borderColor) {
-			borderColor = rowCurrentCellAbove.borderColor[2];
+			if (rowCurrentCellAbove.border ? rowCurrentCellAbove.border[2] : this.layout.defaultBorder) {
+				borderColor = rowCurrentCellAbove.borderColor[2];
+			}
 		}
 	}
 

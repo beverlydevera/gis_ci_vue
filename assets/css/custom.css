@@ -1,24 +1,4 @@
-.timers>li {
-    display: inline-block !important;
-    list-style-type: none !important;
-    padding: 1em !important;
-    text-transform: uppercase !important;
-    font-weight: bold;
-    font-size: 18px;
-  }
-  .timers{
-    padding: inherit;
-  }
-  .timer > li span {
-    display: block !important;
-    font-size: 4.5rem !important;
-  }
-  .timer-container{
-    color: #333;
-    text-align: center;
-  }
-  
-  .smallerinput {
+.smallerinput {
     font-size: 10pt !important;
     height: 20pt !important;
     padding: 0 0 0 3%;

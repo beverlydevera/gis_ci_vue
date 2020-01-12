@@ -7,7 +7,7 @@
   <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-compact" data-widget="treeview" role="menu" data-accordion="false">
 
     <li class="nav-item">
-      <a href="<?= base_url('dashboard') ?>" class="nav-link" v-bind:class="checkactive('dashboard')">
+      <a href="<?= base_url('dashboard') ?>" class="nav-link active" v-bind:class="checkactive('dashboard')">
         <i class="nav-icon fas fa-calendar-alt"></i>
         <p>
           Dashboard
