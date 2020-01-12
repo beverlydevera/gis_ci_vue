@@ -1,4 +1,3 @@
-
 <div class="row">
 <input type="hidden" value="<?=$class_id?>" id="class_id"/>
 <input type="hidden" value="classhistoryinfo" id="currentpage"/>
@@ -79,7 +78,7 @@
   <!-- /.col -->
 </div>
 
-<div class="modal" id="addNewClassAttendanceModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="addNewClassAttendanceModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -111,7 +110,7 @@
     </div>
 </div>
 
-<div class="modal" id="viewClassSchedProfileModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="viewClassSchedProfileModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">

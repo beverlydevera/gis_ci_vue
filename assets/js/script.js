@@ -49,14 +49,15 @@ if ($('#navigationpanel').length) {
 	var nav = new Vue({
 		el: '#navigationpanel',
 		data: {
-			activenav: ""
+			activenav: "",
+			// activenav:$('#activenav').val(),
 		},
 		methods: {
 			checkactive: function (page = '') {
 				var path = window.location.pathname;
-
 				var path = path.split("/", 3).slice(-1)[0];
-
+				this.activenav = path;
+				// console.log(path);
 				return this.activenav == page ? "active" : '';
 			}
 		}

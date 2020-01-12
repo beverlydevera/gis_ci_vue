@@ -15,6 +15,7 @@ class Classes extends CI_Controller {
 	{
         $data['title'] = "Classes and Schedules";
         $data['vueid'] = "classes";
+        $data['activenav'] = "classes";
         $data['vfile'] = "page/classes/index";
         $data['js'] = array('pages/classes.js');
         $this->load->view('layout/main', $data);
