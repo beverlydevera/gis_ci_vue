@@ -3,6 +3,7 @@
         <div class="row">
             Billing Statements<br>
             ano pa po ba lalagay dito
+            Lahat ng transactions: (filterable)
         </div>
     </div>
 </section>

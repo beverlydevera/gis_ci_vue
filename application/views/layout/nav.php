@@ -49,7 +49,7 @@
       <a href="<?= base_url('cashier/index') ?>" class="nav-link">
         <i class="nav-icon fas fa-cash-register"></i>
         <p>
-          Cashier
+          Invoice Statements
         </p>
       </a>
     </li>

@@ -201,7 +201,7 @@
                             <tr>
                                 <td class="stroke-text">10:30 - 11:00</td>
                                 <td rowspan="3" class="fill-gray stroke-text">Open Mats</td>
-                                <td rowspan="3" class="fill-light-orange emphasize-border"><a href="<?=base_url('classes/classSchedInfo/AllLevelsRegularClass-1')?>"><span class="stroke-text">All Levels Regular Class</span></a></td>
+                                <td rowspan="3" class="fill-light-orange emphasize-border"><a href="<?=base_url('classes/classHistoryInfo/1')?>"><span class="stroke-text">All Levels Regular Class</span></a></td>
                                 <td rowspan="3" class="fill-light-orange emphasize-border"><a href="class_schedule.php"><span class="stroke-text">All Levels Regular Class</span></a></td>
                                 <td rowspan="3" class="fill-semi-orange emphasize-border"><a href="class_schedule.php"><span class="stroke-text">Level 1 Regular & Geardrills 10 and Below</span></a></td>
                             </tr>
