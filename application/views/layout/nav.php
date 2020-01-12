@@ -63,6 +63,23 @@
     </li>
     <li class="nav-item has-treeview menu-open">
       <a href="#" class="nav-link" v-bind:class="checkactive('users')">
+        <i class="nav-icon fas fa-book"></i>
+        <p>
+          Libraries
+          <i class="right fas fa-angle-left"></i>
+        </p>
+      </a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item">
+          <a href="<?= base_url('libraries/branches') ?>" class="nav-link">
+            <i class="nav-icon fas fa-circle-notch nav-icon"></i>
+            <p>Branches</p>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item has-treeview menu-open">
+      <a href="#" class="nav-link" v-bind:class="checkactive('users')">
         <i class="nav-icon fas fa-users-cog"></i>
         <p>
           Users
