@@ -14,47 +14,28 @@ class Classes extends CI_Controller {
 	public function index()
 	{
         $data['title'] = "Classes and Schedules";
-        $data['vueid'] = "classes_page";
+        $data['vueid'] = "classes";
         $data['activenav'] = "classes";
         $data['vfile'] = "page/classes/index";
         $data['js'] = array('pages/classes.js');
         $this->load->view('layout/main', $data);
     }
-
-    public function getClassScheds(){
-        $count_data = 0;
-        $data = [];
+    
+    public function getClassScheds()
+    {
+        $classscheds = $this->classes->getClassScheds("*","tbl_classes","","","");
         
-        $query = $this->input->get('query');
-        $limit = $this->input->get('limit');
-        $page = $this->input->get('page');
-        $orderBy = !empty($this->input->get('orderBy')) ? $this->input->get('orderBy') : "class_title";
-        $ascending = $this->input->get('ascending');
-        $byColumn = $this->input->get('byColumn');
-
-        if ($page == 1) { $offset = 0; } 
-        else { $offset = ($page - 1) * $limit; }
-        
-        $condition = array();
-        $select = "
-        s.schedule_id, s.sched_day, s.sched_time, s.status, 
-        c.class_id, c.class_title,
-        b.branch_id, b.branch_name";
-        $order = array(
-            'col'       => $orderBy,
-            'order_by'  => $ascending ? "DESC" : "ASC",
-        );
-        $like = array('column' => ["class_title", "branch_name"], 'data' => $query);
-        $limit = empty($query) ? $limit : 10;
-        $data = $this->classes->getClassScheds($select, $condition, $like, $offset, $order, $limit);
-
-        if(!empty($data)){ $count_data = count($data); }
-        else{ $count_data=0; }
-
-        $response = array(
-            'count' => $count_data,
-            'data'  => $data,
-        );
+        if(!empty($classscheds)){
+            $response = array(
+                "success"   => true,
+                "data"      => $classscheds
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
         response_json($response);
     }
 
