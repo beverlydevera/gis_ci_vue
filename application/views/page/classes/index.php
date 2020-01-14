@@ -1,4 +1,4 @@
-<section class="content" id="classes_page">
+<section class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -8,46 +8,25 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-3">
-                                <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="Search">
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <!-- filters -->
+                            <div class="col-md-12">
+                                <v-server-table url="<?= base_url('Classes/getClassScheds') ?>" :columns="table.column" :options="table.options">
+                                    <template slot="sched_day" slot-scope="e">
+                                        {{e.row.sched_day}} / {{e.row.sched_time}}
+                                    </template>
+                                    <template slot="enrolled" slot-scope="e">
+                                        000
+                                    </template>
+                                    <template slot="status" slot-scope="e">
+                                        <span v-if="e.row.status" class="badge bg-success">Active</span>
+                                        <span v-else class="badge bg-danger">Inactive</span>
+                                    </template>
+                                    <template slot="action" slot-scope="e">
+                                        <!-- <button class="btn btn-info btn-sm" @click="viewApplicantModal(1,e.row.app_id)"><i class="fa fa-eye "></i></button> -->
+                                        <a v-bind:href="'classHistoryInfo/'+e.row.schedule_id" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></a>
+                                    </template>
+                                </v-server-table>
                             </div>
                         </div>
-                        <table class="table table-bordered">
-                            <thead>                  
-                                <tr>
-                                <th style="width: 10px">#</th>
-                                <th>Class Title</th>
-                                <th>Class Schedule</th>
-                                <th>Current Students</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(list,index) in classschedlist" :value="list.class_id">
-                                <td>{{index+1}}</td>
-                                <td>{{list.class_title}}</td>
-                                <td>{{list.sched_day}}/{{list.sched_time}}</td>
-                                <td>000 (count of active na enrolled)</td>
-                                <td>
-                                    <span v-if="list.status" class="badge bg-success">Active</span>
-                                    <span v-else class="badge bg-danger">Inactive</span>
-                                </td>
-                                <td>
-                                    <!-- <a v-bind:href="'classHistoryInfo/'+(list.class_title).replace(/ /g,'')+'-'+list.class_id" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></a> -->
-                                    <a v-bind:href="'classHistoryInfo/'+list.class_id" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></a>
-                                </td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>
