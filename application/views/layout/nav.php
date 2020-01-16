@@ -61,7 +61,7 @@
         </p>
       </a>
     </li>
-    <li class="nav-item has-treeview menu-open">
+    <li class="nav-item has-treeview menu-close">
       <a href="#" class="nav-link" v-bind:class="checkactive('users')">
         <i class="nav-icon fas fa-book"></i>
         <p>
@@ -74,6 +74,18 @@
           <a href="<?= base_url('libraries/branches') ?>" class="nav-link">
             <i class="nav-icon fas fa-circle-notch nav-icon"></i>
             <p>Branches</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<?= base_url('libraries/classes') ?>" class="nav-link">
+            <i class="nav-icon fas fa-circle-notch nav-icon"></i>
+            <p>Classes</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<?= base_url('libraries/ranks') ?>" class="nav-link">
+            <i class="nav-icon fas fa-circle-notch nav-icon"></i>
+            <p>Ranks</p>
           </a>
         </li>
       </ul>

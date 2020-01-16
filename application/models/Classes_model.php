@@ -12,6 +12,8 @@ class Classes_model extends CI_Model {
 	public function getClassScheds($select,$table,$condition,$pager,$type){
 		$this->db->select($select);
         $this->db->from($table);
+        $this->db->join("tbl_classes c","s.class_id = c.class_id","inner");
+        $this->db->join("tbl_branches b","b.branch_id = s.branch_id","inner");
         if(!empty($condition)){
             $this->db->where($condition);
         }

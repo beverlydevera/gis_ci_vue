@@ -167,8 +167,15 @@
         <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                Select Gym:
-                < select here >
+                <div class="row">
+                    <div class="col-md-4">
+                        <!-- <label for="branch_select">Filter:</label> -->
+                        <select class="form-control smallerinput">
+                            <option disabled selected>Select Gym Branch</option>
+                            <option>Sample 1</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
         </div>

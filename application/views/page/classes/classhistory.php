@@ -1,10 +1,9 @@
 <div class="row">
 <input type="hidden" value="<?=$class_id?>" id="class_id"/>
-<input type="hidden" value="classhistoryinfo" id="currentpage"/>
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <ul class="nav nav-tabs" id="myTab1" role="tablist">
+        <ul class="nav nav-pills">
           <li class="nav-item"><a class="nav-link active" id="classscheds-tab" data-toggle="tab" href="#classscheds" role="tab" aria-controls="classscheds" aria-selected="true">Class Schedules Held</a></li>
           <li class="nav-item"><a class="nav-link" id="classstudents-tab" data-toggle="tab" href="#classstudents" role="tab" aria-controls="classstudents" aria-selected="false">Students Enrolled</a></li>
         </ul>

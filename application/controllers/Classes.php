@@ -13,17 +13,22 @@ class Classes extends CI_Controller {
 	
 	public function index()
 	{
-        $data['title'] = "Classes and Schedules";
-        $data['vueid'] = "classes";
+        $data['title'] = "Class Schedules";
+        $data['vueid'] = "classes_page";
         $data['activenav'] = "classes";
         $data['vfile'] = "page/classes/index";
         $data['js'] = array('pages/classes.js');
         $this->load->view('layout/main', $data);
     }
-    
+
     public function getClassScheds()
     {
-        $classscheds = $this->classes->getClassScheds("*","tbl_classes","","","");
+        $select = "s.schedule_id, s.sched_day, s.sched_time, s.status, c.class_id, c.class_title, b.branch_id, b.branch_name";
+        $condition = [
+            "c.status" => 1,
+            "b.status" => 1
+        ];
+        $classscheds = $this->classes->getClassScheds($select,"tbl_schedules s",$condition,"","");
         
         if(!empty($classscheds)){
             $response = array(

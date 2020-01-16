@@ -5,9 +5,6 @@
     }
 
     .smallerinput {
-        font-size: 10pt !important;
-        height: 20pt !important;
-        padding: 0 0 0 3%;
         color: blue;
         font-weight: bold;
     }
@@ -122,7 +119,7 @@
                                     <form class="form-horizontal">
                                         <h6>BASIC INFORMATION</h6>
                                         <div class="form-group row">
-                                            <table class="table table-bordered">
+                                            <table class="table table-bordered table-responsive-sm table-sm">
                                                 <tr>
                                                     <th width="15%"><span class="requiredspan">*</span>Full Name:</th>
                                                     <th colspan=3>
@@ -207,7 +204,7 @@
                                         <hr/>
                                         <h6>EDUCATION INFORMATION</h6>
                                         <div class="form-group row">
-                                            <table class="table table-bordered">
+                                            <table class="table table-bordered table-responsive-sm table-sm">
                                                 <tr>
                                                     <th width="20%"><span class="requiredspan">*</span>Name of School:</th>
                                                     <th colspan=3><input type="text" class="form-control smallerinput" v-model="derivedinfo.schoolname" required></th>
@@ -223,7 +220,7 @@
                                         <hr/>
                                         <h6>WORK INFORMATION <small><i>(if working)</i></small></h6>
                                         <div class="form-group row">
-                                            <table class="table table-bordered">
+                                            <table class="table table-bordered table-responsive-sm table-sm">
                                                 <tr>
                                                     <th width="20%">Name of Company:</th>
                                                     <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.companyname"></th>
@@ -235,7 +232,7 @@
                                         <hr>
                                         <h6>PARENTS / GUARDIAN INFORMATION</h6>
                                         <div class="form-group row">
-                                            <table class="table table-bordered">
+                                            <table class="table table-bordered table-responsive-sm table-sm">
                                                 <tr>
                                                     <th width="20%"></th>
                                                     <th width="20%"><span class="requiredspan">*</span>Father</th>
@@ -271,7 +268,7 @@
                                         <hr/>
                                         <h6>EMERGENCY CONTACT INFORMATION</h6>
                                         <div class="form-group row">
-                                            <table class="table table-bordered">
+                                            <table class="table table-bordered table-responsive-sm table-sm">
                                                 <tr>
                                                     <th width="20%"><span class="requiredspan">*</span>Name:</th>
                                                     <th><input type="text" class="form-control smallerinput" v-model="derivedinfo.emergency_name" required></th>
@@ -298,7 +295,7 @@
                                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#enrollToClassModal" style="float:right;" @click="getClassScheds">Enroll to a Class</button>
                                     </h6>
                                     <br>
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered table-responsive-sm table-sm">
                                         <thead>                  
                                             <tr>
                                                 <th width="3%">#</th>
@@ -443,7 +440,8 @@
                                         <h3 class="card-title">List of Class Packages</h3>
                                     </div>
                                     <div class="card-body">
-                                        <table class="table table-bordered">
+                                        
+                                            <table class="table table-bordered table-responsive-sm table-sm">
                                             <thead>                  
                                                 <tr>
                                                     <th>#</th>
@@ -518,7 +516,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <table class="table table-bordered">
+                    
+                                            <table class="table table-bordered table-responsive-sm table-sm">
                         <tr>
                             <th colspan=2>Class Title</th>
                             <th colspan=2>{{studentclassdetails.class_title}}</th>
