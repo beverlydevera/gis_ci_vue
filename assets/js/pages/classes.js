@@ -64,6 +64,7 @@ var classsched = new Vue({
                     classsched.classschedinfo=e.data.data.classSchedinfo;
                     classsched.classschedsheld=e.data.data.classScheds;
                     classsched.classStudents=e.data.data.classStudents;
+                    classsched.classAttendanceInfo.schedule_date = formatDate(currentdate);
                     classsched.classAttendanceInfo.attendance = [];
                     e.data.data.classStudents.forEach(e => {
                         classsched.classAttendanceInfo.attendance.push({
@@ -120,6 +121,7 @@ var classsched = new Vue({
             var urls = window.App.baseUrl + "classes/getclassSchedInfo";
             axios.post(urls, datas)
                 .then(function (e) {
+                    classsched.classStudents=e.data.data.classStudents;
                     classsched.classAttendanceInfo.attendance = [];
                     JSON.parse(e.data.data.classScheds.attendance).forEach(e => {
                         classsched.classAttendanceInfo.attendance.push({
@@ -136,7 +138,6 @@ var classsched = new Vue({
                 .catch(function (error) {
                     console.log(error)
                 });
-                // classsched.getclassSchedInfo();
         },
         changeAttendanceStat(index){
             var attinfo = this.classAttendanceInfo.attendance[index];
@@ -186,10 +187,6 @@ var classsched = new Vue({
                             });
                     }
             })
-            //are you sure to save changes?
-            //update tbl_attendance
-            //update sessions_attended
-            // console.log(datas);
         }
     }, mounted: function () {
         this.getClassScheds();

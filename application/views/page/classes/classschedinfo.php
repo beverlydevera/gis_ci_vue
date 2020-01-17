@@ -38,7 +38,7 @@
                         <!-- filters -->
                     </div>
                     <div class="col-md-3">
-                        <a style="float:right;" data-target="#addNewClassAttendanceModal" data-toggle="modal" class="btn bg-gradient-primary btn-xs">Add New Class Attendance</a>
+                        <a style="float:right;" @click="getclassSchedInfo()" data-target="#addNewClassAttendanceModal" data-toggle="modal" class="btn bg-gradient-primary btn-xs">Add New Class Attendance</a>
                     </div>
                 </div>
                 <table class="table table-bordered table-responsive-sm table-sm">
@@ -240,7 +240,7 @@
               </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" @click="submitAttendanceChanges()" class="btn btn-primary">Submit</button>
+                <button type="submit" @click="submitAttendanceChanges()" class="btn btn-primary">Save Changes</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>

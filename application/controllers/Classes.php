@@ -74,11 +74,12 @@ class Classes extends CI_Controller {
 
         if($attendance_id>0){
             $classschedsheld = $this->classes->getClassSchedInfo("*",["s.class_id"=>$class_id, "a.attendance_id"=>$attendance_id],"","row");
+            $condition = "`sc`.`class_id` = $class_id AND `deleted` = 0 AND `year` = " . date('Y');
         }else{
             $classschedsheld = $this->classes->getClassSchedInfo("*",["s.class_id"=>$class_id],"","");
+            $condition = "`sc`.`class_id` = $class_id AND `sessions_attended` < `sessions` AND `deleted` = 0 AND `year` = " . date('Y');
         }
         
-        $condition = "`sc`.`class_id` = $class_id AND `sessions_attended` < `sessions` AND `deleted` = 0 AND `year` = " . date('Y');
         $classStudents = $this->classes->getClassStudents("*",$condition,"","");
 
         if(!empty($classschedinfo)){
@@ -113,6 +114,7 @@ class Classes extends CI_Controller {
             $datainsert['schedule_id'] = $data['schedule_id'];
             $datainsert['date_added'] = $this->data['curdatetime'];
             $datainsert['attendance'] = json_encode($attendanceinfo['attendance']);
+            unset($datainsert['attendance_id']);
     
             if(!empty($attendanceinfo['attendance'])){
                 foreach($attendanceinfo['attendance'] as $attinfo){
@@ -175,7 +177,7 @@ class Classes extends CI_Controller {
 
             $success = true;
             $type = "success";
-            $message = "Attendance changeds were saved successfully";
+            $message = "Attendance changes were saved successfully";
         }
         $response = array(
             'success'   => $success,
