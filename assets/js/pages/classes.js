@@ -4,10 +4,8 @@ var classsched = new Vue({
     el: '#classes_page',
     data: {
         classschedlist: {},
-        classschedinfo: {
-            present: {},
-            absent: {},
-        },
+        classschedsheld: {},
+        classschedinfo: {        },
         classStudents: {},
         class_id:$('#class_id').val(),
         selectedStudents: {}
@@ -43,7 +41,8 @@ var classsched = new Vue({
             var urls = window.App.baseUrl + "classes/getclassSchedInfo";
             axios.post(urls, datas)
                 .then(function (e) {
-                    classsched.classschedinfo=e.data.data.classScheds;
+                    classsched.classschedinfo=e.data.data.classSchedinfo;
+                    classsched.classschedsheld=e.data.data.classScheds;
                     classsched.classStudents=e.data.data.classStudents;
                 })
                 .catch(function (error) {

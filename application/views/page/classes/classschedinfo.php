@@ -3,10 +3,24 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <ul class="nav nav-pills">
-          <li class="nav-item"><a class="nav-link active" id="classscheds-tab" data-toggle="tab" href="#classscheds" role="tab" aria-controls="classscheds" aria-selected="true">Class Schedules Held</a></li>
-          <li class="nav-item"><a class="nav-link" id="classstudents-tab" data-toggle="tab" href="#classstudents" role="tab" aria-controls="classstudents" aria-selected="false">Students Enrolled</a></li>
-        </ul>
+        <div class="row">
+          <div class="col-md-4">
+            <ul class="nav nav-pills">
+              <a style="margin-right: 2px;" href="<?= base_url('classes/') ?>" class="btn bg-gradient-primary btn-sm"><i class="fas fa-arrow-left" style="color:#fff;"></i></a>
+              <li class="nav-item"><a class="nav-link active" id="classscheds-tab" data-toggle="tab" href="#classscheds" role="tab" aria-controls="classscheds" aria-selected="true">Class Schedules Held</a></li>
+              <li class="nav-item"><a class="nav-link" id="classstudents-tab" data-toggle="tab" href="#classstudents" role="tab" aria-controls="classstudents" aria-selected="false">Students Enrolled</a></li>
+            </ul>
+          </div>
+          <div class="col-md-2"></div>
+          <div class="col-md-3">
+            <b>Class Title:</b> <u>{{classschedinfo.class_title}}</u><br>
+            <b>Branch Name:</b> <u>{{classschedinfo.branch_name}}</u>
+          </div>
+          <div class="col-md-3">
+            <b>Schedule:</b> <u>{{classschedinfo.sched_day}} / {{classschedinfo.sched_time}}</u><br>
+            <b>Enrolled:</b> <u>{{classStudents.length}}</u>
+          </div>
+        </div>
       </div>
       <div class="card-body">
           <div class="tab-content" id="pds-tabContent">
@@ -17,7 +31,7 @@
                         <div class="input-group-prepend smallerinput">
                             <span class="input-group-text"><i class="fas fa-search"></i></span>
                         </div>
-                        <input type="text" class="form-control smallerinput" placeholder="Search for Class Schedules">
+                        <input type="text" class="form-control smallerinput" placeholder="Search for Class Schedule">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -40,7 +54,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(list,index) in classschedinfo">
+                    <tr v-for="(list,index) in classschedsheld">
                       <td>{{index+1}}</td>
                       <td>{{changeDateFormat(list.schedule_date)}}</td>
                       <td>
@@ -59,6 +73,16 @@
                 </table>
               </div>
               <div class="tab-pane fade" id="classstudents" role="tabpanel" aria-labelledby="classstudents-tab">
+                  <div class="row">
+                    <div class="col-md-3">
+                        <div class="input-group mb-3">
+                        <div class="input-group-prepend smallerinput">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        </div>
+                        <input type="text" class="form-control smallerinput" placeholder="Search for Student Name">
+                        </div>
+                    </div>
+                  </div>
                   <div class="row">
                     <div class="col-md-12">
                     <table class="table table-bordered table-responsive-sm table-sm">
@@ -79,7 +103,7 @@
                           <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
                           <td>{{list.sex}}</td>
                           <td>
-                            000
+                            {{list.sessions-list.sessions_attended}}
                           </td>
                           <td>
                             <a v-bind:href="'../.././students/profile/'+(list.firstname).replace(/ /g,'')+(list.lastname).replace(/ /g,'')+'-'+list.student_id" class="btn btn-primary btn-xs"><span style="color:#000;">View Profile</span></a>
@@ -121,7 +145,7 @@
               <div class="row">
                 <div class="col-md-5">
                   <h6>Class Date:</h6>
-                  <input type="date" class="form-control smallerinput" value="<?=date("Y-m-d")?>"/>
+                  <input type="date" class="form-control smallerinput" min="<?=date("Y-m-d")?>" value="<?=date("Y-m-d")?>"/>
                 </div>
                 <!-- <div class="col-md-4"></div>
                 <div class="col-md-3">

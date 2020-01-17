@@ -52,7 +52,7 @@ class Classes extends CI_Controller {
         $class_id = end($string);
         $data['class_id'] = $class_id;
 
-        $data['title'] = "Classes History";
+        $data['title'] = "Class Information";
         $data['vueid'] = "classes_page";
         $data['vfile'] = "page/classes/classschedinfo";
         $data['js'] = array('pages/classes.js');
@@ -62,15 +62,25 @@ class Classes extends CI_Controller {
     public function getClassSchedInfo()
     {
         $class_id = $this->input->post('class_id');
-        $classschedinfo = $this->classes->getClassSchedInfo("*",["s.class_id"=>$class_id],"","");
+
+        $select = "s.schedule_id, s.sched_day, s.sched_time, s.status, c.class_id, c.class_title, b.branch_id, b.branch_name";
+        $condition = [
+            "c.status"   => 1,
+            "b.status"   => 1,
+            "s.class_id" => $class_id
+        ];
+        $classschedinfo = $this->classes->getClassScheds($select,"tbl_schedules s",$condition,"","row");
+
+        $classschedsheld = $this->classes->getClassSchedInfo("*",["s.class_id"=>$class_id],"","");
         $condition = "`sc`.`class_id` = $class_id AND `sessions_attended` < `sessions` AND `deleted` = 0 AND `year` = " . date('Y');
         $classStudents = $this->classes->getClassStudents("*",$condition,"","");
 
-        if(!empty($classschedinfo)){
+        if(!empty($classschedsheld)){
             $response = array(
                 "success"   => true,
                 "data"      => [
-                    "classScheds" => $classschedinfo,
+                    "classSchedinfo" => $classschedinfo,
+                    "classScheds" => $classschedsheld,
                     "classStudents" => $classStudents
                 ],
             );
