@@ -1,16 +1,31 @@
+var monthlist = [ "", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+
 var classsched = new Vue({
     el: '#classes_page',
     data: {
         classschedlist: {},
-        classhistoryinfo: {
+        classschedinfo: {
             present: {},
             absent: {},
         },
-        classschedprofile: {},
+        classStudents: {},
         class_id:$('#class_id').val(),
         selectedStudents: {}
     },
     methods: {
+        changeDateFormat(date){
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+
+            month = monthlist[month];
+            var returndateformat = month + " " + day + ", " + year;
+            return returndateformat;
+        },
         getClassScheds(){
             var urls = window.App.baseUrl + "classes/getClassScheds";
             axios.post(urls, "")
@@ -21,30 +36,15 @@ var classsched = new Vue({
                     console.log(error)
                 });
         },
-        getClassHistoryInfo(){
+        getclassSchedInfo(){
             // alert();
             var datas = { class_id:this.class_id };
             var datas = frmdata(datas);
-            var urls = window.App.baseUrl + "classes/getClassHistoryInfo";
+            var urls = window.App.baseUrl + "classes/getclassSchedInfo";
             axios.post(urls, datas)
                 .then(function (e) {
-                    classsched.classhistoryinfo=e.data.data;
-                })
-                .catch(function (error) {
-                    console.log(error)
-                });
-        },
-        viewClassSchedProfileModal(attendance_id){
-            var datas = { 
-                class_id:this.class_id,
-                attendance_id: attendance_id
-            };
-            var datas = frmdata(datas);
-            var urls = window.App.baseUrl + "classes/getClassSchedInfo";
-            axios.post(urls, datas)
-                .then(function (e) {
-                    classsched.classschedprofile=e.data.data;
-                    $('#viewClassSchedProfileModal').modal('show');
+                    classsched.classschedinfo=e.data.data.classScheds;
+                    classsched.classStudents=e.data.data.classStudents;
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -55,8 +55,8 @@ var classsched = new Vue({
         },
     }, mounted: function () {
         this.getClassScheds();
-        if(this.class_id.length){
-            this.getClassHistoryInfo();
+        if(this.class_id!=0){
+            this.getclassSchedInfo();
         }
     },
 })

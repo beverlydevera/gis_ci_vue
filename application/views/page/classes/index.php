@@ -1,6 +1,7 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
+            <input type="hidden" value="0" id="class_id"/>
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
@@ -18,13 +19,13 @@
                             </div>
                             <div class="col-md-2">
                                 <select class="form-control smallerinput">
-                                    <option disabled selected>Select Class</option>
+                                    <option disabled selected>Select Branch</option>
                                     <option>Sample 1</option>
                                 </select>
                             </div>
                             <div class="col-md-2">
                                 <select class="form-control smallerinput">
-                                    <option disabled selected>Select Branch</option>
+                                    <option disabled selected>Select Class</option>
                                     <option>Sample 1</option>
                                 </select>
                             </div>
@@ -40,9 +41,9 @@
                                     <option>Monday</option>
                                 </select>
                             </div> -->
-                            <!-- <div class="col-md-1">
+                            <div class="col-md-1">
                                 <button class="btn btn-primary btn-xs">Filter</button>
-                            </div> -->
+                            </div>
                         </div>
                         <table class="table table-bordered table-responsive-sm table-sm">
                             <thead>                  
@@ -69,7 +70,7 @@
                                 </td>
                                 <td>
                                     <!-- <a v-bind:href="'classHistoryInfo/'+(list.class_title).replace(/ /g,'')+'-'+list.class_id" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></a> -->
-                                    <a v-bind:href="'classHistoryInfo/'+list.schedule_id" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></a>
+                                    <a v-bind:href="'classSchedInfo/'+list.class_id" class="btn btn-primary btn-xs"><i class="fas fa-eye" style="color:#000;"></i></a>
                                 </td>
                                 </tr>
                             </tbody>

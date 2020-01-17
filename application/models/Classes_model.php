@@ -42,7 +42,8 @@ class Classes_model extends CI_Model {
 	public function getClassSchedInfo($select,$condition,$pager,$type){
 
 		$this->db->select($select);
-        $this->db->from("tbl_attendance");
+        $this->db->from("tbl_attendance a");
+        $this->db->join("tbl_schedules s","s.schedule_id = a.schedule_id","inner");
         if(!empty($condition)){
             $this->db->where($condition);
         }
@@ -68,50 +69,20 @@ class Classes_model extends CI_Model {
 		return null;
 	}
 
-	public function getClassSchedStudents($select,$condition,$condition_wherein,$pager,$type){
+	public function getClassStudents($select,$condition,$pager,$type){
 
 		$this->db->select($select);
-        $this->db->from("tbl_students");
-        $this->db->join("tbl_studentpackages","tbl_studentpackages.student_id = tbl_students.student_id","inner");
-		$this->db->join("tbl_packages","tbl_packages.package_id = tbl_studentpackages.package_id","inner");
-		// if(!empty($condition_wherein)){
-        //     $this->db->where_in($condition_wherein['col'],$condition_wherein['arr']);
-		// }
-        if(!empty($condition)){
-            $this->db->where($condition);
-			$this->db->where($condition_wherein['col']." IN (".$condition_wherein['arr'].")");
-		}
-        $this->db->order_by("tbl_students.lastname","ASC");
-        $this->db->order_by("tbl_students.firstname","ASC");
-        $this->db->order_by("tbl_students.middlename","ASC");
-
-		if (!empty($pager)) {
-		$this->db->limit($pager['limit'],$pager['offset']);
-		}
-
-		$query = $this->db->get();
-		if ($query->num_rows()) {
-
-			if ($type =="row") {
-				return $query->row();
-			}elseif($type =="count_row"){
-				return $query->num_rows();
-			}elseif($type =="is_array") {
-				return $query->result_array();
-			}else{
-				return $query->result();
-			}
-		}
-		return null;
-	}
-
-	public function getClassHistoryInfo($select,$condition,$pager,$type){
-
-		$this->db->select($select);
-        $this->db->from("tbl_attendance");
+        $this->db->from("tbl_students s");
+        $this->db->join("tbl_studentpackages sp","sp.student_id = s.student_id","inner");
+		$this->db->join("tbl_packages p","p.package_id = sp.package_id","inner");
+		$this->db->join("tbl_schedules sc","sc.schedule_id = p.schedule_id","inner");
+		
         if(!empty($condition)){
             $this->db->where($condition);
         }
+        $this->db->order_by("s.lastname","ASC");
+        $this->db->order_by("s.firstname","ASC");
+        $this->db->order_by("s.middlename","ASC");
 
 		if (!empty($pager)) {
 		$this->db->limit($pager['limit'],$pager['offset']);
