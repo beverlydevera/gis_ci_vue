@@ -30,7 +30,7 @@ class Classes extends CI_Controller {
             "c.status" => 1,
             "b.status" => 1
         ];
-        $classscheds = $this->classes->getClassScheds($select,"tbl_schedules s",$condition,"","");
+        $classscheds = $this->classes->getClassScheds($select,"tbl_schedules s",$condition,["limit"=>5,"offset"=>0],"");
 
         if(!empty($classscheds)){
             foreach($classscheds as $csk => $csv){
@@ -85,6 +85,7 @@ class Classes extends CI_Controller {
             $classschedsheld = $this->classes->getClassSchedInfo("*",["s.class_id"=>$class_id, "a.attendance_id"=>$attendance_id],"","row");
             $condition = "`sc`.`class_id` = $class_id AND `deleted` = 0 AND `year` = " . date('Y');
         }else{
+            // $classschedsheld = $this->classes->getClassSchedInfo("*",["s.class_id"=>$class_id],["limit"=>5,"offset"=>0],"");
             $classschedsheld = $this->classes->getClassSchedInfo("*",["s.class_id"=>$class_id],"","");
             $condition = "`sc`.`class_id` = $class_id AND `sessions_attended` < `sessions` AND `deleted` = 0 AND `year` = " . date('Y');
         }
