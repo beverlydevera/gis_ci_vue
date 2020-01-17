@@ -75,19 +75,58 @@ class Classes extends CI_Controller {
         $condition = "`sc`.`class_id` = $class_id AND `sessions_attended` < `sessions` AND `deleted` = 0 AND `year` = " . date('Y');
         $classStudents = $this->classes->getClassStudents("*",$condition,"","");
 
-        if(!empty($classschedsheld)){
+        if(!empty($classschedinfo)){
             $response = array(
                 "success"   => true,
                 "data"      => [
                     "classSchedinfo" => $classschedinfo,
-                    "classScheds" => $classschedsheld,
-                    "classStudents" => $classStudents
+                    "classScheds"    => $classschedsheld,
+                    "classStudents"  => $classStudents
                 ],
             );
         }else{
             $response = array(
                 "success"   => false,
                 "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
+    public function addNewAttendance()
+    {
+        $data = jsondata();
+        $schedule_id = $data['schedule_id'];
+        $datainsert = $attendanceinfo = $data['attendanceinfo'];
+
+        //check if date already exists for that schedule
+
+        $datainsert['schedule_id'] = $schedule_id;
+        $datainsert['date_added'] = $this->data['curdatetime'];
+        $datainsert['attendance'] = json_encode($attendanceinfo['attendance']);
+
+        if(!empty($attendanceinfo['attendance'])){
+            foreach($attendanceinfo['attendance'] as $attinfo){
+                if($attinfo['status']){
+                    $studpack_id = $attinfo['studpack_id'];
+                    $student_id = $attinfo['student_id'];
+                    $this->Main->raw("UPDATE tbl_studentpackages SET sessions_attended=sessions_attended+1 WHERE studpack_id=$studpack_id AND student_id=$student_id","","update");
+                }
+            }
+        }
+        $result = $this->Main->insert("tbl_attendance", $datainsert, true);
+
+        if (!empty($result)) {
+            $response = array(
+                'success'   => true,
+                'type'      => 'success',
+                'message'   => "Attendance was submitted successfully.",
+            );
+        } else {
+            $response = array(
+                'success'   => false,
+                'type'      => 'warning',
+                'message'   => "Submit Unsuccessful",
             );
         }
         response_json($response);

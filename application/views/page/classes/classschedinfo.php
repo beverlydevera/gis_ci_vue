@@ -102,9 +102,7 @@
                           <td>{{list.reference_id}}</td>
                           <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
                           <td>{{list.sex}}</td>
-                          <td>
-                            {{list.sessions-list.sessions_attended}}
-                          </td>
+                          <td>{{list.sessions-list.sessions_attended}}</td>
                           <td>
                             <a v-bind:href="'../.././students/profile/'+(list.firstname).replace(/ /g,'')+(list.lastname).replace(/ /g,'')+'-'+list.student_id" class="btn btn-primary btn-xs"><span style="color:#000;">View Profile</span></a>
                           </td>
@@ -145,7 +143,7 @@
               <div class="row">
                 <div class="col-md-5">
                   <h6>Class Date:</h6>
-                  <input type="date" class="form-control smallerinput" min="<?=date("Y-m-d")?>" value="<?=date("Y-m-d")?>"/>
+                  <input type="date" class="form-control smallerinput" max="<?=date("Y-m-d")?>" v-model="newClassAttendanceInfo.schedule_date"/>
                 </div>
                 <!-- <div class="col-md-4"></div>
                 <div class="col-md-3">
@@ -170,6 +168,7 @@
                         <th>Student Reference ID</th>
                         <th>Names</th>
                         <th>Sex</th>
+                        <th>Remaining Sessions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -177,12 +176,13 @@
                         <td>{{index+1}}</td>
                         <td>
                           <label class="container">
-                            <input type="checkbox" v-model="selectedStudents[list.student_id]"><span class="checkmark"></span>
+                            <input type="checkbox" v-model="newClassAttendanceInfo.attendance[index].status"><span class="checkmark"></span>
                           </label>
                         </td>
                         <td>{{list.reference_id}}</td>
                         <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
                         <td>{{list.sex}}</td>
+                        <td>{{list.sessions-list.sessions_attended}}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -190,7 +190,7 @@
               </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" @click="addNewAttendanceInfo()" class="btn btn-primary">Submit</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>

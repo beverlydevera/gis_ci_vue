@@ -22,7 +22,6 @@
     <link rel="stylesheet" href="<?= base_url("assets/template/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css") ?>">
     <link rel="stylesheet" href="<?= base_url("assets/template/plugins/sweetalert2/sweetalert2.min.css") ?>">
     <link rel="stylesheet" href="<?= base_url("assets/template/plugins/toastr/toastr.min.css") ?>">
-
     <link rel="stylesheet" href="<?= base_url('assets/css/custom.css') ?>">
 
     <script src="<?= base_url('assets/js/plugins/vue.js') ?>"></script>
@@ -331,7 +330,6 @@ to get the desired effect
     <script src="<?= base_url("assets/template/plugins/sweetalert2/sweetalert2.min.js") ?>"></script>
     <script src="<?= base_url('assets/template/plugins/toastr/toastr.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/script.js') ?>"></script>
-
 
     <?php if (!empty($js)) : ?>
         <?php foreach ($js as $j) : ?>
