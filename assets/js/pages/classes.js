@@ -49,7 +49,7 @@ var classsched = new Vue({
             var urls = window.App.baseUrl + "classes/getClassScheds";
             axios.post(urls, "")
                 .then(function (e) {
-                    classsched.classschedlist=e.data.data;
+                    classsched.classschedlist=e.data.data;                    
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -73,7 +73,6 @@ var classsched = new Vue({
                             status: true
                         })
                     });
-
                 })
                 .catch(function (error) {
                     console.log(error)

@@ -31,6 +31,15 @@ class Classes extends CI_Controller {
             "b.status" => 1
         ];
         $classscheds = $this->classes->getClassScheds($select,"tbl_schedules s",$condition,"","");
+
+        if(!empty($classscheds)){
+            foreach($classscheds as $csk => $csv){
+                $class_id = $csv->class_id;
+                $condition = "`sc`.`class_id` = $class_id AND `sessions_attended` < `sessions` AND `deleted` = 0 AND `year` = " . date('Y');
+                $classStudents = $this->classes->getClassStudents("*",$condition,"","count_row");
+                $classscheds[$csk]->enrollees = $classStudents;
+            }
+        }
         
         if(!empty($classscheds)){
             $response = array(
