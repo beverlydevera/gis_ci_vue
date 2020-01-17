@@ -83,10 +83,30 @@ class Classes extends CI_Controller {
 
         if($attendance_id>0){
             $classschedsheld = $this->classes->getClassSchedInfo("*",["s.class_id"=>$class_id, "a.attendance_id"=>$attendance_id],"","row");
-            $condition = "`sc`.`class_id` = $class_id AND `deleted` = 0 AND `year` = " . date('Y');
+            $attendance = json_decode($classschedsheld->attendance);
+            if(!empty($attendance)){
+                $ids="";
+                foreach($attendance as $attidk => $attidv){
+                    $ids .= $attidv->student_id . ",";
+                }
+                $ids = substr($ids,0,-1);
+            }
+            $condition = "`sc`.`class_id` = $class_id AND s.student_id IN ($ids) AND `deleted` = 0 AND `year` = " . date('Y');
         }else{
             // $classschedsheld = $this->classes->getClassSchedInfo("*",["s.class_id"=>$class_id],["limit"=>5,"offset"=>0],"");
             $classschedsheld = $this->classes->getClassSchedInfo("*",["s.class_id"=>$class_id],"","");
+            if(!empty($classschedsheld)){
+                foreach($classschedsheld as $csk => $csv){
+                    $attendance = json_decode($csv->attendance);
+                    $absent = $present = 0;
+                    foreach($attendance as $attk => $attv){
+                        if($attv->status){ $present++; }
+                        else{ $absent++; }
+                    }
+                    $classschedsheld[$csk]->absent = $absent;
+                    $classschedsheld[$csk]->present = $present;
+                }
+            }
             $condition = "`sc`.`class_id` = $class_id AND `sessions_attended` < `sessions` AND `deleted` = 0 AND `year` = " . date('Y');
         }
         

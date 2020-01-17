@@ -57,15 +57,9 @@
                     <tr v-for="(list,index) in classschedsheld">
                       <td>{{index+1}}</td>
                       <td>{{changeDateFormat(list.schedule_date)}}</td>
-                      <td>
-                          {{JSON.parse(list.attendance).length}}
-                      </td>
-                      <td>
-                          000
-                      </td>
-                      <td>
-                          000
-                      </td>
+                      <td>{{list.present + list.absent}}</td>
+                      <td>{{list.present}}</td>
+                      <td>{{list.absent}}</td>
                       <td>{{list.date_added}}</td>
                       <td><button class="btn btn-primary btn-xs" @click="editClassAttendanceModal(list.attendance_id)"><i class="fa fa-edit"></i></button></td>
                     </tr>
