@@ -54,13 +54,41 @@
                       </td>
                       <td>{{list.date_added}}</td>
                       <td><button class="btn btn-primary btn-xs" @click="viewClassSchedProfileModal(list.attendance_id)"><i class="fa fa-edit"></i></button></td>
-                      
                     </tr>
                   </tbody>
                 </table>
               </div>
               <div class="tab-pane fade" id="classstudents" role="tabpanel" aria-labelledby="classstudents-tab">
-                  students enrolled sa class - active or hindi na status
+                  <div class="row">
+                    <div class="col-md-12">
+                    <table class="table table-bordered table-responsive-sm table-sm">
+                      <thead>                  
+                        <tr>
+                          <th style="width: 10px">#</th>
+                          <th>Student Reference ID</th>
+                          <th>Names</th>
+                          <th>Sex</th>
+                          <th>Remaining Sessions</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(list,index) in classStudents" :value="list.student_id">
+                          <td>{{index+1}}</td>
+                          <td>{{list.reference_id}}</td>
+                          <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
+                          <td>{{list.sex}}</td>
+                          <td>
+                            000
+                          </td>
+                          <td>
+                            <a v-bind:href="'../.././students/profile/'+(list.firstname).replace(/ /g,'')+(list.lastname).replace(/ /g,'')+'-'+list.student_id" class="btn btn-primary btn-xs"><span style="color:#000;">View Profile</span></a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    </div>
+                  </div>
               </div>
           </div>
       </div>
