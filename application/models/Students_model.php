@@ -101,6 +101,37 @@ class Students_model extends CI_Model {
 		return null;
 	}
 
+	public function getStudentAttendance($select,$condition,$pager,$type){
+
+		$this->db->select($select);
+        $this->db->from("tbl_attendance a");
+        $this->db->join("tbl_packages p","a.schedule_id = p.schedule_id","inner");
+        $this->db->join("tbl_studentpackages sp","sp.package_id = p.package_id","inner");
+        if(!empty($condition)){
+            $this->db->where($condition);
+        }
+        $this->db->order_by("sessions","ASC");
+
+		if (!empty($pager)) {
+		$this->db->limit($pager['limit'],$pager['offset']);
+		}
+
+		$query = $this->db->get();
+		if ($query->num_rows()) {
+
+			if ($type =="row") {
+				return $query->row();
+			}elseif($type =="count_row"){
+				return $query->num_rows();
+			}elseif($type =="is_array") {
+				return $query->result_array();
+			}else{
+				return $query->result();
+			}
+		}
+		return null;
+	}
+
 }
 
 /* End of file Recruitment_model.php */

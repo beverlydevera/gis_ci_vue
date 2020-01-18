@@ -1,3 +1,5 @@
+var monthlist = [ "", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+
 var profile = new Vue({
     el: '#studentprofile_page',
     data: {
@@ -18,8 +20,23 @@ var profile = new Vue({
         },
         studentclasses:{},
         studentclassdetails:{},
+        studentattendance:{}
     },
     methods: {
+        changeDateFormat(date){
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            // alert(month.length);
+            // if (month.length < 2) month = '0' + month;
+            // if (day.length < 2) day = '0' + day;
+
+            month = monthlist[month];
+            var returndateformat = month + " " + day + ", " + year;
+            return returndateformat;
+        },
         calculate_age() {
             var dob = this.studentinfo.birthdate;
             var dob = dob.split("-");
@@ -74,13 +91,18 @@ var profile = new Vue({
                     console.log(error)
                 });
         },
-        getStudentClassDetails(studpack_id){
-            var datas = { studpack_id: studpack_id };
+        getStudentClassDetails(studpack_id,schedule_id){
+            var datas = { 
+                student_id: this.student_id,
+                schedule_id: schedule_id,
+                studpack_id: studpack_id
+            };
             var datas = frmdata(datas);
             var urls = window.App.baseUrl + "students/getStudentClassDetails";
             axios.post(urls, datas)
                 .then(function (e) {
-                    profile.studentclassdetails=e.data.data;
+                    profile.studentclassdetails=e.data.data.studentclassdetails;
+                    profile.studentattendance=e.data.data.studentattendance;
                 })
                 .catch(function (error) {
                     console.log(error)

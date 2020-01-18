@@ -121,14 +121,35 @@ class Students extends CI_Controller {
     public function getStudentClassDetails()
     {
 
+        $student_id = $this->input->post('student_id');
+        $schedule_id = $this->input->post('schedule_id');
         $studpack_id = $this->input->post('studpack_id');
         $studentclassdetails = $this->student->getStudentClasses("*",['studpack_id'=>$studpack_id, 'deleted'=>0],"","row");
-        // $studentattendance = $this->student->getStudentAttendance("*",['studpack_id'=>$studpack_id, 'deleted'=>0],"","row");
-        
+        $studentattendance = $this->student->getStudentAttendance("*",['a.schedule_id'=>$schedule_id, 'sp.studpack_id'=>$studpack_id],"","");
+        $studatt = [];
+
+        if(!empty($studentattendance)){
+            foreach($studentattendance as $stk => $stv){
+                $attinfo = json_decode($stv->attendance);
+                foreach($attinfo as $atk => $atv){
+                    if($atv->student_id==$student_id){
+                        $arr = [
+                            'schedule_date' => $stv->schedule_date,
+                            'status' => $atv->status,
+                        ];
+                    }
+                }
+                array_push($studatt,$arr);
+            }
+        }
+
         if(!empty($studentclassdetails)){
             $response = array(
                 "success"   => true,
-                "data"      => $studentclassdetails
+                "data"      => [
+                    'studentclassdetails'   => $studentclassdetails,
+                    'studentattendance'     => $studatt,
+                ]
             );
         }else{
             $response = array(

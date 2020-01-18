@@ -19,7 +19,7 @@
             <td>{{list.sched_day}} / {{list.sched_time}}</td>
             <td>{{list.sessions-list.sessions_attended}}</td>
             <td>
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#StudentClassDetailsModal" @click="getStudentClassDetails(list.studpack_id)"><i class="fas fa-eye"></i></button>
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#StudentClassDetailsModal" @click="getStudentClassDetails(list.studpack_id,list.schedule_id)"><i class="fas fa-eye"></i></button>
                 <button type="button" class="btn btn-danger btn-sm" @click="deleteStudentClass(list.studpack_id)"><i class="fas fa-trash-alt"></i></button>
             </td>
         </tr>
@@ -31,7 +31,7 @@
         <div class="modal-content">            
             <form @submit.prevent="enrollToClass">
                 <div class="modal-header">
-                    <h4 class="modal-title">Enroll to a Class</h4>
+                    <h5 class="modal-title">Enroll to a Class</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -114,7 +114,7 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">My Class Details</h4>
+                <h5 class="modal-title">My Class Details</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -153,11 +153,12 @@
                     <tr>
                         <th colspan=4>Classes Facilitated</th>
                     </tr>
-                    <tr>
-                        <td colspan=2>Dates</td>
-                        <td colspan=2>
-                            <span class="badge bg-success">Present</span>
-                            <span class="badge bg-danger">Absent</span>
+                    <tr v-for="(list,index) in studentattendance">
+                        <td>{{index+1}}</td>
+                        <td colspan=2>{{changeDateFormat(list.schedule_date)}}</td>
+                        <td>
+                            <span v-if="list.status" class="badge bg-success">Present</span>
+                            <span v-else class="badge bg-danger">Absent</span>
                         </td>
                     </tr>
                 </table>
