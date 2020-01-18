@@ -1,0 +1,156 @@
+
+    /* line 2042, ../sass/_stilo.scss */
+    .stroke-text {
+    color: white;
+    text-shadow: -1px -1px 0 #000,   1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    font-weight: 800;
+    }
+    
+    .stroke-text{
+    color: white;
+    text-shadow:
+    -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+    font-weight: 800;
+    }
+
+    /* line 2053, ../sass/_stilo.scss */
+    .fill-yellow {
+    background-image: linear-gradient(to bottom, #fbe295, #fccc38);
+    }
+
+    /* line 2057, ../sass/_stilo.scss */
+    .fill-blue {
+    background-image: linear-gradient(to bottom, #e7f3fd, #bdd7ee);
+    }
+
+    /* line 2061, ../sass/_stilo.scss */
+    .fill-red {
+    background-image: linear-gradient(to bottom, #f66160, #f13533);
+    }
+
+    /* line 2065, ../sass/_stilo.scss */
+    .fill-light-orange {
+    background-image: linear-gradient(to bottom, #fdddc8, #efb894);
+    }
+
+    /* line 2069, ../sass/_stilo.scss */
+    .fill-cubs {
+    background-image: linear-gradient(to bottom, #dbe2d5, #b7c3ae);
+    }
+
+    /* line 2073, ../sass/_stilo.scss */
+    .fill-gray {
+    background-image: linear-gradient(to bottom, #ffffff, #cacaca);
+    }
+
+    /* line 2077, ../sass/_stilo.scss */
+    .fill-green {
+    background-image: linear-gradient(to bottom, #39dc7f, #00b34d);
+    }
+
+    /* line 2081, ../sass/_stilo.scss */
+    .fill-semi-orange {
+    background-image: linear-gradient(to bottom, #d69e7a, #c8865c);
+    }
+
+    /* line 2085, ../sass/_stilo.scss */
+    .fill-dark-orange {
+    background-image: linear-gradient(to bottom, #d26d33, #bd5215);
+    }
+
+    /* line 2089, ../sass/_stilo.scss */
+    .fill-dark-blue {
+    background-image: linear-gradient(to bottom, #405c86, #1e3a63);
+    }
+
+    /* line 2093, ../sass/_stilo.scss */
+    .fill-dark-gray {
+    background-image: linear-gradient(to bottom, #a2a4a8, #515254);
+    }
+
+    /* line 2098, ../sass/_stilo.scss */
+    .table-sched a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    padding: 10px 10px 60px 10px;
+    /*table default padding except on bottom 500px for example*/
+    margin-bottom: -50px;
+    }
+
+    .fill-yellow{
+    background-image: linear-gradient(to bottom, #fbe295 , #fccc38);
+    }
+
+    .fill-blue{
+    background-image: linear-gradient(to bottom, #e7f3fd , #bdd7ee);
+    }
+
+    .fill-red{
+    background-image: linear-gradient(to bottom, #f66160 , #f13533);
+    }
+
+    .fill-light-orange{
+    background-image: linear-gradient(to bottom, #fdddc8 , #efb894);
+    }
+
+    .fill-cubs{
+    background-image: linear-gradient(to bottom, #dbe2d5 , #b7c3ae);
+    }
+
+    .fill-gray{
+    background-image: linear-gradient(to bottom, #ffffff , #cacaca);
+    }
+
+    .fill-green{
+    background-image: linear-gradient(to bottom, #39dc7f , #00b34d);
+    }
+
+    .fill-semi-orange{
+    background-image: linear-gradient(to bottom, #d69e7a , #c8865c);
+    }
+
+    .fill-dark-orange{
+    background-image: linear-gradient(to bottom, #d26d33 , #bd5215);
+    }
+
+    .fill-dark-blue{
+    background-image: linear-gradient(to bottom, #405c86 , #1e3a63);
+    }
+
+    .fill-dark-gray{
+    background-image: linear-gradient(to bottom, #a2a4a8 , #515254);
+    }
+
+    .table-sched{
+        a{
+            display: block;
+            height: 100%;        
+            width: 100%;
+            padding: 10px 10px 60px 10px; /*table default padding except on bottom 500px for example*/
+            margin-bottom: -50px;
+        }
+    }
+
+    th, td{
+    text-align: center;
+    vertical-align: middle !important;
+    padding: 0.25% !important;
+    border: 2px solid #000 !important;
+    }
+
+    .header-style{
+    background-color: #0800ff;
+    }
+
+
+    /* .comment:after {
+        content: "";
+        position: relative;
+        top: 0.5em;
+        border-left: 0.5em solid transparent;
+        border-top: 0.5em solid red;
+    } */
