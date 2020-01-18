@@ -144,14 +144,14 @@ var classsched = new Vue({
             
             if(attinfo.status==true){
                 attinfo.status=false;
-                if(attinfo.origstat!=attinfo.status){
+                // if(attinfo.origstat!=attinfo.status){
                     attinfo.tmp_sessions_attended -= 1;
-                }
+                // }
             }else{ 
                 attinfo.status=true;
-                if(attinfo.origstat!=attinfo.status){
+                // if(attinfo.origstat!=attinfo.status){
                     attinfo.tmp_sessions_attended += 1;
-                }
+                // }
             }
         },
         submitAttendanceChanges(){
