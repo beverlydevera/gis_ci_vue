@@ -128,6 +128,7 @@ var classsched = new Vue({
                             studpack_id: e.studpack_id,
                             status: e.status,
                             origstat: e.status,
+                            tmp_sessions_attended: ""
                         })
                     });
                     classsched.classAttendanceInfo.attendance_id = e.data.data.classScheds.attendance_id;
