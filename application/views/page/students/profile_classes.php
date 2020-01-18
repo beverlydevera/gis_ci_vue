@@ -124,7 +124,7 @@
                 <table class="table table-bordered table-responsive-sm table-sm">
                     <tr>
                         <th colspan=2>Class Title</th>
-                        <th colspan=2>{{studentclassdetails.class_title}}</th>
+                        <td colspan=2>{{studentclassdetails.class_title}}</td>
                     </tr>
                     <tr>
                         <th colspan=2>Class Schedule</th>
@@ -142,17 +142,13 @@
                         <td colspan=2>{{studentclassdetails.payment_options}}</td>
                     </tr>
                     <tr>
-                        <th colspan=2>Dates</th>
-                        <th colspan=2>Amount Paid</th>
-                    </tr>
-                    <tr>
-                        <th colspan=4>Attendance Details</th>
-                    </tr>
-                    <tr>
                         <th width="30%">Sessions Registered</th>
                         <td width="20%">{{studentclassdetails.sessions}}</td>
                         <th width="30%">Remaining Sessions</th>
-                        <td width="20%">00</td>
+                        <td width="20%">{{studentclassdetails.sessions-studentclassdetails.sessions_attended}}</td>
+                    </tr>
+                    <tr>
+                        <th colspan=4>Attendance Details</th>
                     </tr>
                     <tr>
                         <th colspan=4>Classes Facilitated</th>

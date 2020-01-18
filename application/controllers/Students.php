@@ -123,6 +123,7 @@ class Students extends CI_Controller {
 
         $studpack_id = $this->input->post('studpack_id');
         $studentclassdetails = $this->student->getStudentClasses("*",['studpack_id'=>$studpack_id, 'deleted'=>0],"","row");
+        // $studentattendance = $this->student->getStudentAttendance("*",['studpack_id'=>$studpack_id, 'deleted'=>0],"","row");
         
         if(!empty($studentclassdetails)){
             $response = array(
