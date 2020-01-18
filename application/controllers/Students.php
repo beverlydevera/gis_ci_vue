@@ -216,7 +216,6 @@ class Students extends CI_Controller {
 
     public function saveNewStudentRegistration()
     {
-        
         $curyear = date('Y');
         $data = $this->input->post();
         $result = $this->Main->insert("tbl_students", $data, true);
@@ -245,4 +244,5 @@ class Students extends CI_Controller {
         }
         response_json($response);
     }
+
 }

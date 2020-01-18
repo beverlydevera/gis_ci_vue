@@ -121,10 +121,10 @@
                                         </tr>
                                         <tr>
                                             <th width="15%"><span class="requiredspan">*</span>Height (m):</th>
-                                            <th><input type="number" class="form-control smallerinput" v-model="studentinfo.height" required step="any"></th>
+                                            <th ><input type="number" class="form-control smallerinput" v-model="studentinfo.height" required step="any"></th>
                                             <th width="15%"><span class="requiredspan">*</span>Weight (kg):</th>
-                                            <th><input type="number" class="form-control smallerinput" v-model="studentinfo.weight" required step="any"></th>
-                                            <th width="15%"><span class="requiredspan">*</span>Insurance:</th>
+                                            <th ><input type="number" class="form-control smallerinput" v-model="studentinfo.weight" required step="any"></th>
+                                            <!-- <th width="15%"><span class="requiredspan">*</span>Insurance:</th>
                                             <th>
                                                 <div class="row">
                                                     <div class="col-sm-2"></div>
@@ -137,7 +137,7 @@
                                                         <label class="form-check-label" for="">No</label>
                                                     </div>
                                                 </div>
-                                            </th>
+                                            </th> -->
                                             
                                         </tr>
                                     </table>
