@@ -1,37 +1,4 @@
-<style>
-    h6{
-        font-weight: bold;
-        text-decoration: underline;
-    }
-
-    .smallerinput {
-        color: blue;
-        font-weight: bold;
-    }
-
-    .form-group {
-        margin-bottom: 0.5rem !important;
-    }
-
-    table{
-        margin-bottom: 0 !important;
-    }
-
-    .requiredspan {
-        color: red;
-    }
-    
-    th, td{
-        padding: 1% !important;
-        /* vertical-align: middle; */
-    }
-
-    hr{
-        border: 1px dotted #000 !important;
-    }
-</style>
-<section class="content" id="studentprofile_page">
-
+<section class="content">
     <form @submit.prevent="updateProfile">
         <input type="hidden" value="<?=$student_id?>" id="student_id">
         <div class="container-fluid">

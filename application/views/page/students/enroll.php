@@ -33,7 +33,7 @@
         border: 1px dotted #000 !important;
     }
 </style>
-<section class="content" id="studentenroll_page">
+<section class="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-sm-12 col-lg-12">

@@ -1,4 +1,4 @@
-<div class="row" id="students_page">
+<div class="row">
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
@@ -8,10 +8,10 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="input-group mb-3">
-                <div class="input-group-prepend">
+                <div class="input-group-prepend smallerinput">
                     <span class="input-group-text"><i class="fas fa-search"></i></span>
                 </div>
-                <input type="text" class="form-control" placeholder="Search for Name">
+                <input type="text" class="form-control smallerinput" placeholder="Search for Name">
                 </div>
             </div>
             <div class="col-md-9">
@@ -42,7 +42,7 @@
                 <span v-else class="badge bg-danger">Inactive</span>
               </td>
               <td>
-                  <a v-bind:href="'students/profile/'+(list.firstname).replace(/ /g,'')+(list.lastname).replace(/ /g,'')+'-'+list.student_id" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i></a>
+                  <a v-bind:href="'students/profile/'+(list.firstname).replace(/ /g,'')+(list.lastname).replace(/ /g,'')+'-'+list.student_id" class="btn btn-primary btn-xs"><i class="fas fa-edit" style="color:#000;"></i></a>
                   <button type="button" class="btn btn-danger btn-xs"><i class="fas fa-archive"></i></i></button>
               </td>
             </tr>

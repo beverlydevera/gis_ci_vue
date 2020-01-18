@@ -24,3 +24,17 @@ label {
     padding: .25rem;
     vertical-align: middle;
 }
+
+/* profile */
+table {
+    margin-bottom: 0 !important;
+}
+
+h6 {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+hr {
+    border: 1px dotted #000 !important;
+}

@@ -14,9 +14,9 @@ class Students extends CI_Controller {
     public function index()
     {
         $data['title'] = "Students";
-        $data['vueid'] = "students";
+        $data['vueid'] = "students_page";
         $data['vfile'] = "page/students/index";
-        $data['js'] = array('pages/students.js');
+        $data['js'] = array('pages/students/index.js');
         $this->load->view('layout/main', $data);
     }
     
@@ -45,9 +45,9 @@ class Students extends CI_Controller {
         $data['student_id'] = $student_id;
 
         $data['title'] = "Students Profile";
-        $data['vueid'] = "students_profile";
+        $data['vueid'] = "studentprofile_page";
         $data['vfile'] = "page/students/profile";
-        $data['js'] = array('pages/students.js');
+        $data['js'] = array('pages/students/profile.js');
         $this->load->view('layout/main', $data);
     }
 
@@ -63,7 +63,8 @@ class Students extends CI_Controller {
                 "success"   => true,
                 "data"      => [
                     'studentprofile' => $studentinfo,
-                    'studentclasses' => $studentclasses],
+                    'studentclasses' => $studentclasses
+                ],
             );
         }else{
             $response = array(
@@ -101,7 +102,7 @@ class Students extends CI_Controller {
     {
 
         $class_id = $this->input->post('class_id');
-        $classpackages = $this->student->getClassPackages("*","tbl_packages",['class_id'=>$class_id],"","");
+        $classpackages = $this->student->getClassPackages("*","tbl_packages",['tbl_classes.class_id'=>$class_id],"","");
         
         if(!empty($classpackages)){
             $response = array(
@@ -206,9 +207,9 @@ class Students extends CI_Controller {
     public function newStudentRegistration()
     {
         $data['title'] = "Enroll Student";
-        $data['vueid'] = "student_enroll";
+        $data['vueid'] = "studentenroll_page";
         $data['vfile'] = "page/students/enroll";
-        $data['js'] = array('pages/students.js');
+        $data['js'] = array('pages/students/enroll.js');
         $this->load->view('layout/main', $data);
     }
 

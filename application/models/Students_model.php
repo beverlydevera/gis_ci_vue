@@ -41,7 +41,9 @@ class Students_model extends CI_Model {
 
 	public function getClassPackages($select,$table,$condition,$pager,$type){
 		$this->db->select($select);
-        $this->db->from($table);
+		$this->db->from($table);
+        $this->db->join("tbl_schedules","tbl_schedules.schedule_id = tbl_packages.schedule_id","inner");
+        $this->db->join("tbl_classes","tbl_classes.class_id = tbl_schedules.class_id","inner");
         if(!empty($condition)){
             $this->db->where($condition);
         }
@@ -72,7 +74,8 @@ class Students_model extends CI_Model {
 		$this->db->select($select);
         $this->db->from("tbl_studentpackages");
         $this->db->join("tbl_packages","tbl_packages.package_id = tbl_studentpackages.package_id","inner");
-        $this->db->join("tbl_classes","tbl_classes.class_id = tbl_packages.class_id","inner");
+        $this->db->join("tbl_schedules","tbl_schedules.schedule_id = tbl_packages.schedule_id","inner");
+        $this->db->join("tbl_classes","tbl_classes.class_id = tbl_schedules.class_id","inner");
         if(!empty($condition)){
             $this->db->where($condition);
         }
