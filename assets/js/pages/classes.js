@@ -128,6 +128,7 @@ var classsched = new Vue({
                             studpack_id: e.studpack_id,
                             status: e.status,
                             origstat: e.status,
+                            tmp_sessions_attended: ""
                         })
                     });
                     classsched.classAttendanceInfo.attendance_id = e.data.data.classScheds.attendance_id;
@@ -144,14 +145,14 @@ var classsched = new Vue({
             
             if(attinfo.status==true){
                 attinfo.status=false;
-                // if(attinfo.origstat!=attinfo.status){
+                if(attinfo.origstat!=attinfo.status){
                     attinfo.tmp_sessions_attended -= 1;
-                // }
+                }
             }else{ 
                 attinfo.status=true;
-                // if(attinfo.origstat!=attinfo.status){
+                if(attinfo.origstat!=attinfo.status){
                     attinfo.tmp_sessions_attended += 1;
-                // }
+                }
             }
         },
         submitAttendanceChanges(){

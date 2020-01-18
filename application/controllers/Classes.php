@@ -189,13 +189,13 @@ class Classes extends CI_Controller {
         }else{
             if(!empty($attendanceinfo['attendance'])){
                 foreach($attendanceinfo['attendance'] as $attinfo   ){
-                    if(!empty($attinfo['tmp_sessions_attended'])){
+                    if($attinfo['tmp_sessions_attended']=="0" || $attinfo['tmp_sessions_attended']>0){
                         $studpack_id = $attinfo['studpack_id'];
                         $student_id = $attinfo['student_id'];
                         $sessions_attended = $attinfo['tmp_sessions_attended'];
                         $this->Main->raw("UPDATE tbl_studentpackages SET sessions_attended=$sessions_attended WHERE studpack_id=$studpack_id AND student_id=$student_id","","update");
-                        unset($attinfo['tmp_sessions_attended']);
                     }
+                    unset($attinfo['tmp_sessions_attended']);
                     unset($attinfo['origstat']);
                     array_push($att_update,$attinfo);
 
