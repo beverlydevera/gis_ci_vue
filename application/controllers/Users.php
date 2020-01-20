@@ -13,7 +13,7 @@ class Users extends CI_Controller {
 	public function index()
 	{
         $data['title'] = "Users";
-        $data['vueid'] = "users";
+        $data['vueid'] = "users_page";
         $data['vfile'] = "page/users/index";
         // $data['js'] = array('pages/users.js');
         $this->load->view('layout/main', $data);
@@ -22,7 +22,7 @@ class Users extends CI_Controller {
     public function logs()
 	{
         $data['title'] = "User Logs";
-        $data['vueid'] = "userlogs";
+        $data['vueid'] = "userlogs_page";
         $data['vfile'] = "page/users/userlogs";
         // $data['js'] = array('pages/users.js');
         $this->load->view('layout/main', $data);
