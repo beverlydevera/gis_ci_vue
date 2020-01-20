@@ -215,6 +215,43 @@ to get the desired effect
                 <i class="fas fa-th-large"></i>
             </a>
             </li>
+            <li class="nav-item dropdown user-menu">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                <img src="<?=base_url('assets/img/other_avatar.png')?>" class="user-image img-circle elevation-2" alt="User Image">
+                <span class="d-none d-md-inline"><?=strtoupper(sesdata('fullname'))?></span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <!-- User image -->
+                <li class="user-header bg-primary">
+                    <img src="<?=base_url('assets/img/other_avatar.png')?>" class="img-circle elevation-2" alt="User Image">
+
+                    <p>
+                    <?=strtoupper(sesdata('fullname'))?>
+                    <small><?=strtoupper(sesdata('role'))?></small>
+                    </p>
+                </li>
+                <!-- Menu Body -->
+                <li class="user-body">
+                    <div class="row">
+                    <div class="col-4 text-center">
+                        <a href="#">Followers</a>
+                    </div>
+                    <div class="col-4 text-center">
+                        <a href="#">Sales</a>
+                    </div>
+                    <div class="col-4 text-center">
+                        <a href="#">Friends</a>
+                    </div>
+                    </div>
+                    <!-- /.row -->
+                </li>
+                <!-- Menu Footer-->
+                <li class="user-footer">
+                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                    <a href="#" class="btn btn-default btn-flat float-right">Sign out</a>
+                </li>
+                </ul>
+            </li>
             <li class="nav-item">
                 <a href="<?= base_url('users/logout') ?>" class="nav-link">
                     <i class="nav-icon fas fa-sign-out-alt"></i> Logout
@@ -328,12 +365,6 @@ to get the desired effect
     <script src="<?= base_url("assets/template/dist/js/adminlte.js") ?>"></script>
     <script src="<?= base_url('assets/js/plugins/axios.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/plugins/vue-tables-2.min.js') ?>"></script>
-
-    
-    <!-- OPTIONAL SCRIPTS -->
-    <script src="<?=base_url()?>assets/template/plugins/chart.js/Chart.min.js"></script>
-    <script src="<?=base_url()?>assets/template/dist/js/demo.js"></script>
-    <script src="<?=base_url()?>assets/template/dist/js/pages/dashboard3.js"></script>
 
     <script src="<?= base_url("assets/template/plugins/sweetalert2/sweetalert2.min.js") ?>"></script>
     <script src="<?= base_url('assets/template/plugins/toastr/toastr.min.js') ?>"></script>
