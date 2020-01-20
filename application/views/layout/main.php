@@ -23,8 +23,10 @@
     <link rel="stylesheet" href="<?= base_url("assets/template/plugins/sweetalert2/sweetalert2.min.css") ?>">
     <link rel="stylesheet" href="<?= base_url("assets/template/plugins/toastr/toastr.min.css") ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/custom.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/style.css') ?>">
 
     <script src="<?= base_url('assets/js/plugins/vue.js') ?>"></script>
+    <script src="<?= base_url('assets/js/jquery-3.4.1.min.js') ?>"></script>
     <script type="text/javascript">
         window.App = {
             "baseUrl": "<?= base_url() ?>",
@@ -352,6 +354,8 @@ to get the desired effect
             timer: 3000
         });
     </script>
+    
+    
 </body>
 
 </html>
