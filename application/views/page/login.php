@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="<?= base_url("assets/template/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css") ?>">
     <link rel="stylesheet" href="<?= base_url("assets/template/plugins/sweetalert2/sweetalert2.min.css") ?>">
     <link rel="stylesheet" href="<?= base_url("assets/template/plugins/toastr/toastr.min.css") ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/custom.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/loginregister.css') ?>">
 
     <script src="<?= base_url('assets/js/plugins/vue.js') ?>"></script>
     <script type="text/javascript">
@@ -72,7 +72,7 @@
         <a href="forgot-password.html">I forgot my password</a>
       </p>
       <p class="mb-0">
-        <a href="register.html" class="text-center">Register a new user account</a>
+        <a href="<?=base_url()?>register" class="text-center">Register a new user account</a>
       </p>
     </div>
     <!-- /.login-card-body -->
