@@ -64,3 +64,5 @@
   </div>
   <!-- /.col -->
 </div>
+
+if walang membership for the year = inactive siya => renew membership
