@@ -252,7 +252,11 @@ class Students extends CI_Controller {
             $response = array(
                 "success"   => true,
                 "message"   => "Student Registration was saved successfully.\nContinue by adding the student to a class.",
-                "data"      => $result,
+                "data"      => [
+                    "student_id"   => $result['lastid'],
+                    "reference_id" => $reference_id,
+                    "result"       => $result
+                ],
                 // "redirect"  => $redirect
             );
         }else{
