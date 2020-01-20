@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?= base_url('assets/css/timeline.css') ?>">
+<link rel="stylesheet" href="<?= base_url('assets/css/profile_timeline.css') ?>">
 <div class="container">
     <div class="row">
         <div class="col-md-12">
