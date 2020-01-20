@@ -135,9 +135,6 @@
                         <td colspan=2>{{studentclassdetails.date_added}}</td>
                     </tr>
                     <tr>
-                        <th colspan=4>Payment History and Details</th>
-                    </tr>
-                    <tr>
                         <th colspan=2>Payment Option</th>
                         <td colspan=2>{{studentclassdetails.payment_options}}</td>
                     </tr>
@@ -146,9 +143,6 @@
                         <td width="20%">{{studentclassdetails.sessions}}</td>
                         <th width="30%">Remaining Sessions</th>
                         <td width="20%">{{studentclassdetails.sessions-studentclassdetails.sessions_attended}}</td>
-                    </tr>
-                    <tr>
-                        <th colspan=4>Attendance Details</th>
                     </tr>
                     <tr>
                         <th colspan=4>Classes Facilitated</th>
