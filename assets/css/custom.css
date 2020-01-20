@@ -47,3 +47,8 @@ hr {
 .announcement-text {
     text-align: justify;
 }
+
+.dropdown-menu-lg {
+    max-width: 200px;
+    min-width: 200px;
+}
