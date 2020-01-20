@@ -44,7 +44,9 @@
                     <td style="text-align:left;">
                     • Class Enrollment
                     </td>
-                    <td>Not Yet Paid</td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#addPaymentModal">Add Payment</button>
+                    </td>
                     <td>View Invoice</td>
                 </tr>
             </tbody>
@@ -76,4 +78,45 @@
         </table>
     </div>
 
+</div>
+
+<div class="modal fade" id="addPaymentModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Payment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                    <table class="table table-bordered table-responsive-sm table-sm billing-table">
+                        <tr>
+                            <th width="20%">OR Number:</th>
+                            <th><input type="text" class="form-control smallerinput" v-model="studentrefid" required></th>
+                        </tr>
+                        <tr>
+                            <th width="20%">OR Date:</th>
+                            <th><input type="text" class="form-control smallerinput" v-model="studentrefid" required></th>
+                        </tr>
+                        <tr>
+                            <th width="20%">Amount:</th>
+                            <th><input type="text" class="form-control smallerinput" v-model="studentrefid" required></th>
+                        </tr>
+                        <tr>
+                            <th width="20%">Invoice No:</th>
+                            <th><input type="text" :readonly="readonly_everything" class="form-control smallerinput" v-model="studentrefid" required></th>
+                        </tr>
+                    </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save payment</button>
+            </div>
+        </div>
+    </div>
 </div>
