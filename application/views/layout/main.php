@@ -18,6 +18,9 @@
     <link rel="stylesheet" href="<?=base_url("assets/template/plugins/daterangepicker/daterangepicker.css")?>">
     <!-- Google Font: Source Sans Pro -->
     <link href="<?= base_url('assets/css/fonts.css') ?>" rel="stylesheet">
+    <!-- Ekko Lightbox -->
+    <link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/ekko-lightbox/ekko-lightbox.css">
+    
     <link rel="stylesheet" href="<?= base_url("assets/template/plugins/select2/css/select2.min.css") ?>">
     <link rel="stylesheet" href="<?= base_url("assets/template/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css") ?>">
     <link rel="stylesheet" href="<?= base_url("assets/template/plugins/sweetalert2/sweetalert2.min.css") ?>">
@@ -206,7 +209,8 @@ to get the desired effect
     <script src="<?= base_url("assets/template/dist/js/adminlte.js") ?>"></script>
     <script src="<?= base_url('assets/js/plugins/axios.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/plugins/vue-tables-2.min.js') ?>"></script>
-
+    <!-- Ekko Lightbox -->
+    <script src="<?=base_url()?>assets/template/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
     <script src="<?= base_url("assets/template/plugins/sweetalert2/sweetalert2.min.js") ?>"></script>
     <script src="<?= base_url('assets/template/plugins/toastr/toastr.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/script.js') ?>"></script>
@@ -231,8 +235,16 @@ to get the desired effect
             showConfirmButton: false,
             timer: 3000
         });
+        
+        $(function () {
+            $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+            event.preventDefault();
+            $(this).ekkoLightbox({
+                alwaysShowClose: true
+            });
+            });
+        })
     </script>
-    
     
 </body>
 
