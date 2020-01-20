@@ -237,20 +237,19 @@ class Students extends CI_Controller {
 
     public function saveNewStudentRegistration()
     {
-        $curyear = date('Y');
-        $studentinfo = $this->input->post("studentinfo");
-        $insurance = $this->input->post("insurance");
-        $result_registration = $this->Main->insert("tbl_students", $studentinfo, true);
+        $data = jsondata();
+        $studentinfo = $data["studentinfo"];
+        $insurance = $data["insurance"];
+        $result = $this->Main->insert("tbl_students", $studentinfo, true);
 
-        if(!empty($result_registration)){
-            $reference_id = $curyear."-".$studentinfo['sex'].$result_registration['lastid'];
-            $this->Main->update("tbl_students",['student_id'=>$result_registration['lastid']],['reference_id'=>$reference_id]);
+        if(!empty($result)){
+            $reference_id = date("Y")."-".$studentinfo['sex'].$result['lastid'];
+            $this->Main->update("tbl_students",['student_id'=>$result['lastid']],['reference_id'=>$reference_id]);
             
-            //insert to tblmembership
             $insert_membership_data = [
-                "student_id"      => $result_registration['lastid'],
+                "student_id"      => $result['lastid'],
                 "year"            => date("Y"),
-                "insurance_avail" =>$insurance,
+                "insurance_avail" => $insurance,
                 "date_added"      => date('Y-m-d H:i:s')
             ];
             $insert_membership = $this->Main->insert("tbl_membership",$insert_membership_data,true);
@@ -259,10 +258,10 @@ class Students extends CI_Controller {
                 "success"   => true,
                 "message"   => "Student Registration was saved successfully.\nContinue by adding the student to a class.",
                 "data"      => [
-                    "student_id"    => $result_registration['lastid'],
+                    "student_id"    => $result['lastid'],
                     "reference_id"  => $reference_id,
-                    "membership_id" => $insert_membership['last_id'],
-                    "result"        => $result_registration
+                    "membership_id" => $insert_membership['lastid'],
+                    "result"        => $result
                 ],
             );
         }else{

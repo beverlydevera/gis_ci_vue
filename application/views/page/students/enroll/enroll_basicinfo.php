@@ -172,9 +172,9 @@
             </tr>
             <tr>
                 <th width="25%">Have you had any previous martial arts training?</th>
-                <th width="6%">
+                <th width="7%">
                     <div class="row">
-                        <div class="col-sm-2"></div>
+                        <div class="col-sm-4"></div>
                         <div class="col-sm-1">
                             <input type="radio" class="form-check-input" :value="1" v-model="derivedinfo.prevtrain" required>
                             <label class="form-check-label" for="">Yes</label>

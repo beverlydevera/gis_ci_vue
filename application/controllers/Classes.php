@@ -133,7 +133,6 @@ class Classes extends CI_Controller {
     {
         $data = jsondata();
         $datainsert = $attendanceinfo = $data['attendanceinfo'];
-
         $countexist = $this->Main->count("tbl_attendance", ["schedule_id"=>$data['schedule_id'], "schedule_date"=>$datainsert['schedule_date']]);
         if($countexist>0){
             $success = false;

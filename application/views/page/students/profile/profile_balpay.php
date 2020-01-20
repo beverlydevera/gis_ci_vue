@@ -60,7 +60,7 @@
                     <th>OR Date</th>
                     <th>OR Amount</th>
                     <th>Invoice No.</th>
-                    <th>View OR</th>
+                    <!-- <th>View OR</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -70,7 +70,7 @@
                     <td>01/01/2020</td>
                     <td>1,500.00</td>
                     <td>INV000001</td>
-                    <td>View OR</td>
+                    <!-- <td>View OR</td> -->
                 </tr>
             </tbody>
         </table>

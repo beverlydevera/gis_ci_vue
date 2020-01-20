@@ -41,11 +41,10 @@ var enroll = new Vue({
             this.studentinfo.emergencyinfo = this.derivedinfo.emergency_name+"/"+this.derivedinfo.emergency_relationship+"/"+this.derivedinfo.emergency_address+"/"+this.derivedinfo.emergency_mobilenum;
             
             var datas = {
-                studentinfo: this.studentinfo,
-                insurance: this.otherinfo.insurance
+                insurance: this.otherinfo.insurance,
+                studentinfo: this.studentinfo
             };
-
-            var datas = frmdata(datas);
+            // var datas = frmdata(datas);
             var urls = window.App.baseUrl + "students/saveNewStudentRegistration";
             axios.post(urls, datas)
                 .then(function (e) {

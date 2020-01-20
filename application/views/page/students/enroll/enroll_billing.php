@@ -2,7 +2,7 @@
     <div class="col-md-2"></div>
     <div class="col-md-8">
         <h5>Date: <?=date(" F d, Y")?>
-            <a href="" class="btn btn-primary btn-sm" style="float:right; color:#000;">Print Invoice</a>
+            <a href="" class="btn btn-primary btn-sm" style="float:right; color:#fff;">Print Invoice</a>
         </h5>
         <hr>
         <h5>Billing Summary</h5>
