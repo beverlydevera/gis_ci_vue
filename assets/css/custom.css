@@ -38,3 +38,12 @@ h6 {
 hr {
     border: 1px solid #d3d3d3 !important;
 }
+
+.announcement-date {
+    text-decoration: underline; 
+    text-align: right;
+}
+
+.announcement-text {
+    text-align: justify;
+}

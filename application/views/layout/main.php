@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="<?= base_url("assets/template/plugins/toastr/toastr.min.css") ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/custom.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/style.css') ?>">
-
+    
     <script src="<?= base_url('assets/js/plugins/vue.js') ?>"></script>
     <script src="<?= base_url('assets/js/jquery-3.4.1.min.js') ?>"></script>
     <script type="text/javascript">
@@ -328,6 +328,12 @@ to get the desired effect
     <script src="<?= base_url("assets/template/dist/js/adminlte.js") ?>"></script>
     <script src="<?= base_url('assets/js/plugins/axios.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/plugins/vue-tables-2.min.js') ?>"></script>
+
+    
+    <!-- OPTIONAL SCRIPTS -->
+    <script src="<?=base_url()?>assets/template/plugins/chart.js/Chart.min.js"></script>
+    <script src="<?=base_url()?>assets/template/dist/js/demo.js"></script>
+    <script src="<?=base_url()?>assets/template/dist/js/pages/dashboard3.js"></script>
 
     <script src="<?= base_url("assets/template/plugins/sweetalert2/sweetalert2.min.js") ?>"></script>
     <script src="<?= base_url('assets/template/plugins/toastr/toastr.min.js') ?>"></script>
