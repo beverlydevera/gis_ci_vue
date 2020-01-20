@@ -44,7 +44,7 @@
                                 <th width="12%" class="stroke-text header-style">SATURDAY</th>
                                 <th width="12%" class="stroke-text header-style">SUNDAY</th>
                             </tr>
- aaaa           </thead>
+                    </thead>
                         <tbody>
                             <tr>
                                 <td class="stroke-text">9:00 - 9:30</td>
