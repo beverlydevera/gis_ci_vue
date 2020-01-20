@@ -63,7 +63,7 @@
     </li>
     <li class="nav-item has-treeview menu-open">
     <!-- <li class="nav-item has-treeview menu-close"> -->
-      <a href="#" class="nav-link" v-bind:class="checkactive('users')">
+      <a href="#" class="nav-link" v-bind:class="checkactive('libraries')">
         <i class="nav-icon fas fa-book"></i>
         <p>
           Libraries

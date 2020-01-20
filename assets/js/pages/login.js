@@ -32,6 +32,13 @@ var login = new Vue({
                     console.log(error)
                 });
         },
+        forgotpass(){
+            Swal.fire({
+                title: "Password Recovery warning",
+                text: "Please contact your system administrator to recover your account/password.",
+                type: 'warning',
+            })
+        }
     }, mounted: function () {
         //a
     },

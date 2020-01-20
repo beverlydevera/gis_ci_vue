@@ -31,7 +31,7 @@
                             </div>
                             <div class="col-md-2">
                                 <select class="form-control smallerinput">
-                                    <option disabled selected>Select Day</option>
+                                    <option disabled selected>Select Class SchedDay</option>
                                     <option>Monday</option>
                                 </select>
                             </div>

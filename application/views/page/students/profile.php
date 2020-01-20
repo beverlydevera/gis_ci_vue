@@ -60,9 +60,15 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="#gallery" data-toggle="tab">
+                                    <i class="far fa-images"></i>
+                                    Gallery
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="#balancepayments" data-toggle="tab">
                                     <i class="far fa-credit-card"></i>
-                                    Balance and Payments
+                                    Accounts
                                 </a>
                             </li>
                             <!-- <li class="nav-item">
@@ -71,31 +77,25 @@
                                     Audit Trail
                                 </a>
                             </li> -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="#gallery" data-toggle="tab">
-                                    <i class="far fa-images"></i>
-                                    Gallery
-                                </a>
-                            </li>
                         </ul>
                         </div>
                         
                         <div class="card-body">
                             <div class="tab-content">
                                 <div class="tab-pane active" id="personalinfo">
-                                    <?php include('profile_basicinfo.php');?>
+                                    <?php include('profile/profile_basicinfo.php');?>
                                 </div>
                                 <div class="tab-pane" id="activity">
-                                    <?php include('profile_classes.php');?>
+                                    <?php include('profile/profile_classes.php');?>
                                 </div>
                                 <div class="tab-pane" id="timeline">
-                                    <?php include('profile_timeline.php');?>
-                                </div>
-                                <div class="tab-pane" id="balancepayments">
-                                    <?php include('profile_balpay.php');?>
+                                    <?php include('profile/profile_timeline.php');?>
                                 </div>
                                 <div class="tab-pane" id="gallery">
-                                    <?php include('profile_gallery.php');?>
+                                    <?php include('profile/profile_gallery.php');?>
+                                </div>
+                                <div class="tab-pane" id="balancepayments">
+                                    <?php include('profile/profile_balpay.php');?>
                                 </div>
                             </div>
                         </div>

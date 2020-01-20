@@ -9,7 +9,6 @@ class Classes extends CI_Controller {
         $this->load->model("Main");
         $this->load->model("Classes_model", "classes");
         date_default_timezone_set("Asia/Manila");
-        $this->data['curdatetime'] = date('Y-m-d H:i:s');
         checkLogin();
 	}
 	
@@ -134,7 +133,6 @@ class Classes extends CI_Controller {
     {
         $data = jsondata();
         $datainsert = $attendanceinfo = $data['attendanceinfo'];
-
         $countexist = $this->Main->count("tbl_attendance", ["schedule_id"=>$data['schedule_id'], "schedule_date"=>$datainsert['schedule_date']]);
         if($countexist>0){
             $success = false;
@@ -142,7 +140,7 @@ class Classes extends CI_Controller {
             $message = "Class Schedule Date already exists";
         }else{
             $datainsert['schedule_id'] = $data['schedule_id'];
-            $datainsert['date_added'] = $this->data['curdatetime'];
+            $datainsert['date_added'] = date('Y-m-d H:i:s');
             $datainsert['attendance'] = json_encode($attendanceinfo['attendance']);
             unset($datainsert['attendance_id']);
     

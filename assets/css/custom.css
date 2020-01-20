@@ -52,3 +52,14 @@ hr {
     max-width: 200px;
     min-width: 200px;
 }
+
+.billing-desc{
+    text-align: left !important;
+}
+
+.billing-table tfoot{
+    text-align: center !important;
+}
+/* .billing-table th, td {
+    border: 1px solid #fff !important;
+} */

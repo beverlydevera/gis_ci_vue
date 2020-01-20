@@ -61,25 +61,25 @@ var profile = new Vue({
                 });
         },
         checkPayment(){
-                var datas = { package_id: this.classenroll.package_id };
-                var datas = frmdata(datas);
-                var urls = window.App.baseUrl + "students/checkPayment";
-                axios.post(urls, datas)
-                    .then(function (e) {
-                        if (e.data.success) {
-                            if(profile.classenroll.payment=="fullPayment"){
-                                profile.classenroll.amounttopay = e.data.data;
-                                profile.readonly_everything = true;
-                            }else{
-                                $("#amountpay").attr({ "max" : e.data.data, });
-                                profile.classenroll.amounttopay = "";
-                                profile.readonly_everything = false;
-                            }
+            var datas = { package_id: this.classenroll.package_id };
+            var datas = frmdata(datas);
+            var urls = window.App.baseUrl + "students/checkPayment";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    if (e.data.success) {
+                        if(profile.classenroll.payment=="fullPayment"){
+                            profile.classenroll.amounttopay = e.data.data;
+                            profile.readonly_everything = true;
+                        }else{
+                            $("#amountpay").attr({ "max" : e.data.data, });
+                            profile.classenroll.amounttopay = "";
+                            profile.readonly_everything = false;
                         }
-                    })
-                    .catch(function (error) {
-                        console.log(error)
-                    });
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
         },
         getClassScheds(){
             var urls = window.App.baseUrl + "classes/getClassScheds";
