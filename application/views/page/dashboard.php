@@ -6,11 +6,6 @@
                 <div class="card-header">
                 <h3 class="card-title">Other Dashboard</h3>
                 </div>
-                <div class="card-body">
-                    Graphs
-                    Announcements
-                    Calendar
-                </div>
             </div>
         </div>
 
