@@ -33,14 +33,6 @@
             "removeDOM": "",
         };
     </script>
-
-    <script type="text/javascript">
-        $('.cstm-rowspan').hover(function(){
-            $('.cstm-rowspan').addClass('cstm-rowspan-bg');
-                }, function(){
-            $('.cstm-rowspan').removeClass('cstm-rowspan-bg');
-        });
-    </script>
 </head>
 <!--
 BODY TAG OPTIONS:
