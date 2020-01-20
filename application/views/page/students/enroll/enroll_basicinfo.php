@@ -65,20 +65,20 @@
                 <th ><input type="number" class="form-control smallerinput" v-model="studentinfo.height" required step="any"></th>
                 <th width="15%"><span class="requiredspan">*</span>Weight (kg):</th>
                 <th ><input type="number" class="form-control smallerinput" v-model="studentinfo.weight" required step="any"></th>
-                <!-- <th width="15%"><span class="requiredspan">*</span>Insurance:</th>
+                <th width="15%">Insurance:</th>
                 <th>
                     <div class="row">
                         <div class="col-sm-2"></div>
                         <div class="col-sm-5">
-                            <input type="radio" class="form-check-input" :value="1" v-model="studentinfo.insurance" required>
+                            <input type="radio" class="form-check-input" :value="1" v-model="otherinfo.insurance" required>
                             <label class="form-check-label" for="">Yes</label>
                         </div>
                         <div class="col-sm-5">
-                            <input type="radio" class="form-check-input" :value="0" v-model="studentinfo.insurance" required>
+                            <input type="radio" class="form-check-input" :value="0" v-model="otherinfo.insurance" required>
                             <label class="form-check-label" for="">No</label>
                         </div>
                     </div>
-                </th> -->
+                </th>
             </tr>
         </table>
     </div>

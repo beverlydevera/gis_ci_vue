@@ -6,6 +6,10 @@ var enroll = new Vue({
         studentrefid:"",
         student_id:"",
         studentinfo:{},
+        otherinfo:{
+            insurance: 0,
+            membership_id: 0,
+        },
         derivedinfo:{
             studentage: 0,
         },
@@ -35,8 +39,13 @@ var enroll = new Vue({
             this.studentinfo.motherinfo = this.derivedinfo.mother_name+"/"+this.derivedinfo.mother_occupation+"/"+this.derivedinfo.mother_officeadd+"/"+this.derivedinfo.mother_contactno;
             this.studentinfo.guardianinfo = this.derivedinfo.guardian_name+"/"+this.derivedinfo.guardian_occupation+"/"+this.derivedinfo.guardian_officeadd+"/"+this.derivedinfo.guardian_contactno;
             this.studentinfo.emergencyinfo = this.derivedinfo.emergency_name+"/"+this.derivedinfo.emergency_relationship+"/"+this.derivedinfo.emergency_address+"/"+this.derivedinfo.emergency_mobilenum;
-                        
-            var datas = frmdata(this.studentinfo);
+            
+            var datas = {
+                studentinfo: this.studentinfo,
+                insurance: this.otherinfo.insurance
+            };
+
+            var datas = frmdata(datas);
             var urls = window.App.baseUrl + "students/saveNewStudentRegistration";
             axios.post(urls, datas)
                 .then(function (e) {
@@ -48,6 +57,7 @@ var enroll = new Vue({
                         })
                         enroll.studentrefid = e.data.data.reference_id;
                         enroll.student_id = e.data.data.student_id;
+                        enroll.otherinfo.membership_id = e.data.data.membership_id;
                         enroll.disabled_everything = true;
                         $('.active').removeClass('active');
                         $('.disabled').removeClass('disabled');

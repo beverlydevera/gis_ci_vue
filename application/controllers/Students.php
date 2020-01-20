@@ -8,6 +8,7 @@ class Students extends CI_Controller {
         parent::__construct();
         $this->load->model("Main");
         $this->load->model("Students_model", "student");
+        date_default_timezone_set("Asia/Manila");
         checkLogin();
 	}
 	
@@ -182,7 +183,6 @@ class Students extends CI_Controller {
 
     public function enrollToClass()
     {
-        
         $data = $this->input->post();
         $data['date_added'] = date('Y-m-d H:i:s');
         $result = $this->Main->insert("tbl_studentpackages", $data, true);
@@ -238,33 +238,38 @@ class Students extends CI_Controller {
     public function saveNewStudentRegistration()
     {
         $curyear = date('Y');
-        $data = $this->input->post();
-        $result = $this->Main->insert("tbl_students", $data, true);
+        $studentinfo = $this->input->post("studentinfo");
+        $insurance = $this->input->post("insurance");
+        $result_registration = $this->Main->insert("tbl_students", $studentinfo, true);
 
-        if(!empty($result)){
-            $reference_id = $curyear."-".$data['sex'].$result['lastid'];
-            $this->Main->update("tbl_students",['student_id'=>$result['lastid']],['reference_id'=>$reference_id]);
+        if(!empty($result_registration)){
+            $reference_id = $curyear."-".$studentinfo['sex'].$result_registration['lastid'];
+            $this->Main->update("tbl_students",['student_id'=>$result_registration['lastid']],['reference_id'=>$reference_id]);
             
-            // $name="";
-            // $name = str.replace(' ', '', $name.$data['firstname']);
-            // $name = str.replace(' ', '', $name.$data['lastname']);
-            // $redirect = base_url('students/profile/'.$name."-".$result['lastid']);
+            //insert to tblmembership
+            $insert_membership_data = [
+                "student_id"      => $result_registration['lastid'],
+                "year"            => date("Y"),
+                "insurance_avail" =>$insurance,
+                "date_added"      => date('Y-m-d H:i:s')
+            ];
+            $insert_membership = $this->Main->insert("tbl_membership",$insert_membership_data,true);
+
             $response = array(
                 "success"   => true,
                 "message"   => "Student Registration was saved successfully.\nContinue by adding the student to a class.",
                 "data"      => [
-                    "student_id"   => $result['lastid'],
-                    "reference_id" => $reference_id,
-                    "result"       => $result
+                    "student_id"    => $result_registration['lastid'],
+                    "reference_id"  => $reference_id,
+                    "membership_id" => $insert_membership['last_id'],
+                    "result"        => $result_registration
                 ],
-                // "redirect"  => $redirect
             );
         }else{
             $response = array(
                 "success"   => false,
                 "message"   => "Student Registration was not saved.",
                 "data"      => "",
-                // "redirect"  => ""
             );
         }
         response_json($response);

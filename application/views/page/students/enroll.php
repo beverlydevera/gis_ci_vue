@@ -9,10 +9,10 @@
                         <a class="nav-link active" id="basicinfo-tab" data-toggle="pill" href="#basicinfo" role="tab" aria-controls="basicinfo" aria-selected="true">Personal Information</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link disabled" id="schedulinginfo-tab" data-toggle="pill" href="#schedulinginfo" role="tab" aria-controls="schedulinginfo" aria-selected="false">Class Enrollment</a>
+                        <a class="nav-link " id="schedulinginfo-tab" data-toggle="pill" href="#schedulinginfo" role="tab" aria-controls="schedulinginfo" aria-selected="false">Class Enrollment</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link disabled" id="billinginfo-tab" data-toggle="pill" href="#billinginfo" role="tab" aria-controls="billinginfo" aria-selected="false">Billing</a>
+                        <a class="nav-link " id="billinginfo-tab" data-toggle="pill" href="#billinginfo" role="tab" aria-controls="billinginfo" aria-selected="false">Billing</a>
                         </li>
                         <li class="nav-item">
                         <a class="nav-link disabled" id="completeinfo-tab" data-toggle="pill" href="#completeinfo" role="tab" aria-controls="completeinfo" aria-selected="false">Complete</a>
