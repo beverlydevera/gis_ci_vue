@@ -154,7 +154,7 @@
         
     }
 
-    th, td{
+    .table-sched th, td{
     text-align: center;
     vertical-align: middle !important;
     padding: 0.25% !important;
