@@ -1,5 +1,4 @@
 
-    /* line 2042, ../sass/_stilo.scss */
     .stroke-text {
     color: white;
     text-shadow: -1px -1px 0 #000,   1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
@@ -16,62 +15,61 @@
     font-weight: 800;
     }
 
-    /* line 2053, ../sass/_stilo.scss */
+
     .fill-yellow {
     background-image: linear-gradient(to bottom, #fbe295, #fccc38);
     }
 
-    /* line 2057, ../sass/_stilo.scss */
+
     .fill-blue {
     background-image: linear-gradient(to bottom, #e7f3fd, #bdd7ee);
     }
 
-    /* line 2061, ../sass/_stilo.scss */
+
     .fill-red {
     background-image: linear-gradient(to bottom, #f66160, #f13533);
     }
 
-    /* line 2065, ../sass/_stilo.scss */
+
     .fill-light-orange {
     background-image: linear-gradient(to bottom, #fdddc8, #efb894);
     }
 
-    /* line 2069, ../sass/_stilo.scss */
     .fill-cubs {
     background-image: linear-gradient(to bottom, #dbe2d5, #b7c3ae);
     }
 
-    /* line 2073, ../sass/_stilo.scss */
+
     .fill-gray {
     background-image: linear-gradient(to bottom, #ffffff, #cacaca);
     }
 
-    /* line 2077, ../sass/_stilo.scss */
+
     .fill-green {
     background-image: linear-gradient(to bottom, #39dc7f, #00b34d);
     }
 
-    /* line 2081, ../sass/_stilo.scss */
+
     .fill-semi-orange {
     background-image: linear-gradient(to bottom, #d69e7a, #c8865c);
     }
 
-    /* line 2085, ../sass/_stilo.scss */
+
     .fill-dark-orange {
     background-image: linear-gradient(to bottom, #d26d33, #bd5215);
     }
 
-    /* line 2089, ../sass/_stilo.scss */
+
     .fill-dark-blue {
     background-image: linear-gradient(to bottom, #405c86, #1e3a63);
     }
 
-    /* line 2093, ../sass/_stilo.scss */
+
     .fill-dark-gray {
     background-image: linear-gradient(to bottom, #a2a4a8, #515254);
     }
 
-    /* line 2098, ../sass/_stilo.scss */
+
     .table-sched a {
     display: block;
     height: 100%;
@@ -81,8 +79,12 @@
     margin-bottom: -50px;
     }
 
-    .fill-yellow{
+    .fill-semi-yellow{
     background-image: linear-gradient(to bottom, #fbe295 , #fccc38);
+    }
+
+    .fill-yellow{
+        background-image: linear-gradient(to bottom, #c3f143 , #1eff00);
     }
 
     .fill-blue{
@@ -114,7 +116,7 @@
     }
 
     .fill-dark-orange{
-    background-image: linear-gradient(to bottom, #d26d33 , #bd5215);
+    background-image: linear-gradient(to bottom, #ff5e00 , #d88859);
     }
 
     .fill-dark-blue{
@@ -125,6 +127,22 @@
     background-image: linear-gradient(to bottom, #a2a4a8 , #515254);
     }
 
+    .fill-dark-violet{
+        background-image: linear-gradient(to bottom, #7d0eb1 , #3f0d57);
+    }
+
+    .fill-light-white{
+        background-image: linear-gradient(to bottom, #70c0ca , #57b6b6);
+    }
+
+    .fill-semi-white{
+        background-image: linear-gradient(to bottom, #0e7474 , #33585f);
+    }
+
+    .fill-dark-white{
+        background-image: linear-gradient(to bottom, #1c4b4b , #1d2b2e);
+    }
+
     .table-sched{
         a{
             display: block;
@@ -133,18 +151,21 @@
             padding: 10px 10px 60px 10px; /*table default padding except on bottom 500px for example*/
             margin-bottom: -50px;
         }
+        
     }
 
     th, td{
     text-align: center;
     vertical-align: middle !important;
     padding: 0.25% !important;
-    border: 2px solid #000 !important;
+    border: 1px solid #000 !important;
     }
 
     .header-style{
-    background-color: #0800ff;
+    background-color: #9b99ee;
     }
+    
+
 
 
     /* .comment:after {
@@ -154,3 +175,40 @@
         border-left: 0.5em solid transparent;
         border-top: 0.5em solid red;
     } */
+
+
+
+
+/*       
+    .table-sched td:hover::before {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px #beb645;
+      }
+      
+      td:hover {
+        color: #ffee10;
+        box-shadow: 0 0 5px #ffee10;
+        text-shadow: 0 0 5px #ffee10;
+      } */
+
+
+
+
+
+
+    .table-sched td{
+            transition: all .2s ease-in-out;
+    }
+        
+    .table-sched td:hover{
+            transform: scale(1.1);
+            box-shadow: 0 0 5px #000000;
+    }
+
+    .table-sched tr:hover{
+            background: #62ff06;
+    }
+              
+    
+
+

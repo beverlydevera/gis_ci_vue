@@ -26,11 +26,20 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/style.css') ?>">
 
     <script src="<?= base_url('assets/js/plugins/vue.js') ?>"></script>
+    <script src="<?= base_url('assets/js/jquery-3.4.1.min.js') ?>"></script>
     <script type="text/javascript">
         window.App = {
             "baseUrl": "<?= base_url() ?>",
             "removeDOM": "",
         };
+    </script>
+
+    <script type="text/javascript">
+        $('.cstm-rowspan').hover(function(){
+            $('.cstm-rowspan').addClass('cstm-rowspan-bg');
+                }, function(){
+            $('.cstm-rowspan').removeClass('cstm-rowspan-bg');
+        });
     </script>
 </head>
 <!--
@@ -353,6 +362,8 @@ to get the desired effect
             timer: 3000
         });
     </script>
+    
+    
 </body>
 
 </html>
