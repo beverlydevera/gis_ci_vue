@@ -2,6 +2,26 @@
     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#enrollToClassModal" style="float:right;" @click="getClassScheds">Enroll to a Class</button>
 </h6>
 <br>
+<div class="row">
+    <div class="col-md-3">
+        <div class="input-group mb-3">
+        <div class="input-group-prepend smallerinput">
+            <span class="input-group-text"><i class="fas fa-search"></i></span>
+        </div>
+        <input type="text" class="form-control smallerinput" placeholder="Search">
+        </div>
+    </div>
+    <div class="col-md-3">
+        <select class="form-control smallerinput">
+            <option disabled selected>Select Class SchedDay</option>
+            <option>Monday</option>
+        </select>
+    </div>
+    <div class="col-md-1">
+        <button class="btn btn-primary btn-xs">Filter</button>
+    </div>
+</div>
+<!-- <br> -->
 <table class="table table-bordered table-responsive-sm table-sm">
     <thead>                  
         <tr>
