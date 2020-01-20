@@ -7,36 +7,44 @@
                 <div class="timeline">
                     <a href="#" class="timeline-content">
                         <span class="year">2018</span>
-                        <h3 class="title">Web Designer</h3>
+                        <h3 class="title">2nd Brown</h3>
                         <p class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer malesuada tellus lorem, et condimentum neque commodo quis.
+                            <div class="text-center">
+                                <img class="profile-user-img img-fluid img-circle" src="<?= base_url("assets/img/karate4.jpg") ?>">
+                            </div>
                         </p>
                     </a>
                 </div>
                 <div class="timeline">
                     <a href="#" class="timeline-content">
                         <span class="year">2017</span>
-                        <h3 class="title">Web Developer</h3>
+                        <h3 class="title">3rd Red</h3>
                         <p class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer malesuada tellus lorem, et condimentum neque commodo quis.
+                            <div class="text-center">
+                                <img class="profile-user-img img-fluid img-circle" src="<?= base_url("assets/img/karate7.jpg") ?>">
+                            </div>
                         </p>
                     </a>
                 </div>
                 <div class="timeline">
                     <a href="#" class="timeline-content">
                         <span class="year">2016</span>
-                        <h3 class="title">Web Designer</h3>
+                        <h3 class="title">6th Blue</h3>
                         <p class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer malesuada tellus lorem, et condimentum neque commodo quis.
+                            <div class="text-center">
+                                <img class="profile-user-img img-fluid img-circle" src="<?= base_url("assets/img/karate2.jpg") ?>">
+                            </div>
                         </p>
                     </a>
                 </div>
                 <div class="timeline">
                     <a href="#" class="timeline-content">
                         <span class="year">2015</span>
-                        <h3 class="title">Web Developer</h3>
+                        <h3 class="title">8th Yellow</h3>
                         <p class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer malesuada tellus lorem, et condimentum neque commodo quis.
+                            <div class="text-center">
+                                <img class="profile-user-img img-fluid img-circle" src="<?= base_url("assets/img/karate6.jpg") ?>">
+                            </div>
                         </p>
                     </a>
                 </div>

@@ -214,37 +214,88 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-8">
-                                <h6 class="announcement-heading">Sample Heading 1</h6>
+                                <h6 class="announcement-heading">Milo Summer Clinic 2019</h6>
                             </div>
                             <div class="col-md-4">
                                 <p class="announcement-date">Jan. 20, 2019</p>
                             </div>
-                            <div class="col-md-12">
-                                <p class="announcement-text">Sample Paragraph 1 Sample Paragraph 1 Sample Paragraph 1 Sample Paragraph 1 Sample Paragraph 1 Sample Paragraph 1 Sample Paragraph 1 Sample Paragraph 1...<a href="">Read More</a></p>
+                            <div class="col-md-12 announcement-contact">
+                                <span>Enroll now for free trial at your nearest Bravehearts Martial Arts Institute branch. 
+                                    Join us in the place where champions are made. For more information...
+                                </span>
+                                <br><a href="">Read More</a>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-md-8">
-                                <h6 class="announcement-heading">Sample Heading 2</h6>
+                                <h6 class="announcement-heading">Vision / Mission</h6>
                             </div>
                             <div class="col-md-4">
                                 <p class="announcement-date">Jan. 20, 2019</p>
                             </div>
-                            <div class="col-md-12">
-                                <p class="announcement-text">Sample Paragraph 2 Sample Paragraph 2 Sample Paragraph 2 Sample Paragraph 2 Sample Paragraph 2 Sample Paragraph 2 Sample Paragraph 2 Sample Paragraph 2...<a href="">Read More</a></p>
+                            <div class="col-md-12 announcement-contact">
+                                <label>Our Mission</label>
+                                <span>
+                                <br>
+                                    We commit to become the leading Martial Arts Institute by providing scientific, 
+                                    structured and top of the line martial arts instructions with core values of 
+                                    “Discipline, Character and Excellence,” in an environment where love, camaraderie 
+                                    and friendship emanates.
+                                </span>
+                                <br>
+                                <label>Our Vision</label>
+                                <span>
+                                <br>
+                                    We help every member of Bravehearts Martial Arts Institute experience satisfaction 
+                                    and by creating in them their desire to excel making sure that every student feels 
+                                    great about themselves as they quest for their personal best in an atmosphere of success 
+                                    and accomplishment through our carefully selected martial arts instructions and values.
+                                </span>
+                                <br>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-md-8">
-                                <h6 class="announcement-heading">Sample Heading 3</h6>
+                                <h6 class="announcement-heading">Contact Numbers</h6>
                             </div>
                             <div class="col-md-4">
                                 <p class="announcement-date">Jan. 18, 2019</p>
                             </div>
-                            <div class="col-md-12">
-                                <p class="announcement-text">Sample Paragraph 3 Sample Paragraph 3 Sample Paragraph 3 Sample Paragraph 3 Sample Paragraph 3 Sample Paragraph 3 Sample Paragraph 3 Sample Paragraph 3...<a href="">Read More</a></p>
+                            <div class="col-md-12 announcement-contact">
+                                <p class="announcement-text">
+                                    <label>ABANAO SQUARE MALL</label>
+                                    <br>
+                                    <span>Roofdeck, Abanao Square Mall
+                                    <br>Smart 0939 094 0117 / Globe 0926 733 8773
+                                    </span>
+                                    <br>
+                                    <label>KM 5, LA TRINIDAD</label>
+                                    <br>
+                                    <span>Rm. 212, 2nd Floor VC Arcadian Bldg Km 5
+                                    <br>Smart 0920 529 1056 / Landline: 422-8923
+                                    </span>
+                                    <br>
+                                    <label>UCAB ITOGON BENGUET</label>
+                                    <br>
+                                    <span>Lower Gomok Consumer Cooperative, Ucab Itogon Benguet
+                                    <br>Smart 0929 180 2642
+                                    <br>
+                                    </span>
+                                    <label>BUYAGAN, LA TRINIDAD</label>
+                                    <br>
+                                    <span>AE224 Western Buyagan, Poblacion, La Trinidad Benguet
+                                    <br>Smart: 0949 303 5571
+                                    </span>
+                                    <br>
+                                    <label>ALBERGO RESIDENCES</label>
+                                    <br>
+                                    <span>116 Albergo Residences, 01 Ignacio Villamor St., Baguio CIty
+                                    <br>Globe: 0967-211-5673 / ​Landline: 665-8193
+                                    </span>
+                                    <br>
+                                </p>
                             </div>
                         </div>
                         <hr>

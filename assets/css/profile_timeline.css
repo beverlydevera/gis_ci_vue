@@ -101,16 +101,16 @@ h4{text-align:center;margin:30px 0;color:#444}
 .main-timeline3 .title{font-size:18px;font-weight:600;text-transform:uppercase;color:#4a4a4a}
 .main-timeline3 .description{font-size:14px;color:#6f6f6f;margin:0 0 5px}
 .main-timeline3 .timeline:nth-child(2n){padding:10px 100px 10px 60px;text-align:right}
-.main-timeline3 .timeline:nth-child(2n):before{left:auto;right:-20px;background:#bf3fc8;box-shadow:0 0 1px 5px #bf3fc8}
-.main-timeline3 .timeline:nth-child(2n) .year{padding-right:50px;border-radius:10px 10px 0;left:auto;right:-20px;background:#bf3fc8}
-.main-timeline3 .timeline:nth-child(2n) .year:before{border-left:none;border-right:20px solid transparent;left:auto;right:0;border-top-color:#bf3fc8}
+.main-timeline3 .timeline:nth-child(2n):before{left:auto;right:-20px;background:#ce3c41;box-shadow:0 0 1px 5px #ce3c41}
+.main-timeline3 .timeline:nth-child(2n) .year{padding-right:50px;border-radius:10px 10px 0;left:auto;right:-20px;background:#ce3c41}
+.main-timeline3 .timeline:nth-child(2n) .year:before{border-left:none;border-right:20px solid transparent;left:auto;right:0;border-top-color:#ce3c41}
 .main-timeline3 .timeline:nth-child(2){margin-top:140px}
 .main-timeline3 .timeline:nth-child(odd){margin:-140px 0 0}
 .main-timeline3 .timeline:nth-child(even){margin-bottom:60px}
 .main-timeline3 .timeline:first-child,.main-timeline3 .timeline:last-child:nth-child(even){margin:0}
-.main-timeline3 .timeline:nth-child(3n):before{background:#ce3c41;box-shadow:0 0 1px 5px #ce3c41}
-.main-timeline3 .timeline:nth-child(3n) .year{background:#ce3c41}
-.main-timeline3 .timeline:nth-child(3n) .year:before{border-top-color:#ce3c41}
+.main-timeline3 .timeline:nth-child(3n):before{background:#2e00fa;box-shadow:0 0 1px 5px #2e00fa}
+.main-timeline3 .timeline:nth-child(3n) .year{background:#2e00fa}
+.main-timeline3 .timeline:nth-child(3n) .year:before{border-top-color:#2e00fa}
 .main-timeline3 .timeline:nth-child(4n):before{background:#8cc43d;box-shadow:0 0 1px 5px #8cc43d}
 .main-timeline3 .timeline:nth-child(4n) .year{background:#8cc43d}
 .main-timeline3 .timeline:nth-child(4n) .year:before{border-top-color:#8cc43d}

@@ -217,4 +217,16 @@
     .table-sched tr:hover{
             background: #62ff06;
     }
+
+    .announcement-contact label{
+      font-weight: 800;
+      color: rgba(59, 174, 250, 0.993);
+    }
+
+    .announcement-contact span{
+      font-style: italic;
+      color: rgb(105, 93, 93);
+    }
+
+   
               
