@@ -5,13 +5,21 @@ var enroll = new Vue({
         readonly_everything: true,
         studentrefid:"",
         student_id:"",
-        studentinfo:{},
+        studentinfo:{
+            telephoneno: "",
+            religion: "",
+            nickname: "",
+        },
         otherinfo:{
             insurance: 0,
             membership_id: 0,
         },
         derivedinfo:{
             studentage: 0,
+            schoolyear: "",
+            schoolcourse: "",
+            companyname: "",
+            companyaddress: "",
         },
         classschedlist: {},
         classpackagelist: {},

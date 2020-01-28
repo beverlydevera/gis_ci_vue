@@ -6,9 +6,18 @@ var profile = new Vue({
         readonly_everything: true,
         disabled_everything: true,
         student_id:$('#student_id').val(),
-        studentinfo:{},
+        studentinfo:{
+            telephoneno: "",
+            religion: "",
+            nickname: "",
+        },
+
         derivedinfo:{
             studentage: 0,
+            schoolyear: "",
+            schoolcourse: "",
+            companyname: "",
+            companyaddress: "",
         },
         classschedlist: {},
         classpackagelist: {},

@@ -54,9 +54,15 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="#competition" data-toggle="tab">
+                                    <i class="fas fa-medal"></i>
+                                    Competitions
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="#timeline" data-toggle="tab">
                                     <i class="fas fa-trophy"></i>
-                                    Promotion Timeline
+                                    Promotion
                                 </a>
                             </li>
                             <li class="nav-item">
