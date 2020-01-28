@@ -19,7 +19,8 @@
                                 <a>{{studentinfo.reference_id}}</a>
                             </li>
                             <li class="list-group-item">
-                                <b>Branch: </b><span class="btn btn-success btn-xs float-right"><i class="fas fa-edit"></i></span><br>
+                                <b>Branch: </b>
+                                <!-- <button class="btn btn-success btn-xs float-right" data-toggle="modal" data-target="#transferBranchModal"><i class="fas fa-edit"></i></button><br> -->
                                 <a >Albergo</a>
                             </li>
                             <li class="list-group-item">
@@ -111,6 +112,36 @@
             </div>
         </div>
     </div>
+
+    <!-- <div class="modal fade" id="transferBranchModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Change Branch</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6>Transfer to:</h6>
+                            <select class="form-control">
+                                <option disabled selected>Select Branch</option>
+                                <option>Albergo</option>
+                                <option>Arcadian</option>
+                                <option>Aaa</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
 
     <div class="modal fade" id="changeMembershipModal">
         <div class="modal-dialog modal-sm">
