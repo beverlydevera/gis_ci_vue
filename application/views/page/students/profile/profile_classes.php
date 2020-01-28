@@ -39,8 +39,8 @@
             <td>{{list.sched_day}} / {{list.sched_time}}</td>
             <td>{{list.sessions-list.sessions_attended}}</td>
             <td>
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#StudentClassDetailsModal" @click="getStudentClassDetails(list.studpack_id,list.schedule_id)"><i class="fas fa-eye"></i></button>
-                <button type="button" class="btn btn-danger btn-sm" @click="deleteStudentClass(list.studpack_id)"><i class="fas fa-trash-alt"></i></button>
+                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#StudentClassDetailsModal" @click="getStudentClassDetails(list.studpack_id,list.schedule_id)"><i class="fas fa-eye"></i></button>
+                <button type="button" class="btn btn-danger btn-xs" @click="deleteStudentClass(list.studpack_id)"><i class="fas fa-trash-alt"></i></button>
             </td>
         </tr>
     </tbody>

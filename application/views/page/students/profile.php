@@ -19,8 +19,8 @@
                                 <a>{{studentinfo.reference_id}}</a>
                             </li>
                             <li class="list-group-item">
-                                <b>Branch: </b>
-                                <!-- <button class="btn btn-success btn-xs float-right" data-toggle="modal" data-target="#transferBranchModal"><i class="fas fa-edit"></i></button><br> -->
+                                <b>Branch: </b><br>
+                                <!-- <button class="btn btn-success btn-xs float-right" data-toggle="modal" data-target="#transferBranchModal"><i class="fas fa-edit"></i></button> -->
                                 <a >Albergo</a>
                             </li>
                             <li class="list-group-item">
@@ -96,6 +96,9 @@
                             </div>
                             <div class="tab-pane" id="classes">
                                 <?php include('profile/profile_classes.php');?>
+                            </div>
+                            <div class="tab-pane" id="competition">
+                                <?php include('profile/profile_competition.php');?>
                             </div>
                             <div class="tab-pane" id="timeline">
                                 <?php include('profile/profile_timeline.php');?>
