@@ -12,7 +12,7 @@ var enroll = new Vue({
         },
         otherinfo:{
             insurance: 0,
-            membership_id: 0,
+            studmem_id: 0,
         },
         derivedinfo:{
             studentage: 0,
@@ -64,7 +64,7 @@ var enroll = new Vue({
                         })
                         enroll.studentrefid = e.data.data.reference_id;
                         enroll.student_id = e.data.data.student_id;
-                        enroll.otherinfo.membership_id = e.data.data.membership_id;
+                        enroll.otherinfo.studmem_id = e.data.data.studmem_id;
                         enroll.disabled_everything = true;
                         $('.active').removeClass('active');
                         $('.disabled').removeClass('disabled');

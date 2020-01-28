@@ -56,15 +56,16 @@ class Students extends CI_Controller {
     {
         $student_id = $this->input->post('student_id');
         $studentinfo = $this->student->getStudents("*","tbl_students",["student_id"=>$student_id],"","row");
-        
+        $studentmembership = $this->student->getStudents("*","tbl_studentmembership",["student_id"=>$student_id],["limit"=>1,"offset"=>0],"row");        
         $studentclasses = $this->student->getStudentClasses("*",["student_id"=>$student_id, "deleted"=>0],"","");
         
         if(!empty($studentinfo)){
             $response = array(
                 "success"   => true,
                 "data"      => [
-                    'studentprofile' => $studentinfo,
-                    'studentclasses' => $studentclasses
+                    'studentprofile'    => $studentinfo,
+                    'studentclasses'    => $studentclasses,
+                    'studentmembership' => $studentmembership
                 ],
             );
         }else{
@@ -101,7 +102,6 @@ class Students extends CI_Controller {
 
     public function getClassPackage()
     {
-
         $class_id = $this->input->post('class_id');
         $classpackages = $this->student->getClassPackages("*","tbl_packages",['tbl_classes.class_id'=>$class_id],"","");
         
@@ -121,7 +121,6 @@ class Students extends CI_Controller {
 
     public function getStudentClassDetails()
     {
-
         $student_id = $this->input->post('student_id');
         $schedule_id = $this->input->post('schedule_id');
         $studpack_id = $this->input->post('studpack_id');
@@ -163,7 +162,6 @@ class Students extends CI_Controller {
 
     public function checkPayment()
     {
-
         $package_id = $this->input->post('package_id');
         $classpackages = $this->student->getClassPackages("pricerate","tbl_packages",['package_id'=>$package_id],"","row");
 
@@ -205,7 +203,6 @@ class Students extends CI_Controller {
 
     public function deleteStudentClass()
     {
-
         $studpack_id = $this->input->post('studpack_id');
         //check muna kung may payment history na bago magdelete
         //kung wala, delete row, kung meron change status
@@ -249,10 +246,11 @@ class Students extends CI_Controller {
             $insert_membership_data = [
                 "student_id"      => $result['lastid'],
                 "year"            => date("Y"),
+                "membership_type" => 1,
                 "insurance_avail" => $insurance,
                 "date_added"      => date('Y-m-d H:i:s')
             ];
-            $insert_membership = $this->Main->insert("tbl_membership",$insert_membership_data,true);
+            $insert_membership = $this->Main->insert("tbl_studentmembership",$insert_membership_data,true);
 
             $response = array(
                 "success"   => true,
@@ -260,7 +258,7 @@ class Students extends CI_Controller {
                 "data"      => [
                     "student_id"    => $result['lastid'],
                     "reference_id"  => $reference_id,
-                    "membership_id" => $insert_membership['lastid'],
+                    "studmem_id" => $insert_membership['lastid'],
                     "result"        => $result
                 ],
             );
@@ -272,6 +270,11 @@ class Students extends CI_Controller {
             );
         }
         response_json($response);
+    }
+
+    public function changeMembership()
+    {
+        
     }
 
 }

@@ -64,7 +64,6 @@
                                     <h3 class="card-title">List of Class Packages</h3>
                                 </div>
                                 <div class="card-body">
-                                    
                                         <table class="table table-bordered table-responsive-sm table-sm">
                                         <thead>                  
                                             <tr>

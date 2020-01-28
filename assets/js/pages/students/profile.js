@@ -11,13 +11,14 @@ var profile = new Vue({
             religion: "",
             nickname: "",
         },
-
+        studentmembership: {},
         derivedinfo:{
             studentage: 0,
             schoolyear: "",
             schoolcourse: "",
             companyname: "",
             companyaddress: "",
+            studentmembership: {}
         },
         classschedlist: {},
         classpackagelist: {},
@@ -126,8 +127,17 @@ var profile = new Vue({
                     dat = e.data.data;
                     profile.studentclasses=dat.studentclasses;
                     profile.studentinfo=dat.studentprofile;
+                    profile.studentmembership=dat.studentmembership;
+                    if(dat.studentmembership!=null){
+                        if(dat.studentmembership.membership_type.includes("/")){
+                            profile.derivedinfo.studentmembership[0] = dat.studentmembership.membership_type.split("/")['0'];
+                            profile.derivedinfo.studentmembership[1] = dat.studentmembership.membership_type.split("/")['1'];
+                        }else{
+                            profile.derivedinfo.studentmembership[0] = dat.studentmembership.membership_type;
+                        }
+                    }
                     dat = e.data.data.studentprofile;
-                    
+
                     if(dat.school!=null){
                         profile.derivedinfo.schoolname=dat.school.split("/")['0'];
                         profile.derivedinfo.schoolyear=dat.school.split("/")['1'];
@@ -253,6 +263,38 @@ var profile = new Vue({
                             title: e.data.message
                         })
                     }
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        changeMembership(studmem_id){
+            var datas = { 
+                student_id: this.student_id,
+                studmem_id: studmem_id,
+                payment_options: this.classenroll.payment
+            };
+            var datas = frmdata(datas);
+            var urls = window.App.baseUrl + "students/changeMembership";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    // if (e.data.success) {
+                    //     Toast.fire({
+                    //         type: "success",
+                    //         title: e.data.message
+                    //     })
+                    //     profile.getStudentProfile();
+                    // }else{
+                    //     Toast.fire({
+                    //         type: "warning",
+                    //         title: e.data.message
+                    //     })
+                    // }
+                    // profile.classenroll.class_id = "";
+                    // profile.classenroll.package_id = "";
+                    // profile.classenroll.payment = "";
+                    // profile.classenroll.amounttopay = "";
+                    $('#changeMembershipModal').modal('show');
                 })
                 .catch(function (error) {
                     console.log(error)

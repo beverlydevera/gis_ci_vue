@@ -14,10 +14,15 @@ class Students_model extends CI_Model {
         $this->db->from($table);
         if(!empty($condition)){
             $this->db->where($condition);
-        }
-        $this->db->order_by("lastname","ASC");
-        $this->db->order_by("firstname","ASC");
-        $this->db->order_by("middlename","ASC");
+		}
+
+		if($table=="tbl_students"){
+			$this->db->order_by("lastname","ASC");
+			$this->db->order_by("firstname","ASC");
+			$this->db->order_by("middlename","ASC");
+		}else if($table=="tbl_studentmembership"){
+			$this->db->order_by("studmem_id","DESC");
+		}
 
 		if (!empty($pager)) {
 		$this->db->limit($pager['limit'],$pager['offset']);

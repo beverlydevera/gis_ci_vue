@@ -1,6 +1,9 @@
 <link rel="stylesheet" href="<?= base_url('assets/css/profile_timeline.css') ?>">
 
 <div class="container">
+    <h6>PROMOTION
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addNewPromotionModal" style="float:right;">Add Promotion</button>
+    </h6>
     <div class="row">
         <div class="col-md-12">
             <div class="main-timeline3">

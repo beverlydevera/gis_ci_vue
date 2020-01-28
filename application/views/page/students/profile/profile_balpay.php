@@ -134,19 +134,19 @@
                     <table class="table table-bordered table-responsive-sm table-sm billing-table">
                         <tr>
                             <th width="20%">OR Number:</th>
-                            <th><input type="text" class="form-control smallerinput" v-model="studentrefid" required></th>
+                            <th><input type="text" class="form-control smallerinput" required></th>
                         </tr>
                         <tr>
                             <th width="20%">OR Date:</th>
-                            <th><input type="text" class="form-control smallerinput" v-model="studentrefid" required></th>
+                            <th><input type="text" class="form-control smallerinput" required></th>
                         </tr>
                         <tr>
                             <th width="20%">Amount:</th>
-                            <th><input type="text" class="form-control smallerinput" v-model="studentrefid" required></th>
+                            <th><input type="text" class="form-control smallerinput" required></th>
                         </tr>
                         <tr>
                             <th width="20%">Invoice No:</th>
-                            <th><input type="text" :readonly="readonly_everything" class="form-control smallerinput" v-model="studentrefid" required></th>
+                            <th><input type="text" :readonly="readonly_everything" class="form-control smallerinput" required></th>
                         </tr>
                     </table>
                     </div>
