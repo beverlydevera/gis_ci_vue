@@ -45,6 +45,12 @@
             <p>Enroll New Student</p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="<?= base_url('walkin') ?>" class="nav-link" v-bind:class="checkactive('walkin')">
+            <i class="fas fa-walking nav-icon"></i>
+            <p>Walk-in / Pre-Registered</p>
+          </a>
+        </li>
       </ul>
     </li>
     <li class="nav-item">
@@ -94,7 +100,7 @@
         </li>
       </ul>
     </li>
-    <li class="nav-item has-treeview menu-open">
+    <li class="nav-item has-treeview menu-close">
       <a href="#" class="nav-link" v-bind:class="checkactive('users')">
         <i class="nav-icon fas fa-users-cog"></i>
         <p>
