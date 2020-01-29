@@ -46,6 +46,7 @@
                                     <th>Details</th>
                                     <th>Price Rate</th>
                                     <th>Year</th>
+                                    <th>Remarks</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -67,10 +68,28 @@
                                     </template>
                                     <template v-else-if="list.packagetype=='Summer Promo'">
                                         <td><span class="badge bg-warning">{{list.packagetype}}</span></td>
-                                        <td><button class="btn btn-warning btn-xs">View Details</button></td>
+                                        <td>
+                                            <button v-bind:id="'showDetailsbtn-'+list.package_id" class="btn btn-warning btn-xs" @click="showDetails(list.package_id)">Show Details</button>
+                                            <button v-bind:id="'hideDetailsbtn-'+list.package_id" style="display:none;" class="btn btn-warning btn-xs" @click="hideDetails(list.package_id)">Hide Details</button>
+                                            <template v-if="packagedetails.package_data.length>0">
+                                                <table class="table table-bordered table-responsive-sm table-sm" v-if="list.package_id==packagedetails.package_id">
+                                                    <tr>
+                                                        <th>PARTICULAR</th>
+                                                        <th>PRICE</th>
+                                                    </tr>
+                                                <template id="summerpromodetails" v-for="(ll,ii) in packagedetails.package_data" style="display:none;">
+                                                    <tr>
+                                                        <td>{{ll.particular}}</td>
+                                                        <td>{{ll.price}}</td>
+                                                    </tr>
+                                                </template>
+                                                </table>
+                                            </template>
+                                        </td>
                                     </template>
                                     <td>{{list.pricerate}}</td>
                                     <td>{{list.year}}</td>
+                                    <td>{{list.remarks}}</td>
                                     <td><button type="button" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i></button></td>
                                 </tr>
                             </tbody>

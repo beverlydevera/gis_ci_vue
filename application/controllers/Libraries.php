@@ -45,7 +45,9 @@ class Libraries extends CI_Controller {
     public function getPackageList()
     {
         $condition = jsondata();
-        $packagelist = $this->libraries->getPackages("*","tbl_packages",$condition,"","");
+        $type="";
+        if(!empty($condition)){$type="row";}
+        $packagelist = $this->libraries->getPackages("*","tbl_packages",$condition,"",$type);
         
         if(!empty($packagelist)){
             $response = array(
