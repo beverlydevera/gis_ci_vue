@@ -26,7 +26,9 @@ var package = new Vue({
                 price: "",
             },
             pricerate: 0,
-        }
+        },
+        disabled_showbtn: false,
+        disabled_hidebtn: true,
     },
     methods: {
         changePackageType_addModal(){
@@ -171,6 +173,8 @@ var package = new Vue({
                     $('#summerpromodetails-'+package_id).css({'display': '',});
                     $('#showDetailsbtn-'+package_id).css({'display': 'none',});
                     $('#hideDetailsbtn-'+package_id).css({'display': '',});
+                    package.disabled_showbtn = true;
+                    package.disabled_hidebtn = false;
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -184,6 +188,8 @@ var package = new Vue({
             $('#summerpromodetails-'+package_id).css({'display': 'none',});
             $('#showDetailsbtn-'+package_id).css({'display': '',});
             $('#hideDetailsbtn-'+package_id).css({'display': 'none',});
+            package.disabled_showbtn = false;
+            package.disabled_hidebtn = true;
         },
         editPackageModal(package_id){
             var datas = {package_id:package_id}

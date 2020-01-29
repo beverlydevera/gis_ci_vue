@@ -69,8 +69,8 @@
                                     <template v-else-if="list.packagetype=='Summer Promo'">
                                         <td><span class="badge bg-warning">{{list.packagetype}}</span></td>
                                         <td>
-                                            <button v-bind:id="'showDetailsbtn-'+list.package_id" class="btn btn-warning btn-xs" @click="showDetails(list.package_id)">Show Details</button>
-                                            <button v-bind:id="'hideDetailsbtn-'+list.package_id" style="display:none;" class="btn btn-warning btn-xs" @click="hideDetails(list.package_id)">Hide Details</button>
+                                            <button v-bind:id="'showDetailsbtn-'+list.package_id" :disabled="disabled_showbtn" class="btn btn-warning btn-xs" @click="showDetails(list.package_id)">Show Details</button>
+                                            <button v-bind:id="'hideDetailsbtn-'+list.package_id" :disabled="disabled_hidebtn" style="display:none;" class="btn btn-warning btn-xs" @click="hideDetails(list.package_id)">Hide Details</button>
                                             <template v-if="packagedetails.package_data.length>0">
                                                 <table class="table table-bordered table-responsive-sm table-sm" v-if="list.package_id==packagedetails.package_id">
                                                     <tr>
