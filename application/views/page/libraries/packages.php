@@ -133,10 +133,13 @@
                         <tr id="summerpromo_package" style="display:none;">
                             <th width="25%">Package Details:</th>
                             <th>
-                                <div class="row">
-                                    <div class="col-md-6"><input type="text" class="form-control smallerinput" placeholder="Particular"></div>
-                                    <div class="col-md-5"><input type="number" class="form-control smallerinput" placeholder="Price"></div>
-                                    <div class="col-md-1" style="padding:0;"><button type="button" class="btn btn-primary btn-xs"><i class="fas fa-plus"></i></button></div>
+                                <div class="row" v-for="(list,index) in newPackage.packagedetails">
+                                    <div class="col-md-6"><input type="text" class="form-control smallerinput" v-model="list.particular" placeholder="Particular"></div>
+                                    <div class="col-md-5"><input type="number" class="form-control smallerinput" v-model="list.price" placeholder="Price"></div>
+                                    <div class="col-md-1" style="padding:0;">
+                                        <button v-if="index==0" type="button" class="btn btn-primary btn-xs" @click="addnewParticular_item()"><i class="fas fa-plus"></i></button>
+                                        <button v-if="index>0" type="button" class="btn btn-danger btn-xs" @click="cancelParticular_item(index)"><i class="fas fa-minus"></i></button>
+                                    </div>
                                 </div>
                             </th>
                         </tr>
