@@ -9,25 +9,19 @@
     <li class="nav-item">
       <a href="<?= base_url('dashboard') ?>" class="nav-link" v-bind:class="checkactive('dashboard')">
         <i class="nav-icon fas fa-chart-line"></i>
-        <p>
-          Dashboard
-        </p>
+        <p>Dashboard</p>
       </a>
     </li>
     <li class="nav-item">
       <a href="<?= base_url('schedules/') ?>" class="nav-link" v-bind:class="checkactive('schedules')">
         <i class="nav-icon fas fa-calendar-alt"></i>
-        <p>
-          Schedules
-        </p>
+        <p>Schedules</p>
       </a>
     </li>
     <li class="nav-item">
       <a href="<?= base_url('classes/') ?>" class="nav-link" v-bind:class="checkactive('classes')">
         <i class="nav-icon fas fa-tasks"></i>
-        <p>
-          Classes
-        </p>
+        <p>Classes</p>
       </a>
     </li>
     <li class="nav-item has-treeview menu-open">
@@ -56,21 +50,22 @@
     <li class="nav-item">
       <a href="<?= base_url('invoice/index') ?>" class="nav-link" v-bind:class="checkactive('invoice')">
         <i class="nav-icon fas fa-cash-register"></i>
-        <p>
-          Invoice Statements
-        </p>
+        <p>Invoice Statements</p>
       </a>
-    </li>    
+    </li>
     <li class="nav-item">
       <a href="<?= base_url('announcements/') ?>" class="nav-link" v-bind:class="checkactive('announcements')">
         <i class="nav-icon fas fa-bullhorn"></i>
-        <p>
-          Announcements
-        </p>
+        <p>Announcements</p>
       </a>
     </li>
-    <li class="nav-item has-treeview menu-open">
-    <!-- <li class="nav-item has-treeview menu-close"> -->
+    <li class="nav-item">
+      <a href="<?= base_url('inventory/') ?>" class="nav-link" v-bind:class="checkactive('inventory')">
+        <i class="nav-icon fas fa-clipboard-list"></i>
+        <p>Inventory</p>
+      </a>
+    </li>
+    <li class="nav-item has-treeview menu-close">
       <a href="#" class="nav-link" v-bind:class="checkactive('libraries')">
         <i class="nav-icon fas fa-book"></i>
         <p>

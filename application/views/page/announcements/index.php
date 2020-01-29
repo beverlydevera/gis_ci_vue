@@ -74,7 +74,7 @@
                         <tr>
                             <th width="10%">Text:</th>
                             <th>
-                                <textarea class="form-control" rows=3></textarea>
+                                <textarea class="form-control" rows=2></textarea>
                             </th>
                         </tr>
                         <tr>
