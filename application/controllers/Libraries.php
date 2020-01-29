@@ -92,4 +92,34 @@ class Libraries extends CI_Controller {
         response_json($response);
     }
 
+    public function savePackageChanges()
+    {
+        $data = jsondata();
+        $package_id = $data['package_id'];
+        $dataupdate = $data;
+        $dataupdate['packagedetails'] = json_encode($data['packagedetails']);
+
+        if(!empty($dataupdate)){
+            unset($dataupdate['package_id']);
+            unset($dataupdate['date_added']);
+            $updatequery = $this->Main->update("tbl_packages", ["package_id"=>$package_id], $dataupdate,"");
+            if(!empty($updatequery)){
+                $success = true;
+                $type = "success";
+                $message = "Package was updated successfully.";
+            }
+        }else{
+            $success = false;
+            $type = "warning";
+            $message = "Package was not updated";
+        }
+
+        $response = array(
+            'success'   => $success,
+            'type'      => $type,
+            'message'   => $message,
+        );
+        response_json($response);
+    }
+
 }

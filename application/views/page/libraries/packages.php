@@ -90,7 +90,7 @@
                                     <td>{{list.pricerate}}</td>
                                     <td>{{list.year}}</td>
                                     <td>{{list.remarks}}</td>
-                                    <td><button type="button" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i></button></td>
+                                    <td><button type="button" class="btn btn-primary btn-xs" @click="editPackageModal(list.package_id)"><i class="fas fa-edit"></i></button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -117,7 +117,7 @@
                         <tr>
                             <th width="25%">Package Type:</th>
                             <th>
-                                <select class="form-control smallerinput" @change="changePackageType()" v-model="newPackage.packagetype" required>
+                                <select class="form-control smallerinput" @change="changePackageType_addModal()" v-model="newPackage.packagetype" required>
                                     <option disabled selected>Select Package Type</option>
                                     <option>Regular</option>
                                     <option>Unlimited</option>
@@ -125,7 +125,7 @@
                                 </select>
                             </th>
                         </tr>
-                        <tr id="regular_package" style="display:none;">
+                        <tr id="add_regular_package" style="display:none;">
                             <th width="25%">Package Details:</th>
                             <th>
                                 <div class="row">
@@ -148,26 +148,26 @@
                                 </div>
                             </th>
                         </tr>
-                        <tr id="unlimited_package" style="display:none;">
+                        <tr id="add_unlimited_package" style="display:none;">
                             <th width="25%">Package Details:</th>
                             <th><input type="text" class="form-control smallerinput" v-model="newPackage.packagedetails"></th>
                         </tr>
-                        <tr id="summerpromo_package" style="display:none;">
+                        <tr id="add_summerpromo_package" style="display:none;">
                             <th width="25%">Package Details:</th>
                             <th>
                                 <div class="row" v-for="(list,index) in newPackage.packagedetails">
                                     <div class="col-md-7"><input type="text" class="form-control smallerinput" v-model="list.particular" placeholder="Particular"></div>
-                                    <div class="col-md-4"><input type="text" class="form-control smallerinput" v-model="list.price" @blur="addPriceRate()" placeholder="Price"></div>
+                                    <div class="col-md-4"><input type="text" class="form-control smallerinput" v-model="list.price" @blur="addPriceRate('add')" placeholder="Price"></div>
                                     <div class="col-md-1" style="padding:0;">
-                                        <button v-if="index==0" type="button" class="btn btn-primary btn-xs" @click="addnewParticular_item()"><i class="fas fa-plus"></i></button>
-                                        <button v-if="index>0" type="button" class="btn btn-danger btn-xs" @click="cancelParticular_item(index)"><i class="fas fa-minus"></i></button>
+                                        <button v-if="index==0" type="button" class="btn btn-primary btn-xs" @click="addnewParticular_item('add')"><i class="fas fa-plus"></i></button>
+                                        <button v-if="index>0" type="button" class="btn btn-danger btn-xs" @click="cancelParticular_item('add',index)"><i class="fas fa-minus"></i></button>
                                     </div>
                                 </div>
                             </th>
                         </tr>
                         <tr>
                             <th width="25%">Price Rate:</th>
-                            <th><input type="number" id="pricerate" v-model="newPackage.pricerate" class="form-control smallerinput" required></th>
+                            <th><input type="number" id="add_pricerate" v-model="newPackage.pricerate" class="form-control smallerinput" required></th>
                         </tr>
                         <tr>
                             <th width="25%">Year:</th>
@@ -184,6 +184,94 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary" @click="saveNewPackage()">Save Package</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editPackageModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Package</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                    <table class="table table-bordered table-responsive-sm table-sm billing-table">
+                        <tr>
+                            <th width="25%">Package Type:</th>
+                            <th>
+                                <select class="form-control smallerinput" @change="changePackageType_addModal()" v-model="packageinfo.packagetype" required readonly>
+                                    <option disabled selected>Select Package Type</option>
+                                    <option>Regular</option>
+                                    <option>Unlimited</option>
+                                    <option>Summer Promo</option>
+                                </select>
+                            </th>
+                        </tr>
+                        <tr id="edit_regular_package" style="display:none;">
+                            <th width="25%">Package Details:</th>
+                            <th>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <select class="form-control smallerinput" v-model="packageinfo.packagedetails.schedule">
+                                            <option disabled selected>Select Schedule</option>
+                                            <option>All Levels Regular Class | Monday | 09:30-10:00</option>
+                                            <option>All Levels Regular Class | Monday | 09:30-10:00</option>
+                                            <option>All Levels Regular Class | Monday | 09:30-10:00</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 smallerinput" style="padding-top:2%;">
+                                        No. of Sessions:
+                                    </div>
+                                    <div class="col-md-8" style="padding-top:1%;">
+                                        <input type="text" class="form-control smallerinput" placeholder="Input Number of Sessions"  v-model="packageinfo.packagedetails.sessions">
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                        <tr id="edit_unlimited_package" style="display:none;">
+                            <th width="25%">Package Details:</th>
+                            <th><input type="text" class="form-control smallerinput" v-model="packageinfo.packagedetails"></th>
+                        </tr>
+                        <tr id="edit_summerpromo_package" style="display:none;">
+                            <th width="25%">Package Details:</th>
+                            <th>
+                                <div class="row" v-for="(list,index) in packageinfo.packagedetails">
+                                    <div class="col-md-7"><input type="text" class="form-control smallerinput" v-model="list.particular" placeholder="Particular"></div>
+                                    <div class="col-md-4"><input type="text" class="form-control smallerinput" v-model="list.price" @blur="addPriceRate('edit')" placeholder="Price"></div>
+                                    <div class="col-md-1" style="padding:0;">
+                                        <button v-if="index==0" type="button" class="btn btn-primary btn-xs" @click="addnewParticular_item('edit')"><i class="fas fa-plus"></i></button>
+                                        <button v-if="index>0" type="button" class="btn btn-danger btn-xs" @click="cancelParticular_item('edit',index)"><i class="fas fa-minus"></i></button>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th width="25%">Price Rate:</th>
+                            <th><input type="number" id="edit_pricerate" v-model="packageinfo.pricerate" class="form-control smallerinput" required></th>
+                        </tr>
+                        <tr>
+                            <th width="25%">Year:</th>
+                            <th><input type="text" class="form-control smallerinput" v-model="packageinfo.year" required readonly></th>
+                        </tr>
+                        <tr>
+                            <th width="25%">Remarks:</th>
+                            <th><input type="text" class="form-control smallerinput" v-model="packageinfo.remarks"></th>
+                        </tr>
+                    </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" @click="savePackageChanges()">Save Changes</button>
             </div>
         </div>
     </div>
