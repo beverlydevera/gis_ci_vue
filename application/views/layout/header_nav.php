@@ -110,11 +110,6 @@
         <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
     </div>
     </li>
-    <li class="nav-item">
-    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
-        <i class="fas fa-th-large"></i>
-    </a>
-    </li>
     <li class="nav-item dropdown user-menu">
         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
         <img src="<?=base_url('assets/img/other_avatar.png')?>" class="user-image img-circle elevation-2" alt="User Image">

@@ -46,6 +46,7 @@
               <th>Branch</th>
               <th>Membership</th>
               <th>Rank/Belt</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>

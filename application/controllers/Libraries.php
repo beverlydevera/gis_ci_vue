@@ -31,15 +31,5 @@ class Libraries extends CI_Controller {
         $data['js'] = array('pages/libraries.js');
         $this->load->view('layout/main', $data);
     }
-	
-	public function ranks()
-	{
-        $data['title'] = "Libraries - Ranks";
-        $data['vueid'] = "libraries_page";
-        $data['activenav'] = "libraries";
-        $data['vfile'] = "page/libraries/ranks";
-        $data['js'] = array('pages/libraries.js');
-        $this->load->view('layout/main', $data);
-    }
 
 }

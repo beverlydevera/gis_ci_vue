@@ -67,7 +67,7 @@
                         </tr>
                         <tr>
                             <th width="30%">Upload Photos:</th>
-                            <th><input type="file" accept=".jpeg,.jpg,.png"></th>
+                            <th><input type="file" multiple accept=".jpeg,.jpg,.png"></th>
                         </tr>
                     </table>
                     </div>

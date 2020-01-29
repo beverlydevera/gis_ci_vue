@@ -60,6 +60,14 @@
           Invoice Statements
         </p>
       </a>
+    </li>    
+    <li class="nav-item">
+      <a href="<?= base_url('announcements/') ?>" class="nav-link" v-bind:class="checkactive('announcements')">
+        <i class="nav-icon fas fa-bullhorn"></i>
+        <p>
+          Announcements
+        </p>
+      </a>
     </li>
     <li class="nav-item has-treeview menu-open">
     <!-- <li class="nav-item has-treeview menu-close"> -->
@@ -81,12 +89,6 @@
           <a href="<?= base_url('libraries/classes') ?>" class="nav-link">
             <i class="nav-icon fas fa-circle-notch nav-icon"></i>
             <p>Classes</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="<?= base_url('libraries/ranks') ?>" class="nav-link">
-            <i class="nav-icon fas fa-circle-notch nav-icon"></i>
-            <p>Ranks</p>
           </a>
         </li>
       </ul>
