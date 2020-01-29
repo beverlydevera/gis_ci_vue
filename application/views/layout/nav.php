@@ -75,6 +75,12 @@
       </a>
       <ul class="nav nav-treeview">
         <li class="nav-item">
+          <a href="<?= base_url('libraries/packages') ?>" class="nav-link">
+            <i class="nav-icon fas fa-circle-notch nav-icon"></i>
+            <p>Packages</p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="<?= base_url('libraries/branches') ?>" class="nav-link">
             <i class="nav-icon fas fa-circle-notch nav-icon"></i>
             <p>Branches</p>
