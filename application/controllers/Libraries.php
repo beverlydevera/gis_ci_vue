@@ -35,10 +35,10 @@ class Libraries extends CI_Controller {
 	public function packages()
 	{
         $data['title'] = "Libraries - Packages";
-        $data['vueid'] = "libraries_page";
+        $data['vueid'] = "packages_page";
         $data['activenav'] = "libraries";
         $data['vfile'] = "page/libraries/packages";
-        $data['js'] = array('pages/libraries.js');
+        $data['js'] = array('pages/libraries/packages.js');
         $this->load->view('layout/main', $data);
     }
 

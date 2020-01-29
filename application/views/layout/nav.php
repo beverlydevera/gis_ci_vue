@@ -82,19 +82,19 @@
       <ul class="nav nav-treeview">
         <li class="nav-item">
           <a href="<?= base_url('libraries/packages') ?>" class="nav-link">
-            <i class="nav-icon fas fa-circle-notch nav-icon"></i>
+            <i class="nav-icon fas fa-cubes nav-icon"></i>
             <p>Packages</p>
           </a>
         </li>
         <li class="nav-item">
           <a href="<?= base_url('libraries/branches') ?>" class="nav-link">
-            <i class="nav-icon fas fa-circle-notch nav-icon"></i>
+            <i class="nav-icon fas fa-dumbbell nav-icon"></i>
             <p>Branches</p>
           </a>
         </li>
         <li class="nav-item">
           <a href="<?= base_url('libraries/classes') ?>" class="nav-link">
-            <i class="nav-icon fas fa-circle-notch nav-icon"></i>
+            <i class="nav-icon fas fa-chalkboard-teacher nav-icon"></i>
             <p>Classes</p>
           </a>
         </li>
