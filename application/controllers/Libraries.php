@@ -42,4 +42,52 @@ class Libraries extends CI_Controller {
         $this->load->view('layout/main', $data);
     }
 
+    public function getPackageList()
+    {
+        $condition = jsondata();
+        $packagelist = $this->libraries->getPackages("*","tbl_packages",$condition,"","");
+        
+        if(!empty($packagelist)){
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    "packagelist" => $packagelist
+                ]
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
+    public function saveNewPackage()
+    {
+        $data = jsondata();
+        $datainsert = $data;
+        $datainsert['packagedetails'] = json_encode($data['packagedetails']);
+
+        if(!empty($datainsert)){
+            $insertquery = $this->Main->insert("tbl_packages",$datainsert,true);
+            if(!empty($insertquery)){
+                $success = true;
+                $type = "success";
+                $message = "Package was added successfully.";
+            }
+        }else{
+            $success = false;
+            $type = "warning";
+            $message = "Package was not added";
+        }
+
+        $response = array(
+            'success'   => $success,
+            'type'      => $type,
+            'message'   => $message,
+        );
+        response_json($response);
+    }
+
 }
