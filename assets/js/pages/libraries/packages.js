@@ -29,6 +29,11 @@ var package = new Vue({
         },
         disabled_showbtn: false,
         disabled_hidebtn: true,
+        searchFilter:{
+            searchinput: "",
+            packagetype: "Select Package Type",
+            year: "Select Year"
+        }
     },
     methods: {
         changePackageType_addModal(){
@@ -218,7 +223,7 @@ var package = new Vue({
                 })
                 .catch(function (error) {
                     console.log(error)
-                }); 
+                });
         },
         savePackageChanges(){
             var urls = window.App.baseUrl + "Libraries/savePackageChanges";
@@ -249,6 +254,23 @@ var package = new Vue({
                     console.log(error)
                 });
         },
+        searchTable(){
+            var datas = {
+                details:     this.searchFilter.searchinput,
+                remarks:     this.searchFilter.searchinput,
+                packagetype: this.searchFilter.packagetype,
+                year:        this.searchFilter.year,
+            }
+            var urls = window.App.baseUrl + "Libraries/getPackageList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    //update table
+                    //continue here
+                })
+                .catch(function (error) {
+                    console.log(error)
+                }); 
+        }
     }, mounted: function () {
         this.getPackageList();
     },

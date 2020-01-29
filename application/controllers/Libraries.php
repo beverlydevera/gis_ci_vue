@@ -46,7 +46,7 @@ class Libraries extends CI_Controller {
     {
         $condition = jsondata();
         $type="";
-        if(!empty($condition)){$type="row";}
+        if(!empty($condition['package_id'])){$type="row";}
         $packagelist = $this->libraries->getPackages("*","tbl_packages",$condition,"",$type);
         
         if(!empty($packagelist)){

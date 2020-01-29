@@ -13,11 +13,11 @@
                                 <div class="input-group-prepend smallerinput">
                                     <span class="input-group-text"><i class="fas fa-search"></i></span>
                                 </div>
-                                <input type="text" class="form-control smallerinput" placeholder="Search">
+                                    <input type="text" class="form-control smallerinput" placeholder="Search" @blur="searchTable()" v-model="searchFilter.searchinput">
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <select class="form-control smallerinput">
+                                <select class="form-control smallerinput" v-model="searchFilter.packagetype">
                                     <option disabled selected>Select Package Type</option>
                                     <option>Regular</option>
                                     <option>Unlimited</option>
@@ -25,14 +25,14 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <select class="form-control smallerinput">
+                                <select class="form-control smallerinput" v-model="searchFilter.year">
                                     <option disabled selected>Select Year</option>
                                     <option>2020</option>
                                     <option>2019</option>
                                 </select>
                             </div>
                             <div class="col-md-1">
-                                <button class="btn btn-primary btn-xs">Filter</button>
+                                <button class="btn btn-primary btn-xs" @click="searchTable()">Filter</button>
                             </div>
                             <div class="col-md-4">
                                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addNewPackageModal" style="float:right;">Add a New Package</button>
@@ -205,12 +205,7 @@
                         <tr>
                             <th width="25%">Package Type:</th>
                             <th>
-                                <select class="form-control smallerinput" @change="changePackageType_addModal()" v-model="packageinfo.packagetype" required readonly>
-                                    <option disabled selected>Select Package Type</option>
-                                    <option>Regular</option>
-                                    <option>Unlimited</option>
-                                    <option>Summer Promo</option>
-                                </select>
+                                <input type="text" class="form-control smallerinput"v-model="packageinfo.packagetype" required readonly>
                             </th>
                         </tr>
                         <tr id="edit_regular_package" style="display:none;">
