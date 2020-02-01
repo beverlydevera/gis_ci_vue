@@ -25,6 +25,7 @@ var package = new Vue({
                 sessions: "",
                 particular: "",
                 price: "",
+                type: "",
             },
             pricerate: 0,
         },
@@ -276,14 +277,22 @@ var package = new Vue({
                     console.log(error)
                 }); 
         },
-        getItemPrice(index){
-            var inventory_id = this.newPackage.packagedetails[index].particular;
+        getItemPrice(action,index){
+            if(action=="add"){
+                var inventory_id = this.newPackage.packagedetails[index].particular;
+            }else if(action=="edit"){
+                var inventory_id = this.packageinfo.packagedetails[index].particular;
+            }
             var datas = {inventory_id: inventory_id};
             var urls = window.App.baseUrl + "Inventory/getInventoryList";
             axios.post(urls, datas)
                 .then(function (e) {
-                    package.newPackage.packagedetails[index].price = e.data.data.inventorylist.item_unitprice;
-                    package.addPriceRate('add');
+                    if(action=="add"){
+                        package.newPackage.packagedetails[index].price = e.data.data.inventorylist.item_unitprice;
+                    }else if(action=="edit"){
+                        package.packageinfo.packagedetails[index].price = e.data.data.inventorylist.item_unitprice;
+                    }
+                    package.addPriceRate(action);
                 })
                 .catch(function (error) {
                     console.log(error)
