@@ -45,7 +45,7 @@
                                     </td>
                                     <td>
                                         <button type="button" data-target="#viewItemStockInfoModal" data-toggle="modal" class="btn btn-success btn-xs" @click="viewItemStockInfoModal(list.inventory_id)"><i class="fas fa-eye"></i></button>
-                                        <button type="button" class="btn btn-success btn-xs"><i class="fas fa-plus"></i></button>
+                                        <button type="button" data-target="#addNewStockModal" data-toggle="modal" class="btn btn-success btn-xs" @click="viewItemStockInfoModal(list.inventory_id)"><i class="fas fa-plus"></i></button>
                                     </td>
                                 </tr>
                                 </template>
@@ -84,12 +84,12 @@
                             <th><input type="text" class="form-control smallerinput" required v-model="newInventoryItem.inventory.item_desc"></th>
                         </tr>
                         <tr>
-                            <th width="20%">Unit Price:</th>
-                            <th><input type="text" class="form-control smallerinput" required v-model="newInventoryItem.stocks.item_unitprice"></th>
-                        </tr>
-                        <tr>
                             <th width="20%">Quantity:</th>
                             <th><input type="number" class="form-control smallerinput" required v-model="newInventoryItem.stocks.input_stocks"></th>
+                        </tr>
+                        <tr>
+                            <th width="20%">Unit Price:</th>
+                            <th><input type="text" class="form-control smallerinput" required v-model="newInventoryItem.stocks.item_unitprice"></th>
                         </tr>
                         <tr>
                             <th width="20%">Branch:</th>
@@ -173,6 +173,74 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addNewStockModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Stock</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                    <table class="table table-bordered table-responsive-sm table-sm billing-table">
+                        <tr>
+                            <th width="20%">Date:</th>
+                            <th>January 30, 2020</th>
+                        </tr>
+                        <tr>
+                            <th width="20%">Item Name:</th>
+                            <th><input type="text" class="form-control smallerinput" required v-model="inventoryItemInfo.itemInfo.item_name" readonly></th>
+                        </tr>
+                        <tr>
+                            <th width="20%">Description:</th>
+                            <th><input type="text" class="form-control smallerinput" required v-model="inventoryItemInfo.itemInfo.item_desc" readonly></th>
+                        </tr>
+                        <tr>
+                            <th width="20%">Remaining Stocks:</th>
+                            <th><input type="text" class="form-control smallerinput" required v-model="inventoryItemInfo.itemInfo.totalremainingstocks" readonly></th>
+                        </tr>
+                        <tr>
+                            <th width="20%">Quantity:</th>
+                            <th><input type="number" class="form-control smallerinput" required v-model="newStock.input_stocks"></th>
+                        </tr>
+                        <tr>
+                            <th width="20%">Unit Price:</th>
+                            <th><input type="text" class="form-control smallerinput" required v-model="newStock.item_unitprice"></th>
+                        </tr>
+                        <tr>
+                            <th width="20%">Branch:</th>
+                            <th>
+                                <select class="form-control smallerinput" v-model="newStock.branch_id">
+                                    <option disabled selected>Select Branch</option>
+                                    <template v-for="(ll,ii) in branchlist">
+                                        <option :value="ll.branch_id">{{ll.branch_name}}</option>
+                                    </template>
+                                </select>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th width="20%">Supplier:</th>
+                            <th><input type="text" class="form-control smallerinput" v-model="newStock.supplier"></th>
+                        </tr>
+                        <tr>
+                            <th width="20%">Remarks:</th>
+                            <th><textarea class="form-control" rows=2 v-model="newStock.remarks"></textarea></th>
+                        </tr>
+                    </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" @click="saveNewStock()">Save New Stock</button>
             </div>
         </div>
     </div>

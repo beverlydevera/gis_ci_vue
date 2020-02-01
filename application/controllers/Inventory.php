@@ -49,30 +49,6 @@ class Inventory extends CI_Controller {
         response_json($response);
     }
 
-    public function getItemStockInfo()
-    {
-        $type = "";
-        $condition = jsondata();
-        $itemstockinfo = $this->inventory->getStockInfo("*","tbl_stocks s",$condition,"",$type);
-        $iteminfo = $this->inventory->getInventoryList("*, SUM(s.remaining_stocks) AS totalremainingstocks","tbl_inventory i",$condition,"","","row");
-        
-        if(!empty($itemstockinfo)){
-            $response = array(
-                "success"   => true,
-                "data"      => [
-                    "iteminfo"      => $iteminfo,
-                    "itemstockinfo" => $itemstockinfo
-                ]
-            );
-        }else{
-            $response = array(
-                "success"   => false,
-                "data"      => ""
-            );
-        }
-        response_json($response);
-    }
-
     public function saveNewInventoryItem()
     {
         $data = jsondata();
@@ -99,6 +75,59 @@ class Inventory extends CI_Controller {
             $success = false;
             $type = "warning";
             $message = "Inventory Item was not added";
+        }
+
+        $response = array(
+            'success'   => $success,
+            'type'      => $type,
+            'message'   => $message,
+        );
+        response_json($response);
+    }
+
+    public function getItemStockInfo()
+    {
+        $type = "";
+        $condition = jsondata();
+        $itemstockinfo = $this->inventory->getStockInfo("*","tbl_stocks s",$condition,"",$type);
+        $iteminfo = $this->inventory->getInventoryList("*, SUM(s.remaining_stocks) AS totalremainingstocks","tbl_inventory i",$condition,"","","row");
+        
+        if(!empty($itemstockinfo)){
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    "iteminfo"      => $iteminfo,
+                    "itemstockinfo" => $itemstockinfo
+                ]
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
+    public function saveNewStockInfo()
+    {
+        $data = jsondata();
+        $datainsert = $data['newStockInfo'];
+        $datainsert['inventory_id'] = $data['inventory_id'];
+        
+        if(!empty($datainsert)){
+            $datainsert['remaining_stocks'] = $datainsert['input_stocks'];
+            $insertquery = $this->Main->insert("tbl_stocks",$datainsert,true);
+
+            if(!empty($insertquery)){
+                $success = true;
+                $type = "success";
+                $message = "Stocks were added successfully.";
+            }
+        }else{
+            $success = false;
+            $type = "warning";
+            $message = "Stocks were not added";
         }
 
         $response = array(
