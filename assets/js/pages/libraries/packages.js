@@ -63,7 +63,8 @@ var package = new Vue({
                 },{
                     type: "inventory",
                     particular: "Select From Inventory",
-                    price: "0"
+                    price: "0",
+                    stock_id: ""
                 }];
                 $('#add_regular_package').css({'display': 'none',});
                 $('#add_unlimited_package').css({'display': 'none',});
@@ -289,13 +290,15 @@ var package = new Vue({
         },
         getItemDetails(action,index){
             if(action=="add"){
-                var inventory_id = this.newPackage.packagedetails[index].particular;
+                var stock_id = this.newPackage.packagedetails[index].particular;
             }else if(action=="edit"){
-                var inventory_id = this.packageinfo.packagedetails[index].particular;
+                var stock_id = this.packageinfo.packagedetails[index].particular;
             }else if(action=="display"){
-                var inventory_id = this.packagedetails.package_data[index].particular;
+                var stock_id = this.packagedetails.package_data[index].particular;
             }
-            var datas = {inventory_id: inventory_id};
+            var datas = {
+                "s.stock_id": stock_id,
+            };
             var urls = window.App.baseUrl + "Inventory/getInventoryList";
             axios.post(urls, datas)
                 .then(function (e) {
@@ -306,7 +309,7 @@ var package = new Vue({
                         package.packageinfo.packagedetails[index].price = e.data.data.inventorylist.item_unitprice;
                         package.addPriceRate(action);
                     }else if(action=="display"){
-                        package.packagedetails.package_data[index].particular = e.data.data.inventorylist.item_name;
+                        package.packagedetails.package_data[index].particular = e.data.data.inventorylist.item_no + " | " + e.data.data.inventorylist.item_name;
                     }
                 })
                 .catch(function (error) {

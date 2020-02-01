@@ -22,13 +22,15 @@ class Inventory extends CI_Controller {
     
     public function getInventoryList()
     {
-        $type=""; $condition="";
-        
+        $type=""; $condition = [];
+
+        // $condition['s.stocks>'] = "0";
         if(!empty(jsondata())){
-            $condition = jsondata(); 
-            if(!empty($condition['inventory_id'])){$type="row";}
+            $condition = jsondata();
+            if(!empty($condition['s.stock_id'])){ $type="row"; }
+            // $condition['s.stocks>'] = "0";
         }
-        $inventorylist = $this->inventory->getInventoryList("*","tbl_inventory",$condition,"",$type);
+        $inventorylist = $this->inventory->getInventoryList("*","tbl_inventory i",$condition,"","",$type);
         
         if(!empty($inventorylist)){
             $response = array(

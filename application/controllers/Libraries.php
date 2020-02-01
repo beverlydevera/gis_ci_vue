@@ -8,6 +8,7 @@ class Libraries extends CI_Controller {
         parent::__construct();
         $this->load->model("Main");
         $this->load->model("Libraries_model", "libraries");
+        $this->load->model("Inventory_model", "inventory");
         date_default_timezone_set("Asia/Manila");
         checkLogin();
 	}

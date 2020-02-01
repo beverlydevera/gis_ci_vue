@@ -9,16 +9,22 @@ class Inventory_model extends CI_Model {
 		parent::__construct();
 	}
 
-	public function getInventoryList($select,$table,$condition,$pager,$type)
+	public function getInventoryList($select,$table,$condition,$pager,$groupby,$type)
 	{
 		$this->db->select($select);
         $this->db->from($table);
+        $this->db->join("tbl_stocks s","i.inventory_id = s.inventory_id","inner");
         if(!empty($condition)){
             $this->db->where($condition);
 		}
 
 		$this->db->order_by("item_name","ASC");
-
+		if(!empty($groupby)){
+			if($groupby=="inventoryindex"){
+				$this->db->group_by($groupby);
+			}
+		}
+		
 		if (!empty($pager)) {
 		$this->db->limit($pager['limit'],$pager['offset']);
 		}
