@@ -44,21 +44,10 @@
                                     <td>Austria</td>
                                     <td>091234567890</td>
                                     <td>bevs@email.com</td>
-                                    <td><span class="badge bg-info">CASHIER</span></td>
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i></i></button>
-                                        <button type="button" class="btn btn-danger btn-xs"><i class="fas fa-archive"></i></i></button>
+                                        <span class="badge bg-info">CASHIER</span><br>
+                                        Branch: <u>ABANAO</u>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>guest</td>
-                                    <td>Guest</td>
-                                    <td>aaa</td>
-                                    <td>aaa</td>
-                                    <td>091234567890</td>
-                                    <td>guest@email.com</td>
-                                    <td><span class="badge bg-warning">GUEST</span></td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i></i></button>
                                         <button type="button" class="btn btn-danger btn-xs"><i class="fas fa-archive"></i></i></button>
