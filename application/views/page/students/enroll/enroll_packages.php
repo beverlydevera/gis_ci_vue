@@ -26,7 +26,7 @@
 <hr/>
 <h5>Packages</h5>
 <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-6">
         Select Package Type:
         <select class="form-control" required @change="changePackageType()" v-model="packages_selects.packagetype">
             <option disabled selected>Select Package Type</option>
@@ -35,32 +35,111 @@
             <option>Summer Promo</option>
         </select>
         <br>
+
+        <h6>List of {{packages_selects.packagetype}} Packages</h6>
+        
         <div id="packagetype_regular" style="display:none;">
             <table class="table table-bordered table-responsive-sm table-sm">
                 <thead>
+                    <th>#</th>
                     <th>Class</th>
-                    <th>Schedule</th>
                     <th>Sessions</th>
+                    <th>Price Rate</th>
+                    <th>Remarks</th>
+                    <th>Schedules</th>
+                </thead>
+                <tbody v-for="(list,index) in packagelist">
+                    <tr>
+                        <td>{{index+1}}</td>
+                        <td>{{list.packagedetails.class}}</td>
+                        <td>{{list.packagedetails.sessions}}</td>
+                        <td>{{list.pricerate}}</td>
+                        <td>{{list.remarks}}</td>
+                        <td>
+                            <button v-bind:id="'showSchedulesbtn-'+list.package_id" :disabled="disabled_showbtn" class="btn btn-primary btn-xs" @click="getSchedulesList(list.packagedetails.class_id,list.package_id)">View Schedules</button>
+                            <button v-bind:id="'hideSchedulesbtn-'+list.package_id" :disabled="disabled_hidebtn" class="btn btn-warning btn-xs" @click="hideSchedules(list.packagedetails.class_id,list.package_id)" style="display:none;">Hide Schedules</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="regular_schedules" style="display:none;">
+            <table class="table table-bordered table-responsive-sm table-sm">
+                <thead>
+                    <th>#</th>
+                    <th>Branch</th>
+                    <th>Day</th>
+                    <th>Time</th>
+                </thead>
+                <tbody v-for="(list,index) in scheduleslist">
+                    <tr>
+                        <td>{{index+1}}</td>
+                        <td>{{list.branch_name}}</td>
+                        <td>{{list.sched_day}}</td>
+                        <td>{{list.sched_time}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div id="packagetype_unlimited" style="display:none;">
+            <table class="table table-bordered table-responsive-sm table-sm">
+                <thead>
+                    <th>#</th>
+                    <th>Description</th>
                     <th>Price Rate</th>
                     <th>Remarks</th>
                 </thead>
                 <tbody v-for="(list,index) in packagelist">
                     <tr>
-                        <td>{{list.packagedetails.schedule}}</td>
-                        <td>{{list.packagedetails.schedule}}</td>
-                        <td>{{list.packagedetails.sessions}}</td>
+                        <td>{{index+1}}</td>
+                        <td>{{list.packagedetails}}</td>
+                        <td>{{list.pricerate}}</td>
+                        <td>{{list.remarks}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div id="packagetype_unlimited" style="display:none;">
-            Select Unlimited Info
-        </div>
+        
         <div id="packagetype_summerpromo" style="display:none;">
-            Select from Packages
+            <table class="table table-bordered table-responsive-sm table-sm">
+                <thead>
+                    <th>#</th>
+                    <th>Details</th>
+                    <th>Price Rate</th>
+                    <th>Remarks</th>
+                </thead>
+                <tbody v-for="(list,index) in packagelist">
+                    <tr>
+                        <td>{{index+1}}</td>
+                        <td>
+                            <button v-bind:id="'showDetailsbtn-'+list.package_id" :disabled="disabled_showbtn" class="btn btn-primary btn-xs" @click="showDetails(list.package_id)">Show Details</button>
+                            <button v-bind:id="'hideDetailsbtn-'+list.package_id" :disabled="disabled_hidebtn" class="btn btn-warning btn-xs" @click="hideDetails(list.package_id)" style="display:none;">Hide Details</button>
+                            <template v-if="packagedetails.package_data.length>0">
+                                <table class="table table-bordered table-responsive-sm table-sm" v-if="list.package_id==packagedetails.package_id">
+                                    <tr>
+                                        <th>PARTICULAR</th>
+                                        <th>PRICE</th>
+                                    </tr>
+                                <template id="summerpromodetails" v-for="(ll,ii) in packagedetails.package_data" style="display:none;">
+                                    <tr>
+                                        <td>{{ll.particular}}</td>
+                                        <td>{{ll.price}}</td>
+                                    </tr>
+                                </template>
+                                </table>
+                            </template>
+                        </td>
+                        <td>{{list.pricerate}}</td>
+                        <td>{{list.remarks}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+
     </div>
-    <div class="col-md-7">
+    <div class="col-md-6">
         Packages Info
     </div>
 </div>

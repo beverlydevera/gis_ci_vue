@@ -298,7 +298,6 @@ var package = new Vue({
             var urls = window.App.baseUrl + "Classes/getClassesList";
             axios.post(urls, datas)
                 .then(function (e) {
-                    console.log(e.data.data);
                     package.packagelist[index].packagedetails.class = e.data.data.classeslist.class_title;
                 })
                 .catch(function (error) {

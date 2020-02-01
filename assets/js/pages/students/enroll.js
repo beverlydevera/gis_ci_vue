@@ -21,8 +21,17 @@ var enroll = new Vue({
             companyname: "",
             companyaddress: "",
         },
-        packages_selects: {},
-        packagelist: []
+        packages_selects: {
+            packagetype: ""
+        },
+        packagelist: [],
+        packagedetails: {
+            package_id: "",
+            package_data: []
+        },
+        disabled_showbtn: false,
+        disabled_hidebtn: true,
+        scheduleslist: []
     },
     methods: {
         calculate_age() {
@@ -132,15 +141,44 @@ var enroll = new Vue({
                 });
         },
         changePackageType(){
-            if(this.packages_selects.packagetype=="Regular"){
-                //get regular packages
-                var datas={
-                    packagetype: "Regular"
-                };
-                var urls = window.App.baseUrl + "Libraries/getPackageList";
-                axios.post(urls, datas)
-                    .then(function (e) {
-                        e.data.data.packagelist.forEach(e => {
+            this.packagelist=[];
+            var packagetype = this.packages_selects.packagetype;
+            var datas={ 
+                packagetype: packagetype
+            };
+            var urls = window.App.baseUrl + "Libraries/getPackageList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    if(packagetype=="Regular"){
+
+                        e.data.data.packagelist.forEach((e,index) => {
+                            enroll.packagelist.push({
+                                package_id: e.package_id,
+                                packagetype: e.packagetype,
+                                packagedetails: JSON.parse(e.packagedetails),
+                                pricerate: e.pricerate,
+                                year: e.year,
+                                remarks: e.remarks,
+                            })
+                            enroll.getClassDetails(index);
+                        });
+                        $('#packagetype_regular').css({'display': '',});
+                        $('#regular_schedules').css({'display': 'none',});
+                        $('#packagetype_unlimited').css({'display': 'none',});
+                        $('#packagetype_summerpromo').css({'display': 'none',});
+
+                    }else if(packagetype=="Unlimited"){
+
+                        enroll.packagelist = e.data.data.packagelist;
+                        $('#packagetype_regular').css({'display': 'none',});
+                        $('#regular_schedules').css({'display': 'none',});
+                        $('#packagetype_unlimited').css({'display': '',});
+                        $('#packagetype_summerpromo').css({'display': 'none',});
+
+                    }else if(packagetype=="Summer Promo"){
+                        
+                        // enroll.packagelist = e.data.data.packagelist;
+                        e.data.data.packagelist.forEach((e,index) => {
                             enroll.packagelist.push({
                                 package_id: e.package_id,
                                 packagetype: e.packagetype,
@@ -150,25 +188,113 @@ var enroll = new Vue({
                                 remarks: e.remarks,
                             })
                         });
-                    })
-                    .catch(function (error) {
-                        console.log(error)
+                        $('#packagetype_regular').css({'display': 'none',});
+                        $('#regular_schedules').css({'display': 'none',});
+                        $('#packagetype_unlimited').css({'display': 'none',});
+                        $('#packagetype_summerpromo').css({'display': '',});
+
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        getClassDetails(index){
+            var class_id = this.packagelist[index].packagedetails.class;
+            var datas = {
+                condition: { "c.class_id": class_id },
+            };
+            var urls = window.App.baseUrl + "Classes/getClassesList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    enroll.packagelist[index].packagedetails.class_id = enroll.packagelist[index].packagedetails.class;
+                    enroll.packagelist[index].packagedetails.class = e.data.data.classeslist.class_title;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                }); 
+        },
+        showDetails(package_id){
+            var datas = {package_id:package_id}
+            var urls = window.App.baseUrl + "Libraries/getPackageList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    JSON.parse(e.data.data.packagelist.packagedetails).forEach((e,index) => {
+                        enroll.packagedetails.package_data.push({
+                            particular: e.particular,
+                            price: e.price,
+                            type: e.type
+                        })
+                        if(e.type=='inventory'){ enroll.getItemDetails(index); }
                     });
-                $('#packagetype_regular').css({'display': '',});
-                $('#packagetype_unlimited').css({'display': 'none',});
-                $('#packagetype_summerpromo').css({'display': 'none',});
-            }else if(this.packages_selects.packagetype=="Unlimited"){
-                //get unlimited packages
-                $('#packagetype_regular').css({'display': 'none',});
-                $('#packagetype_unlimited').css({'display': '',});
-                $('#packagetype_summerpromo').css({'display': 'none',});
-            }else if(this.packages_selects.packagetype=="Summer Promo"){
-                //get summer promo packages
-                $('#packagetype_regular').css({'display': 'none',});
-                $('#packagetype_unlimited').css({'display': 'none',});
-                $('#packagetype_summerpromo').css({'display': '',});
-            }
-        }
+
+                    enroll.packagedetails.package_id = package_id;
+                    $('#summerpromodetails-'+package_id).css({'display': '',});
+                    $('#showDetailsbtn-'+package_id).css({'display': 'none',});
+                    $('#hideDetailsbtn-'+package_id).css({'display': '',});
+                    enroll.disabled_showbtn = true;
+                    enroll.disabled_hidebtn = false;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        hideDetails(package_id){
+            enroll.packagedetails = {
+                package_id: "",
+                package_data: []
+            };
+            $('#summerpromodetails-'+package_id).css({'display': 'none',});
+            $('#showDetailsbtn-'+package_id).css({'display': '',});
+            $('#hideDetailsbtn-'+package_id).css({'display': 'none',});
+            enroll.disabled_showbtn = false;
+            enroll.disabled_hidebtn = true;
+        },
+        getItemDetails(index){
+            var stock_id = this.packagedetails.package_data[index].particular;
+            var datas = {
+                condition: { "s.stock_id": stock_id },
+                groupby: ""
+            };
+            var urls = window.App.baseUrl + "Inventory/getInventoryList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    enroll.packagedetails.package_data[index].stock_id = enroll.packagedetails.package_data[index].particular;
+                    console.log( e.data.data.inventorylist);
+                    enroll.packagedetails.package_data[index].particular = e.data.data.inventorylist.item_name;
+                    console.log(enroll.packagedetails.package_data[index]);
+                })
+                .catch(function (error) {
+                    console.log(error)
+                }); 
+        },
+        getSchedulesList(class_id,package_id){
+            var datas = {
+                condition: { "s.class_id": class_id },
+            };
+            var urls = window.App.baseUrl + "Classes/getSchedulesList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    $('#regular_schedules').css({'display': '',});
+                    enroll.scheduleslist = e.data.data.scheduleslist;
+                    
+                    $('#showSchedulesbtn-'+package_id).css({'display': 'none',});
+                    $('#hideSchedulesbtn-'+package_id).css({'display': '',});
+                    enroll.disabled_showbtn = true;
+                    enroll.disabled_hidebtn = false;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                }); 
+        },
+        hideSchedules(class_id,package_id){
+            enroll.scheduleslist = {};
+            $('#regular_schedules').css({'display': 'none',});
+            $('#showSchedulesbtn-'+package_id).css({'display': '',});
+            $('#hideSchedulesbtn-'+package_id).css({'display': 'none',});
+            enroll.disabled_showbtn = false;
+            enroll.disabled_hidebtn = true;
+        },
     }, mounted: function () {
         //firstrun
     },

@@ -242,4 +242,31 @@ class Classes extends CI_Controller {
         response_json($response);
     }
 
+    public function getSchedulesList()
+    {
+        $type=""; $condition = [];
+        $data = jsondata();
+
+        if(!empty($data)){
+            $condition = $data['condition'];
+            if(!empty($condition['s.schedule_id'])){ $type="row"; }
+        }
+        $scheduleslist = $this->classes->getSchedulesList("*","tbl_schedules s",$condition,"",$type);
+        
+        if(!empty($scheduleslist)){
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    "scheduleslist" => $scheduleslist
+                ]
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
 }

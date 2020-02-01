@@ -48,7 +48,11 @@ class Libraries extends CI_Controller {
         $condition = jsondata();
         $type="";
         if(!empty($condition['package_id'])){$type="row";}
-        $packagelist = $this->libraries->getPackages("*","tbl_packages",$condition,"",$type);
+        $orderby = [
+            "column" => "package_id",
+            "order"  => "DESC"
+        ];
+        $packagelist = $this->libraries->getPackages("*","tbl_packages",$condition,"",$orderby,$type);
         
         if(!empty($packagelist)){
             $response = array(

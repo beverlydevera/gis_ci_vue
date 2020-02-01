@@ -9,7 +9,7 @@ class Libraries_model extends CI_Model {
 		parent::__construct();
 	}
 
-	public function getPackages($select,$table,$condition,$pager,$type)
+	public function getPackages($select,$table,$condition,$pager,$orderby,$type)
 	{
 		$this->db->select($select);
         $this->db->from($table);
@@ -17,7 +17,9 @@ class Libraries_model extends CI_Model {
             $this->db->where($condition);
 		}
 
-		$this->db->order_by("package_id","DESC");
+		if(!empty($orderby)){
+			$this->db->order_by($orderby['column'],$orderby["order"]);
+		}
 
 		if (!empty($pager)) {
 		$this->db->limit($pager['limit'],$pager['offset']);
