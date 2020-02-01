@@ -278,7 +278,10 @@ var package = new Vue({
                 });
         },
         getInventoryList(){
-            var datas = {};
+            var datas = {
+                condition: "",
+                groupby: "item_no,item_unitprice"
+            };
             var urls = window.App.baseUrl + "Inventory/getInventoryList";
             axios.post(urls, datas)
                 .then(function (e) {
@@ -297,7 +300,8 @@ var package = new Vue({
                 var stock_id = this.packagedetails.package_data[index].particular;
             }
             var datas = {
-                "s.stock_id": stock_id,
+                condition: { "s.stock_id": stock_id },
+                groupby: ""
             };
             var urls = window.App.baseUrl + "Inventory/getInventoryList";
             axios.post(urls, datas)

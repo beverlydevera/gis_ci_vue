@@ -28,27 +28,27 @@
                                     <th>Item No.</th>
                                     <th>Item Name</th>
                                     <th>Description</th>
-                                    <th>Price</th>
                                     <th>Remaining Stocks</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <template v-for="(list,index) in inventorylist">
                                 <tr>
-                                    <td>1</td>
-                                    <td>ITEM-0001</td>
-                                    <td>Uniform</td>
-                                    <td>Pomsae Uniform</td>
-                                    <td>500.00</td>
+                                    <td>{{index+1}}</td>
+                                    <td>{{list.item_no}}</td>
+                                    <td>{{list.item_name}}</td>
+                                    <td>{{list.item_desc}}</td>
                                     <td>
-                                        <span class="badge bg-success">7 SETS</span>
-                                        <span class="badge bg-danger">OUT OF STOCK</span>
+                                        <span v-if="list.totalstocks>0" class="badge bg-success">{{list.totalstocks}}</span>
+                                        <span v-else class="badge bg-danger">OUT OF STOCK</span>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-success btn-xs"><i class="fas fa-eye"></i></button>
                                         <button type="button" class="btn btn-success btn-xs"><i class="fas fa-plus"></i></button>
                                     </td>
                                 </tr>
+                                </template>
                             </tbody>
                         </table>
                     </div>

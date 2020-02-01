@@ -22,13 +22,16 @@ class Inventory extends CI_Controller {
     
     public function getInventoryList()
     {
-        $type=""; $condition = [];
+        $type=$groupby=""; $condition = [];
+        $data = jsondata();
 
-        if(!empty(jsondata())){
-            $condition = jsondata();
+        if(!empty($data)){
+            if(!empty($data['groupby'])){ $groupby = $data['groupby']; }
+            
+            $condition = $data['condition'];
             if(!empty($condition['s.stock_id'])){ $type="row"; }
         }
-        $inventorylist = $this->inventory->getInventoryList("*","tbl_inventory i",$condition,"","",$type);
+        $inventorylist = $this->inventory->getInventoryList("*, SUM(s.stocks) AS totalstocks","tbl_inventory i",$condition,"",$groupby,$type);
         
         if(!empty($inventorylist)){
             $response = array(

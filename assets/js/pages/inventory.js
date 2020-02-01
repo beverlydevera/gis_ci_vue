@@ -21,6 +21,20 @@ var inventory = new Vue({
                     console.log(error)
                 });
         },
+        getInventoryList(){
+            $datas = {
+                condition: "",
+                groupby: "item_no"
+            };
+            var urls = window.App.baseUrl + "Inventory/getInventoryList";
+            axios.post(urls, $datas)
+                .then(function (e) {
+                    inventory.inventorylist=e.data.data.inventorylist;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
         saveNewInventoryItem(){
             $datas = this.newInventoryItem;
             var urls = window.App.baseUrl + "Inventory/saveNewInventoryItem";
@@ -31,6 +45,7 @@ var inventory = new Vue({
                         title: e.data.message
                     })
                     $('#addNewInventoryItemModal').modal('hide');
+                    inventory.getInventoryList();
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -38,5 +53,6 @@ var inventory = new Vue({
         }
     }, mounted: function () {
         this.getBranches();
+        this.getInventoryList();
     },
 })

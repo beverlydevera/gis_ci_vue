@@ -20,9 +20,7 @@ class Inventory_model extends CI_Model {
 
 		$this->db->order_by("item_name","ASC");
 		if(!empty($groupby)){
-			if($groupby=="inventoryindex"){
-				$this->db->group_by($groupby);
-			}
+			$this->db->group_by($groupby);
 		}
 		
 		if (!empty($pager)) {
