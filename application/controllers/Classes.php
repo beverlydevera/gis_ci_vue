@@ -214,5 +214,32 @@ class Classes extends CI_Controller {
         );
         response_json($response);
     }
+    
+    public function getClassesList()
+    {
+        $type=""; $condition = [];
+        $data = jsondata();
+
+        if(!empty($data)){
+            $condition = $data['condition'];
+            if(!empty($condition['c.class_id'])){ $type="row"; }
+        }
+        $classeslist = $this->Main->getData("*","tbl_classes c",$condition,"","","",$type);
+        
+        if(!empty($classeslist)){
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    "classeslist" => $classeslist
+                ]
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
 
 }

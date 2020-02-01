@@ -57,7 +57,7 @@
                                         <td><span class="badge bg-success">{{list.packagetype}}</span></td>
                                         <td>
                                             <div class="row">
-                                                <div class="col-md-8" style="border-right:1px solid #000;">{{list.packagedetails.schedule}}</div>
+                                                <div class="col-md-8" style="border-right:1px solid #000;">{{list.packagedetails.class}}</div>
                                                 <div class="col-md-4">{{list.packagedetails.sessions}} Session/s</div>
                                             </div>
                                         </td>
@@ -130,11 +130,11 @@
                             <th>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <select class="form-control smallerinput" v-model="newPackage.packagedetails.schedule">
-                                            <option disabled selected>Select Schedule</option>
-                                            <option>All Levels Regular Class | Monday | 09:30-10:00</option>
-                                            <option>All Levels Regular Class | Monday | 09:30-10:00</option>
-                                            <option>All Levels Regular Class | Monday | 09:30-10:00</option>
+                                        <select class="form-control smallerinput" v-model="newPackage.packagedetails.class">
+                                            <option disabled selected>Select Class</option>
+                                            <template v-for="(list,index) in classeslist">
+                                                <option :value="list.class_id">{{list.class_title}}</option>
+                                            </template>
                                         </select>
                                     </div>
                                 </div>
@@ -226,11 +226,11 @@
                             <th>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <select class="form-control smallerinput" v-model="packageinfo.packagedetails.schedule">
-                                            <option disabled selected>Select Schedule</option>
-                                            <option>All Levels Regular Class | Monday | 09:30-10:00</option>
-                                            <option>All Levels Regular Class | Monday | 09:30-10:00</option>
-                                            <option>All Levels Regular Class | Monday | 09:30-10:00</option>
+                                        <select class="form-control smallerinput" v-model="packageinfo.packagedetails.class">
+                                            <option disabled selected>Select Class</option>
+                                            <template v-for="(list,index) in classeslist">
+                                                <option :value="list.class_id">{{list.class_title}}</option>
+                                            </template>
                                         </select>
                                     </div>
                                 </div>

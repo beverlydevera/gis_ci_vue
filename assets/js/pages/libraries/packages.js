@@ -36,13 +36,14 @@ var package = new Vue({
             packagetype: "Select Package Type",
             year: "Select Year"
         },
-        inventorylist: []
+        inventorylist: [],
+        classeslist: []
     },
     methods: {
         changePackageType_addModal(){
             if(this.newPackage.packagetype=="Regular"){
                 this.newPackage.packagedetails = {
-                    schedule: "Select Schedule",
+                    class: "Select Schedule",
                     sessions: ""
                 };
                 $('#add_regular_package').css({'display': '',});
@@ -137,7 +138,7 @@ var package = new Vue({
             var urls = window.App.baseUrl + "Libraries/getPackageList";
             axios.post(urls, "")
                 .then(function (e) {
-                    e.data.data.packagelist.forEach(e => {
+                    e.data.data.packagelist.forEach((e,index) => {
                         package.packagelist.push({
                             package_id: e.package_id,
                             packagetype: e.packagetype,
@@ -146,6 +147,7 @@ var package = new Vue({
                             year: e.year,
                             remarks: e.remarks,
                         })
+                        if(e.packagetype=='Regular'){ package.getClassDetails(index); }
                     });
                 })
                 .catch(function (error) {
@@ -277,6 +279,32 @@ var package = new Vue({
                     console.log(error)
                 });
         },
+        getClassesList(){
+            var datas = {};
+            var urls = window.App.baseUrl + "Classes/getClassesList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    package.classeslist = e.data.data.classeslist;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                }); 
+        },
+        getClassDetails(index){
+            var class_id = this.packagelist[index].packagedetails.class;
+            var datas = {
+                condition: { "c.class_id": class_id },
+            };
+            var urls = window.App.baseUrl + "Classes/getClassesList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    console.log(e.data.data);
+                    package.packagelist[index].packagedetails.class = e.data.data.classeslist.class_title;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                }); 
+        },
         getInventoryList(){
             var datas = {
                 condition: "",
@@ -339,6 +367,7 @@ var package = new Vue({
         }
     }, mounted: function () {
         this.getPackageList();
+        this.getClassesList();
         this.getInventoryList();
     },
 })
