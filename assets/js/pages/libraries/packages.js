@@ -9,6 +9,7 @@ var package = new Vue({
                 sessions: "",
                 particular: "",
                 price: "",
+                type: "",
             },
             pricerate: 0,
         },
@@ -33,7 +34,8 @@ var package = new Vue({
             searchinput: "",
             packagetype: "Select Package Type",
             year: "Select Year"
-        }
+        },
+        inventorylist: []
     },
     methods: {
         changePackageType_addModal(){
@@ -54,8 +56,13 @@ var package = new Vue({
                 $('#add_pricerate').prop('readonly', false);
             }else if(this.newPackage.packagetype=="Summer Promo"){
                 this.newPackage.packagedetails = [{
+                    type: "input",
                     particular: "",
-                    price: ""
+                    price: "0"
+                },{
+                    type: "inventory",
+                    particular: "Select From Inventory",
+                    price: "0"
                 }];
                 $('#add_regular_package').css({'display': 'none',});
                 $('#add_unlimited_package').css({'display': 'none',});
@@ -63,31 +70,35 @@ var package = new Vue({
                 $('#add_pricerate').prop('readonly', true);
             }
         },
-        addnewParticular_item(action){
+        addnewParticular_item(action,type){
             if(action=="add"){
                 if(this.newPackage.packagedetails!=null){
                     var packagedetail = {
+                        type: type,
                         particular: null,
-                        price: null,
+                        price: "0",
                     };
                     this.newPackage.packagedetails.push(packagedetail);
                 }else{
                     this.newPackage.packagedetails = [{
+                        type: type,
                         particular: null,
-                        price: null,
+                        price: "0",
                     }];
                 }
             }else if(action=="edit"){
                 if(this.packageinfo.packagedetails!=null){
                     var packagedetail = {
+                        type: type,
                         particular: null,
-                        price: null,
+                        price: "0",
                     };
                     this.packageinfo.packagedetails.push(packagedetail);
                 }else{
                     this.packageinfo.packagedetails = [{
+                        type: type,
                         particular: null,
-                        price: null,
+                        price: "0",
                     }];
                 }
             }
@@ -254,6 +265,30 @@ var package = new Vue({
                     console.log(error)
                 });
         },
+        getInventoryList(){
+            var datas = {};
+            var urls = window.App.baseUrl + "Inventory/getInventoryList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    package.inventorylist = e.data.data.inventorylist;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                }); 
+        },
+        getItemPrice(index){
+            var inventory_id = this.newPackage.packagedetails[index].particular;
+            var datas = {inventory_id: inventory_id};
+            var urls = window.App.baseUrl + "Inventory/getInventoryList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    package.newPackage.packagedetails[index].price = e.data.data.inventorylist.item_unitprice;
+                    package.addPriceRate('add');
+                })
+                .catch(function (error) {
+                    console.log(error)
+                }); 
+        },
         searchTable(){
             var datas = {
                 details:     this.searchFilter.searchinput,
@@ -273,5 +308,6 @@ var package = new Vue({
         }
     }, mounted: function () {
         this.getPackageList();
+        this.getInventoryList();
     },
 })
