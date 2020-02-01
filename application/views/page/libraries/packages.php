@@ -257,8 +257,8 @@
                                         <select v-if="list.type=='inventory'" class="form-control smallerinput" v-model="list.particular" @change="getItemDetails('edit',index)">
                                                 <option disabled selected>Select From Inventory</option>
                                             <template v-for="(inv,invindex) in inventorylist">
-                                                <!-- <option :value="inv.stock_id">{{inv.item_name}}</option> -->
-                                                <option :value="inv.stock_id">{{inv.item_name}} | ₱{{inv.item_unitprice}} | stocks: {{inv.stocks}}</option>
+                                                <option :value="inv.stock_id" v-if="inv.stocks>1">{{inv.item_name}} | ₱{{inv.item_unitprice}} | stocks: {{inv.stocks}}</option>
+                                                <option v-else-if="inv.stocks<1" disabled>{{inv.item_name}} | ₱{{inv.item_unitprice}} | stocks: {{inv.stocks}}</option>
                                             </template>
                                         </select>
                                     </div>

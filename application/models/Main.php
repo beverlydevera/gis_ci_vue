@@ -126,6 +126,41 @@ class Main extends CI_Model
 		}
 	}
 
+	public function getData($select,$table,$condition,$pager,$orderby,$groupby,$type)
+	{
+		$this->db->select($select);
+        $this->db->from($table);
+        if(!empty($condition)){
+            $this->db->where($condition);
+		}
+
+		if(!empty($orderby)){
+			$this->db->order_by($orderby['column'],$orderby['order']);
+		}
+		if(!empty($groupby)){
+			$this->db->groupby($groupby);
+		}
+
+		if (!empty($pager)) {
+		$this->db->limit($pager['limit'],$pager['offset']);
+		}
+
+		$query = $this->db->get();
+		if ($query->num_rows()) {
+
+			if ($type =="row") {
+				return $query->row();
+			}elseif($type =="count_row"){
+				return $query->num_rows();
+			}elseif($type =="is_array") {
+				return $query->result_array();
+			}else{
+				return $query->result();
+			}
+		}
+		return null;
+	}
+
 }
 
 /* End of file Main.php */
