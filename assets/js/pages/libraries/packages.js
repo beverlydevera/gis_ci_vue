@@ -185,7 +185,16 @@ var package = new Vue({
             var urls = window.App.baseUrl + "Libraries/getPackageList";
             axios.post(urls, datas)
                 .then(function (e) {
-                    package.packagedetails.package_data = JSON.parse(e.data.data.packagelist.packagedetails);
+                    // package.packagedetails.package_data = JSON.parse(e.data.data.packagelist.packagedetails);
+                    JSON.parse(e.data.data.packagelist.packagedetails).forEach((e,index) => {
+                        package.packagedetails.package_data.push({
+                            particular: e.particular,
+                            price: e.price,
+                            type: e.type
+                        })
+                        if(e.type=='inventory'){ package.getItemDetails('display',index); }
+                    });
+
                     package.packagedetails.package_id = package_id;
                     $('#summerpromodetails-'+package_id).css({'display': '',});
                     $('#showDetailsbtn-'+package_id).css({'display': 'none',});
@@ -261,6 +270,7 @@ var package = new Vue({
                     $('#edit_regular_package').css({'display': 'none',});
                     $('#edit_unlimited_package').css({'display': 'none',});
                     $('#edit_summerpromo_package').css({'display': 'none',});
+                    package.hideDetails();
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -277,11 +287,13 @@ var package = new Vue({
                     console.log(error)
                 }); 
         },
-        getItemPrice(action,index){
+        getItemDetails(action,index){
             if(action=="add"){
                 var inventory_id = this.newPackage.packagedetails[index].particular;
             }else if(action=="edit"){
                 var inventory_id = this.packageinfo.packagedetails[index].particular;
+            }else if(action=="display"){
+                var inventory_id = this.packagedetails.package_data[index].particular;
             }
             var datas = {inventory_id: inventory_id};
             var urls = window.App.baseUrl + "Inventory/getInventoryList";
@@ -289,10 +301,13 @@ var package = new Vue({
                 .then(function (e) {
                     if(action=="add"){
                         package.newPackage.packagedetails[index].price = e.data.data.inventorylist.item_unitprice;
+                        package.addPriceRate(action);
                     }else if(action=="edit"){
                         package.packageinfo.packagedetails[index].price = e.data.data.inventorylist.item_unitprice;
+                        package.addPriceRate(action);
+                    }else if(action=="display"){
+                        package.packagedetails.package_data[index].particular = e.data.data.inventorylist.item_name;
                     }
-                    package.addPriceRate(action);
                 })
                 .catch(function (error) {
                     console.log(error)

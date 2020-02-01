@@ -158,7 +158,7 @@
                                 <div class="row" v-for="(list,index) in newPackage.packagedetails">
                                     <div class="col-md-7">
                                         <input v-if="list.type=='input'" type="text" class="form-control smallerinput" v-model="list.particular" placeholder="Particular">
-                                        <select v-if="list.type=='inventory'" class="form-control smallerinput" v-model="list.particular" @change="getItemPrice('add',index)">
+                                        <select v-if="list.type=='inventory'" class="form-control smallerinput" v-model="list.particular" @change="getItemDetails('add',index)">
                                                 <option disabled selected>Select From Inventory</option>
                                             <template v-for="(inv,invindex) in inventorylist">
                                                 <option :value="inv.inventory_id">{{inv.item_name}}</option>
@@ -253,7 +253,7 @@
                                 <div class="row" v-for="(list,index) in packageinfo.packagedetails">
                                     <div class="col-md-7">
                                         <input v-if="list.type=='input'" type="text" class="form-control smallerinput" v-model="list.particular" placeholder="Particular">
-                                        <select v-if="list.type=='inventory'" class="form-control smallerinput" v-model="list.particular" @change="getItemPrice('edit',index)">
+                                        <select v-if="list.type=='inventory'" class="form-control smallerinput" v-model="list.particular" @change="getItemDetails('edit',index)">
                                                 <option disabled selected>Select From Inventory</option>
                                             <template v-for="(inv,invindex) in inventorylist">
                                                 <option :value="inv.inventory_id">{{inv.item_name}}</option>
