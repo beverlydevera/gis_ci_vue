@@ -40,11 +40,11 @@
                                     <td>{{list.item_name}}</td>
                                     <td>{{list.item_desc}}</td>
                                     <td>
-                                        <span v-if="list.totalstocks>0" class="badge bg-success">{{list.totalstocks}}</span>
+                                        <span v-if="list.totalremainingstocks>0" class="badge bg-success">{{list.totalremainingstocks}}</span>
                                         <span v-else class="badge bg-danger">OUT OF STOCK</span>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-success btn-xs"><i class="fas fa-eye"></i></button>
+                                        <button type="button" data-target="#viewItemStockInfoModal" data-toggle="modal" class="btn btn-success btn-xs" @click="viewItemStockInfoModal(list.inventory_id)"><i class="fas fa-eye"></i></button>
                                         <button type="button" class="btn btn-success btn-xs"><i class="fas fa-plus"></i></button>
                                     </td>
                                 </tr>
@@ -89,7 +89,7 @@
                         </tr>
                         <tr>
                             <th width="20%">Quantity:</th>
-                            <th><input type="number" class="form-control smallerinput" required v-model="newInventoryItem.stocks.stocks"></th>
+                            <th><input type="number" class="form-control smallerinput" required v-model="newInventoryItem.stocks.input_stocks"></th>
                         </tr>
                         <tr>
                             <th width="20%">Branch:</th>
@@ -117,6 +117,62 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary" @click="saveNewInventoryItem()">Save Item</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="viewItemStockInfoModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Inventory Item Stock Info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <b>Item No.:</b> <u>{{inventoryItemInfo.itemInfo.item_no}}</u><br>
+                        <b>Item Name:</b> <u>{{inventoryItemInfo.itemInfo.item_name}}</u>
+                    </div>
+                    <div class="col-md-6">
+                        <b>Item Description:</b> <u>{{inventoryItemInfo.itemInfo.item_desc}}</u><br>
+                        <b>Remaining Stocks:</b> <u>{{inventoryItemInfo.itemInfo.totalremainingstocks}}</u>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                    <table class="table table-bordered table-responsive-sm table-sm billing-table">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Branch</th>
+                                <th>Quantity</th>
+                                <th>Remaining Stocks</th>
+                                <th>Unit Price</th>
+                                <th>Supplier</th>
+                                <th>Date Added</th>
+                            </tr>
+                        </thead>
+                        <tbody v-for="(list,index) in inventoryItemInfo.itemStockInfo">
+                            <tr>
+                                <td>{{index+1}}</td>
+                                <td>{{list.branch_name}}</td>
+                                <td>{{list.input_stocks}}</td>
+                                <td>{{list.remaining_stocks}}</td>
+                                <td>{{list.item_unitprice}}</td>
+                                <td>{{list.supplier}}</td>
+                                <td>{{list.date_added}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

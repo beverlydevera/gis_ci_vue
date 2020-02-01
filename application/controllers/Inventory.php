@@ -31,13 +31,37 @@ class Inventory extends CI_Controller {
             $condition = $data['condition'];
             if(!empty($condition['s.stock_id'])){ $type="row"; }
         }
-        $inventorylist = $this->inventory->getInventoryList("*, SUM(s.stocks) AS totalstocks","tbl_inventory i",$condition,"",$groupby,$type);
+        $inventorylist = $this->inventory->getInventoryList("*, SUM(s.remaining_stocks) AS totalremainingstocks","tbl_inventory i",$condition,"",$groupby,$type);
         
         if(!empty($inventorylist)){
             $response = array(
                 "success"   => true,
                 "data"      => [
                     "inventorylist" => $inventorylist
+                ]
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
+    public function getItemStockInfo()
+    {
+        $type = "";
+        $condition = jsondata();
+        $itemstockinfo = $this->inventory->getStockInfo("*","tbl_stocks s",$condition,"",$type);
+        $iteminfo = $this->inventory->getInventoryList("*, SUM(s.remaining_stocks) AS totalremainingstocks","tbl_inventory i",$condition,"","","row");
+        
+        if(!empty($itemstockinfo)){
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    "iteminfo"      => $iteminfo,
+                    "itemstockinfo" => $itemstockinfo
                 ]
             );
         }else{
@@ -60,7 +84,8 @@ class Inventory extends CI_Controller {
             $lastid = $insertquery['lastid'];
             $itemno = "ITEM-" . str_pad($lastid, 4, '0', STR_PAD_LEFT);
 
-            $updateitemno = $this->Main->update("tbl_inventory",["inventory_id"=>$lastid],["item_no"=>$itemno],"");
+            $datastocks['remaining_stocks'] = $datastocks['input_stocks'];
+            $updateItem_no = $this->Main->update("tbl_inventory",["inventory_id"=>$lastid],["item_no"=>$itemno],"");
 
             $datastocks['inventory_id'] = $lastid;
             $insertquery = $this->Main->insert("tbl_stocks",$datastocks,true);

@@ -7,6 +7,10 @@ var inventory = new Vue({
         newInventoryItem: {
             inventory: {},
             stocks: {}
+        },
+        inventoryItemInfo: {
+            itemStockInfo: [],
+            itemInfo: {}
         }
     },
     methods: {
@@ -46,6 +50,24 @@ var inventory = new Vue({
                     })
                     $('#addNewInventoryItemModal').modal('hide');
                     inventory.getInventoryList();
+                    inventory.newInventoryItem = {
+                        inventory: {},
+                        stocks: {}
+                    };
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        viewItemStockInfoModal(inventory_id){
+            $datas = {
+                "s.inventory_id": inventory_id
+            };
+            var urls = window.App.baseUrl + "Inventory/getItemStockInfo";
+            axios.post(urls, $datas)
+                .then(function (e) {
+                    inventory.inventoryItemInfo.itemStockInfo=e.data.data.itemstockinfo;
+                    inventory.inventoryItemInfo.itemInfo=e.data.data.iteminfo;
                 })
                 .catch(function (error) {
                     console.log(error)
