@@ -16,7 +16,7 @@ class Inventory extends CI_Controller {
         $data['title'] = "Inventory";
         $data['vueid'] = "inventory_page";
         $data['vfile'] = "page/inventory/index";
-        // $data['js'] = array('pages/inventory.js');
+        $data['js'] = array('pages/inventory.js');
         $this->load->view('layout/main', $data);
     }
     
@@ -24,11 +24,9 @@ class Inventory extends CI_Controller {
     {
         $type=""; $condition = [];
 
-        // $condition['s.stocks>'] = "0";
         if(!empty(jsondata())){
             $condition = jsondata();
             if(!empty($condition['s.stock_id'])){ $type="row"; }
-            // $condition['s.stocks>'] = "0";
         }
         $inventorylist = $this->inventory->getInventoryList("*","tbl_inventory i",$condition,"","",$type);
         
@@ -45,6 +43,41 @@ class Inventory extends CI_Controller {
                 "data"      => ""
             );
         }
+        response_json($response);
+    }
+
+    public function saveNewInventoryItem()
+    {
+        $data = jsondata();
+        $datainventory = $data['inventory'];
+        $datastocks = $data['stocks'];
+
+        if(!empty($data)){
+            $insertquery = $this->Main->insert("tbl_inventory",$datainventory,true);
+            $lastid = $insertquery['lastid'];
+            $itemno = "ITEM-" . str_pad($lastid, 4, '0', STR_PAD_LEFT);
+
+            $updateitemno = $this->Main->update("tbl_inventory",["inventory_id"=>$lastid],["item_no"=>$itemno],"");
+
+            $datastocks['inventory_id'] = $lastid;
+            $insertquery = $this->Main->insert("tbl_stocks",$datastocks,true);
+
+            if(!empty($insertquery)){
+                $success = true;
+                $type = "success";
+                $message = "Inventory Item was added successfully.";
+            }
+        }else{
+            $success = false;
+            $type = "warning";
+            $message = "Inventory Item was not added";
+        }
+
+        $response = array(
+            'success'   => $success,
+            'type'      => $type,
+            'message'   => $message,
+        );
         response_json($response);
     }
 

@@ -123,4 +123,33 @@ class Libraries extends CI_Controller {
         response_json($response);
     }
 
+    public function getBranches()
+    {
+        $type = $groupby = "";
+        $orderby = [];
+
+        $condition = jsondata();
+        if(!empty($condition['branch_id'])){ $type="row"; }
+        $orderby = [
+            'column' => "branch_name",
+            'order' => "ASC",
+        ];
+        $brancheslist = $this->Main->getData("*","tbl_branches",$condition,"",$orderby,$groupby,$type);
+        
+        if(!empty($brancheslist)){
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    "brancheslist" => $brancheslist
+                ]
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
 }

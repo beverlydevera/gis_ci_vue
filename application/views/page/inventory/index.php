@@ -18,7 +18,7 @@
                             </div>
                             <div class="col-md-6"></div>
                             <div class="col-md-3">
-                                <a style="float:right;" data-target="#addNewInventoryItem" data-toggle="modal" class="btn bg-gradient-primary btn-xs">Add New Inventory Item</a>
+                                <a style="float:right;" data-target="#addNewInventoryItemModal" data-toggle="modal" class="btn bg-gradient-primary btn-xs">Add New Inventory Item</a>
                             </div>
                         </div>
                         <table class="table table-bordered table-responsive-sm table-sm">
@@ -58,7 +58,7 @@
     </div>
 </section>
 
-<div class="modal fade" id="addNewInventoryItem">
+<div class="modal fade" id="addNewInventoryItemModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -77,36 +77,38 @@
                         </tr>
                         <tr>
                             <th width="20%">Item Name:</th>
-                            <th><input type="text" class="form-control smallerinput" required></th>
+                            <th><input type="text" class="form-control smallerinput" required v-model="newInventoryItem.inventory.item_name"></th>
                         </tr>
                         <tr>
                             <th width="20%">Description:</th>
-                            <th><input type="text" class="form-control smallerinput" required></th>
+                            <th><input type="text" class="form-control smallerinput" required v-model="newInventoryItem.inventory.item_desc"></th>
                         </tr>
                         <tr>
                             <th width="20%">Unit Price:</th>
-                            <th><input type="text" class="form-control smallerinput" required></th>
+                            <th><input type="text" class="form-control smallerinput" required v-model="newInventoryItem.stocks.item_unitprice"></th>
                         </tr>
                         <tr>
                             <th width="20%">Quantity:</th>
-                            <th><input type="number" class="form-control smallerinput" required></th>
+                            <th><input type="number" class="form-control smallerinput" required v-model="newInventoryItem.stocks.stocks"></th>
                         </tr>
                         <tr>
                             <th width="20%">Branch:</th>
                             <th>
-                                <select class="form-control smallerinput">
+                                <select class="form-control smallerinput" v-model="newInventoryItem.stocks.branch_id">
                                     <option disabled selected>Select Branch</option>
-                                    <option>Sample 1</option>
+                                    <template v-for="(ll,ii) in branchlist">
+                                        <option :value="ll.branch_id">{{ll.branch_name}}</option>
+                                    </template>
                                 </select>
                             </th>
                         </tr>
                         <tr>
                             <th width="20%">Supplier:</th>
-                            <th><input type="text" class="form-control smallerinput"></th>
+                            <th><input type="text" class="form-control smallerinput" v-model="newInventoryItem.stocks.supplier"></th>
                         </tr>
                         <tr>
                             <th width="20%">Remarks:</th>
-                            <th><textarea class="form-control" rows=2></textarea></th>
+                            <th><textarea class="form-control" rows=2 v-model="newInventoryItem.inventory.remarks"></textarea></th>
                         </tr>
                     </table>
                     </div>
@@ -114,7 +116,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save Item</button>
+                <button type="submit" class="btn btn-primary" @click="saveNewInventoryItem()">Save Item</button>
             </div>
         </div>
     </div>
