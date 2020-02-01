@@ -21,15 +21,8 @@ var enroll = new Vue({
             companyname: "",
             companyaddress: "",
         },
-        classschedlist: {},
-        classpackagelist: {},
-        classenroll: {
-            class_id: "",
-            package_id: "",
-            payment: "",
-            amounttopay: "",
-        },
-        studentclasses:{},
+        packages_selects: {},
+        packagelist: []
     },
     methods: {
         calculate_age() {
@@ -77,85 +70,6 @@ var enroll = new Vue({
                             title: e.data.message
                         })
                     }
-                })
-                .catch(function (error) {
-                    console.log(error)
-                });
-        },
-        getClassScheds(){
-            var urls = window.App.baseUrl + "classes/getClassScheds";
-            axios.post(urls, "")
-                .then(function (e) {
-                    enroll.classschedlist=e.data.data;
-                })
-                .catch(function (error) {
-                    console.log(error)
-                });
-        },
-        getClassPackages(){
-            var datas = { class_id: this.classenroll.class_id };
-            var datas = frmdata(datas);
-            var urls = window.App.baseUrl + "students/getClassPackage";
-            axios.post(urls, datas)
-                .then(function (e) {
-                    if (e.data.success) {
-                       enroll.classpackagelist = e.data.data;
-                       enroll.disabled_everything = false;
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error)
-                });
-        },
-        checkPayment(){
-            var datas = { package_id: this.classenroll.package_id };
-            var datas = frmdata(datas);
-            var urls = window.App.baseUrl + "students/checkPayment";
-            axios.post(urls, datas)
-                .then(function (e) {
-                    if (e.data.success) {
-                        if(enroll.classenroll.payment=="fullPayment"){
-                            enroll.classenroll.amounttopay = e.data.data;
-                            enroll.readonly_everything = true;
-                        }else{
-                            $("#amountpay").attr({ "max" : e.data.data, });
-                            enroll.classenroll.amounttopay = "";
-                            enroll.readonly_everything = false;
-                        }
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error)
-                });
-        },
-        enrollToClass(){
-            var datas = { 
-                student_id: this.student_id,
-                package_id: this.classenroll.package_id,
-                payment_options: this.classenroll.payment
-            };
-            var datas = frmdata(datas);
-            var urls = window.App.baseUrl + "students/enrollToClass";
-            axios.post(urls, datas)
-                .then(function (e) {
-                    // console.log(e);
-                    if (e.data.success) {
-                        Toast.fire({
-                            type: "success",
-                            title: e.data.message
-                        })
-                        enroll.getStudentProfile();
-                    }else{
-                        Toast.fire({
-                            type: "warning",
-                            title: e.data.message
-                        })
-                    }
-                    enroll.classenroll.class_id = "";
-                    enroll.classenroll.package_id = "";
-                    enroll.classenroll.payment = "";
-                    enroll.classenroll.amounttopay = "";
-                    $('#enrollToClassModal').modal('hide');
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -217,6 +131,44 @@ var enroll = new Vue({
                     console.log(error)
                 });
         },
+        changePackageType(){
+            if(this.packages_selects.packagetype=="Regular"){
+                //get regular packages
+                var datas={
+                    packagetype: "Regular"
+                };
+                var urls = window.App.baseUrl + "Libraries/getPackageList";
+                axios.post(urls, datas)
+                    .then(function (e) {
+                        e.data.data.packagelist.forEach(e => {
+                            enroll.packagelist.push({
+                                package_id: e.package_id,
+                                packagetype: e.packagetype,
+                                packagedetails: JSON.parse(e.packagedetails),
+                                pricerate: e.pricerate,
+                                year: e.year,
+                                remarks: e.remarks,
+                            })
+                        });
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+                $('#packagetype_regular').css({'display': '',});
+                $('#packagetype_unlimited').css({'display': 'none',});
+                $('#packagetype_summerpromo').css({'display': 'none',});
+            }else if(this.packages_selects.packagetype=="Unlimited"){
+                //get unlimited packages
+                $('#packagetype_regular').css({'display': 'none',});
+                $('#packagetype_unlimited').css({'display': '',});
+                $('#packagetype_summerpromo').css({'display': 'none',});
+            }else if(this.packages_selects.packagetype=="Summer Promo"){
+                //get summer promo packages
+                $('#packagetype_regular').css({'display': 'none',});
+                $('#packagetype_unlimited').css({'display': 'none',});
+                $('#packagetype_summerpromo').css({'display': '',});
+            }
+        }
     }, mounted: function () {
         //firstrun
     },

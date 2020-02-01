@@ -258,7 +258,7 @@ class Students extends CI_Controller {
                 "data"      => [
                     "student_id"    => $result['lastid'],
                     "reference_id"  => $reference_id,
-                    "studmem_id" => $insert_membership['lastid'],
+                    "studmem_id"    => $insert_membership['lastid'],
                     "result"        => $result
                 ],
             );
