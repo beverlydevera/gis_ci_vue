@@ -26,7 +26,7 @@
                     <td>1,000.00</td>
                 </tr>
                 <tr>
-                    <th class="billing-desc" colspan="5">Class Fees</th>
+                    <th class="billing-desc" colspan="5">Packages Availed</th>
                 </tr>
                 <tr>
                     <td>3</td>

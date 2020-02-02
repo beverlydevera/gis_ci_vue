@@ -274,7 +274,7 @@ var enroll = new Vue({
                     console.log(error)
                 }); 
         },
-        getSchedulesList(class_id,package_id,index){
+        getSchedulesList(class_id,package_id,packageindex){
             var datas = {
                 condition: { "s.class_id": class_id },
             };
@@ -283,7 +283,7 @@ var enroll = new Vue({
                 .then(function (e) {
                     $('#regular_schedules').css({'display': '',});
                     enroll.scheduleslist.package_id = package_id;
-                    enroll.scheduleslist.packageindex = index;
+                    enroll.scheduleslist.packageindex = packageindex;
                     enroll.scheduleslist.data = e.data.data.scheduleslist;
                     
                     $('#showSchedulesbtn-'+package_id).css({'display': 'none',});
@@ -295,7 +295,7 @@ var enroll = new Vue({
                     console.log(error)
                 }); 
         },
-        hideSchedules(class_id,package_id){
+        hideSchedules(package_id){
             enroll.scheduleslist = {};
             $('#regular_schedules').css({'display': 'none',});
             $('#showSchedulesbtn-'+package_id).css({'display': '',});
@@ -303,25 +303,56 @@ var enroll = new Vue({
             enroll.disabled_showbtn = false;
             enroll.disabled_hidebtn = true;
         },
-        selectRegular(schedule_id,class_id){
-            var selected = {
-                "student_id": this.student_id,
-                "package_id": this.scheduleslist.package_id,
-                "package_type": this.packages_selects.packagetype,
-                "price_rate": this.packagelist[enroll.scheduleslist.packageindex].pricerate,
-                "details": {
-                    "class_id": class_id,
-                    "schedule_id": schedule_id,
-                    "sessions": this.packagelist[enroll.scheduleslist.packageindex].packagedetails.sessions,
-                    "sessions_attended": 0,
-                },
-            };
-
+        selectPackage(scheduleindex,packagetype,packageindex){
+            if(packagetype=="regular"){
+                var selected = {
+                    "student_id": this.student_id,
+                    "package_id": this.packagelist[packageindex].package_id,
+                    "package_type": this.packagelist[packageindex].packagetype,
+                    "price_rate": this.packagelist[packageindex].pricerate,
+                    "details": {
+                        "class": this.packagelist[packageindex].packagedetails.class,
+                        "class_id": this.packagelist[packageindex].packagedetails.class_id,
+                        "schedule_id": this.scheduleslist.data[scheduleindex].schedule_id,
+                        "sched_day": this.scheduleslist.data[scheduleindex].sched_day,
+                        "sched_time": this.scheduleslist.data[scheduleindex].sched_time,
+                        "branch": this.scheduleslist.data[scheduleindex].branch_name,
+                        "sessions": this.packagelist[packageindex].packagedetails.sessions,
+                        "sessions_attended": 0,
+                    },
+                };
+            }else if(packagetype=="unlimited"){
+                var selected = {
+                    "student_id": this.student_id,
+                    "package_id": this.packagelist[packageindex].package_id,
+                    "package_type": this.packagelist[packageindex].packagetype,
+                    "price_rate": this.packagelist[packageindex].pricerate,
+                    "details": this.packagelist[packageindex].packagedetails
+                };
+            }else if(packagetype=="summer promo"){
+                var selected = {
+                    "student_id": this.student_id,
+                    "package_id": this.packagelist[packageindex].package_id,
+                    "package_type": this.packagelist[packageindex].packagetype,
+                    "price_rate": this.packagelist[packageindex].pricerate,
+                    "details": this.packagelist[packageindex].packagedetails
+                };
+            }
+            
+            // $('#selectPackage-'+schedule_id). prop('disabled', true);
+            $('.selectpack'). prop('disabled', true);
+            $('#selected_packages').css({'display': '',});
             if(this.selectedPackages!=null){
                 this.selectedPackages.push(selected);
             }else{
                 this.selectedPackages = selected;
             }
+        },
+        saveSelectedPackages(){
+            //insert to tbl_studentinvoice
+            //get invoice number
+            //insert to tbl_studentpackages
+            //transfer to billing tab
         }
     }, mounted: function () {
         //firstrun

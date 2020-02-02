@@ -55,7 +55,7 @@
                         <td>{{list.remarks}}</td>
                         <td>
                             <button v-bind:id="'showSchedulesbtn-'+list.package_id" :disabled="disabled_showbtn" class="btn btn-primary btn-xs" @click="getSchedulesList(list.packagedetails.class_id,list.package_id,index)">View Schedules</button>
-                            <button v-bind:id="'hideSchedulesbtn-'+list.package_id" :disabled="disabled_hidebtn" class="btn btn-warning btn-xs" @click="hideSchedules(list.packagedetails.class_id,list.package_id)" style="display:none;">Hide Schedules</button>
+                            <button v-bind:id="'hideSchedulesbtn-'+list.package_id" :disabled="disabled_hidebtn" class="btn btn-warning btn-xs" @click="hideSchedules(list.package_id)" style="display:none;">Hide Schedules</button>
                         </td>
                     </tr>
                 </tbody>
@@ -80,7 +80,7 @@
                         <td>{{list.sched_day}}</td>
                         <td>{{list.sched_time}}</td>
                         <td>
-                            <button class="btn btn-success btn-xs" v-bind:id="'selectRegular_'+list.schedule_id" @click="selectRegular(list.schedule_id,list.class_id)">Select Class</button>
+                            <button v-bind:id="'selectPackage-'+list.schedule_id" class="selectpack btn btn-success btn-xs" @click="selectPackage(index,'regular',scheduleslist.packageindex)">Select Class</button>
                         </td>
                     </tr>
                 </tbody>
@@ -103,7 +103,7 @@
                         <td>{{list.pricerate}}</td>
                         <td>{{list.remarks}}</td>
                         <td>
-                            <button class="btn btn-success btn-xs">Select Package</button>
+                            <button v-bind:id="'selectPackage-'+list.package_id" class="selectpack btn btn-success btn-xs" @click="selectPackage('','unlimited',index)">Select Package</button>
                         </td>
                     </tr>
                 </tbody>
@@ -143,7 +143,7 @@
                         <td>{{list.pricerate}}</td>
                         <td>{{list.remarks}}</td>
                         <td>
-                            <button class="btn btn-success btn-xs">Select Package</button>
+                            <button v-bind:id="'selectPackage-'+list.package_id" class="selectpack btn btn-success btn-xs" @click="selectPackage('','summer promo',index)">Select Package</button>
                         </td>
                     </tr>
                 </tbody>
@@ -153,7 +153,7 @@
     </div>
     <div class="col-md-6">
         <h6>Summary of Selected Packages</h6>
-        <div id="selected_packages">
+        <div id="selected_packages" style="display:none">
             <table class="table table-bordered table-responsive-sm table-sm">
                 <thead>
                     <tr>
@@ -167,11 +167,35 @@
                     <tr>
                         <td>{{index+1}}</td>
                         <td>{{list.package_type}}</td>
-                        <td>{{list.details}}</td>
+                        <td v-if="list.package_type=='Regular'">
+                            Branch: {{list.details.branch}} <br>
+                            Class: {{list.details.class}} <br>
+                            Schedule: {{list.details.sched_day}} / {{list.details.sched_time}} <br>
+                            Sessions: {{list.details.sessions}}
+                        </td>
+                        <td v-else-if="list.package_type=='Unlimited'">
+                            {{list.details}}
+                        </td>
+                        <td v-else-if="list.package_type=='Summer Promo'">
+                            <table class="table table-bordered table-responsive-sm table-sm">
+                                <tr>
+                                    <th>PARTICULAR</th>
+                                    <th>PRICE</th>
+                                </tr>
+                            <template v-for="(ll,ii) in list.details">
+                                <tr>
+                                    <td>{{ll.particular}}</td>
+                                    <td>{{ll.price}}</td>
+                                </tr>
+                            </template>
+                            </table>
+                        </td>
                         <td>{{list.price_rate}}</td>
                     </tr>
                 </tbody>
             </table>
+            <br>
+            <button class="btn btn-primary float-right" @click="saveSelectedPackages()">Save Selected Packages</button>
         </div>
     </div>
 </div>
