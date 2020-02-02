@@ -31,7 +31,11 @@ var enroll = new Vue({
         },
         disabled_showbtn: false,
         disabled_hidebtn: true,
-        scheduleslist: []
+        scheduleslist: {
+            package_id: "",
+            data: []
+        },
+        selectedPackages: []
     },
     methods: {
         calculate_age() {
@@ -141,6 +145,8 @@ var enroll = new Vue({
                 });
         },
         changePackageType(){
+            this.disabled_showbtn=false,
+            this.disabled_hidebtn=true,
             this.packagelist=[];
             var packagetype = this.packages_selects.packagetype;
             var datas={ 
@@ -268,7 +274,7 @@ var enroll = new Vue({
                     console.log(error)
                 }); 
         },
-        getSchedulesList(class_id,package_id){
+        getSchedulesList(class_id,package_id,index){
             var datas = {
                 condition: { "s.class_id": class_id },
             };
@@ -276,7 +282,9 @@ var enroll = new Vue({
             axios.post(urls, datas)
                 .then(function (e) {
                     $('#regular_schedules').css({'display': '',});
-                    enroll.scheduleslist = e.data.data.scheduleslist;
+                    enroll.scheduleslist.package_id = package_id;
+                    enroll.scheduleslist.packageindex = index;
+                    enroll.scheduleslist.data = e.data.data.scheduleslist;
                     
                     $('#showSchedulesbtn-'+package_id).css({'display': 'none',});
                     $('#hideSchedulesbtn-'+package_id).css({'display': '',});
@@ -295,6 +303,26 @@ var enroll = new Vue({
             enroll.disabled_showbtn = false;
             enroll.disabled_hidebtn = true;
         },
+        selectRegular(schedule_id,class_id){
+            var selected = {
+                "student_id": this.student_id,
+                "package_id": this.scheduleslist.package_id,
+                "package_type": this.packages_selects.packagetype,
+                "price_rate": this.packagelist[enroll.scheduleslist.packageindex].pricerate,
+                "details": {
+                    "class_id": class_id,
+                    "schedule_id": schedule_id,
+                    "sessions": this.packagelist[enroll.scheduleslist.packageindex].packagedetails.sessions,
+                    "sessions_attended": 0,
+                },
+            };
+
+            if(this.selectedPackages!=null){
+                this.selectedPackages.push(selected);
+            }else{
+                this.selectedPackages = selected;
+            }
+        }
     }, mounted: function () {
         //firstrun
     },

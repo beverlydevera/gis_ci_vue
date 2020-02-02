@@ -1,10 +1,8 @@
 <table class="table table-bordered table-responsive-sm table-sm">
     <tr>
         <th width="15%">Student Reference ID:</th>
-        <th><input type="text" :readonly="disabled_everything" class="form-control smallerinput" v-model="studentrefid" required></th>
-    </tr>
-    <tr>
-        <th width="15%">Full Name:</th>
+        <th width="15%"><input type="text" :readonly="disabled_everything" class="form-control smallerinput" v-model="studentrefid" required></th>
+        <th width="8%">Full Name:</th>
         <th>
             <div class="row">
                 <div class="col-sm-3">
@@ -26,9 +24,9 @@
 <hr/>
 <h5>Packages</h5>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6" style="border-right:1px solid #000;">
         Select Package Type:
-        <select class="form-control" required @change="changePackageType()" v-model="packages_selects.packagetype">
+        <select class="form-control col-md-6" required @change="changePackageType()" v-model="packages_selects.packagetype">
             <option disabled selected>Select Package Type</option>
             <option>Regular</option>
             <option>Unlimited</option>
@@ -56,7 +54,7 @@
                         <td>{{list.pricerate}}</td>
                         <td>{{list.remarks}}</td>
                         <td>
-                            <button v-bind:id="'showSchedulesbtn-'+list.package_id" :disabled="disabled_showbtn" class="btn btn-primary btn-xs" @click="getSchedulesList(list.packagedetails.class_id,list.package_id)">View Schedules</button>
+                            <button v-bind:id="'showSchedulesbtn-'+list.package_id" :disabled="disabled_showbtn" class="btn btn-primary btn-xs" @click="getSchedulesList(list.packagedetails.class_id,list.package_id,index)">View Schedules</button>
                             <button v-bind:id="'hideSchedulesbtn-'+list.package_id" :disabled="disabled_hidebtn" class="btn btn-warning btn-xs" @click="hideSchedules(list.packagedetails.class_id,list.package_id)" style="display:none;">Hide Schedules</button>
                         </td>
                     </tr>
@@ -65,19 +63,25 @@
         </div>
 
         <div id="regular_schedules" style="display:none;">
+            <br/>
+            <h6>List of Class Schedules</h6>
             <table class="table table-bordered table-responsive-sm table-sm">
                 <thead>
                     <th>#</th>
                     <th>Branch</th>
                     <th>Day</th>
                     <th>Time</th>
+                    <th>Action</th>
                 </thead>
-                <tbody v-for="(list,index) in scheduleslist">
+                <tbody v-for="(list,index) in scheduleslist.data">
                     <tr>
                         <td>{{index+1}}</td>
                         <td>{{list.branch_name}}</td>
                         <td>{{list.sched_day}}</td>
                         <td>{{list.sched_time}}</td>
+                        <td>
+                            <button class="btn btn-success btn-xs" v-bind:id="'selectRegular_'+list.schedule_id" @click="selectRegular(list.schedule_id,list.class_id)">Select Class</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -90,6 +94,7 @@
                     <th>Description</th>
                     <th>Price Rate</th>
                     <th>Remarks</th>
+                    <th>Action</th>
                 </thead>
                 <tbody v-for="(list,index) in packagelist">
                     <tr>
@@ -97,6 +102,9 @@
                         <td>{{list.packagedetails}}</td>
                         <td>{{list.pricerate}}</td>
                         <td>{{list.remarks}}</td>
+                        <td>
+                            <button class="btn btn-success btn-xs">Select Package</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -109,6 +117,7 @@
                     <th>Details</th>
                     <th>Price Rate</th>
                     <th>Remarks</th>
+                    <th>Action</th>
                 </thead>
                 <tbody v-for="(list,index) in packagelist">
                     <tr>
@@ -133,6 +142,9 @@
                         </td>
                         <td>{{list.pricerate}}</td>
                         <td>{{list.remarks}}</td>
+                        <td>
+                            <button class="btn btn-success btn-xs">Select Package</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -140,6 +152,26 @@
 
     </div>
     <div class="col-md-6">
-        Packages Info
+        <h6>Summary of Selected Packages</h6>
+        <div id="selected_packages">
+            <table class="table table-bordered table-responsive-sm table-sm">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Package Type</th>
+                        <th>Details</th>
+                        <th>Price Rate</th>
+                    </tr>
+                </thead>
+                <tbody v-for="(list,index) in selectedPackages">
+                    <tr>
+                        <td>{{index+1}}</td>
+                        <td>{{list.package_type}}</td>
+                        <td>{{list.details}}</td>
+                        <td>{{list.price_rate}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
