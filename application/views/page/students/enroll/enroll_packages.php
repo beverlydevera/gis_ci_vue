@@ -19,9 +19,17 @@
                 </div>
             </div>
         </th>
+        <th width="8%">Insurance:</th>
+        <th>
+            <select class="form-control smallerinput" required v-model="otherinfo.insurance">
+                <option disabled selected>Select Insurance</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+        </th>
     </tr>
 </table>
-<hr/>
+<hr>
 <h5>Packages</h5>
 <div class="row">
     <div class="col-md-6" style="border-right:1px solid #000;">

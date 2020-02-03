@@ -1,4 +1,4 @@
-<form @submit.prevent="saveNewStudentRegistration">
+<!-- <form @submit.prevent="saveNewStudentRegistration"> -->
     <h6>BASIC INFORMATION</h6>
     <div class="form-group row">
         <table class="table table-bordered table-responsive-sm table-sm">
@@ -65,20 +65,6 @@
                 <th ><input type="number" class="form-control smallerinput" v-model="studentinfo.height" required step="any"></th>
                 <th width="15%"><span class="requiredspan">*</span>Weight (kg):</th>
                 <th ><input type="number" class="form-control smallerinput" v-model="studentinfo.weight" required step="any"></th>
-                <th width="15%">Insurance:</th>
-                <th>
-                    <div class="row">
-                        <div class="col-sm-2"></div>
-                        <div class="col-sm-5">
-                            <input type="radio" class="form-check-input" :value="1" v-model="otherinfo.insurance" required>
-                            <label class="form-check-label" for="">Yes</label>
-                        </div>
-                        <div class="col-sm-5">
-                            <input type="radio" class="form-check-input" :value="0" v-model="otherinfo.insurance" required>
-                            <label class="form-check-label" for="">No</label>
-                        </div>
-                    </div>
-                </th>
             </tr>
         </table>
     </div>
@@ -206,6 +192,7 @@
     </div>
     <hr>
     <div class="text-right">
-        <button type="submit" class="btn btn-primary" style="width: 20%;">Submit Application Form</button>
+        <button type="submit" @click="saveNewStudentRegistration()" id="submitapplicationform" class="btn btn-primary" style="width: 20%;">Submit Application Form</button>
+        <button type="submit" id="updateapplicationform" class="btn btn-primary" style="width: 20%; display:none;">Update Application Form</button>
     </div>
-</form>
+<!-- </form> -->

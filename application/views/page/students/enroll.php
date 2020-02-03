@@ -9,16 +9,16 @@
                         <a class="nav-link active" id="basicinfo-tab" data-toggle="pill" href="#basicinfo" role="tab" aria-controls="basicinfo" aria-selected="true">Personal Information</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link " id="availpackages-tab" data-toggle="pill" href="#availpackages" role="tab" aria-controls="availpackages" aria-selected="false"> Avail Packages</a>
+                        <a class="nav-link disabled" id="availpackages-tab" data-toggle="pill" href="#availpackages" role="tab" aria-controls="availpackages" aria-selected="false">Insurance and Packages</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link " id="billinginfo-tab" data-toggle="pill" href="#billinginfo" role="tab" aria-controls="billinginfo" aria-selected="false">Billing</a>
+                        <a class="nav-link disabled" id="billinginfo-tab" data-toggle="pill" href="#billinginfo" role="tab" aria-controls="billinginfo" aria-selected="false">Billing</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link " id="payment-tab" data-toggle="pill" href="#payment" role="tab" aria-controls="payment" aria-selected="false">Payment</a>
+                        <a class="nav-link disabled" id="payment-tab" data-toggle="pill" href="#payment" role="tab" aria-controls="payment" aria-selected="false">Payment</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link " id="complete-tab" data-toggle="pill" href="#complete" role="tab" aria-controls="complete" aria-selected="false">Complete</a>
+                        <a class="nav-link disabled" id="complete-tab" data-toggle="pill" href="#complete" role="tab" aria-controls="complete" aria-selected="false">Complete</a>
                         </li>
                     </ul>
                 </div>

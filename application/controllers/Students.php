@@ -232,11 +232,10 @@ class Students extends CI_Controller {
         $this->load->view('layout/main', $data);
     }
 
-    public function saveNewStudentRegistration()
+    public function enroll_saveNewStudentRegistration()
     {
         $data = jsondata();
         $studentinfo = $data["studentinfo"];
-        $insurance = $data["insurance"];
         $result = $this->Main->insert("tbl_students", $studentinfo, true);
 
         if(!empty($result)){
@@ -247,14 +246,14 @@ class Students extends CI_Controller {
                 "student_id"      => $result['lastid'],
                 "year"            => date("Y"),
                 "membership_type" => 1,
-                "insurance_avail" => $insurance,
+                "insurance_avail" => 0,
                 "date_added"      => date('Y-m-d H:i:s')
             ];
             $insert_membership = $this->Main->insert("tbl_studentmembership",$insert_membership_data,true);
 
             $response = array(
                 "success"   => true,
-                "message"   => "Student Registration was saved successfully.\nContinue by adding the student to a class.",
+                "message"   => "Student Registration was saved successfully.\nContinue to insurance and packages.",
                 "data"      => [
                     "student_id"    => $result['lastid'],
                     "reference_id"  => $reference_id,
@@ -272,9 +271,45 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
-    public function changeMembership()
+    public function enroll_saveNewStudentPackages()
     {
-        
+        $data = jsondata();
+        $student_id = $data["student_id"];
+        $studmem_id = $data["studmem_id"];
+        $insurance = $data["insurance"];
+        $studentpackages = $data["studentpackages"];
+
+        $this->Main->update("tbl_studentmembership",['studmem_id'=>$studmem_id],['insurance_avail'=>$insurance]);
+        $insert_studinvoice = $this->Main->insert("tbl_studentinvoice", ["student_id" => $student_id], true);
+        if(!empty($insert_studinvoice)){
+            $invoiceid = $insert_studinvoice['lastid'];
+            foreach($studentpackages as $spkey => $spval){
+                unset($studentpackages[$spkey]['package_type']);
+                unset($studentpackages[$spkey]['price_rate']);
+                $studentpackages[$spkey]['invoice_id'] = $invoiceid;
+                $studentpackages[$spkey]['details'] = json_encode($spval['details']);
+            }
+            
+            $insert_studpackages = $this->Main->insertbatch("tbl_studentpackages", $studentpackages);
+            $studentpackages = $this->Main->getData("*","tbl_studentpackages",["invoice_id"=>$invoiceid],"","","","");
+
+            $response = array(
+                "success"   => true,
+                "message"   => "Student Packages were saved successfully.\nContinue to billing.",
+                "data"      => [
+                    "invoice_id"        => $invoiceid,
+                    "studentpackages"   => $studentpackages,
+                    "result"            => $insert_studpackages
+                ],
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "message"   => "Insurance and Packages were not saved.",
+                "data"      => "",
+            );
+        }
+        response_json($response);
     }
 
 }
