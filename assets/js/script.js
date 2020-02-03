@@ -1,6 +1,6 @@
 function showloading(message = '') {
 	var message = (message.length > 0) ? message : "Submitting Data . . .";
-	swal({
+	Swal.fire({
 		text: message,
 		showCloseButton: false,
 		showCancelButton: false,

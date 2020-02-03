@@ -13,6 +13,12 @@
       </a>
     </li>
     <li class="nav-item">
+      <a href="<?= base_url('announcements/') ?>" class="nav-link" v-bind:class="checkactive('announcements')">
+        <i class="nav-icon fas fa-bullhorn"></i>
+        <p>Announcements</p>
+      </a>
+    </li>
+    <li class="nav-item">
       <a href="<?= base_url('schedules/') ?>" class="nav-link" v-bind:class="checkactive('schedules')">
         <i class="nav-icon fas fa-calendar-alt"></i>
         <p>Schedules</p>
@@ -57,12 +63,6 @@
       <a href="<?= base_url('invoice/index') ?>" class="nav-link" v-bind:class="checkactive('invoice')">
         <i class="nav-icon fas fa-cash-register"></i>
         <p>Invoice Statements</p>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="<?= base_url('announcements/') ?>" class="nav-link" v-bind:class="checkactive('announcements')">
-        <i class="nav-icon fas fa-bullhorn"></i>
-        <p>Announcements</p>
       </a>
     </li>
     <li class="nav-item">

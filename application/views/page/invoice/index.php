@@ -20,6 +20,7 @@
                                 <select class="form-control smallerinput">
                                     <option disabled selected>Select Payment Status</option>
                                     <option>Paid</option>
+                                    <option>Partial</option>
                                     <option>Unpaid</option>
                                 </select>
                             </div>
@@ -35,9 +36,9 @@
                                     <th>Invoice Date</th>
                                     <th>Student Ref No.</th>
                                     <th>Student Name</th>
-                                    <th>Paid</th>
-                                    <th>OR Number</th>
-                                    <th>View Invoice</th>
+                                    <th>Status</th>
+                                    <th>Payments</th>
+                                    <th>Invoice</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,8 +49,11 @@
                                     <td>2019-F1</td>
                                     <td>DE VERA, BEVERLY MARIELLE JOAN</td>
                                     <td><span class="badge bg-success">PAID</span><br></td>
-                                    <td><a href="#">OR000001</a></td>
-                                    <td><button type="button" class="btn btn-primary btn-xs">View Invoice</button></td>
+                                    <td><button type="button" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></button></td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></button>
+                                        <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-print"></i></button>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>2</td>
@@ -57,9 +61,25 @@
                                     <td>01/01/2010</td>
                                     <td>2019-F2</td>
                                     <td>ABC, DEF GHI</td>
+                                    <td><span class="badge bg-warning">PARTIAL</span><br></td>
+                                    <td><button type="button" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></button></td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></button>
+                                        <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-print"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>INV000003</td>
+                                    <td>01/01/2010</td>
+                                    <td>2019-F2</td>
+                                    <td>ABC, DEF GHI</td>
                                     <td><span class="badge bg-danger">UNPAID</span><br></td>
-                                    <td>-</td>
-                                    <td><button type="button" class="btn btn-primary btn-xs">View Invoice</button></td>
+                                    <td><button type="button" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></button></td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></button>
+                                        <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-print"></i></button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

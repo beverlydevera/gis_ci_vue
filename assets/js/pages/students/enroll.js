@@ -109,8 +109,10 @@ var enroll = new Vue({
                 studentinfo: this.studentinfo
             };
             var urls = window.App.baseUrl + "students/enroll_saveNewStudentRegistration";
+            showloading();
             axios.post(urls, datas)
                 .then(function (e) {
+                    Swal.close();
                     Toast.fire({
                         type: e.data.type,
                         title: e.data.message
@@ -415,8 +417,10 @@ var enroll = new Vue({
                             studmem_id: this.otherinfo.studmem_id
                         };
                         var urls = window.App.baseUrl + "Students/enroll_saveNewStudentPackages";
+                        showloading();
                         axios.post(urls, datas)
                             .then(function (e) {
+                                Swal.close();
                                 Toast.fire({
                                     type: e.data.type,
                                     title: e.data.message
@@ -459,8 +463,8 @@ var enroll = new Vue({
                         enroll.otherinfo.invoicetotal += parseInt(60);
                     }
 
-                    (e.data.data.invoice_packages).forEach((e,index) => {
-                        if(e.package_type=="Unlimited"){
+                    e.data.data.invoice_packages.forEach(e => {
+                        if(e.packagetype=="Unlimited"){
                             var package = {
                                 invoice_id: e.invoice_id,
                                 student_id: e.student_id,

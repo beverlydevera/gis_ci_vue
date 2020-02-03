@@ -15,7 +15,7 @@ class Invoice extends CI_Controller {
         $data['title'] = "Invoice Statements";
         $data['vueid'] = "invoice_page";
         $data['vfile'] = "page/invoice/index";
-        // $data['js'] = array('pages/invoice.js');
+        $data['js'] = array('pages/invoice.js');
         $this->load->view('layout/main', $data);
     }
     
