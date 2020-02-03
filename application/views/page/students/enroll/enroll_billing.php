@@ -6,7 +6,10 @@
         </h5>
         <hr>
         <h5>Billing Summary</h5>
-        <h6>Invoice Number: <u><b>{{otherinfo.invoicedetails.studmembership.invoice_number}}</b></u> Summary</h6>
+        <p>
+            Invoice Number: <u><b>{{otherinfo.invoicedetails.studmembership.invoice_number}}</b></u> <br/>
+            Billed to: <u><b>{{studentinfo.lastname}}, {{studentinfo.firstname}} {{studentinfo.middlename}}</b></u>
+        </p>
         <table class="table table-bordered table-responsive-sm table-sm billing-table">
             <thead>
                 <tr>
@@ -19,7 +22,7 @@
                 <tr>
                     <td>{{otherinfo.invoiceno}}</td>
                     <td class="billing-desc">Membership Fee ({{otherinfo.invoicedetails.studmembership.year}})</td>
-                    <td>1000</td>
+                    <td>{{otherinfo.invoicedetails.studmembership.membership_price}}</td>
                 </tr>
                 <tr v-if="otherinfo.invoicedetails.studmembership.insurance_avail!=0">
                     <td>{{otherinfo.invoiceno+1}}</td>
@@ -45,9 +48,11 @@
                         </td>
                         <td class="billing-desc" v-else-if="list.packagetype=='Summer Promo'">
                             Package Type: <u>{{list.packagetype}}</u><br>
-                            <template v-for="(ll,ii) in list.details">
-                                <p v-if="ll.type=='input'">• {{ll.particular}}</p>
-                            </template>
+                            Package Details: <u>
+                                <template v-for="(ll,ii) in list.details">
+                                    <template v-if="ll.type=='input'"><span v-if="ii>0">, </span>{{ll.particular}}</template>
+                                </template>
+                            </u>
                         </td>
                         <td>{{list.pricerate}}</td>
                     </tr>

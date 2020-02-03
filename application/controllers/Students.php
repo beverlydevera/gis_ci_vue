@@ -223,6 +223,14 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
+    //startnew here
+
+    //index functions
+
+    //end of index
+
+    //enrollment functions
+
     public function newStudentRegistration()
     {
         $data['title'] = "Enroll Student";
@@ -252,6 +260,7 @@ class Students extends CI_Controller {
                 "student_id"      => $studentid,
                 "year"            => date("Y"),
                 "membership_type" => 1,
+                "membership_price"=> "1000",
                 "insurance"       => 0,
                 "date_added"      => date('Y-m-d H:i:s'),
                 "invoice_id"      => $invoice_id
@@ -261,6 +270,7 @@ class Students extends CI_Controller {
             $response = array(
                 "success"   => true,
                 "message"   => "Student Registration was saved successfully.\nContinue to insurance and packages.",
+                "type"      => "success",
                 "data"      => [
                     "student_id"    => $studentid,
                     "invoice_id"    => $invoice_id,
@@ -274,6 +284,7 @@ class Students extends CI_Controller {
             $response = array(
                 "success"   => false,
                 "message"   => "Student Registration was not saved.",
+                "type"      => "warning",
                 "data"      => "",
             );
         }
@@ -307,6 +318,7 @@ class Students extends CI_Controller {
             $response = array(
                 "success"   => true,
                 "message"   => "Student Packages were saved successfully.\nContinue to billing.",
+                "type"      => "success",
                 "data"      => [
                     "result" => $insert_studpackages
                 ],
@@ -315,6 +327,7 @@ class Students extends CI_Controller {
             $response = array(
                 "success"   => false,
                 "message"   => "Insurance and Packages were not saved.",
+                "type"      => "warning",
                 "data"      => "",
             );
         }
@@ -356,5 +369,36 @@ class Students extends CI_Controller {
         }
         response_json($response);
     }
+
+    public function enroll_savePayment()
+    {
+        $data = jsondata();
+
+        if(!empty($data)){
+            $paymentdetails = $data['paymentdetails'];
+            $insertpayment = $this->Main->insert("tbl_paymentshistory", $paymentdetails, true);
+
+            $response = array(
+                "success"   => true,
+                "message"   => "Payment was saved successfully.\nRegistration complete",
+                "data"      => [
+                    "result"     => $insertpayment,
+                ],
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "message"   => "Payment not saved.",
+                "data"      => "",
+            );
+        }
+        response_json($response);
+    }
+
+    //end of enrollment
+
+    //profile function
+
+    //end of profile
 
 }

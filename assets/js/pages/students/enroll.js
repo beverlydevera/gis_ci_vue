@@ -1,9 +1,42 @@
+var currentdate = formatDate(new Date());
+var currenttime = formatTime(new Date());
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+function formatTime(date) {
+    var d = new Date(date);
+    var hr = d.getHours();
+    var min = d.getMinutes();
+    var sec = d.getSeconds();
+
+    if (hr < 10)
+        hr = "0" + hr;
+    if (min < 10)
+        min = "0" + min;
+    if (sec < 10)
+        sec = "0" + sec;
+
+    return [hr, min, sec].join(':');
+}
+
+
 var enroll = new Vue({
     el: '#studentenroll_page',
     data: {
         disabled_everything: false,
         disabled_packages: false,
-        readonly_everything: true,
         studentrefid:"",
         student_id:"",
         studentinfo:{
@@ -46,7 +79,10 @@ var enroll = new Vue({
             data: []
         },
         selectedPackages: [],
-        paymentdetails: {}
+        paymentdetails: {
+            paymentoption: "full",
+            ordate: currentdate
+        }
     },
     methods: {
         calculate_age() {
@@ -75,11 +111,11 @@ var enroll = new Vue({
             var urls = window.App.baseUrl + "students/enroll_saveNewStudentRegistration";
             axios.post(urls, datas)
                 .then(function (e) {
-                    if (e.data.success) {
-                        Toast.fire({
-                            type: "success",
-                            title: e.data.message
-                        })
+                    Toast.fire({
+                        type: e.data.type,
+                        title: e.data.message
+                    })
+                    if(e.data.success){
                         enroll.studentrefid = e.data.data.reference_id;
                         enroll.student_id = e.data.data.student_id;
                         enroll.otherinfo.studmem_id = e.data.data.studmem_id;
@@ -94,11 +130,6 @@ var enroll = new Vue({
 
                         $('#submitapplicationform').css({'display': 'none',});
                         $('#updateapplicationform').css({'display': '',});
-                    }else{
-                        Toast.fire({
-                            type: "warning",
-                            title: e.data.message
-                        })
                     }
                 })
                 .catch(function (error) {
@@ -386,21 +417,27 @@ var enroll = new Vue({
                         var urls = window.App.baseUrl + "Students/enroll_saveNewStudentPackages";
                         axios.post(urls, datas)
                             .then(function (e) {
-                                enroll.getInvoiceDetails();
-                                $('.active').removeClass('active');                        
-                                $('#billinginfo-tab').removeClass('disabled');
-                                $('#billinginfo-tab').addClass('active');
-                                $('#billinginfo').addClass('active show');
-
-                                enroll.packagelist = [];
-                                enroll.packages_selects.packagetype = "";
-                                enroll.disabled_packages = true;
-                                
-                                $('#packagetype_regular').css({'display': 'none',});
-                                $('#regular_schedules').css({'display': 'none',});
-                                $('#packagetype_unlimited').css({'display': 'none',});
-                                $('#packagetype_summerpromo').css({'display': 'none',});
-                                $('#savenewstudentpackages').css({'display': 'none',});
+                                Toast.fire({
+                                    type: e.data.type,
+                                    title: e.data.message
+                                })
+                                if(e.data.success){
+                                    enroll.getInvoiceDetails();
+                                    $('.active').removeClass('active');                        
+                                    $('#billinginfo-tab').removeClass('disabled');
+                                    $('#billinginfo-tab').addClass('active');
+                                    $('#billinginfo').addClass('active show');
+    
+                                    enroll.packagelist = [];
+                                    enroll.packages_selects.packagetype = "";
+                                    enroll.disabled_packages = true;
+                                    
+                                    $('#packagetype_regular').css({'display': 'none',});
+                                    $('#regular_schedules').css({'display': 'none',});
+                                    $('#packagetype_unlimited').css({'display': 'none',});
+                                    $('#packagetype_summerpromo').css({'display': 'none',});
+                                    $('#savenewstudentpackages').css({'display': 'none',});
+                                }
                             })
                             .catch(function (error) {
                                 console.log(error)
@@ -450,6 +487,7 @@ var enroll = new Vue({
                         }
                         enroll.otherinfo.invoicedetails.studpackages.push(package)
                         enroll.otherinfo.invoicetotal += parseInt(e.pricerate);
+                        enroll.paymentdetails.amount = enroll.otherinfo.invoicetotal;
                     });
                 })
                 .catch(function (error) {
@@ -457,24 +495,84 @@ var enroll = new Vue({
                 }); 
         },
         proceedtoPayment(){
+            // Swal.fire({
+            //     title: "Are you sure you want to proceed to payment?",
+            //     // text: "You won't be able to undo this.",
+            //     type: 'warning',
+            //     showCancelButton: true,
+            //     confirmButtonColor: '#3085d6',
+            //     cancelButtonColor: '#d33',
+            //     confirmButtonText: 'Yes, proceed to payment',
+            //     }).then((result) => {
+            //         if (result.value) {
+                        $('.active').removeClass('active');
+                        $('#payment-tab').removeClass('disabled');
+                        $('#payment-tab').addClass('active');
+                        $('#payment').addClass('active show');
+            //             $('#proceedtoPayment').css({'display': 'none',});
+            //         }
+            // })
+        },
+        changePaymentOption(){
+            if(this.paymentdetails.paymentoption=="full"){
+                this.paymentdetails.amount = this.otherinfo.invoicetotal;
+            }else if(this.paymentdetails.paymentoption=="staggered"){
+                this.paymentdetails.amount = "";
+            }
+        },
+        savePayment(){
             Swal.fire({
-                title: "Are you sure you want to proceed to payment?",
+                title: "Are you sure you want to save payment?",
                 text: "You won't be able to undo this.",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, proceed to payment',
+                confirmButtonText: 'Yes, save payment',
                 }).then((result) => {
                     if (result.value) {
-                        $('.active').removeClass('active');
-                        $('#payment-tab').removeClass('disabled');
-                        $('#payment-tab').addClass('active');
-                        $('#payment').addClass('active show');
-                        $('#proceedtoPayment').css({'display': 'none',});
+                        this.paymentdetails.invoice_id = this.otherinfo.invoice_id;
+                        this.paymentdetails.student_id = this.student_id;
+                        this.otherinfo.paymentordate = this.paymentdetails.ordate;
+                        this.paymentdetails.ordate += " " + currenttime;
+                        var datas = {
+                            paymentdetails: this.paymentdetails,
+                        };
+                        console.log(datas);
+                        var urls = window.App.baseUrl + "Students/enroll_savePayment";
+                        axios.post(urls, datas)
+                            .then(function (e) {
+                                if(e.data.success){
+                                    Swal.fire({
+                                        text: e.data.message,
+                                        type: 'success',
+                                    }).then((result) => {
+                                        enroll.paymentdetails.payment_id = e.data.data.result.lastid;
+                                        enroll.paymentdetails.ordate = enroll.otherinfo.paymentordate;
+                                        console.log(enroll.paymentdetails.payment_id);
+                                        $('.active').removeClass('active');
+                                        $('#complete-tab').removeClass('disabled');
+                                        $('#complete-tab').addClass('active');
+                                        $('#complete').addClass('active show');
+
+                                        $("input").attr("disabled", true);
+                                        $("select").attr("disabled", true);
+                                        $("textarea").attr("disabled", true);
+                                        $('button').css({'display': 'none',});
+                                    })
+                                }else{
+                                    Toast.fire({
+                                        type: "error",
+                                        title: e.data.message
+                                    })
+                                }
+                            })
+                            .catch(function (error) {
+                                console.log(error)
+                            }); 
                     }
             })
-        },
+        }
     },
     watch: {
         // app_reference_code: function(val) {
