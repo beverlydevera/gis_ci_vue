@@ -17,7 +17,8 @@ var enroll = new Vue({
             invoicedetails: {
                 studmembership: {},
                 studpackages: []
-            }
+            },
+            invoicetotal: 0
         },
         derivedinfo:{
             studentage: 0,
@@ -385,6 +386,10 @@ var enroll = new Vue({
             axios.post(urls, datas)
                 .then(function (e) {
                     enroll.otherinfo.invoicedetails.studmembership = e.data.data.invoice_membership;
+                    enroll.otherinfo.invoicetotal = parseInt(1000);
+                    if(e.data.data.invoice_membership.insurance_avail!=0){
+                        enroll.otherinfo.invoicetotal += parseInt(60);
+                    }
 
                     (e.data.data.invoice_packages).forEach((e,index) => {
                         if(e.package_type=="Unlimited"){
@@ -413,11 +418,18 @@ var enroll = new Vue({
                             }
                         }
                         enroll.otherinfo.invoicedetails.studpackages.push(package)
+                        enroll.otherinfo.invoicetotal += parseInt(e.pricerate);
                     });
                 })
                 .catch(function (error) {
                     console.log(error)
                 }); 
+        },
+        proceedtoPayment(){
+            $('.active').removeClass('active');
+            $('#payment-tab').removeClass('disabled');
+            $('#payment-tab').addClass('active');
+            $('#payment').addClass('active show');
         }
     }, mounted: function () {
         //firstrun

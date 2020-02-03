@@ -18,12 +18,12 @@
                 <tr>
                     <td>{{otherinfo.invoiceno}}</td>
                     <td class="billing-desc">Membership Fee ({{otherinfo.invoicedetails.studmembership.year}})</td>
-                    <td>500.00</td>
+                    <td>1,000.00</td>
                 </tr>
                 <tr v-if="otherinfo.invoicedetails.studmembership.insurance_avail!=0">
                     <td>{{otherinfo.invoiceno+1}}</td>
                     <td class="billing-desc">Insurance Fee ({{otherinfo.invoicedetails.studmembership.year}})</td>
-                    <td>1,000.00</td>
+                    <td>60.00</td>
                 </tr>
                 <tr v-if="otherinfo.invoicedetails.studpackages!=''">
                     <th class="billing-desc" colspan="5">Packages Availed</th>
@@ -44,18 +44,9 @@
                         </td>
                         <td class="billing-desc" v-else-if="list.packagetype=='Summer Promo'">
                             Package Type: <u>{{list.packagetype}}</u> <br>
-                            <table class="table table-bordered table-responsive-sm table-sm">
-                                <tr>
-                                    <td>PARTICULAR</td>
-                                    <td>PRICE</td>
-                                </tr>
                             <template v-for="(ll,ii) in list.details">
-                                <tr v-if="ll.type=='input'">
-                                    <td>{{ll.particular}}</td>
-                                    <td>{{ll.price}}</td>
-                                </tr>
+                                <template v-if="ll.type=='input'">• {{ll.particular}}</template><br/>
                             </template>
-                            </table>
                         </td>
                         <td>{{list.pricerate}}</td>
                     </tr>
@@ -67,10 +58,12 @@
             <tfoot>
                 <tr>
                     <th colspan="2">Total</th>
-                    <th>2,000.00</th>
+                    <th>{{otherinfo.invoicetotal}}</th>
                 </tr>
             </tfoot>
         </table>
+        <br>
+        <button href="" class="btn btn-primary btn-sm" style="float:right; color:#fff;" @click="proceedtoPayment()">Proceed to Payment</button>
     </div>
     <div class="col-md-2"></div>
 </div>
