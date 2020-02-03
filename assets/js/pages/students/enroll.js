@@ -376,6 +376,7 @@ var enroll = new Vue({
                 confirmButtonText: 'Yes, save and proceed',
                 }).then((result) => {
                     if (result.value) {
+                        if(this.otherinfo.insurance.avail==0){ this.otherinfo.insurance.price=0; }
                         var datas = {
                             insurance: this.otherinfo.insurance,
                             studentpackages: this.selectedPackages,
@@ -470,10 +471,17 @@ var enroll = new Vue({
                         $('#payment-tab').removeClass('disabled');
                         $('#payment-tab').addClass('active');
                         $('#payment').addClass('active show');
+                        $('#proceedtoPayment').css({'display': 'none',});
                     }
             })
-        }
-    }, mounted: function () {
+        },
+    },
+    watch: {
+        // app_reference_code: function(val) {
+        //     this.getExamination();
+        // }
+    },
+    mounted: function () {
         //firstrun
     },
 })

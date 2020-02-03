@@ -19,12 +19,12 @@
                 <tr>
                     <td>{{otherinfo.invoiceno}}</td>
                     <td class="billing-desc">Membership Fee ({{otherinfo.invoicedetails.studmembership.year}})</td>
-                    <td>1,000.00</td>
+                    <td>1000</td>
                 </tr>
                 <tr v-if="otherinfo.invoicedetails.studmembership.insurance_avail!=0">
                     <td>{{otherinfo.invoiceno+1}}</td>
                     <td class="billing-desc">Insurance Fee ({{otherinfo.invoicedetails.studmembership.year}})</td>
-                    <td>60.00</td>
+                    <td>{{otherinfo.insurance.price}}</td>
                 </tr>
                 <tr v-if="otherinfo.invoicedetails.studpackages!=''">
                     <th class="billing-desc" colspan="5">Packages Availed</th>
@@ -46,7 +46,7 @@
                         <td class="billing-desc" v-else-if="list.packagetype=='Summer Promo'">
                             Package Type: <u>{{list.packagetype}}</u><br>
                             <template v-for="(ll,ii) in list.details">
-                                <template v-if="ll.type=='input'">• {{ll.particular}}</template>
+                                <p v-if="ll.type=='input'">• {{ll.particular}}</p>
                             </template>
                         </td>
                         <td>{{list.pricerate}}</td>
@@ -64,7 +64,7 @@
             </tfoot>
         </table>
         <br>
-        <button href="" class="btn btn-primary btn-sm" style="float:right; color:#fff;" @click="proceedtoPayment()">Proceed to Payment</button>
+        <button id="proceedtoPayment" class="btn btn-primary btn-sm" style="float:right; color:#fff;" @click="proceedtoPayment()">Proceed to Payment</button>
     </div>
     <div class="col-md-2"></div>
 </div>
