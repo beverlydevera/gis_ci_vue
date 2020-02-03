@@ -41,41 +41,22 @@
                                     <th>Invoice</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody v-for="(list,index) in invoicelist">
                                 <tr>
-                                    <td>1</td>
-                                    <td>INV000001</td>
-                                    <td>01/01/2010</td>
-                                    <td>2019-F1</td>
-                                    <td>DE VERA, BEVERLY MARIELLE JOAN</td>
-                                    <td><span class="badge bg-success">PAID</span><br></td>
-                                    <td><button type="button" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></button></td>
+                                    <td>{{index+1}}</td>
+                                    <td>{{list.invoice_number}}</td>
+                                    <td>{{list.date_added}}</td>
+                                    <td>{{list.reference_id}}</td>
+                                    <td>{{list.lastname}}, {{list.firstname}}</td>
+                                    <td>
+                                        <span v-if="list.invstatus=='paid'" class="badge bg-success">PAID</span>
+                                        <span v-else-if="list.invstatus=='partial'" class="badge bg-warning">PARTIAL</span>
+                                        <span v-else-if="list.invstatus=='unpaid'" class="badge bg-danger">UNPAID</span>
+                                    </td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></button>
-                                        <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-print"></i></button>
+                                        <button v-if="list.invstatus!='paid'" type="button" class="btn btn-primary btn-xs"><i class="fas fa-plus"></i></button>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>INV000002</td>
-                                    <td>01/01/2010</td>
-                                    <td>2019-F2</td>
-                                    <td>ABC, DEF GHI</td>
-                                    <td><span class="badge bg-warning">PARTIAL</span><br></td>
-                                    <td><button type="button" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></button></td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></button>
-                                        <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-print"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>INV000003</td>
-                                    <td>01/01/2010</td>
-                                    <td>2019-F2</td>
-                                    <td>ABC, DEF GHI</td>
-                                    <td><span class="badge bg-danger">UNPAID</span><br></td>
-                                    <td><button type="button" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></button></td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></button>
                                         <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-print"></i></button>
