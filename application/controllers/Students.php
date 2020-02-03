@@ -251,7 +251,7 @@ class Students extends CI_Controller {
             $reference_id = date("Y").$studentinfo['sex']."-".str_pad($studentid, 4, '0', STR_PAD_LEFT);
             $this->Main->update("tbl_students",['student_id'=>$studentid],['reference_id'=>$reference_id]);
             
-            $insert_studinvoice = $this->Main->insert("tbl_studentinvoice", ["student_id" => $studentid], true);
+            $insert_studinvoice = $this->Main->insert("tbl_studentinvoice", ["student_id" => $studentid, "status"=>0, "amount"=>0], true);
             $invoice_id = $insert_studinvoice['lastid'];
             $invoice_number = "INV".date("Y")."-".str_pad($invoice_id, 4, '0', STR_PAD_LEFT);
             $this->Main->update("tbl_studentinvoice",['invoice_id'=>$invoice_id],['invoice_number'=>$invoice_number]);
@@ -375,8 +375,17 @@ class Students extends CI_Controller {
         $data = jsondata();
 
         if(!empty($data)){
+            $invoiceamount = $data['invoiceamount'];
             $paymentdetails = $data['paymentdetails'];
             $insertpayment = $this->Main->insert("tbl_paymentshistory", $paymentdetails, true);
+
+            if($invoiceamount>$paymentdetails['amount']){
+                $dataupdate['status'] = "partial";
+            }else if($invoiceamount==$paymentdetails['amount']){
+                $dataupdate['status'] = "paid";
+            }else{ $dataupdate['status'] = "unpaid"; }
+            $dataupdate["amount"] = $invoiceamount;
+            $this->Main->update("tbl_studentinvoice",['invoice_id'=>$paymentdetails['invoice_id']],$dataupdate);
 
             $response = array(
                 "success"   => true,

@@ -541,6 +541,7 @@ var enroll = new Vue({
                         this.paymentdetails.ordate += " " + currenttime;
                         var datas = {
                             paymentdetails: this.paymentdetails,
+                            invoiceamount: this.otherinfo.invoicetotal
                         };
                         console.log(datas);
                         var urls = window.App.baseUrl + "Students/enroll_savePayment";
