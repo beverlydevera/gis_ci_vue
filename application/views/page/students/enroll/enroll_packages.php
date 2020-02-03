@@ -21,7 +21,7 @@
         </th>
         <th width="8%">Insurance:</th>
         <th>
-            <select class="form-control smallerinput" required v-model="otherinfo.insurance.avail">
+            <select class="form-control smallerinput" required v-model="otherinfo.insurance.avail" :disabled="disabled_packages">
                 <option disabled selected>Select Insurance</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
@@ -34,7 +34,7 @@
 <div class="row">
     <div class="col-md-6" style="border-right:1px solid #000;">
         Select Package Type:
-        <select class="form-control col-md-6" required @change="changePackageType()" v-model="packages_selects.packagetype">
+        <select class="form-control col-md-6" required @change="changePackageType()" v-model="packages_selects.packagetype" :disabled="disabled_packages">
             <option disabled selected>Select Package Type</option>
             <option>Regular</option>
             <option>Unlimited</option>
@@ -140,6 +140,7 @@
                                         <th>PRICE</th>
                                     </tr>
                                 <template id="summerpromodetails" v-for="(ll,ii) in packagedetails.package_data" style="display:none;">
+                                    <tr>
                                         <td>{{ll.particular}}</td>
                                         <td>{{ll.price}}</td>
                                     </tr>
@@ -202,7 +203,7 @@
                 </tbody>
             </table>
             <br>
-            <button class="btn btn-primary float-right" @click="saveSelectedPackages()">Save Selected Packages</button>
+            <button id="savenewstudentpackages" class="btn btn-primary float-right" @click="saveSelectedPackages()">Save Selected Packages</button>
         </div>
     </div>
 </div>

@@ -252,7 +252,7 @@ class Students extends CI_Controller {
                 "student_id"      => $studentid,
                 "year"            => date("Y"),
                 "membership_type" => 1,
-                "insurance_avail" => 0,
+                "insurance"       => 0,
                 "date_added"      => date('Y-m-d H:i:s'),
                 "invoice_id"      => $invoice_id
             ];

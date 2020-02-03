@@ -5,7 +5,8 @@
             <a href="" class="btn btn-primary btn-sm" style="float:right; color:#fff;">Print Invoice</a>
         </h5>
         <hr>
-        <h5>Invoice Number: <u><b>{{otherinfo.invoicedetails.studmembership.invoice_number}}</b></u> Summary</h5>
+        <h5>Billing Summary</h5>
+        <h6>Invoice Number: <u><b>{{otherinfo.invoicedetails.studmembership.invoice_number}}</b></u> Summary</h6>
         <table class="table table-bordered table-responsive-sm table-sm billing-table">
             <thead>
                 <tr>
@@ -43,9 +44,9 @@
                             Details: <u>{{list.details}}</u>
                         </td>
                         <td class="billing-desc" v-else-if="list.packagetype=='Summer Promo'">
-                            Package Type: <u>{{list.packagetype}}</u> <br>
+                            Package Type: <u>{{list.packagetype}}</u><br>
                             <template v-for="(ll,ii) in list.details">
-                                <template v-if="ll.type=='input'">• {{ll.particular}}</template><br/>
+                                <template v-if="ll.type=='input'">• {{ll.particular}}</template>
                             </template>
                         </td>
                         <td>{{list.pricerate}}</td>

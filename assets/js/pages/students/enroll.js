@@ -2,6 +2,7 @@ var enroll = new Vue({
     el: '#studentenroll_page',
     data: {
         disabled_everything: false,
+        disabled_packages: false,
         readonly_everything: true,
         studentrefid:"",
         student_id:"",
@@ -365,24 +366,46 @@ var enroll = new Vue({
             }
         },
         saveSelectedPackages(){
-            var datas = {
-                insurance: this.otherinfo.insurance,
-                studentpackages: this.selectedPackages,
-                invoice_id: this.otherinfo.invoice_id,
-                studmem_id: this.otherinfo.studmem_id
-            };
-            var urls = window.App.baseUrl + "Students/enroll_saveNewStudentPackages";
-            axios.post(urls, datas)
-                .then(function (e) {
-                    enroll.getInvoiceDetails();
-                    $('.active').removeClass('active');                        
-                    $('#billinginfo-tab').removeClass('disabled');
-                    $('#billinginfo-tab').addClass('active');
-                    $('#billinginfo').addClass('active show');
-                })
-                .catch(function (error) {
-                    console.log(error)
-                }); 
+            Swal.fire({
+                title: "Are you sure you want to save selected packages and proceed to billing?",
+                text: "You won't be able to undo this.",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, save and proceed',
+                }).then((result) => {
+                    if (result.value) {
+                        var datas = {
+                            insurance: this.otherinfo.insurance,
+                            studentpackages: this.selectedPackages,
+                            invoice_id: this.otherinfo.invoice_id,
+                            studmem_id: this.otherinfo.studmem_id
+                        };
+                        var urls = window.App.baseUrl + "Students/enroll_saveNewStudentPackages";
+                        axios.post(urls, datas)
+                            .then(function (e) {
+                                enroll.getInvoiceDetails();
+                                $('.active').removeClass('active');                        
+                                $('#billinginfo-tab').removeClass('disabled');
+                                $('#billinginfo-tab').addClass('active');
+                                $('#billinginfo').addClass('active show');
+
+                                enroll.packagelist = [];
+                                enroll.packages_selects.packagetype = "";
+                                enroll.disabled_packages = true;
+                                
+                                $('#packagetype_regular').css({'display': 'none',});
+                                $('#regular_schedules').css({'display': 'none',});
+                                $('#packagetype_unlimited').css({'display': 'none',});
+                                $('#packagetype_summerpromo').css({'display': 'none',});
+                                $('#savenewstudentpackages').css({'display': 'none',});
+                            })
+                            .catch(function (error) {
+                                console.log(error)
+                            }); 
+                    }
+            })
         },
         getInvoiceDetails(){
             var datas = {
@@ -433,10 +456,22 @@ var enroll = new Vue({
                 }); 
         },
         proceedtoPayment(){
-            $('.active').removeClass('active');
-            $('#payment-tab').removeClass('disabled');
-            $('#payment-tab').addClass('active');
-            $('#payment').addClass('active show');
+            Swal.fire({
+                title: "Are you sure you want to proceed to payment?",
+                text: "You won't be able to undo this.",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, proceed to payment',
+                }).then((result) => {
+                    if (result.value) {
+                        $('.active').removeClass('active');
+                        $('#payment-tab').removeClass('disabled');
+                        $('#payment-tab').addClass('active');
+                        $('#payment').addClass('active show');
+                    }
+            })
         }
     }, mounted: function () {
         //firstrun
