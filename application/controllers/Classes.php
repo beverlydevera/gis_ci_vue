@@ -224,7 +224,7 @@ class Classes extends CI_Controller {
             $condition = $data['condition'];
             if(!empty($condition['c.class_id'])){ $type="row"; }
         }
-        $classeslist = $this->Main->getData("*","tbl_classes c",$condition,"","","",$type);
+        $classeslist = $this->Main->getDataOneJoin("*","tbl_classes c","",$condition,"","","",$type);
         
         if(!empty($classeslist)){
             $response = array(

@@ -140,7 +140,6 @@
                                         <th>PRICE</th>
                                     </tr>
                                 <template id="summerpromodetails" v-for="(ll,ii) in packagedetails.package_data" style="display:none;">
-                                    <tr>
                                         <td>{{ll.particular}}</td>
                                         <td>{{ll.price}}</td>
                                     </tr>
@@ -191,7 +190,7 @@
                                     <th>PRICE</th>
                                 </tr>
                             <template v-for="(ll,ii) in list.details">
-                                <tr>
+                                <tr v-if="ll.type=='input'">
                                     <td>{{ll.particular}}</td>
                                     <td>{{ll.price}}</td>
                                 </tr>

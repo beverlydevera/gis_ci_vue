@@ -138,7 +138,7 @@ class Libraries extends CI_Controller {
             'column' => "branch_name",
             'order' => "ASC",
         ];
-        $brancheslist = $this->Main->getData("*","tbl_branches",$condition,"",$orderby,$groupby,$type);
+        $brancheslist = $this->Main->getDataOneJoin("*","tbl_branches","",$condition,"",$orderby,$groupby,$type);
         
         if(!empty($brancheslist)){
             $response = array(

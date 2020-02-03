@@ -13,6 +13,11 @@ var enroll = new Vue({
         otherinfo:{
             insurance: 1,
             studmem_id: 0,
+            invoiceno: 1,
+            invoicedetails: {
+                studmembership: {},
+                studpackages: []
+            }
         },
         derivedinfo:{
             studentage: 0,
@@ -361,11 +366,54 @@ var enroll = new Vue({
             axios.post(urls, datas)
                 .then(function (e) {
                     enroll.otherinfo.invoice_id = e.data.data.invoice_id;
-                    enroll.studentpackageslist = e.data.data.studentpackages;
+                    enroll.getInvoiceDetails();
                     $('.active').removeClass('active');                        
                     $('#billinginfo-tab').removeClass('disabled');
                     $('#billinginfo-tab').addClass('active');
                     $('#billinginfo').addClass('active show');
+                })
+                .catch(function (error) {
+                    console.log(error)
+                }); 
+        },
+        getInvoiceDetails(){
+            var datas = {
+                student_id: this.student_id,
+                invoice_id: this.otherinfo.invoice_id,
+            };
+            var urls = window.App.baseUrl + "Students/enroll_getInvoiceDetails";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    enroll.otherinfo.invoicedetails.studmembership = e.data.data.invoice_membership;
+
+                    (e.data.data.invoice_packages).forEach((e,index) => {
+                        if(e.package_type=="Unlimited"){
+                            var package = {
+                                invoice_id: e.invoice_id,
+                                student_id: e.student_id,
+                                studpack_id: e.studpack_id,
+                                year: e.year,
+                                package_id: e.package_id,
+                                details: e.details,
+                                packagedetails: e.packagedetails,
+                                packagetype: e.packagetype,
+                                pricerate: e.pricerate
+                            }
+                        }else{
+                            var package = {
+                                invoice_id: e.invoice_id,
+                                student_id: e.student_id,
+                                studpack_id: e.studpack_id,
+                                year: e.year,
+                                package_id: e.package_id,
+                                details: JSON.parse(e.details),
+                                packagedetails: JSON.parse(e.packagedetails),
+                                packagetype: e.packagetype,
+                                pricerate: e.pricerate
+                            }
+                        }
+                        enroll.otherinfo.invoicedetails.studpackages.push(package)
+                    });
                 })
                 .catch(function (error) {
                     console.log(error)

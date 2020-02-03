@@ -126,10 +126,13 @@ class Main extends CI_Model
 		}
 	}
 
-	public function getData($select,$table,$condition,$pager,$orderby,$groupby,$type)
+	public function getDataOneJoin($select,$table,$join,$condition,$pager,$orderby,$groupby,$type)
 	{
 		$this->db->select($select);
-        $this->db->from($table);
+		$this->db->from($table);
+		if(!empty($join)){
+			$this->db->join($join['table'],$join['key'],$join['jointype']);
+		}
         if(!empty($condition)){
             $this->db->where($condition);
 		}

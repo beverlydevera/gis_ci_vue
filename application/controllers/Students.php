@@ -279,26 +279,29 @@ class Students extends CI_Controller {
         $insurance = $data["insurance"];
         $studentpackages = $data["studentpackages"];
 
-        $this->Main->update("tbl_studentmembership",['studmem_id'=>$studmem_id],['insurance_avail'=>$insurance]);
         $insert_studinvoice = $this->Main->insert("tbl_studentinvoice", ["student_id" => $student_id], true);
         if(!empty($insert_studinvoice)){
             $invoiceid = $insert_studinvoice['lastid'];
+
+            $this->Main->update("tbl_studentmembership",['studmem_id'=>$studmem_id],['insurance_avail'=>$insurance,'invoice_id'=>$invoiceid]);
             foreach($studentpackages as $spkey => $spval){
+                $studentpackages[$spkey]['invoice_id'] = $invoiceid;
+                if($spval['package_type']=="Unlimited"){
+                    $studentpackages[$spkey]['details'] = $spval['details'];
+                }else{
+                    $studentpackages[$spkey]['details'] = json_encode($spval['details']);
+                }
                 unset($studentpackages[$spkey]['package_type']);
                 unset($studentpackages[$spkey]['price_rate']);
-                $studentpackages[$spkey]['invoice_id'] = $invoiceid;
-                $studentpackages[$spkey]['details'] = json_encode($spval['details']);
             }
             
             $insert_studpackages = $this->Main->insertbatch("tbl_studentpackages", $studentpackages);
-            $studentpackages = $this->Main->getData("*","tbl_studentpackages",["invoice_id"=>$invoiceid],"","","","");
 
             $response = array(
                 "success"   => true,
                 "message"   => "Student Packages were saved successfully.\nContinue to billing.",
                 "data"      => [
                     "invoice_id"        => $invoiceid,
-                    "studentpackages"   => $studentpackages,
                     "result"            => $insert_studpackages
                 ],
             );
@@ -306,6 +309,37 @@ class Students extends CI_Controller {
             $response = array(
                 "success"   => false,
                 "message"   => "Insurance and Packages were not saved.",
+                "data"      => "",
+            );
+        }
+        response_json($response);
+    }
+
+    public function enroll_getInvoiceDetails()
+    {
+        $data = jsondata();
+        $student_id = $data["student_id"];
+        $invoice_id = $data["invoice_id"];
+
+        if(!empty($invoice_id)){
+            $invoice_membership = $this->Main->getDataOneJoin("*","tbl_studentmembership","",["invoice_id"=>$invoice_id],"","","","row");
+            $join = [
+                "table" => "tbl_packages p",
+                "key"   => "p.package_id=sp.package_id",
+                "jointype" => "inner"
+            ];
+            $invoice_packages = $this->Main->getDataOneJoin("*","tbl_studentpackages sp",$join,["invoice_id"=>$invoice_id],"","","","");
+
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    "invoice_membership" => $invoice_membership,
+                    "invoice_packages"   => $invoice_packages
+                ],
+            );
+        }else{
+            $response = array(
+                "success"   => false,
                 "data"      => "",
             );
         }
