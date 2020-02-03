@@ -139,15 +139,26 @@ var package = new Vue({
             axios.post(urls, "")
                 .then(function (e) {
                     e.data.data.packagelist.forEach((e,index) => {
-                        package.packagelist.push({
-                            package_id: e.package_id,
-                            packagetype: e.packagetype,
-                            packagedetails: JSON.parse(e.packagedetails),
-                            pricerate: e.pricerate,
-                            year: e.year,
-                            remarks: e.remarks,
-                        })
-                        if(e.packagetype=='Regular'){ package.getClassDetails(index); }
+                        if(e.packagetype!="Unlimited"){
+                            package.packagelist.push({
+                                package_id: e.package_id,
+                                packagetype: e.packagetype,
+                                packagedetails: JSON.parse(e.packagedetails),
+                                pricerate: e.pricerate,
+                                year: e.year,
+                                remarks: e.remarks,
+                            })
+                            if(e.packagetype=='Regular'){ package.getClassDetails(index); }
+                        }else{
+                            package.packagelist.push({
+                                package_id: e.package_id,
+                                packagetype: e.packagetype,
+                                packagedetails: e.packagedetails,
+                                pricerate: e.pricerate,
+                                year: e.year,
+                                remarks: e.remarks,
+                            })
+                        }
                     });
                 })
                 .catch(function (error) {
@@ -226,12 +237,12 @@ var package = new Vue({
             axios.post(urls, datas)
                 .then(function (e) {
                     package.packageinfo = e.data.data.packagelist;
-                    package.packageinfo.packagedetails = JSON.parse(e.data.data.packagelist.packagedetails);
                     if(package.packageinfo.packagetype=="Regular"){
                         $('#edit_regular_package').css({'display': '',});
                         $('#edit_unlimited_package').css({'display': 'none',});
                         $('#edit_summerpromo_package').css({'display': 'none',});
                         $('#edit_pricerate').prop('readonly', false);
+                        package.packageinfo.packagedetails = JSON.parse(e.data.data.packagelist.packagedetails);
                     }else if(package.packageinfo.packagetype=="Unlimited"){
                         $('#edit_regular_package').css({'display': 'none',});
                         $('#edit_unlimited_package').css({'display': '',});
@@ -242,6 +253,7 @@ var package = new Vue({
                         $('#edit_unlimited_package').css({'display': 'none',});
                         $('#edit_summerpromo_package').css({'display': '',});
                         $('#edit_pricerate').prop('readonly', true);
+                        package.packageinfo.packagedetails = JSON.parse(e.data.data.packagelist.packagedetails);                        
                     }
                     $('#editPackageModal').modal('show');
                 })

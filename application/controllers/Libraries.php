@@ -74,7 +74,9 @@ class Libraries extends CI_Controller {
     {
         $data = jsondata();
         $datainsert = $data;
-        $datainsert['packagedetails'] = json_encode($data['packagedetails']);
+        if($datainsert['packagetype']!="Unlimited"){
+            $datainsert['packagedetails'] = json_encode($data['packagedetails']);
+        }
 
         if(!empty($datainsert)){
             $insertquery = $this->Main->insert("tbl_packages",$datainsert,true);
@@ -102,7 +104,9 @@ class Libraries extends CI_Controller {
         $data = jsondata();
         $package_id = $data['package_id'];
         $dataupdate = $data;
-        $dataupdate['packagedetails'] = json_encode($data['packagedetails']);
+        if($dataupdate['packagetype']!="Unlimited"){
+            $dataupdate['packagedetails'] = json_encode($data['packagedetails']);
+        }
 
         if(!empty($dataupdate)){
             unset($dataupdate['package_id']);
