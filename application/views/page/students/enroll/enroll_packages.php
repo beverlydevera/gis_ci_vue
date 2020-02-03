@@ -21,7 +21,7 @@
         </th>
         <th width="8%">Insurance:</th>
         <th>
-            <select class="form-control smallerinput" required v-model="otherinfo.insurance">
+            <select class="form-control smallerinput" required v-model="otherinfo.insurance.avail">
                 <option disabled selected>Select Insurance</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>

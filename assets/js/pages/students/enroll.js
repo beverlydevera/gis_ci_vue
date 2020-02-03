@@ -11,7 +11,10 @@ var enroll = new Vue({
             nickname: "",
         },
         otherinfo:{
-            insurance: 1,
+            insurance: {
+                avail: 1,
+                price: 60
+            },
             studmem_id: 0,
             invoiceno: 1,
             invoicedetails: {
@@ -41,7 +44,8 @@ var enroll = new Vue({
             package_id: "",
             data: []
         },
-        selectedPackages: []
+        selectedPackages: [],
+        paymentdetails: {}
     },
     methods: {
         calculate_age() {
@@ -51,6 +55,10 @@ var enroll = new Vue({
             var diff_ms = Date.now() - dob.getTime();
             var age_dt = new Date(diff_ms);
             this.derivedinfo.studentage = Math.abs(age_dt.getUTCFullYear() - 1970);
+
+            if(this.derivedinfo.studentage>=25){
+                this.otherinfo.insurance.price = 150;
+            }
         },
         saveNewStudentRegistration(){
             this.studentinfo.school = this.derivedinfo.schoolname+"/"+this.derivedinfo.schoolyear+"/"+this.derivedinfo.schoolcourse;
@@ -63,11 +71,9 @@ var enroll = new Vue({
             var datas = {
                 studentinfo: this.studentinfo
             };
-            // var datas = frmdata(datas);
             var urls = window.App.baseUrl + "students/enroll_saveNewStudentRegistration";
             axios.post(urls, datas)
                 .then(function (e) {
-                    // console.log(e);
                     if (e.data.success) {
                         Toast.fire({
                             type: "success",
@@ -77,6 +83,8 @@ var enroll = new Vue({
                         enroll.student_id = e.data.data.student_id;
                         enroll.otherinfo.studmem_id = e.data.data.studmem_id;
                         enroll.disabled_everything = true;
+                        enroll.otherinfo.invoice_id = e.data.data.invoice_id;
+                        enroll.otherinfo.invoice_number = e.data.data.invoice_number;
 
                         $('.active').removeClass('active');                        
                         $('#availpackages-tab').removeClass('disabled');
@@ -358,15 +366,14 @@ var enroll = new Vue({
         },
         saveSelectedPackages(){
             var datas = {
-                student_id: this.student_id,
                 insurance: this.otherinfo.insurance,
                 studentpackages: this.selectedPackages,
+                invoice_id: this.otherinfo.invoice_id,
                 studmem_id: this.otherinfo.studmem_id
             };
             var urls = window.App.baseUrl + "Students/enroll_saveNewStudentPackages";
             axios.post(urls, datas)
                 .then(function (e) {
-                    enroll.otherinfo.invoice_id = e.data.data.invoice_id;
                     enroll.getInvoiceDetails();
                     $('.active').removeClass('active');                        
                     $('#billinginfo-tab').removeClass('disabled');

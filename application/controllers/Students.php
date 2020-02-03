@@ -239,15 +239,22 @@ class Students extends CI_Controller {
         $result = $this->Main->insert("tbl_students", $studentinfo, true);
 
         if(!empty($result)){
-            $reference_id = date("Y")."-".$studentinfo['sex'].$result['lastid'];
-            $this->Main->update("tbl_students",['student_id'=>$result['lastid']],['reference_id'=>$reference_id]);
+            $studentid = $result['lastid'];
+            $reference_id = date("Y").$studentinfo['sex']."-".str_pad($studentid, 4, '0', STR_PAD_LEFT);
+            $this->Main->update("tbl_students",['student_id'=>$studentid],['reference_id'=>$reference_id]);
             
+            $insert_studinvoice = $this->Main->insert("tbl_studentinvoice", ["student_id" => $studentid], true);
+            $invoice_id = $insert_studinvoice['lastid'];
+            $invoice_number = "INV".date("Y")."-".str_pad($invoice_id, 4, '0', STR_PAD_LEFT);
+            $this->Main->update("tbl_studentinvoice",['invoice_id'=>$invoice_id],['invoice_number'=>$invoice_number]);
+
             $insert_membership_data = [
-                "student_id"      => $result['lastid'],
+                "student_id"      => $studentid,
                 "year"            => date("Y"),
                 "membership_type" => 1,
                 "insurance_avail" => 0,
-                "date_added"      => date('Y-m-d H:i:s')
+                "date_added"      => date('Y-m-d H:i:s'),
+                "invoice_id"      => $invoice_id
             ];
             $insert_membership = $this->Main->insert("tbl_studentmembership",$insert_membership_data,true);
 
@@ -255,7 +262,9 @@ class Students extends CI_Controller {
                 "success"   => true,
                 "message"   => "Student Registration was saved successfully.\nContinue to insurance and packages.",
                 "data"      => [
-                    "student_id"    => $result['lastid'],
+                    "student_id"    => $studentid,
+                    "invoice_id"    => $invoice_id,
+                    "invoice_number"=> $invoice_number,
                     "reference_id"  => $reference_id,
                     "studmem_id"    => $insert_membership['lastid'],
                     "result"        => $result
@@ -274,18 +283,17 @@ class Students extends CI_Controller {
     public function enroll_saveNewStudentPackages()
     {
         $data = jsondata();
-        $student_id = $data["student_id"];
-        $studmem_id = $data["studmem_id"];
-        $insurance = $data["insurance"];
-        $studentpackages = $data["studentpackages"];
 
-        $insert_studinvoice = $this->Main->insert("tbl_studentinvoice", ["student_id" => $student_id], true);
-        if(!empty($insert_studinvoice)){
-            $invoiceid = $insert_studinvoice['lastid'];
+        if(!empty($data)){
+            $invoice_id = $data["invoice_id"];
+            $studmem_id = $data["studmem_id"];
+            $insurance = $data["insurance"];
+            $studentpackages = $data["studentpackages"];
+            
+            $this->Main->update("tbl_studentmembership",['invoice_id'=>$invoice_id],['insurance'=>json_encode($insurance)]);
 
-            $this->Main->update("tbl_studentmembership",['studmem_id'=>$studmem_id],['insurance_avail'=>$insurance,'invoice_id'=>$invoiceid]);
             foreach($studentpackages as $spkey => $spval){
-                $studentpackages[$spkey]['invoice_id'] = $invoiceid;
+                $studentpackages[$spkey]['invoice_id'] = $invoice_id;
                 if($spval['package_type']=="Unlimited"){
                     $studentpackages[$spkey]['details'] = $spval['details'];
                 }else{
@@ -296,13 +304,11 @@ class Students extends CI_Controller {
             }
             
             $insert_studpackages = $this->Main->insertbatch("tbl_studentpackages", $studentpackages);
-
             $response = array(
                 "success"   => true,
                 "message"   => "Student Packages were saved successfully.\nContinue to billing.",
                 "data"      => [
-                    "invoice_id"        => $invoiceid,
-                    "result"            => $insert_studpackages
+                    "result" => $insert_studpackages
                 ],
             );
         }else{
@@ -322,13 +328,18 @@ class Students extends CI_Controller {
         $invoice_id = $data["invoice_id"];
 
         if(!empty($invoice_id)){
-            $invoice_membership = $this->Main->getDataOneJoin("*","tbl_studentmembership","",["invoice_id"=>$invoice_id],"","","","row");
+            $join = [
+                "table" => "tbl_studentinvoice si",
+                "key"   => "si.invoice_id=sm.invoice_id",
+                "jointype" => "inner"
+            ];
+            $invoice_membership = $this->Main->getDataOneJoin("*","tbl_studentmembership sm",$join,["sm.invoice_id"=>$invoice_id],"","","","row");
             $join = [
                 "table" => "tbl_packages p",
                 "key"   => "p.package_id=sp.package_id",
                 "jointype" => "inner"
             ];
-            $invoice_packages = $this->Main->getDataOneJoin("*","tbl_studentpackages sp",$join,["invoice_id"=>$invoice_id],"","","","");
+            $invoice_packages = $this->Main->getDataOneJoin("*","tbl_studentpackages sp",$join,["sp.invoice_id"=>$invoice_id],"","","","");
 
             $response = array(
                 "success"   => true,

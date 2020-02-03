@@ -5,7 +5,7 @@
             <a href="" class="btn btn-primary btn-sm" style="float:right; color:#fff;">Print Invoice</a>
         </h5>
         <hr>
-        <h5>Billing Summary</h5>
+        <h5>Invoice Number: <u><b>{{otherinfo.invoicedetails.studmembership.invoice_number}}</b></u> Summary</h5>
         <table class="table table-bordered table-responsive-sm table-sm billing-table">
             <thead>
                 <tr>

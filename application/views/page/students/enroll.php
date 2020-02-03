@@ -12,7 +12,7 @@
                         <a class="nav-link disabled" id="availpackages-tab" data-toggle="pill" href="#availpackages" role="tab" aria-controls="availpackages" aria-selected="false">Insurance and Packages</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link " id="billinginfo-tab" data-toggle="pill" href="#billinginfo" role="tab" aria-controls="billinginfo" aria-selected="false">Billing</a>
+                        <a class="nav-link disabled" id="billinginfo-tab" data-toggle="pill" href="#billinginfo" role="tab" aria-controls="billinginfo" aria-selected="false">Billing</a>
                         </li>
                         <li class="nav-item">
                         <a class="nav-link disabled" id="payment-tab" data-toggle="pill" href="#payment" role="tab" aria-controls="payment" aria-selected="false">Payment</a>
