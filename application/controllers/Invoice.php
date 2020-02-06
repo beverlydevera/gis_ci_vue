@@ -6,8 +6,9 @@ class Invoice extends CI_Controller {
 	public function __construct()
     {
         parent::__construct();
-        $this->load->model("Main");
         checkLogin();
+        $this->load->model("Main");
+		$this->load->library('pdf');
 	}
 	
 	public function index()
@@ -147,6 +148,27 @@ class Invoice extends CI_Controller {
             );
         }
         response_json($response);
+    }
+
+    public function printInvoice($invoice_id)
+    {
+        $type = $groupby = ""; $condition = $orderby = $join = [];
+        $condition = ["invoice_id"=>$invoice_id];
+        $join = [
+            "table"    => "tbl_students s",
+            "key"      => "s.student_id=si.student_id",
+            "jointype" => "inner"
+        ];
+        $data['invoicedetails'] = $this->Main->getDataOneJoin("*, si.status as invstatus","tbl_studentinvoice si",$join,$condition,"",$orderby,$groupby,"row");
+        
+        $this->load->view('page/invoice/invoicepdf',$data);
+        $html = $this->output->get_output();
+        $this->load->library('pdf');
+        $pdf = $this->dompdf->loadHtml($html);
+        $this->dompdf->setPaper('A4', 'portrait');
+        $this->dompdf->render();
+        $filename = "INVOICE.pdf";
+        $file = $this->dompdf->stream($filename, array("Attachment"=>0));
     }
     
 }

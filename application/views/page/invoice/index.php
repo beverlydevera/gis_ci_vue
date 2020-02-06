@@ -61,7 +61,8 @@
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></button>
-                                        <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-print"></i></button>
+                                        <button type="button" class="btn btn-primary btn-xs" @click="printInvoice(list.invoice_id)"><i class="fas fa-print"></i></button>
+                                        <!-- <button class="btn btn-sm btn-primary my-2" style="float:right;" @click="printRegretLetter">Print Regret Letters</button> -->
                                     </td>
                                 </tr>
                             </tbody>

@@ -168,6 +168,10 @@ var invoice = new Vue({
                 .catch(function (error) {
                     console.log(error)
                 });
+        },
+        printInvoice(invoice_id){
+            var urls = window.App.baseUrl + "Invoice/printInvoice/"+invoice_id;
+            window.open(urls, "_blank");
         }
     }, mounted: function () {
         this.getInvoiceList();
