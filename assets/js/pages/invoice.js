@@ -90,9 +90,8 @@ var invoice = new Vue({
                     console.log(error)
                 });
         },
-        addPaymentModalshow(invoice_id){
-            if(invoice_id>0){ this.addPaymentModal(invoice_id); }
-            else{ $('#viewPaymentsModal').modal('hide'); }
+        addPaymentModalshow(){
+            $('#viewPaymentsModal').modal('hide');
             $('#addPaymentsModal').modal('show');
         },
         addPaymentModal(invoice_id){

@@ -38,8 +38,7 @@
                                     <th>Student Name</th>
                                     <th>Status</th>
                                     <th>Amount</th>
-                                    <th>Payments</th>
-                                    <th>Invoice</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody v-for="(list,index) in invoicelist">
@@ -56,13 +55,12 @@
                                     </td>
                                     <td>{{list.amount}}</td>
                                     <td>
-                                        <button @click="viewPaymentsModal(index)" type="button" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></button>
-                                        <button @click="addPaymentModalshow(list.invoice_id)" v-if="list.invstatus!='paid'" type="button" class="btn btn-primary btn-xs"><i class="fas fa-plus"></i></button>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></button>
-                                        <button type="button" class="btn btn-primary btn-xs" @click="printInvoice(list.invoice_id)"><i class="fas fa-print"></i></button>
-                                        <!-- <button class="btn btn-sm btn-primary my-2" style="float:right;" @click="printRegretLetter">Print Regret Letters</button> -->
+                                        <button @click="viewPaymentsModal(index)" type="button" class="btn btn-primary btn-xs">
+                                            <i class="fas fa-eye"></i> View Payments
+                                        </button>
+                                        <button type="button" class="btn btn-primary btn-xs" @click="printInvoice(list.invoice_id)">
+                                            <i class="fas fa-print"></i> Print Invoice
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -128,7 +126,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button v-if="invoicedetails.details.paymentstotal<invoicedetails.details.amount" type="button" class="btn btn-primary" @click="addPaymentModalshow('')">Add a New Payment</button>
+                <button v-if="invoicedetails.details.paymentstotal<invoicedetails.details.amount" type="button" class="btn btn-primary" @click="addPaymentModalshow()"><i class="fas fa-plus"></i> Add a New Payment</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
