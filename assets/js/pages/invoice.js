@@ -80,10 +80,8 @@ var invoice = new Vue({
                 "invoice_id": invoice_id
             };
             var urls = window.App.baseUrl + "invoice/viewPayments";
-            showloading("Loading Data");
             axios.post(urls, datas)
                 .then(function (e) {
-                    Swal.close();
                     invoice.invoicedetails.paymentslist = e.data.data.paymentslist;
                     invoice.addPaymentModal(invoice_id);
                     $('#viewPaymentsModal').modal('show');
@@ -114,13 +112,13 @@ var invoice = new Vue({
             showloading("Loading Data");
             axios.post(urls, datas)
                 .then(function (e) {
-                    Swal.close();
                     invoice.invoicedetails.details = e.data.data.invoicedetails;
                     invoice.invoicedetails.details.paymentstotal = e.data.data.paymentstotal;
 
                     invoice.paymentdetails.invoice_id = e.data.data.invoicedetails.invoice_id;
                     invoice.paymentdetails.amountmax = invoice.invoicedetails.details.amount - invoice.invoicedetails.details.paymentstotal;
                     invoice.paymentdetails.amount = invoice.invoicedetails.details.amount - invoice.invoicedetails.details.paymentstotal;
+                    Swal.close();
                 })
                 .catch(function (error) {
                     console.log(error)

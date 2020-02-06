@@ -1,7 +1,7 @@
 <style>
 body { 
+    width: 100%;
     margin: 15px; 
-    padding-top: 40px;
     /* margin: 35px 45px 35px 45px;  */
     font-family: Arial, Helvetica, sans-serif;
     text-align: justify;
@@ -10,6 +10,12 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     opacity: 0.5; */
+}
+#frontpage {
+    padding-top: 30px;
+}
+#backpage {
+    padding-top: 0px;
 }
 .font-bold {
     font-weight: bold; 
@@ -46,7 +52,7 @@ th {
 }
 </style>
 
-<body style="width: 100%;">
+<body id="frontpage">
     <div id="child">
     <header>
         <img src="<?=FCPATH?>assets/img/bravehearts_logo.jpg" style="height:140px;">
@@ -64,7 +70,7 @@ th {
     <hr style="border-top: 5px solid #800000">
 
     <h3>Statement of Account</h3>
-    <table cellpadding="2">
+    <table cellpadding="1">
         <tr>
             <th style="width:30%;">Billed to</th>
             <th style="width:20%;">Date of Issue</th>
@@ -95,11 +101,11 @@ th {
     </table>
     <br>
 
-    <hr style="border-top: 3px double #800000">
+    <hr style="border-top: 3px solid #800000">
 
-    <div style="border:1px solid black;">
-        <h3>Billing Breakdown</h3>
-        <table cellpadding="5">
+    <div>
+        <h3>Invoice Breakdown</h3>
+        <table cellpadding="3">
             <tr>
                 <th style="text-align:center;">Item / Description</th>
                 <th style="text-align:center;">Rate</th>
@@ -119,16 +125,37 @@ th {
                 <td style="text-align:right;">P 1,800.00</td>
             </tr>
             <tr>
-                <td colspan=4></td>
-            </tr>
-            <tr>
                 <td colspan=4><hr style="border-top: 1px dotted #800000"></td>
             </tr>
             <tr>
                 <td rowspan=2></td>
-                <td rowspan=2></td>
-                <th>Amount Due (PHP)</th>
+                <th colspan=2 style="text-align:right;">Total Invoice Amount (PHP)</th>
                 <td style="text-align:right;">P 4,800.00</td>
+            </tr>
+        </table>
+    </div>
+
+    <hr style="border-top: 2px solid #800000">
+
+    <div style="width:45%; float:right;">
+        <table>
+            <tr>
+                <th>Total Invoice Amount</th>
+                <td style="text-align:right;">P 4,800.00</td>
+            </tr>
+            <tr>
+                <th>Total Amount Paid</th>
+                <td style="text-align:right;">- P 3,000.00</td>
+            </tr>
+            <tr>
+                <td colspan=2 style="font-size:10px;">(See payment history at the back)</td>
+            </tr>
+            <tr>
+                <td colspan=2><hr style="border-top: 1px dotted #000"></td>
+            </tr>
+            <tr>
+                <th>Remaining Balance</th>
+                <td style="text-align:right;">P 1,800.00</td>
             </tr>
         </table>
     </div>
@@ -139,5 +166,36 @@ th {
         E-mail:  braveheartsinstitute@gmail.com <br>
         Website: <span style="color:blue;">www.braveheartsinstitute.com</span>
     </footer> -->
+    </div>
+</body>
+
+<body id="backpage">
+    <div>
+        <h3>Payments History</h3>
+        <table style="text-align:center;">
+            <tr>
+                <th>Date</th>
+                <th>OR Number</th>
+                <th>Total</th>
+            </tr>
+            <tr>
+                <td>01/01/2020</td>
+                <td>2020-00001</td>
+                <td>P 1,000.00</td>
+            </tr>
+            <tr>
+                <td>01/01/2020</td>
+                <td>2020-00002</td>
+                <td>P 2,000.00</td>
+            </tr>
+            <tr>
+                <td colspan=3><hr style="border-top: 1px dotted #800000"></td>
+            </tr>
+            <tr>
+                <td rowspan=2></td>
+                <th>Total Amount Paid (PHP)</th>
+                <td>P 3,000.00</td>
+            </tr>
+        </table>
     </div>
 </body>
