@@ -28,12 +28,12 @@ body {
 }
 footer {
     position: fixed; 
-    bottom: 8px; 
+    bottom: 6px; 
     left: 10px; 
     right: 10px;
 
-    height: 50px;
-    text-align: center !important;
+    height: 40px;
+    text-align: left !important;
     font-size: 12px; /* font: 8 */
     font-family: "Times New Roman", Times, serif !important;
 }
@@ -84,7 +84,7 @@ th {
             </td>
             <td>01/01/2020</td>
             <td>INV-00001</td>
-            <td rowspan=3 style="text-align:right; color:#800000; font-size:35px;">P0.00</td>
+            <th rowspan=3 style="text-align:right; color:#800000; font-size:30px;">P1,800.00</th>
         </tr>
         <tr>
             <td colspan=2></td>
@@ -160,13 +160,12 @@ th {
         </table>
     </div>
 
-    <!-- <footer>
-        Bravehearts Martial Arts Institute <br>
-        Telephone (6374) 444 8129 | 444 3638 | 444 3262 • Telefax (6374) 442 7917 | 304 3949 <br>
-        E-mail:  braveheartsinstitute@gmail.com <br>
-        Website: <span style="color:blue;">www.braveheartsinstitute.com</span>
-    </footer> -->
     </div>
+    <footer>
+        Bravehearts Martial Arts Institute <br>
+        Statement of Account for: <span style="color:blue;">Student ABC</span><br>
+        <?=date("F d, Y")?>
+    </footer>
 </body>
 
 <body id="backpage">
