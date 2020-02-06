@@ -31,7 +31,6 @@ function formatTime(date) {
     return [hr, min, sec].join(':');
 }
 
-
 var enroll = new Vue({
     el: '#studentenroll_page',
     data: {

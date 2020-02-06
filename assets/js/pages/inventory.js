@@ -32,8 +32,10 @@ var inventory = new Vue({
                 groupby: "item_no"
             };
             var urls = window.App.baseUrl + "Inventory/getInventoryList";
+            showloading("Loading Data");
             axios.post(urls, datas)
                 .then(function (e) {
+                    Swal.close();
                     inventory.inventorylist=e.data.data.inventorylist;
                 })
                 .catch(function (error) {

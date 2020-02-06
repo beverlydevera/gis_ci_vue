@@ -136,8 +136,10 @@ var package = new Vue({
         },
         getPackageList(){
             var urls = window.App.baseUrl + "Libraries/getPackageList";
+            showloading("Loading Data");
             axios.post(urls, "")
                 .then(function (e) {
+                    Swal.close();
                     e.data.data.packagelist.forEach((e,index) => {
                         if(e.packagetype!="Unlimited"){
                             package.packagelist.push({

@@ -141,7 +141,7 @@ class Main extends CI_Model
 			$this->db->order_by($orderby['column'],$orderby['order']);
 		}
 		if(!empty($groupby)){
-			$this->db->groupby($groupby);
+			$this->db->group_by($groupby);
 		}
 
 		if (!empty($pager)) {
