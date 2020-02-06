@@ -57,7 +57,7 @@
                                     <td>{{list.amount}}</td>
                                     <td>
                                         <button @click="viewPaymentsModal(index)" type="button" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></button>
-                                        <button v-if="list.invstatus!='paid'" type="button" class="btn btn-primary btn-xs"><i class="fas fa-plus"></i></button>
+                                        <button @click="addPaymentModalshow(list.invoice_id)" v-if="list.invstatus!='paid'" type="button" class="btn btn-primary btn-xs"><i class="fas fa-plus"></i></button>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-eye"></i></button>
@@ -127,8 +127,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button v-if="invoicedetails.details.paymentstotal<invoicedetails.details.amount" type="button" class="btn btn-primary" @click="addPaymentModalshow()">Add Payment</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button v-if="invoicedetails.details.paymentstotal<invoicedetails.details.amount" type="button" class="btn btn-primary" @click="addPaymentModalshow('')">Add a New Payment</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" @click="addPaymentModal()">Close</button>
             </div>
         </div>
     </div>

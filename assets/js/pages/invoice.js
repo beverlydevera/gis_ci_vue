@@ -84,22 +84,47 @@ var invoice = new Vue({
             axios.post(urls, datas)
                 .then(function (e) {
                     Swal.close();
-                    invoice.invoicedetails.details = e.data.data.invoicedetails;
-                    invoice.invoicedetails.details.paymentstotal = e.data.data.paymentstotal;
                     invoice.invoicedetails.paymentslist = e.data.data.paymentslist;
-
-                    invoice.paymentdetails.invoice_id = e.data.data.invoicedetails.invoice_id;
-                    invoice.paymentdetails.amountmax = invoice.invoicedetails.details.amount - invoice.invoicedetails.details.paymentstotal;
-                    invoice.paymentdetails.amount = invoice.invoicedetails.details.amount - invoice.invoicedetails.details.paymentstotal;
+                    invoice.addPaymentModal(invoice_id);
                     $('#viewPaymentsModal').modal('show');
                 })
                 .catch(function (error) {
                     console.log(error)
                 });
         },
-        addPaymentModalshow(){
-            $('#viewPaymentsModal').modal('hide');
+        addPaymentModalshow(invoice_id){
+            if(invoice_id>0){ this.addPaymentModal(invoice_id); }
+            else{ $('#viewPaymentsModal').modal('hide'); }
             $('#addPaymentsModal').modal('show');
+        },
+        addPaymentModal(invoice_id){
+            this.paymentdetails = {
+                invoice_id: "",
+                student_id: "",
+                ornumber: "",
+                paymentdate: currentdate,
+                ordate: currentdate,
+                paymentoption: "full",
+                amount: 0,
+            }
+            var datas = {
+                "invoice_id": invoice_id,
+            };
+            var urls = window.App.baseUrl + "invoice/getInvoiceDetails";
+            showloading("Loading Data");
+            axios.post(urls, datas)
+                .then(function (e) {
+                    Swal.close();
+                    invoice.invoicedetails.details = e.data.data.invoicedetails;
+                    invoice.invoicedetails.details.paymentstotal = e.data.data.paymentstotal;
+
+                    invoice.paymentdetails.invoice_id = e.data.data.invoicedetails.invoice_id;
+                    invoice.paymentdetails.amountmax = invoice.invoicedetails.details.amount - invoice.invoicedetails.details.paymentstotal;
+                    invoice.paymentdetails.amount = invoice.invoicedetails.details.amount - invoice.invoicedetails.details.paymentstotal;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
         },
         amountchange(){
             if(this.paymentdetails.amount == this.invoicedetails.details.amount - this.invoicedetails.details.paymentstotal){

@@ -68,19 +68,10 @@ class Invoice extends CI_Controller {
             $paymentslist = $this->Main->getDataOneJoin("*","tbl_paymentshistory ph",$join,$condition,"",$orderby,$groupby,$type);
             $paymentstotal = $this->Main->getDataOneJoin("SUM(ph.amount) as paymentstotal","tbl_paymentshistory ph",$join,$condition,"",$orderby,"invoice_id","row");
 
-            $orderby = [];
-            $join = [
-                "table"    => "tbl_students s",
-                "key"      => "s.student_id=si.student_id",
-                "jointype" => "inner"
-            ];
-            $invoicedetails = $this->Main->getDataOneJoin("*, si.status as invstatus","tbl_studentinvoice si",$join,$condition,"",$orderby,$groupby,"row");
-        
             $response = array(
                 "success"   => true,
                 "data"      => [
                     "paymentslist" => $paymentslist,
-                    "invoicedetails" => $invoicedetails,
                     "paymentstotal" => $paymentstotal->paymentstotal
                 ]
             );
@@ -123,6 +114,38 @@ class Invoice extends CI_Controller {
             'type'      => $type,
             'message'   => $message
         );
+        response_json($response);
+    }
+
+    public function getInvoiceDetails()
+    {
+        $type = $groupby = ""; $condition = $orderby = $join = [];
+        $data = jsondata();
+        $invoice_id = $data['invoice_id'];
+
+        if(!empty($data)){
+            $condition = ["invoice_id"=>$invoice_id];
+            $join = [
+                "table"    => "tbl_students s",
+                "key"      => "s.student_id=si.student_id",
+                "jointype" => "inner"
+            ];
+            $invoicedetails = $this->Main->getDataOneJoin("*, si.status as invstatus","tbl_studentinvoice si",$join,$condition,"",$orderby,$groupby,"row");
+            $paymentstotal = $this->Main->getDataOneJoin("SUM(ph.amount) as paymentstotal","tbl_paymentshistory ph","",$condition,"",$orderby,"invoice_id","row");
+
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    "invoicedetails" => $invoicedetails,
+                    "paymentstotal" => $paymentstotal->paymentstotal
+                ]
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
         response_json($response);
     }
     
