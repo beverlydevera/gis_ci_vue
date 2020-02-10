@@ -115,6 +115,31 @@ class Users extends CI_Controller {
         );
         response_json($response);
     }
+
+    public function archiveUserAccount()
+    {
+        $data = jsondata();
+
+        if(!empty($data)){
+            $user_id = $data['user_id'];
+    
+            $updatequery = $this->Main->update("tbl_users", ["user_id"=>$user_id], ["status"=>0],"");
+            $success = true;
+            $message = "Account was archived successfully.";
+            $type = "success";
+        }else{
+            $success = false;
+            $message = "Account was not archived.";
+            $type = "warning";
+        }
+
+        $response = array(
+            "success"   => $success,
+            "message"   => $message,
+            "type"      => $type,
+        );
+        response_json($response);
+    }
     //end of users list
 
     //start of user logs

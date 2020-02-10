@@ -16,6 +16,9 @@ var users = new Vue({
                     table: "tbl_branches b",
                     key: "b.branch_id=u.branch_id",
                     jointype: "left",
+                },
+                condition: {
+                    "u.status": 1
                 }
             };
             var urls = window.App.baseUrl + "users/getUsersList";
@@ -31,7 +34,8 @@ var users = new Vue({
             var user_id = this.userslist[index].user_id;
             var datas = {
                 condition: {
-                    "user_id": user_id
+                    "user_id": user_id,
+                    "u.status": 1
                 },
                 type: "row",
                 join: {
@@ -119,7 +123,35 @@ var users = new Vue({
             })
         },
         archiveAccount(user_id){
-
+            Swal.fire({
+                title: "Are you sure you want to archive this user account?",
+                // text: "You won't be able to undo this.",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, archive account',
+                }).then((e) => {
+                    if(e.value){
+                        var datas = {
+                            user_id: user_id
+                        };
+                        var urls = window.App.baseUrl + "users/archiveUserAccount";
+                        showloading();
+                        axios.post(urls, datas)
+                            .then(function (e) {
+                                Swal.close();
+                                Toast.fire({
+                                    type: e.data.type,
+                                    title: e.data.message
+                                })
+                                users.getUsers();
+                            })
+                            .catch(function (error) {
+                                console.log(error)
+                            });
+                    }
+                })
         },
     }, mounted: function () {
         this.getUsers();
