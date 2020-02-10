@@ -124,9 +124,8 @@
             <?=strtoupper(sesdata('fullname'))?>
             <small>Role: 
                 <?php
-                    if(sesdata('role')==0){ echo "System Administrator"; }
-                    else if(sesdata('role')==1){ echo "Cashier"; }
-                    else if(sesdata('role')==2){ echo "Guest"; }
+                    if(sesdata('role')==1){ echo "System Administrator"; }
+                    else if(sesdata('role')==2){ echo "Cashier"; }
                 ?>
             </small>
             </p>

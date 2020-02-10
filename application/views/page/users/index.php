@@ -31,11 +31,16 @@
                                     <td>{{list.contactno}}</td>
                                     <td>{{list.emailadd}}</td>
                                     <td>
-                                        <span v-if="list.role==0" class="badge bg-success">SYSTEM ADMIN</span>
-                                        <span v-else-if="list.role==1" class="badge bg-info">CASHIER</span>
+                                        <span v-if="list.role==1" class="badge bg-success">SYSTEM ADMIN</span>
+                                        <template v-else-if="list.role==2">
+                                            <span class="badge bg-info">CASHIER</span><br>
+                                            Branch: {{list.branch_name}}
+                                        </template>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i></i></button>
+                                        <button type="button" class="btn btn-primary btn-xs" @click="editUserDetails(index)"><i class="fas fa-edit"></i></i></button>
+                                        <!-- <button type="button" class="btn btn-primary btn-xs" data-target="#editUserDetailsModal" data-toggle="modal" @click="editUserDetails(index)"><i class="fas fa-edit"></i></i></button> -->
+                                        <button type="button" class="btn btn-warning btn-xs"><i class="fas fa-lock-open"></i></i></button>
                                         <button type="button" class="btn btn-danger btn-xs"><i class="fas fa-archive"></i></i></button>
                                     </td>
                                 </tr>
@@ -47,3 +52,66 @@
         </div>
     </div>
 </section>
+
+<div class="modal fade" id="editUserDetailsModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit User Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                    <table class="table table-bordered table-responsive-sm table-sm billing-table">
+                        <tr>
+                            <th width="25%">Username:</th>
+                            <th><input type="text" v-model="userdetails.date_added" class="form-control smallerinput" readonly></th>
+                        </tr>
+                        <tr>
+                            <th width="25%">Last Name:</th>
+                            <th><input type="text" class="form-control smallerinput" v-model="userdetails.lastname" required placeholder="Last Name"></th>
+                        </tr>
+                        <tr>
+                            <th width="25%">First Name:</th>
+                            <th><input type="text" class="form-control smallerinput" v-model="userdetails.firstname" placeholder="First Name"></th>
+                        </tr>
+                        <tr>
+                            <th width="25%">Middle Name:</th>
+                            <th><input type="text" class="form-control smallerinput" v-model="userdetails.middlename" required placeholder="Middle Name"></th>
+                        </tr>
+                        <tr>
+                            <th width="25%">Contact Number:</th>
+                            <th><input type="text" class="form-control smallerinput" v-model="userdetails.contactno" required></th>
+                        </tr>
+                        <tr>
+                            <th width="25%">Email Address:</th>
+                            <th><input type="email" class="form-control smallerinput" v-model="userdetails.emailadd" required></th>
+                        </tr>
+                        <tr>
+                            <th width="25%">Role:</th>
+                            <th>
+                                <select class="form-control select2 smallerinput" v-model="userdetails.role" style="width: 100%;" data-select2-id="12" tabindex="-1" aria-hidden="true">
+                                    <option selected disabled></option>
+                                    <option :value="1">System Admin</option>
+                                    <option :value="2">Cashier</option>
+                                </select>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th width="25%">Branch:</th>
+                            <th><input type="text" class="form-control smallerinput" v-model="userdetails.branch_name" required></th>
+                        </tr>
+                    </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" @click="saveWalkinChanges()">Save Changes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
