@@ -65,13 +65,7 @@
         <p>Invoice Statements</p>
       </a>
     </li>
-    <li class="nav-item">
-      <a href="<?= base_url('inventory/') ?>" class="nav-link" v-bind:class="checkactive('inventory')">
-        <i class="nav-icon fas fa-clipboard-list"></i>
-        <p>Inventory</p>
-      </a>
-    </li>
-    <li class="nav-item has-treeview menu-close">
+    <li class="nav-item has-treeview menu-open">
       <a href="#" class="nav-link" v-bind:class="checkactive('libraries')">
         <i class="nav-icon fas fa-book"></i>
         <p>
@@ -87,6 +81,12 @@
           </a>
         </li>
         <li class="nav-item">
+          <a href="<?= base_url('inventory/') ?>" class="nav-link" v-bind:class="checkactive('inventory')">
+            <i class="nav-icon fas fa-clipboard-list"></i>
+            <p>Inventory</p>
+          </a>
+        </li>
+        <!-- <li class="nav-item">
           <a href="<?= base_url('libraries/branches') ?>" class="nav-link">
             <i class="nav-icon fas fa-dumbbell nav-icon"></i>
             <p>Branches</p>
@@ -97,7 +97,7 @@
             <i class="nav-icon fas fa-chalkboard-teacher nav-icon"></i>
             <p>Classes</p>
           </a>
-        </li>
+        </li> -->
       </ul>
     </li>
     <li class="nav-item has-treeview menu-close">

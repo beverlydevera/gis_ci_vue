@@ -21,32 +21,18 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody v-for="(list,index) in userslist">
                                 <tr>
-                                    <td>1</td>
-                                    <td>admin</td>
-                                    <td>ADMIN</td>
-                                    <td>aaa</td>
-                                    <td>aaa</td>
-                                    <td>091234567890</td>
-                                    <td>admin@email.com</td>
-                                    <td><span class="badge bg-success">SYSTEM ADMIN</span></td>
+                                    <td>{{index+1}}</td>
+                                    <td>{{list.username}}</td>
+                                    <td>{{list.lastname}}</td>
+                                    <td>{{list.firstname}}</td>
+                                    <td>{{list.middlename}}</td>
+                                    <td>{{list.contactno}}</td>
+                                    <td>{{list.emailadd}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i></i></button>
-                                        <button type="button" class="btn btn-danger btn-xs"><i class="fas fa-archive"></i></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>bevs</td>
-                                    <td>De Vera</td>
-                                    <td>Beverly</td>
-                                    <td>Austria</td>
-                                    <td>091234567890</td>
-                                    <td>bevs@email.com</td>
-                                    <td>
-                                        <span class="badge bg-info">CASHIER</span><br>
-                                        Branch: <u>ABANAO</u>
+                                        <span v-if="list.role==0" class="badge bg-success">SYSTEM ADMIN</span>
+                                        <span v-else-if="list.role==1" class="badge bg-info">CASHIER</span>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-xs"><i class="fas fa-edit"></i></i></button>
