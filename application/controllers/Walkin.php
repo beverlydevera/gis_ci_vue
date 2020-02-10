@@ -27,7 +27,7 @@ class Walkin extends CI_Controller {
         if(!empty($data)){
             $newwalkin = $data['newWalkinInfo'];
             unset($newwalkin['age']);
-            unset($newwalkin['branchname']);
+            unset($newwalkin['branch_name']);
             $data['date_added'] = date('Y-m-d H:i:s');
 
             $insertquery = $this->Main->insert("tbl_walkins", $newwalkin,true);
@@ -64,7 +64,7 @@ class Walkin extends CI_Controller {
             if(!empty($data['type'])){ $type = $data['type']; }
         }
         
-        $walkinlist = $this->Main->getDataOneJoin("*,w.date_added AS wdate_added","tbl_walkins w",$join,$condition,$pager,$orderby,$groupby,$type);
+        $walkinlist = $this->Main->getDataOneJoin("*,w.date_added AS wdate_added, w.status AS wstatus","tbl_walkins w",$join,$condition,$pager,$orderby,$groupby,$type);
 
         if(!empty($walkinlist)){
            
@@ -80,6 +80,43 @@ class Walkin extends CI_Controller {
             "success"   => $success,
             "type"      => $type,
             "data"      => $data
+        );
+        response_json($response);
+    }
+
+    public function saveWalkinChanges()
+    {
+        $data = jsondata();
+
+        if(!empty($data)){
+            
+            $walkindetails = $data['walkindetails'];
+            $walkin_id = $walkindetails['walkin_id'];
+            $walkindetails['status'] = $walkindetails['wstatus'];
+
+            unset($walkindetails['walkin_id']);
+            unset($walkindetails['age']);
+            unset($walkindetails['branch_name']);
+            unset($walkindetails['date_addeddisplay']);
+            unset($walkindetails['date_added']);
+            unset($walkindetails['wstatus']);
+            unset($walkindetails['wdate_added']);
+
+            $updatequery = $this->Main->update("tbl_walkins", ["walkin_id"=>$walkin_id], $walkindetails,"");
+
+            $success = true;
+            $message = "Changes were saved successfully.";
+            $type = "success";
+        }else{
+            $success = false;
+            $message = "Changes were not saved.";
+            $type = "warning";
+        }
+
+        $response = array(
+            "success"   => $success,
+            "message"   => $message,
+            "type"      => $type,
         );
         response_json($response);
     }

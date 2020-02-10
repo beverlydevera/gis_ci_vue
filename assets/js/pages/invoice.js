@@ -1,37 +1,4 @@
 // Vue.use(VueTables.ClientTable);
-var currentdate = formatDate(new Date());
-var currenttime = formatTime(new Date());
-
-function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
-
-    return [year, month, day].join('-');
-}
-
-function formatTime(date) {
-    var d = new Date(date);
-    var hr = d.getHours();
-    var min = d.getMinutes();
-    var sec = d.getSeconds();
-
-    if (hr < 10)
-        hr = "0" + hr;
-    if (min < 10)
-        min = "0" + min;
-    if (sec < 10)
-        sec = "0" + sec;
-
-    return [hr, min, sec].join(':');
-}
-
 var invoice = new Vue({
     el: '#invoice_page',
     data: {

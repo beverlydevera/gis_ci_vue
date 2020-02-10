@@ -54,7 +54,7 @@
         <li class="nav-item">
           <a href="<?= base_url('walkin') ?>" class="nav-link" v-bind:class="checkactive('walkin')">
             <i class="fas fa-walking nav-icon"></i>
-            <p>Walk-in / Pre-Registered</p>
+            <p>Walk-in / Pre-Register</p>
           </a>
         </li>
       </ul>

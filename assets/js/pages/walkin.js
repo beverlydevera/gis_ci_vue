@@ -17,9 +17,9 @@ var walkin = new Vue({
             branch_id: 1,
             branchname: "Abanao",
             walkintype: "Walk-in",
-            status: 1,
-            // date_added: ""
-        }
+            status: 1
+        },
+        walkindetails: {}
     },
     methods: {
         calculate_age() {
@@ -73,6 +73,50 @@ var walkin = new Vue({
                     console.log(error)
                 });
         },
+        editNewWalkinClient(walkin_id){
+            var datas = {
+                join: {
+                    table: "tbl_branches b",
+                    key: "b.branch_id=w.branch_id",
+                    jointype: "inner",
+                },
+                condition: {
+                    walkin_id: walkin_id
+                },
+                type: "row"
+            };
+            var urls = window.App.baseUrl + "walkin/getWalkins";
+            showloading("Loading Data");
+            axios.post(urls, datas)
+                .then(function (e) {
+                    swal.close();
+                    walkin.walkindetails = e.data.data;
+                    walkin.walkindetails.date_added = formatDate(walkin.walkindetails.date_added);
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        saveWalkinChanges(){
+            var datas = { 
+                walkindetails: this.walkindetails };
+            var urls = window.App.baseUrl + "Walkin/saveWalkinChanges";
+            showloading();
+            axios.post(urls, datas)
+                .then(function (e) {
+                    Swal.close();
+                    Swal.fire({
+                        type: e.data.type,
+                        title: e.data.message
+                    }).then(function (e) {
+                        $('#editNewWalkinClientModal').modal('hide');
+                        walkin.getWalkins();
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        }
     }, mounted: function () {
         this.getWalkins();
     },
