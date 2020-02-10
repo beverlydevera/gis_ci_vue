@@ -7,6 +7,7 @@ class Users extends CI_Controller {
     {
         parent::__construct();
         $this->load->model("Main");
+        $this->load->library("Bcrypt");
         checkLogin();
 	}
     
@@ -87,6 +88,33 @@ class Users extends CI_Controller {
         response_json($response);
     }
 
+    public function resetUserPassword()
+    {
+        $data = jsondata();
+
+        if(!empty($data)){
+            $user_id = $data['user_id'];
+            $password = $data['password'];
+
+            $password = $this->bcrypt->hash_password($password);
+    
+            $updatequery = $this->Main->update("tbl_users", ["user_id"=>$user_id], ["password"=>$password],"");
+            $success = true;
+            $message = "Password was reset successfully.";
+            $type = "success";
+        }else{
+            $success = false;
+            $message = "Password was not reset.";
+            $type = "warning";
+        }
+
+        $response = array(
+            "success"   => $success,
+            "message"   => $message,
+            "type"      => $type,
+        );
+        response_json($response);
+    }
     //end of users list
 
     //start of user logs

@@ -39,8 +39,8 @@
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-xs" @click="editUserDetails(index)"><i class="fas fa-edit"></i></i></button>
-                                        <button type="button" class="btn btn-warning btn-xs"><i class="fas fa-lock-open"></i></i></button>
-                                        <button type="button" class="btn btn-danger btn-xs"><i class="fas fa-archive"></i></i></button>
+                                        <button type="button" class="btn btn-warning btn-xs" @click="resetPassword(list.user_id)"><i class="fas fa-lock-open"></i></i></button>
+                                        <button type="button" class="btn btn-danger btn-xs" @click="archiveAccount(lisr.user_id)"><i class="fas fa-archive"></i></i></button>
                                     </td>
                                 </tr>
                             </tbody>

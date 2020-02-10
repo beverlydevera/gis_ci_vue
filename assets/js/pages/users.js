@@ -72,7 +72,55 @@ var users = new Vue({
                 .catch(function (error) {
                     console.log(error)
                 });
-        }
+        },
+        resetPassword(user_id){
+            Swal.fire({
+                title: "Password Reset",
+                input: 'password',
+                inputPlaceholder: 'Enter new password',
+                inputAttributes: {
+                    maxlength: 15,
+                    autocapitalize: 'off',
+                    autocorrect: 'off'
+                },
+                showCancelButton: true,
+            }).then((result) => {
+                if (result.value) {
+                    Swal.fire({
+                        title: "Are you sure you want to reset user password?",
+                        // text: "You won't be able to undo this.",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, reset and proceed',
+                        }).then((e) => {
+                            if(e.value){
+                                var datas = {
+                                    user_id: user_id,
+                                    password: result.value
+                                };
+                                var urls = window.App.baseUrl + "users/resetUserPassword";
+                                showloading();
+                                axios.post(urls, datas)
+                                    .then(function (e) {
+                                        Swal.close();
+                                        Toast.fire({
+                                            type: e.data.type,
+                                            title: e.data.message
+                                        })
+                                    })
+                                    .catch(function (error) {
+                                        console.log(error)
+                                    });
+                            }
+                        })
+                }
+            })
+        },
+        archiveAccount(user_id){
+
+        },
     }, mounted: function () {
         this.getUsers();
     },
