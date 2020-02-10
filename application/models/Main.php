@@ -126,7 +126,7 @@ class Main extends CI_Model
 		}
 	}
 
-	public function getDataOneJoin($select,$table,$join,$condition,$pager,$orderby,$groupby,$type)
+	public function getDataOneJoin($select="*",$table="",$join=array(),$condition=array(),$pager=array(),$orderby=array(),$groupby,$type="")
 	{
 		$this->db->select($select);
 		$this->db->from($table);

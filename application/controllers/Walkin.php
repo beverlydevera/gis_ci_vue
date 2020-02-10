@@ -7,6 +7,7 @@ class Walkin extends CI_Controller {
     {
         parent::__construct();
         $this->load->model("Main");
+        date_default_timezone_set("Asia/Manila");
         checkLogin();
 	}
 	
@@ -27,7 +28,8 @@ class Walkin extends CI_Controller {
             $newwalkin = $data['newWalkinInfo'];
             unset($newwalkin['age']);
             unset($newwalkin['branchname']);
-            
+            $data['date_added'] = date('Y-m-d H:i:s');
+
             $insertquery = $this->Main->insert("tbl_walkins", $newwalkin,true);
 
             $success = true;
@@ -43,6 +45,41 @@ class Walkin extends CI_Controller {
             "success"   => $success,
             "message"   => $message,
             "type"      => $type,
+        );
+        response_json($response);
+    }
+
+    public function getWalkins()
+    {
+        $join = $condition = $pager = $orderby = [];
+        $groupby = $type = $data = "";
+        $data = jsondata();
+
+        if(!empty($data)){
+            if(!empty($data['join'])){ $join = $data['join']; }
+            if(!empty($data['condition'])){ $condition = $data['condition']; }
+            if(!empty($data['pager'])){ $pager = $data['pager']; }
+            if(!empty($data['orderby'])){ $orderby = $data['orderby']; }
+            if(!empty($data['groupby'])){ $groupby = $data['groupby']; }
+            if(!empty($data['type'])){ $type = $data['type']; }
+        }
+        
+        $walkinlist = $this->Main->getDataOneJoin("*,w.date_added AS wdate_added","tbl_walkins w",$join,$condition,$pager,$orderby,$groupby,$type);
+
+        if(!empty($walkinlist)){
+           
+            $success = true;
+            $type = "success";
+            $data = $walkinlist;
+        }else{
+            $success = false;
+            $type = "warning";
+        }
+
+        $response = array(
+            "success"   => $success,
+            "type"      => $type,
+            "data"      => $data
         );
         response_json($response);
     }

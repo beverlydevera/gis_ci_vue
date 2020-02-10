@@ -2,7 +2,7 @@
 var walkin = new Vue({
     el: '#walkin_page',
     data: {
-        // studentslist: {},
+        walkinslist: {},
         newWalkinInfo: {
             lastname: "",
             firstname: "",
@@ -37,30 +37,43 @@ var walkin = new Vue({
             showloading();
             axios.post(urls, datas)
                 .then(function (e) {
-                    // action
                     Swal.close();
-                    Toast.fire({
+                    Swal.fire({
                         type: e.data.type,
                         title: e.data.message
+                    }).then(function (e) {
+                        $('#addNewWalkinClientModal').modal('hide');
+                        walkin.getWalkins();
                     })
-                    // walkin.getWalkins();
                 })
                 .catch(function (error) {
                     console.log(error)
                 });
-        }
-        // getStudents(){
-        //     var urls = window.App.baseUrl + "students/getStudents";
-        //     axios.post(urls, "")
-        //         .then(function (e) {
-        //             // console.log(e);
-        //             students.studentslist=e.data.data;
-        //         })
-        //         .catch(function (error) {
-        //             console.log(error)
-        //         });
-        // },
+        },
+        getWalkins(){
+            var datas = {
+                join: {
+                    table: "tbl_branches b",
+                    key: "b.branch_id=w.branch_id",
+                    jointype: "inner",
+                },
+                orderby: {
+                    column: "w.date_added",
+                    order: "DESC",
+                }
+            };
+            var urls = window.App.baseUrl + "walkin/getWalkins";
+            showloading("Loading Data");
+            axios.post(urls, datas)
+                .then(function (e) {
+                    swal.close();
+                    walkin.walkinslist=e.data.data;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
     }, mounted: function () {
-        // this.getStudents();
+        this.getWalkins();
     },
 })

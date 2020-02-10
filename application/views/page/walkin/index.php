@@ -18,7 +18,7 @@
                             </div>
                             <div class="col-md-6"></div>
                             <div class="col-md-3">
-                                <a style="float:right;" data-target="#addNewWalkinClient" data-toggle="modal" class="btn bg-gradient-primary btn-xs">Add New Walk-in Client</a>
+                                <a style="float:right;" data-target="#addNewWalkinClientModal" data-toggle="modal" class="btn bg-gradient-primary btn-xs">Add New Walk-in Client</a>
                             </div>
                         </div>
                         <table class="table table-bordered table-responsive-sm table-sm">
@@ -34,18 +34,18 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody v-for="(list,index) in walkinslist">
                                 <tr>
-                                    <td>1</td>
-                                    <td>ABC DEF GHI</td>
-                                    <td>F</td>
-                                    <td>Abanao</td>
-                                    <td>Walk-in / Website</td>
-                                    <td>January 20, 2020</td>
+                                    <td>{{index+1}}</td>
+                                    <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
+                                    <td>{{list.sex}}</td>
+                                    <td>{{list.branch_name}}</td>
+                                    <td>{{list.walkintype}}</td>
+                                    <td>{{list.wdate_added}}</td>
                                     <td>
-                                        <span class="badge bg-success">ACTIVE</span>
-                                        <span class="badge bg-warning">PENDING</span>
-                                        <span class="badge bg-danger">INACTIVE</span>
+                                        <span v-if="list.status==1" class="badge bg-warning">PENDING</span>
+                                        <span v-else-if="list.status==2" class="badge bg-success">ACTIVE</span>
+                                        <span v-else-if="list.status==3" class="badge bg-danger">INACTIVE</span>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-success btn-xs"><i class="fas fa-edit"></i></button>
@@ -60,7 +60,7 @@
     </div>
 </section>
 
-<div class="modal fade" id="addNewWalkinClient">
+<div class="modal fade" id="addNewWalkinClientModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
