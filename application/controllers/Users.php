@@ -56,6 +56,37 @@ class Users extends CI_Controller {
         response_json($response);
     }
 
+    public function saveUserDetails()
+    {
+        $data = jsondata();
+
+        if(!empty($data)){
+            
+            $userdetails = $data['userdetails'];
+            $user_id = $userdetails['user_id'];
+
+            unset($userdetails['branch_name']);
+            unset($userdetails['date_added']);
+
+            $updatequery = $this->Main->update("tbl_users", ["user_id"=>$user_id], $userdetails,"");
+
+            $success = true;
+            $message = "Changes were saved successfully.";
+            $type = "success";
+        }else{
+            $success = false;
+            $message = "Changes were not saved.";
+            $type = "warning";
+        }
+
+        $response = array(
+            "success"   => $success,
+            "message"   => $message,
+            "type"      => $type,
+        );
+        response_json($response);
+    }
+
     //end of users list
 
     //start of user logs

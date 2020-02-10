@@ -39,7 +39,6 @@
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-xs" @click="editUserDetails(index)"><i class="fas fa-edit"></i></i></button>
-                                        <!-- <button type="button" class="btn btn-primary btn-xs" data-target="#editUserDetailsModal" data-toggle="modal" @click="editUserDetails(index)"><i class="fas fa-edit"></i></i></button> -->
                                         <button type="button" class="btn btn-warning btn-xs"><i class="fas fa-lock-open"></i></i></button>
                                         <button type="button" class="btn btn-danger btn-xs"><i class="fas fa-archive"></i></i></button>
                                     </td>
@@ -109,7 +108,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" @click="saveWalkinChanges()">Save Changes</button>
+                <button type="submit" class="btn btn-primary" @click="saveUserDetailChanges()">Save Changes</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>

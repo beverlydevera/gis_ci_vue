@@ -45,8 +45,29 @@ var users = new Vue({
             axios.post(urls, datas)
                 .then(function (e) {
                     swal.close();
-                    users.userdetails=e.data.data;   
+                    users.userdetails=e.data.data;
                     $('#editUserDetailsModal').modal('show');
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        saveUserDetailChanges(){
+            var datas = {
+                userdetails: this.userdetails
+            };
+            var urls = window.App.baseUrl + "users/saveUserDetails";
+            showloading();
+            axios.post(urls, datas)
+                .then(function (e) {
+                    Swal.close();
+                    Swal.fire({
+                        type: e.data.type,
+                        title: e.data.message
+                    }).then(function (e) {
+                        $('#editUserDetailsModal').modal('hide');
+                        users.getUsers();
+                    })
                 })
                 .catch(function (error) {
                     console.log(error)
