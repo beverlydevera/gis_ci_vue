@@ -17,18 +17,18 @@
     <thead>
         <tr>
             <th width="3%">#</th>
+            <th>Date</th>
             <th>Competition Title</th>
             <th>Competion Type</th>
-            <th>Awards Received</th>
             <th>Action</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody v-for="(list,index) in competitionslist">
         <tr>
-            <td>1</td>
-            <td>Title 1</td>
-            <td>Type 1</td>
-            <td>Awards 1</td>
+            <td>{{index+1}}</td>
+            <td>{{list.comp_date}}</td>
+            <td>{{list.comp_title}}</td>
+            <td>{{list.comp_type}}</td>
             <td>
                 <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#edit"><i class="fas fa-edit"></i></button>
             </td>
@@ -51,19 +51,37 @@
                     <table class="table table-bordered table-responsive-sm table-sm billing-table">
                         <tr>
                             <th width="30%">Competition Title:</th>
-                            <th><input type="text" class="form-control smallerinput" required></th>
+                            <th><input type="text" v-model="newstudentCompetition.comp_title" class="form-control smallerinput" required></th>
                         </tr>
                         <tr>
                             <th width="30%">Competition Type:</th>
-                            <th><input type="text" class="form-control smallerinput" required></th>
+                            <th><input type="text" v-model="newstudentCompetition.comp_type" class="form-control smallerinput" required></th>
+                        </tr>
+                        <tr>
+                            <th width="30%">Competition Date:</th>
+                            <th><input type="date" v-model="newstudentCompetition.comp_date" class="form-control smallerinput" required max="<?=date("Y-m-d")?>"></th>
+                        </tr>
+                        <tr>
+                            <th width="30%">Competition Venue:</th>
+                            <th><input type="text" v-model="newstudentCompetition.comp_venue" class="form-control smallerinput" required></th>
                         </tr>
                         <tr>
                             <th width="30%">Awards Received:</th>
-                            <th><input type="text" class="form-control smallerinput"></th>
+                            <th>
+                                <div class="row" v-for="(list,index) in newstudentCompetition.comp_awards">
+                                    <div class="col-md-11">
+                                        <input type="text" v-model="list.award_name" class="form-control smallerinput">
+                                    </div>
+                                    <div class="col-md-1" style="padding:0;">
+                                        <button v-if="index==0" type="button" class="btn btn-primary btn-xs" @click="addAward_item('add')"><i class="fas fa-plus"></i></button>
+                                        <button v-else-if="index>0" type="button" class="btn btn-danger btn-xs" @click="cancelAward_item('add',index)"><i class="fas fa-minus"></i></button>
+                                    </div>
+                                </div>
+                            </th>
                         </tr>
                         <tr>
                             <th width="30%">Remarks:</th>
-                            <th><input type="text" class="form-control smallerinput"></th>
+                            <th><input type="text" v-model="newstudentCompetition.remarks" class="form-control smallerinput"></th>
                         </tr>
                         <tr>
                             <th width="30%">Upload Photos:</th>
@@ -75,7 +93,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save event</button>
+                <button type="submit" class="btn btn-primary" @click="submitNewStudentCompetition()">Save competition</button>
             </div>
         </div>
     </div>

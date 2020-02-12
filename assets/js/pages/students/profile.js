@@ -33,7 +33,14 @@ var profile = new Vue({
         package_select: {
             packagetype: "Regular"
         },
-        studentattendance: []
+        studentattendance: [],
+        //third tab
+        newstudentCompetition: {
+            comp_awards: [{
+                award_name: ""
+            }]
+        },
+        competitionslist: []
     },
     methods: {
         calculate_age() {
@@ -51,6 +58,8 @@ var profile = new Vue({
             axios.post(urls, datas)
                 .then(function (e) {
                     dat = e.data.data;
+
+                    profile.competitionslist = dat.competitionslist;
 
                     if(dat.studentpackages.regular!=null){
                         profile.studentpackages.regular = dat.studentpackages.regular;
@@ -218,7 +227,56 @@ var profile = new Vue({
                 .catch(function (error) {
                     console.log(error)
                 });
-        }
+        },
+        submitNewStudentCompetition(){
+            var datas = {
+                competition_info: this.newstudentCompetition,
+                student_id: this.student_id
+            }
+            var urls = window.App.baseUrl + "students/saveStudentCompetition";
+            showloading();
+            axios.post(urls, datas)
+                .then(function (e) {
+                    Swal.close();
+                    Swal.fire({
+                        type: e.data.type,
+                        title: e.data.message
+                    })
+                    if(e.data.success){
+                        profile.newstudentCompetition.studcomp_id = e.data.data.studcomp_id;
+                        if(profile.competitionslist!=null){ profile.competitionslist.push(profile.newstudentCompetition); }
+                        else{ profile.competitionslist = [profile.newstudentCompetition]; }
+                    }
+                    profile.newstudentCompetition = {};
+                    $('#addNewCompetition').modal('hide');
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        addAward_item(action){
+            if(action=='add'){
+                if(this.newstudentCompetition.comp_awards!=null){
+                    var awards = {
+                        award_name: "",
+                    };
+                    this.newstudentCompetition.comp_awards.push(awards);
+                }else{
+                    this.newstudentCompetition.comp_awards = [{
+                        award_name: "",
+                    }];
+                }
+            }else if(action=="edit"){
+                //aaa
+            }
+        },        
+        cancelAward_item(action,index){
+            if(action=="add"){
+                this.newstudentCompetition.comp_awards.splice(index, 1);
+            }else if(action=="edit"){
+                //aaa
+            }
+        },
     }, mounted: function () {
         this.getStudentProfile();
     },

@@ -100,6 +100,9 @@ class Students extends CI_Controller {
 
         $studentmembership->membership_type = $membershiptype;
 
+        $condition = [ "student_id" => $student_id ];
+        $competitionslist = $this->Main->getDataOneJoin("*","tbl_studentcompetitions","",$condition,"","","","");
+
         if(!empty($studentinfo)){
             $response = array(
                 "success"   => true,
@@ -110,7 +113,8 @@ class Students extends CI_Controller {
                         "regular"       => $studentpackages_regular,
                         "unlimited"     => $studentpackages_unlimited,
                         "summerpromo"   => $studentpackages_summerpromo,
-                    ]
+                    ],
+                    'competitionslist'  => $competitionslist
                 ],
             );
         }else{
@@ -182,6 +186,40 @@ class Students extends CI_Controller {
             $response = array(
                 "success"   => false,
                 "message"   => "Error Loading Data",
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
+    public function saveStudentCompetition()
+    {
+        $data = jsondata();
+        $result = "";
+        
+        if(!empty($data)){
+            $student_id = $data['student_id'];
+            $compinfo = $data['competition_info'];
+            $compinfo["comp_awards"] = json_encode($compinfo["comp_awards"]);
+            $compinfo["student_id"] = $student_id;
+
+            $result = $this->Main->insert("tbl_studentcompetitions",$compinfo,true);
+        }
+
+        if(!empty($result)){
+            $response = array(
+                "success"   => true,
+                "type"      => "success",
+                "message"   => "Competition Information was saved successfully.",
+                "data"      => [
+                    "studcomp_id" => $result['lastid']
+                ]
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "type"      => "warning",
+                "message"   => "Competition Information was not saved.",
                 "data"      => ""
             );
         }
