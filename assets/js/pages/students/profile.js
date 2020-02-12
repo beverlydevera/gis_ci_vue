@@ -292,7 +292,7 @@ var profile = new Vue({
                 this.competitionDetails.comp_awards.splice(index, 1);
             }
         },
-        getCompetitionDetails(studcomp_id){
+        getCompetitionDetails(studcomp_id,index){
             var datas = {
                 studcomp_id: studcomp_id
             }
@@ -303,6 +303,7 @@ var profile = new Vue({
                     Swal.close();
                     profile.competitionDetails = e.data.data.competitiondetails;
                     profile.competitionDetails.comp_awards = JSON.parse(profile.competitionDetails.comp_awards);
+                    profile.competitionDetails.complistindex = index;
                     $('#editCompetitionModal').modal('show');
                 })
                 .catch(function (error) {
@@ -310,7 +311,33 @@ var profile = new Vue({
                 });
         },
         submitCompetitionDataChanges(){
-
+            var datas = {
+                competitiondata: this.competitionDetails
+            }
+            var urls = window.App.baseUrl + "students/saveCompetitionDataChanges";
+            showloading();
+            axios.post(urls, datas)
+                .then(function (e) {
+                    Swal.close();
+                    Swal.fire({
+                        type: e.data.type,
+                        title: e.data.message
+                    })
+                    var index = profile.competitionDetails.complistindex;
+                    profile.competitionslist[index].comp_date = profile.competitionDetails.comp_date;
+                    profile.competitionslist[index].comp_title = profile.competitionDetails.comp_title;
+                    profile.competitionslist[index].comp_type = profile.competitionDetails.comp_type;
+                    
+                    profile.competitionDetails = {
+                        comp_awards: [{
+                            award_name: ""
+                        }]
+                    };
+                    $('#editCompetitionModal').modal('hide');
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
         }
     }, mounted: function () {
         this.getStudentProfile();

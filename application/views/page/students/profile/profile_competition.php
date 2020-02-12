@@ -19,7 +19,7 @@
             <th width="3%">#</th>
             <th>Date</th>
             <th>Competition Title</th>
-            <th>Competion Type</th>
+            <th>Competition Type</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -30,7 +30,7 @@
             <td>{{list.comp_title}}</td>
             <td>{{list.comp_type}}</td>
             <td>
-                <button type="button" class="btn btn-primary btn-xs" @click="getCompetitionDetails(list.studcomp_id)"><i class="fas fa-edit"></i></button>
+                <button type="button" class="btn btn-primary btn-xs" @click="getCompetitionDetails(list.studcomp_id,index)"><i class="fas fa-edit"></i></button>
             </td>
         </tr>
     </tbody>

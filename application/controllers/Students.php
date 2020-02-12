@@ -254,6 +254,35 @@ class Students extends CI_Controller {
         }
         response_json($response);
     }
+
+    public function saveCompetitionDataChanges()
+    {
+        $data = jsondata();
+
+        if(!empty($data)){
+            $dataupdate = $data['competitiondata'];
+            $studcomp_id = $dataupdate['studcomp_id'];
+            unset($dataupdate['studcomp_id']);
+            unset($dataupdate['complistindex']);
+            $dataupdate['comp_awards'] = json_encode($dataupdate['comp_awards']);
+
+            $result = $this->Main->update("tbl_studentcompetitions",['studcomp_id'=>$studcomp_id],$dataupdate);
+
+        
+            $response = array(
+                "success"   => true,
+                "message"   => "Competition Data changes were saved successfully.",
+                "data"      => $result
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "message"   => "Competition Data changes were not saved.",
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
     //end of profile
 
     //enrollment functions
