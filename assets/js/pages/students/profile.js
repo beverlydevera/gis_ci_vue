@@ -6,6 +6,7 @@ var profile = new Vue({
         readonly_everything: true,
         disabled_everything: true,
         student_id:$('#student_id').val(),
+        //first tab
         studentinfo:{
             telephoneno: "",
             religion: "",
@@ -43,6 +44,7 @@ var profile = new Vue({
         competitionslist: []
     },
     methods: {
+        //first tab
         calculate_age() {
             var dob = this.studentinfo.birthdate;
             var dob = dob.split("-");
@@ -178,6 +180,7 @@ var profile = new Vue({
                     console.log(error)
                 });
         },
+        //second tab
         changePackagetype(){
             var packagetype = this.package_select.packagetype;
 
@@ -228,6 +231,7 @@ var profile = new Vue({
                     console.log(error)
                 });
         },
+        //third tab
         submitNewStudentCompetition(){
             var datas = {
                 competition_info: this.newstudentCompetition,
@@ -247,7 +251,11 @@ var profile = new Vue({
                         if(profile.competitionslist!=null){ profile.competitionslist.push(profile.newstudentCompetition); }
                         else{ profile.competitionslist = [profile.newstudentCompetition]; }
                     }
-                    profile.newstudentCompetition = {};
+                    profile.newstudentCompetition = {
+                        comp_awards: [{
+                            award_name: ""
+                        }]
+                    };
                     $('#addNewCompetition').modal('hide');
                 })
                 .catch(function (error) {
