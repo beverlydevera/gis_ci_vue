@@ -11,94 +11,6 @@ class Students extends CI_Controller {
         date_default_timezone_set("Asia/Manila");
         checkLogin();
 	}
-	
-    public function index()
-    {
-        $data['title'] = "Students";
-        $data['vueid'] = "students_page";
-        $data['vfile'] = "page/students/index";
-        $data['js'] = array('pages/students/index.js');
-        $this->load->view('layout/main', $data);
-    }
-    
-    public function getStudents()
-    {
-        $students = $this->student->getStudents("*","tbl_students","","","");
-        
-        if(!empty($students)){
-            $response = array(
-                "success"   => true,
-                "data"      => $students
-            );
-        }else{
-            $response = array(
-                "success"   => false,
-                "data"      => ""
-            );
-        }
-        response_json($response);
-    }
-
-    public function profile($string = "")
-    {
-        $string = explode("-", $string);
-        $student_id = end($string);
-        $data['student_id'] = $student_id;
-
-        $data['title'] = "Students Profile";
-        $data['vueid'] = "studentprofile_page";
-        $data['vfile'] = "page/students/profile";
-        $data['js'] = array('pages/students/profile.js');
-        $this->load->view('layout/main', $data);
-    }
-
-    public function getStudentProfile()
-    {
-        $student_id = $this->input->post('student_id');
-        $studentinfo = $this->student->getStudents("*","tbl_students",["student_id"=>$student_id],"","row");
-        $studentmembership = $this->student->getStudents("*","tbl_studentmembership",["student_id"=>$student_id],["limit"=>1,"offset"=>0],"row");        
-        $studentclasses = $this->student->getStudentClasses("*",["student_id"=>$student_id, "deleted"=>0],"","");
-        
-        if(!empty($studentinfo)){
-            $response = array(
-                "success"   => true,
-                "data"      => [
-                    'studentprofile'    => $studentinfo,
-                    'studentclasses'    => $studentclasses,
-                    'studentmembership' => $studentmembership
-                ],
-            );
-        }else{
-            $response = array(
-                "success"   => false,
-                "data"      => ""
-            );
-        }
-        response_json($response);
-    }
-
-    public function UpdateProfile()
-    {
-
-        $datas = $this->input->post();
-        $student_id = $this->input->post('student_id');
-        $result = $this->Main->update("tbl_students",['student_id'=>$student_id],$datas);
-
-        if(!empty($result)){
-            $response = array(
-                "success"   => true,
-                "message"   => "Profile changes saved successfully.",
-                "data"      => $result
-            );
-        }else{
-            $response = array(
-                "success"   => false,
-                "message"   => "Profile changes were not saved.",
-                "data"      => ""
-            );
-        }
-        response_json($response);
-    }
 
     public function getClassPackage()
     {
@@ -226,11 +138,115 @@ class Students extends CI_Controller {
     //startnew here
 
     //index functions
-
+    public function index()
+    {
+        $data['title'] = "Students";
+        $data['vueid'] = "students_page";
+        $data['vfile'] = "page/students/index";
+        $data['js'] = array('pages/students/index.js');
+        $this->load->view('layout/main', $data);
+    }
+    
+    public function getStudents()
+    {
+        $students = $this->student->getStudents("*","tbl_students","","","");
+        
+        if(!empty($students)){
+            $response = array(
+                "success"   => true,
+                "data"      => $students
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
     //end of index
 
-    //enrollment functions
+    //profile function
+    public function profile($string = "")
+    {
+        $string = explode("-", $string);
+        $student_id = end($string);
+        $data['student_id'] = $student_id;
 
+        $data['title'] = "Students Profile";
+        $data['vueid'] = "studentprofile_page";
+        $data['vfile'] = "page/students/profile";
+        $data['js'] = array('pages/students/profile.js');
+        $this->load->view('layout/main', $data);
+    }
+
+    public function getStudentProfile()
+    {
+        $student_id = $this->input->post('student_id');
+        $studentinfo = $this->student->getStudents("*","tbl_students",["student_id"=>$student_id],"","row");
+        $studentmembership = $this->student->getStudents("*","tbl_studentmembership",["student_id"=>$student_id],["limit"=>1,"offset"=>0],"row");        
+        // $studentclasses = $this->student->getStudentClasses("*",["student_id"=>$student_id],"","");
+        
+        if(!empty($studentmembership)){
+            $membershiptype = $studentmembership->membership_type;
+            if(strlen($membershiptype)>1){
+                $memberships = explode("/",$membershiptype);
+                $membershiptype = "";
+                foreach($memberships as $mk => $mv){
+                    $membershipname = $this->Main->getDataOneJoin("*","tbl_membership","",["membership_id"=>$mv],"","","","row")->membership_name;
+                    $membershiptype .= $membershipname . "/";
+                }
+                $membershiptype = substr($membershiptype, 0, -1);
+            }else{
+                $membershiptype = $this->Main->getDataOneJoin("*","tbl_membership","",["membership_id"=>$membershiptype],"","","","row")->membership_name;
+            }
+        }
+
+        $studentmembership->membership_type = $membershiptype;
+
+        if(!empty($studentinfo)){
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    'studentprofile'    => $studentinfo,
+                    'studentmembership' => $studentmembership,
+                    // 'studentclasses'    => $studentclasses
+                ],
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
+    public function UpdateProfile()
+    {
+
+        $datas = $this->input->post();
+        $student_id = $this->input->post('student_id');
+        $result = $this->Main->update("tbl_students",['student_id'=>$student_id],$datas);
+
+        if(!empty($result)){
+            $response = array(
+                "success"   => true,
+                "message"   => "Profile changes saved successfully.",
+                "data"      => $result
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "message"   => "Profile changes were not saved.",
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+    //end of profile
+
+    //enrollment functions
     public function newStudentRegistration()
     {
         $data['title'] = "Enroll Student";
@@ -403,11 +419,6 @@ class Students extends CI_Controller {
         }
         response_json($response);
     }
-
     //end of enrollment
-
-    //profile function
-
-    //end of profile
 
 }

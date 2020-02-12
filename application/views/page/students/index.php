@@ -43,7 +43,6 @@
               <th>Names (Lastname, Firstname, Middlename)</th>
               <th>Sex</th>
               <th>Birthdate</th>
-              <th>Branch</th>
               <th>Membership</th>
               <th>Rank/Belt</th>
               <th>Status</th>
@@ -57,7 +56,6 @@
               <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
               <td>{{list.sex}}</td>
               <td>{{list.birthdate}}</td>
-              <td>Albergo</td>
               <td>Regular</td>
               <td>7th Yellow</td>
               <td>

@@ -125,7 +125,7 @@ var profile = new Vue({
             axios.post(urls, datas)
                 .then(function (e) {
                     dat = e.data.data;
-                    profile.studentclasses=dat.studentclasses;
+                    // profile.studentclasses=dat.studentclasses;
                     profile.studentinfo=dat.studentprofile;
                     profile.studentmembership=dat.studentmembership;
                     if(dat.studentmembership!=null){
