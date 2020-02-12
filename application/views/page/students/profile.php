@@ -19,16 +19,11 @@
                                 <a>{{studentinfo.reference_id}}</a>
                             </li>
                             <li class="list-group-item">
-                                <b>Branch: </b><br>
-                                <!-- <button class="btn btn-success btn-xs float-right" data-toggle="modal" data-target="#transferBranchModal"><i class="fas fa-edit"></i></button> -->
-                                <a >Albergo</a>
-                            </li>
-                            <li class="list-group-item">
                                 <b>Membership/s: </b><span class="btn btn-success btn-xs float-right" @click="changeMembership(studentmembership.studmem_id)"><i class="fas fa-edit"></i></span><br>
                                 <a v-for="(list,index) in derivedinfo.studentmembership">
                                     <span class="badge bg-success">{{list}}</span> <br/>
                                 </a>
-                                • With Insurance                              
+                                <template v-if="studentmembership.insurance.avail">• With Insurance</template>
                             </li>
                             <li class="list-group-item">
                                 <b>Current Rank: </b> <br>

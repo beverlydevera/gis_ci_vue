@@ -70,11 +70,13 @@ class Students extends CI_Controller {
             "p.packagetype"   => "Regular"
         ];
         $studentpackages_regular = $this->Main->getDataOneJoin("*","tbl_studentpackages sp",$join,$condition,"","","","");
+
         $condition = [
             "sp.student_id" => $student_id,
             "p.packagetype"   => "Unlimited"
         ];
         $studentpackages_unlimited = $this->Main->getDataOneJoin("*","tbl_studentpackages sp",$join,$condition,"","","","");
+        
         $condition = [
             "sp.student_id" => $student_id,
             "p.packagetype"   => "Summer Promo"
@@ -219,11 +221,7 @@ class Students extends CI_Controller {
 
             foreach($studentpackages as $spkey => $spval){
                 $studentpackages[$spkey]['invoice_id'] = $invoice_id;
-                if($spval['package_type']=="Unlimited"){
-                    $studentpackages[$spkey]['details'] = $spval['details'];
-                }else{
-                    $studentpackages[$spkey]['details'] = json_encode($spval['details']);
-                }
+                $studentpackages[$spkey]['details'] = json_encode($spval['details']);
                 unset($studentpackages[$spkey]['package_type']);
                 unset($studentpackages[$spkey]['price_rate']);
             }

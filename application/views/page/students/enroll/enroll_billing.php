@@ -44,7 +44,7 @@
                         </td>
                         <td class="billing-desc" v-else-if="list.packagetype=='Unlimited'">
                             Package Type: <u>{{list.packagetype}}</u> <br>
-                            Details: <u>{{list.details}}</u>
+                            Details: <u>{{list.details.detail}}</u>
                         </td>
                         <td class="billing-desc" v-else-if="list.packagetype=='Summer Promo'">
                             Package Type: <u>{{list.packagetype}}</u><br>

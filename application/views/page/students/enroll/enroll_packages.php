@@ -182,7 +182,7 @@
                             Sessions: {{list.details.sessions}}
                         </td>
                         <td v-else-if="list.package_type=='Unlimited'">
-                            {{list.details}}
+                            {{list.details.detail}}
                         </td>
                         <td v-else-if="list.package_type=='Summer Promo'">
                             <table class="table table-bordered table-responsive-sm table-sm">

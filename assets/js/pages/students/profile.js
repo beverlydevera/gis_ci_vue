@@ -11,7 +11,11 @@ var profile = new Vue({
             religion: "",
             nickname: "",
         },
-        studentmembership: {},
+        studentmembership: {
+            insurance: {
+                avail: 0
+            }
+        },
         derivedinfo:{
             studentage: 0,
             schoolyear: "",
@@ -59,6 +63,12 @@ var profile = new Vue({
                         profile.studentpackages.unlimited = dat.studentpackages.unlimited;
                         profile.studentpackages.unlimited.forEach(e => {
                             e.details = JSON.parse(e.details);
+                            e.date_from = formatDate(e.date_added);
+                            
+                            var d = new Date(e.date_added);
+                            var date_to = new Date(d.getFullYear(), (d.getMonth() + 1), d.getDate());
+                            date_to.setMonth(d.getMonth()+1);
+                            e.date_to = formatDate(date_to);
                         })
                     }
 
@@ -73,6 +83,7 @@ var profile = new Vue({
                     profile.studentinfo=dat.studentprofile;
 
                     profile.studentmembership=dat.studentmembership;
+                    profile.studentmembership.insurance = JSON.parse(dat.studentmembership.insurance);
                     if(dat.studentmembership!=null){
                         if(dat.studentmembership.membership_type.includes("/")){
                             profile.derivedinfo.studentmembership[0] = dat.studentmembership.membership_type.split("/")['0'];

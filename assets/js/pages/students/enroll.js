@@ -376,7 +376,10 @@ var enroll = new Vue({
                     "package_id": this.packagelist[packageindex].package_id,
                     "package_type": this.packagelist[packageindex].packagetype,
                     "price_rate": this.packagelist[packageindex].pricerate,
-                    "details": this.packagelist[packageindex].packagedetails
+                    "details": {
+                        "detail": this.packagelist[packageindex].packagedetails,
+                        "sessions_attended": 0
+                    }
                 };
             }else if(packagetype=="summer promo"){
                 var selected = {
@@ -470,7 +473,7 @@ var enroll = new Vue({
                                 studpack_id: e.studpack_id,
                                 year: e.year,
                                 package_id: e.package_id,
-                                details: e.details,
+                                details: JSON.parse(e.details),
                                 packagedetails: e.packagedetails,
                                 packagetype: e.packagetype,
                                 pricerate: e.pricerate
