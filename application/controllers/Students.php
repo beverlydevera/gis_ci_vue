@@ -225,6 +225,35 @@ class Students extends CI_Controller {
         }
         response_json($response);
     }
+
+    public function getCompetitionDetails()
+    {
+        $data = jsondata();
+
+        if(!empty($data)){
+
+            $studcomp_id = $data['studcomp_id'];
+
+            $condition = [
+                "studcomp_id"   => $studcomp_id
+            ];
+            $competitiondetails = $this->Main->getDataOneJoin("*","tbl_studentcompetitions","",$condition,"","","","row");
+
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    "competitiondetails" => $competitiondetails
+                ]
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "message"   => "Error Loading Data",
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
     //end of profile
 
     //enrollment functions

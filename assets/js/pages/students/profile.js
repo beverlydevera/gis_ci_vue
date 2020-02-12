@@ -41,6 +41,11 @@ var profile = new Vue({
                 award_name: ""
             }]
         },
+        competitionDetails: {
+            comp_awards: [{
+                award_name: ""
+            }]
+        },
         competitionslist: []
     },
     methods: {
@@ -256,35 +261,57 @@ var profile = new Vue({
                             award_name: ""
                         }]
                     };
-                    $('#addNewCompetition').modal('hide');
+                    $('#addNewCompetitionModal').modal('hide');
                 })
                 .catch(function (error) {
                     console.log(error)
                 });
         },
         addAward_item(action){
+            var awards = {
+                award_name: "",
+            };
             if(action=='add'){
-                if(this.newstudentCompetition.comp_awards!=null){
-                    var awards = {
-                        award_name: "",
-                    };
+                if(this.newstudentCompetition.comp_awards!=null){                    
                     this.newstudentCompetition.comp_awards.push(awards);
                 }else{
-                    this.newstudentCompetition.comp_awards = [{
-                        award_name: "",
-                    }];
+                    this.newstudentCompetition.comp_awards = [awards];
                 }
             }else if(action=="edit"){
-                //aaa
+                if(this.competitionDetails.comp_awards!=null){                    
+                    this.competitionDetails.comp_awards.push(awards);
+                }else{
+                    this.competitionDetails.comp_awards = [awards];
+                }
             }
         },        
         cancelAward_item(action,index){
             if(action=="add"){
                 this.newstudentCompetition.comp_awards.splice(index, 1);
             }else if(action=="edit"){
-                //aaa
+                this.competitionDetails.comp_awards.splice(index, 1);
             }
         },
+        getCompetitionDetails(studcomp_id){
+            var datas = {
+                studcomp_id: studcomp_id
+            }
+            var urls = window.App.baseUrl + "students/getCompetitionDetails";
+            showloading("Loading Data");
+            axios.post(urls, datas)
+                .then(function (e) {
+                    Swal.close();
+                    profile.competitionDetails = e.data.data.competitiondetails;
+                    profile.competitionDetails.comp_awards = JSON.parse(profile.competitionDetails.comp_awards);
+                    $('#editCompetitionModal').modal('show');
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        submitCompetitionDataChanges(){
+
+        }
     }, mounted: function () {
         this.getStudentProfile();
     },
