@@ -31,7 +31,7 @@
                     <td>{{list.details.sched_day}} / {{list.details.sched_time}}</td>
                     <td>{{list.packagedetails.sessions}}</td>
                     <td>{{list.details.sessions-list.details.sessions_attended}}</td>
-                    <td><button type="button" class="btn btn-primary btn-xs">View</button></td>
+                    <td><button type="button" class="btn btn-primary btn-xs" @click="viewAttendance(list.details.schedule_id,'regular')">View</button></td>
                 </tr>
             </tbody>
         </table>
@@ -56,27 +56,7 @@
                     <td>{{list.date_from}}</td>
                     <td>{{list.date_to}}</td>
                     <td>{{list.details.sessions_attended}}</td>
-                    <td><button type="button" class="btn btn-primary btn-xs">View</button></td>
-                </tr>
-            </tbody>
-        </table>
-
-        
-        <table class="table table-bordered table-responsive-sm table-sm">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Date</th>
-                    <th>Class</th>
-                    <th>Schedule</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>January 21, 2020</td>
-                    <td>All Levels Regular Class</td>
-                    <td>Tuesday / 10:30-11:00</td>
+                    <td><button type="button" class="btn btn-primary btn-xs" @click="viewAttendance(list.details.schedule_id,'unlimited')">View</button></td>
                 </tr>
             </tbody>
         </table>
@@ -86,5 +66,86 @@
 <div class="row" id="package_summerpromo" style="display:none;">
     <div class="col-md-12">
         summer promo package attendance
+    </div>
+</div>
+
+<div class="modal fade" id="regular_attendanceModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">View Student Attendance</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                    <table class="table table-bordered table-responsive-sm table-sm billing-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>Present/Absent</th>
+                            </tr>
+                        </thead>
+                        <tbody v-for="(list,index) in studentattendance">
+                            <tr>
+                                <td>{{index}}</td>
+                                <td>{{list.schedule_date}}</td>
+                                <td>
+                                    <span v-if="list.status==1" class="badge bg-success">PRESENT</span>
+                                    <span v-else-if="list.status==2" class="badge bg-danger">PRESENT</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="unlimited_attendanceModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">View Student Attendance</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                    <table class="table table-bordered table-responsive-sm table-sm billing-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>Class</th>
+                                <th>Schedule</th>
+                            </tr>
+                        </thead>
+                        <tbody v-for="(list,index) in studentattendance">
+                            <tr>
+                                <td>{{index}}</td>
+                                <td>{{list.schedule_date}}</td>
+                                <td>{{list.class_name}}</td>
+                                <td>{{list.sched_day}} / {{list.sched_time}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>

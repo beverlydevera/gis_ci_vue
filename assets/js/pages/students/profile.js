@@ -32,7 +32,8 @@ var profile = new Vue({
         },
         package_select: {
             packagetype: "Regular"
-        }
+        },
+        studentattendance: []
     },
     methods: {
         calculate_age() {
@@ -193,6 +194,30 @@ var profile = new Vue({
                 $('#package_summerpromo_add').css({'display': '',});
                 $('#package_summerpromo').css({'display': '',});
             }
+        },
+        viewAttendance(schedule_id,type){
+            var datas = {
+                schedule_id: schedule_id,
+                student_id: this.student_id
+            }
+            var urls = window.App.baseUrl + "students/getStudentAttendance";
+            showloading();
+            axios.post(urls, datas)
+                .then(function (e) {
+                    Swal.close();
+                    if(e.data.success){
+                        profile.studentattendance = e.data.data.studentattendance;
+                        $('#'+type+'_attendanceModal').modal('show');
+                    }else{
+                        Toast.fire({
+                            type: "warning",
+                            title: e.data.message
+                        })
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
         }
     }, mounted: function () {
         this.getStudentProfile();

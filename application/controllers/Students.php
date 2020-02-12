@@ -124,7 +124,6 @@ class Students extends CI_Controller {
 
     public function UpdateProfile()
     {
-
         $datas = $this->input->post();
         $student_id = $this->input->post('student_id');
         $result = $this->Main->update("tbl_students",['student_id'=>$student_id],$datas);
@@ -139,6 +138,50 @@ class Students extends CI_Controller {
             $response = array(
                 "success"   => false,
                 "message"   => "Profile changes were not saved.",
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
+    public function getStudentAttendance()
+    {
+        $data = jsondata();
+
+        if(!empty($data)){
+
+            $schedule_id = $data['schedule_id'];
+            $student_id = $data['student_id'];
+
+            $join = [
+                "table"     => "tbl_attendance a",
+                "key"       => "sa.attendance_id=a.attendance_id",
+                "jointype"  => "inner"
+            ];
+            $condition = [
+                "schedule_id"   => $schedule_id,
+                "student_id"    => $student_id
+            ];
+            $studentattendance = $this->Main->getDataOneJoin("*","tbl_studentattendance sa",$join,$condition,"","","","");
+
+            if(!empty($studentattendance)){
+                $response = array(
+                    "success"   => true,
+                    "data"      => [
+                        "studentattendance" => $studentattendance
+                    ]
+                );
+            }else{
+                $response = array(
+                    "success"   => false,
+                    "message"   => "No existing attendance yet.",
+                    "data"      => ""
+                );
+            }
+        }else{
+            $response = array(
+                "success"   => false,
+                "message"   => "Error Loading Data",
                 "data"      => ""
             );
         }
