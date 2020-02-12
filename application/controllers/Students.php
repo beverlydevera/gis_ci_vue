@@ -11,132 +11,6 @@ class Students extends CI_Controller {
         date_default_timezone_set("Asia/Manila");
         checkLogin();
 	}
-
-    public function getClassPackage()
-    {
-        $class_id = $this->input->post('class_id');
-        $classpackages = $this->student->getClassPackages("*","tbl_packages",['tbl_classes.class_id'=>$class_id],"","");
-        
-        if(!empty($classpackages)){
-            $response = array(
-                "success"   => true,
-                "data"      => $classpackages
-            );
-        }else{
-            $response = array(
-                "success"   => false,
-                "data"      => ""
-            );
-        }
-        response_json($response);
-    }
-
-    public function getStudentClassDetails()
-    {
-        $student_id = $this->input->post('student_id');
-        $schedule_id = $this->input->post('schedule_id');
-        $studpack_id = $this->input->post('studpack_id');
-        $studentclassdetails = $this->student->getStudentClasses("*",['studpack_id'=>$studpack_id, 'deleted'=>0],"","row");
-        $studentattendance = $this->student->getStudentAttendance("*",['a.schedule_id'=>$schedule_id, 'sp.studpack_id'=>$studpack_id],"","");
-        $studatt = [];
-
-        if(!empty($studentattendance)){
-            foreach($studentattendance as $stk => $stv){
-                $attinfo = json_decode($stv->attendance);
-                foreach($attinfo as $atk => $atv){
-                    if($atv->student_id==$student_id){
-                        $arr = [
-                            'schedule_date' => $stv->schedule_date,
-                            'status' => $atv->status,
-                        ];
-                    }
-                }
-                array_push($studatt,$arr);
-            }
-        }
-
-        if(!empty($studentclassdetails)){
-            $response = array(
-                "success"   => true,
-                "data"      => [
-                    'studentclassdetails'   => $studentclassdetails,
-                    'studentattendance'     => $studatt,
-                ]
-            );
-        }else{
-            $response = array(
-                "success"   => false,
-                "data"      => ""
-            );
-        }
-        response_json($response);
-    }
-
-    public function checkPayment()
-    {
-        $package_id = $this->input->post('package_id');
-        $classpackages = $this->student->getClassPackages("pricerate","tbl_packages",['package_id'=>$package_id],"","row");
-
-        if(!empty($classpackages)){
-            $response = array(
-                "success"   => true,
-                "data"      => $classpackages->pricerate
-            );
-        }else{
-            $response = array(
-                "success"   => false,
-                "data"      => ""
-            );
-        }
-        response_json($response);
-    }
-
-    public function enrollToClass()
-    {
-        $data = $this->input->post();
-        $data['date_added'] = date('Y-m-d H:i:s');
-        $result = $this->Main->insert("tbl_studentpackages", $data, true);
-
-        if(!empty($result)){
-            $response = array(
-                "success"   => true,
-                "message"   => "Student enrolled to class successfully.",
-                "data"      => $result
-            );
-        }else{
-            $response = array(
-                "success"   => false,
-                "message"   => "Student enrollment was not saved.",
-                "data"      => ""
-            );
-        }
-        response_json($response);
-    }
-
-    public function deleteStudentClass()
-    {
-        $studpack_id = $this->input->post('studpack_id');
-        //check muna kung may payment history na bago magdelete
-        //kung wala, delete row, kung meron change status
-        // $result = $this->Main->delete("tbl_student_packages", ["studpack_id"=>$studpack_id]);
-        $result = $this->Main->update("tbl_studentpackages", ["studpack_id"=>$studpack_id], ["deleted"=>1]);
-        
-        if(!empty($result)){
-            $response = array(
-                "success"   => true,
-                "message"   => "Student Class Schedule was deleted successfully"
-            );
-        }else{
-            $response = array(
-                "success"   => false,
-                "message"   => "Student Class Schedule was not deleted"
-            );
-        }
-        response_json($response);
-    }
-
-    //startnew here
-
     //index functions
     public function index()
     {
@@ -184,8 +58,28 @@ class Students extends CI_Controller {
     {
         $student_id = $this->input->post('student_id');
         $studentinfo = $this->student->getStudents("*","tbl_students",["student_id"=>$student_id],"","row");
-        $studentmembership = $this->student->getStudents("*","tbl_studentmembership",["student_id"=>$student_id],["limit"=>1,"offset"=>0],"row");        
-        // $studentclasses = $this->student->getStudentClasses("*",["student_id"=>$student_id],"","");
+        $studentmembership = $this->student->getStudents("*","tbl_studentmembership",["student_id"=>$student_id],["limit"=>1,"offset"=>0],"row"); 
+
+        $join = [
+            "table"     => "tbl_packages p",
+            "key"       => "p.package_id=sp.package_id",
+            "jointype"  => "inner"
+        ];
+        $condition = [
+            "sp.student_id" => $student_id,
+            "p.packagetype"   => "Regular"
+        ];
+        $studentpackages_regular = $this->Main->getDataOneJoin("*","tbl_studentpackages sp",$join,$condition,"","","","");
+        $condition = [
+            "sp.student_id" => $student_id,
+            "p.packagetype"   => "Unlimited"
+        ];
+        $studentpackages_unlimited = $this->Main->getDataOneJoin("*","tbl_studentpackages sp",$join,$condition,"","","","");
+        $condition = [
+            "sp.student_id" => $student_id,
+            "p.packagetype"   => "Summer Promo"
+        ];
+        $studentpackages_summerpromo = $this->Main->getDataOneJoin("*","tbl_studentpackages sp",$join,$condition,"","","","");
         
         if(!empty($studentmembership)){
             $membershiptype = $studentmembership->membership_type;
@@ -210,7 +104,11 @@ class Students extends CI_Controller {
                 "data"      => [
                     'studentprofile'    => $studentinfo,
                     'studentmembership' => $studentmembership,
-                    // 'studentclasses'    => $studentclasses
+                    'studentpackages'   => [
+                        "regular"       => $studentpackages_regular,
+                        "unlimited"     => $studentpackages_unlimited,
+                        "summerpromo"   => $studentpackages_summerpromo,
+                    ]
                 ],
             );
         }else{

@@ -20,33 +20,17 @@ var profile = new Vue({
             companyaddress: "",
             studentmembership: {}
         },
-        classschedlist: {},
-        classpackagelist: {},
-        classenroll: {
-            class_id: "",
-            package_id: "",
-            payment: "",
-            amounttopay: "",
+        //second tab
+        studentpackages: {
+            regular: [],
+            unlimited: [],
+            summerpromo: []
         },
-        studentclasses:{},
-        studentclassdetails:{},
-        studentattendance:{}
+        package_select: {
+            packagetype: "Regular"
+        }
     },
     methods: {
-        changeDateFormat(date){
-            var d = new Date(date),
-                month = '' + (d.getMonth() + 1),
-                day = '' + d.getDate(),
-                year = d.getFullYear();
-
-            // alert(month.length);
-            // if (month.length < 2) month = '0' + month;
-            // if (day.length < 2) day = '0' + day;
-
-            month = monthlist[month];
-            var returndateformat = month + " " + day + ", " + year;
-            return returndateformat;
-        },
         calculate_age() {
             var dob = this.studentinfo.birthdate;
             var dob = dob.split("-");
@@ -55,69 +39,6 @@ var profile = new Vue({
             var age_dt = new Date(diff_ms);
             this.derivedinfo.studentage = Math.abs(age_dt.getUTCFullYear() - 1970);
         },
-        getClassPackages(){
-            var datas = { class_id: this.classenroll.class_id };
-            var datas = frmdata(datas);
-            var urls = window.App.baseUrl + "students/getClassPackage";
-            axios.post(urls, datas)
-                .then(function (e) {
-                    if (e.data.success) {
-                       profile.classpackagelist = e.data.data;
-                       profile.disabled_everything = false;
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error)
-                });
-        },
-        checkPayment(){
-            var datas = { package_id: this.classenroll.package_id };
-            var datas = frmdata(datas);
-            var urls = window.App.baseUrl + "students/checkPayment";
-            axios.post(urls, datas)
-                .then(function (e) {
-                    if (e.data.success) {
-                        if(profile.classenroll.payment=="fullPayment"){
-                            profile.classenroll.amounttopay = e.data.data;
-                            profile.readonly_everything = true;
-                        }else{
-                            $("#amountpay").attr({ "max" : e.data.data, });
-                            profile.classenroll.amounttopay = "";
-                            profile.readonly_everything = false;
-                        }
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error)
-                });
-        },
-        getClassScheds(){
-            var urls = window.App.baseUrl + "classes/getClassScheds";
-            axios.post(urls, "")
-                .then(function (e) {
-                    profile.classschedlist=e.data.data;
-                })
-                .catch(function (error) {
-                    console.log(error)
-                });
-        },
-        getStudentClassDetails(studpack_id,schedule_id){
-            var datas = { 
-                student_id: this.student_id,
-                schedule_id: schedule_id,
-                studpack_id: studpack_id
-            };
-            var datas = frmdata(datas);
-            var urls = window.App.baseUrl + "students/getStudentClassDetails";
-            axios.post(urls, datas)
-                .then(function (e) {
-                    profile.studentclassdetails=e.data.data.studentclassdetails;
-                    profile.studentattendance=e.data.data.studentattendance;
-                })
-                .catch(function (error) {
-                    console.log(error)
-                });
-        },
         getStudentProfile(){
             var datas = { student_id:this.student_id };
             var datas = frmdata(datas);
@@ -125,8 +46,32 @@ var profile = new Vue({
             axios.post(urls, datas)
                 .then(function (e) {
                     dat = e.data.data;
-                    // profile.studentclasses=dat.studentclasses;
+
+                    if(dat.studentpackages.regular!=null){
+                        profile.studentpackages.regular = dat.studentpackages.regular;
+                        profile.studentpackages.regular.forEach(e => {
+                            e.details = JSON.parse(e.details);
+                            e.packagedetails = JSON.parse(e.packagedetails);
+                        })
+                    }
+
+                    if(dat.studentpackages.unlimited!=null){
+                        profile.studentpackages.unlimited = dat.studentpackages.unlimited;
+                        profile.studentpackages.unlimited.forEach(e => {
+                            e.details = JSON.parse(e.details);
+                        })
+                    }
+
+                    if(dat.studentpackages.summerpromo!=null){
+                        profile.studentpackages.summerpromo = dat.studentpackages.summerpromo;
+                        profile.studentpackages.summerpromo.forEach(e => {
+                            e.details = JSON.parse(e.details);
+                            e.packagedetails = JSON.parse(e.packagedetails);
+                        })
+                    }
+                    
                     profile.studentinfo=dat.studentprofile;
+
                     profile.studentmembership=dat.studentmembership;
                     if(dat.studentmembership!=null){
                         if(dat.studentmembership.membership_type.includes("/")){
@@ -212,93 +157,31 @@ var profile = new Vue({
                     console.log(error)
                 });
         },
-        enrollToClass(){
-            var datas = { 
-                student_id: this.student_id,
-                package_id: this.classenroll.package_id,
-                payment_options: this.classenroll.payment
-            };
-            var datas = frmdata(datas);
-            var urls = window.App.baseUrl + "students/enrollToClass";
-            axios.post(urls, datas)
-                .then(function (e) {
-                    // console.log(e);
-                    if (e.data.success) {
-                        Toast.fire({
-                            type: "success",
-                            title: e.data.message
-                        })
-                        profile.getStudentProfile();
-                    }else{
-                        Toast.fire({
-                            type: "warning",
-                            title: e.data.message
-                        })
-                    }
-                    profile.classenroll.class_id = "";
-                    profile.classenroll.package_id = "";
-                    profile.classenroll.payment = "";
-                    profile.classenroll.amounttopay = "";
-                    $('#enrollToClassModal').modal('hide');
-                })
-                .catch(function (error) {
-                    console.log(error)
-                });
-        },
-        deleteStudentClass(studpack_id){
-            var datas = { studpack_id: studpack_id };
-            var datas = frmdata(datas);
-            var urls = window.App.baseUrl + "students/deleteStudentClass";
-            axios.post(urls, datas)
-                .then(function (e) {
-                    if (e.data.success) {
-                        Toast.fire({
-                            type: "success",
-                            title: e.data.message
-                        })
-                        profile.getStudentProfile();
-                    }else{
-                        Toast.fire({
-                            type: "warning",
-                            title: e.data.message
-                        })
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error)
-                });
-        },
-        changeMembership(studmem_id){
-            var datas = { 
-                student_id: this.student_id,
-                studmem_id: studmem_id,
-                payment_options: this.classenroll.payment
-            };
-            var datas = frmdata(datas);
-            var urls = window.App.baseUrl + "students/changeMembership";
-            axios.post(urls, datas)
-                .then(function (e) {
-                    // if (e.data.success) {
-                    //     Toast.fire({
-                    //         type: "success",
-                    //         title: e.data.message
-                    //     })
-                    //     profile.getStudentProfile();
-                    // }else{
-                    //     Toast.fire({
-                    //         type: "warning",
-                    //         title: e.data.message
-                    //     })
-                    // }
-                    // profile.classenroll.class_id = "";
-                    // profile.classenroll.package_id = "";
-                    // profile.classenroll.payment = "";
-                    // profile.classenroll.amounttopay = "";
-                    $('#changeMembershipModal').modal('show');
-                })
-                .catch(function (error) {
-                    console.log(error)
-                });
+        changePackagetype(){
+            var packagetype = this.package_select.packagetype;
+
+            if(packagetype=="Regular"){
+                $('#package_regular_add').css({'display': '',});
+                $('#package_regular').css({'display': '',});
+                $('#package_unlimited_add').css({'display': 'none',});
+                $('#package_unlimited').css({'display': 'none',});
+                $('#package_summerpromo_add').css({'display': 'none',});
+                $('#package_summerpromo').css({'display': 'none',});
+            }else if(packagetype=="Unlimited"){
+                $('#package_regular_add').css({'display': 'none',});
+                $('#package_regular').css({'display': 'none',});
+                $('#package_unlimited_add').css({'display': '',});
+                $('#package_unlimited').css({'display': '',});
+                $('#package_summerpromo_add').css({'display': 'none',});
+                $('#package_summerpromo').css({'display': 'none',});                
+            }else if(packagetype=="Summer Promo"){
+                $('#package_regular_add').css({'display': 'none',});
+                $('#package_regular').css({'display': 'none',});
+                $('#package_unlimited_add').css({'display': 'none',});
+                $('#package_unlimited').css({'display': 'none',});
+                $('#package_summerpromo_add').css({'display': '',});
+                $('#package_summerpromo').css({'display': '',});
+            }
         }
     }, mounted: function () {
         this.getStudentProfile();
