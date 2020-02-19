@@ -65,7 +65,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#timeline" data-toggle="tab">
+                            <a class="nav-link" href="#promotion" data-toggle="tab">
                                 <i class="fas fa-trophy"></i>
                                 Promotion
                             </a>
@@ -96,8 +96,8 @@
                             <div class="tab-pane" id="competition">
                                 <?php include('profile/profile_competition.php');?>
                             </div>
-                            <div class="tab-pane" id="timeline">
-                                <?php include('profile/profile_timeline.php');?>
+                            <div class="tab-pane" id="promotion">
+                                <?php include('profile/profile_promotion.php');?>
                             </div>
                             <div class="tab-pane" id="gallery">
                                 <?php include('profile/profile_gallery.php');?>

@@ -41,6 +41,7 @@ class Students extends CI_Controller {
     //end of index
 
     //profile function
+    //first tab
     public function profile($string = "")
     {
         $string = explode("-", $string);
@@ -103,6 +104,9 @@ class Students extends CI_Controller {
         $condition = [ "student_id" => $student_id ];
         $competitionslist = $this->Main->getDataOneJoin("*","tbl_studentcompetitions","",$condition,"","","","");
 
+        $promotionslist = $this->Main->getDataOneJoin("*","tbl_studentpromotions","",$condition,"","","","");
+        $rankslist = $this->Main->getDataOneJoin("*","tbl_ranks","","","","","","");
+
         if(!empty($studentinfo)){
             $response = array(
                 "success"   => true,
@@ -114,7 +118,9 @@ class Students extends CI_Controller {
                         "unlimited"     => $studentpackages_unlimited,
                         "summerpromo"   => $studentpackages_summerpromo,
                     ],
-                    'competitionslist'  => $competitionslist
+                    'competitionslist'  => $competitionslist,
+                    'promotionlist'     => $promotionslist,
+                    'rankslist'         => $rankslist,
                 ],
             );
         }else{
@@ -148,6 +154,7 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
+    //second tab
     public function getStudentAttendance()
     {
         $data = jsondata();
@@ -192,6 +199,7 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
+    //third tab
     public function saveStudentCompetition()
     {
         $data = jsondata();
@@ -283,6 +291,41 @@ class Students extends CI_Controller {
         }
         response_json($response);
     }
+
+    //fourth tab
+    public function saveStudentPromotion()
+    {
+        $data = jsondata();
+        $result = "";
+        
+        if(!empty($data)){
+            $student_id = $data['student_id'];
+            $prominfo = $data['promotion_info'];
+            $prominfo["next_rank"] = json_encode($prominfo["next_rank"]);
+            $prominfo["student_id"] = $student_id;
+
+            $result = $this->Main->insert("tbl_studentpromotions",$prominfo,true);
+        }
+
+        if(!empty($result)){
+            $response = array(
+                "success"   => true,
+                "type"      => "success",
+                "message"   => "Promotion Information was saved successfully.",
+                "data"      => [
+                    "promotion_id" => $result['lastid']
+                ]
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "type"      => "warning",
+                "message"   => "Promotion Information was not saved.",
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
     //end of profile
 
     //enrollment functions
@@ -321,6 +364,20 @@ class Students extends CI_Controller {
                 "invoice_id"      => $invoice_id
             ];
             $insert_membership = $this->Main->insert("tbl_studentmembership",$insert_membership_data,true);
+            
+            $datainsert = [
+                "student_id"    => $studentid,
+                "rank_id"       => 1,
+                "ses_attended"  => 0,
+                "next_rank"     => [
+                        "rank_id"   => 2,
+                        "rank_name" => "Level 1",
+                        "ses_needed"=> 10
+                    ],
+                "status"        => 1,
+                "date_promoted" => date("Y-m-d H:i:s")
+            ];
+            $insert_promotion = $this->Main->insert("tbl_studentpromotions",$datainsert,true);
 
             $response = array(
                 "success"   => true,
@@ -366,6 +423,7 @@ class Students extends CI_Controller {
             }
             
             $insert_studpackages = $this->Main->insertbatch("tbl_studentpackages", $studentpackages);
+
             $response = array(
                 "success"   => true,
                 "message"   => "Student Packages were saved successfully.\nContinue to billing.",

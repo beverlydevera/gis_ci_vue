@@ -15,7 +15,7 @@ var profile = new Vue({
         studentmembership: {
             insurance: {
                 avail: 0
-            }
+            },
         },
         derivedinfo:{
             studentage: 0,
@@ -46,7 +46,26 @@ var profile = new Vue({
                 award_name: ""
             }]
         },
-        competitionslist: []
+        competitionslist: [],
+        //fourth tab
+        rankslist: [],
+        studentRankInfo: {
+            currentRank: {
+                rank_id: 0,
+                rank_name: "",
+                ses_attended: 0
+            },            
+            newstudentPromotion: {
+                next_rank: {
+                    rank_id: "",
+                    rank_title: "",
+                    ses_needed: ""
+                },
+                ses_attended: 0,
+                status: 1,
+            },
+            promotionlist: []
+        },
     },
     methods: {
         //first tab
@@ -67,6 +86,10 @@ var profile = new Vue({
                     dat = e.data.data;
 
                     profile.competitionslist = dat.competitionslist;
+                    profile.rankslist = dat.rankslist;
+
+                    profile.studentRankInfo.promotionlist = dat.promotionlist;
+                    //parse for profile.studentRankInfo.promotionlist.next_rank
 
                     if(dat.studentpackages.regular!=null){
                         profile.studentpackages.regular = dat.studentpackages.regular;
@@ -217,6 +240,7 @@ var profile = new Vue({
                 schedule_id: schedule_id,
                 student_id: this.student_id
             }
+            //iba yung ipapasa pag unlimited yung package
             var urls = window.App.baseUrl + "students/getStudentAttendance";
             showloading();
             axios.post(urls, datas)
@@ -334,6 +358,42 @@ var profile = new Vue({
                         }]
                     };
                     $('#editCompetitionModal').modal('hide');
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        //fourth tab
+        saveStudentPromotion(){
+            var index = this.studentRankInfo.newstudentPromotion.next_rank.rank_id;
+            this.studentRankInfo.newstudentPromotion.next_rank.rank_id = this.rankslist[index].rank_id;
+            this.studentRankInfo.newstudentPromotion.next_rank.rank_title = this.rankslist[index].rank_title;
+            var datas = {
+                promotion_info: this.studentRankInfo.newstudentPromotion,
+                student_id: this.student_id
+            }
+            var urls = window.App.baseUrl + "students/saveStudentPromotion";
+            showloading();
+            axios.post(urls, datas)
+                .then(function (e) {
+                    Swal.close();
+                    Swal.fire({
+                        type: e.data.type,
+                        title: e.data.message
+                    })
+                    if(e.data.success){
+                        profile.studentRankInfo.newstudentPromotion.promotion_id = e.data.data.promotion_id;
+                        if(profile.studentRankInfo.promotionlist!=null){ profile.studentRankInfo.promotionlist.push(profile.studentRankInfo.newstudentPromotion); }
+                        else{ profile.studentRankInfo.promotionlist = [profile.studentRankInfo.newstudentPromotion]; }
+                    }
+                    profile.studentRankInfo.newstudentPromotion = {
+                        next_rank: {
+                            rank_id: 0,
+                            rank_name: "",
+                            ses_needed: 0
+                        }
+                    };
+                    $('#addNewPromotionModal').modal('hide');
                 })
                 .catch(function (error) {
                     console.log(error)
