@@ -27,11 +27,11 @@
                             </li>
                             <li class="list-group-item">
                                 <b>Current Rank: </b> <br>
-                                <a >7th Yellow</a>
+                                <a >{{studentRankInfo.currentRank.rank_title}}</a>
                             </li>
                             <li class="list-group-item">
                                 <b>Next Promotion: </b> <br>
-                                <a>7 training sessions</a>
+                                <a>{{studentRankInfo.currentRank.next_rank.ses_needed-studentRankInfo.currentRank.ses_attended}} training sessions</a>
                             </li>
                             <li class="list-group-item">
                                 <b>Status: </b> <br>

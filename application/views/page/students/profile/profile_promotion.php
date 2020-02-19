@@ -75,7 +75,7 @@
                         </tr>
                         <tr>
                             <th width="30%">Current Rank:</th>
-                            <th><input type="text" class="form-control smallerinput" v-model="studentRankInfo.currentRank.rank_name" disabled required></th>
+                            <th><input type="text" class="form-control smallerinput" v-model="studentRankInfo.currentRank.rank_title" disabled required></th>
                         </tr>
                         <tr>
                             <th width="30%">Promote To:</th>
@@ -83,7 +83,8 @@
                                 <select class="form-control smallerinput" v-model="studentRankInfo.newstudentPromotion.rank_id" required>
                                     <option disabled selected>Select Rank</option>
                                     <template v-for="(list,index) in rankslist">
-                                        <option :value="list.rank_id">{{list.rank_title}}</option>
+                                        <option v-if="list.rank_id>studentRankInfo.currentRank.rank_id" :value="index">{{list.rank_title}}</option>
+                                        <option v-else :value="index" disabled>{{list.rank_title}} | DISABLED</option>
                                     </template>
                                 </select>
                             </th>
@@ -96,7 +97,8 @@
                                         <select class="form-control smallerinput" v-model="studentRankInfo.newstudentPromotion.next_rank.rank_id" required>
                                             <option disabled selected>Select Rank</option>
                                             <template v-for="(list,index) in rankslist">
-                                                <option :value="index">{{list.rank_title}}</option>
+                                                <option v-if="list.rank_id>studentRankInfo.currentRank.rank_id+1" :value="index">{{list.rank_title}}</option>
+                                                <option v-else :value="index" disabled>{{list.rank_title}} | DISABLED</option>
                                             </template>
                                         </select>
                                     </div>

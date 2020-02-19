@@ -52,9 +52,12 @@ var profile = new Vue({
         studentRankInfo: {
             currentRank: {
                 rank_id: 0,
-                rank_name: "",
-                ses_attended: 0
-            },            
+                rank_title: "",
+                ses_attended: 0,
+                next_rank: {
+                    ses_needed: 0
+                }
+            },
             newstudentPromotion: {
                 next_rank: {
                     rank_id: "",
@@ -62,7 +65,6 @@ var profile = new Vue({
                     ses_needed: ""
                 },
                 ses_attended: 0,
-                status: 1,
             },
             promotionlist: []
         },
@@ -88,9 +90,12 @@ var profile = new Vue({
                     profile.competitionslist = dat.competitionslist;
                     profile.rankslist = dat.rankslist;
 
+                    if(dat.rankinfo!=null){
+                        profile.studentRankInfo.currentRank = dat.rankinfo;
+                        profile.studentRankInfo.currentRank.next_rank = JSON.parse(dat.rankinfo.next_rank);
+                    }
                     profile.studentRankInfo.promotionlist = dat.promotionlist;
-                    //parse for profile.studentRankInfo.promotionlist.next_rank
-
+                    
                     if(dat.studentpackages.regular!=null){
                         profile.studentpackages.regular = dat.studentpackages.regular;
                         profile.studentpackages.regular.forEach(e => {
@@ -365,9 +370,14 @@ var profile = new Vue({
         },
         //fourth tab
         saveStudentPromotion(){
-            var index = this.studentRankInfo.newstudentPromotion.next_rank.rank_id;
-            this.studentRankInfo.newstudentPromotion.next_rank.rank_id = this.rankslist[index].rank_id;
-            this.studentRankInfo.newstudentPromotion.next_rank.rank_title = this.rankslist[index].rank_title;
+            var pt_index = this.studentRankInfo.newstudentPromotion.rank_id;
+            this.studentRankInfo.newstudentPromotion.rank_id = this.rankslist[pt_index].rank_id;
+            var rank_title = this.rankslist[pt_index].rank_title;
+
+            var nr_index = this.studentRankInfo.newstudentPromotion.next_rank.rank_id;
+            this.studentRankInfo.newstudentPromotion.next_rank.rank_id = this.rankslist[nr_index].rank_id;
+            this.studentRankInfo.newstudentPromotion.next_rank.rank_title = this.rankslist[nr_index].rank_title;
+
             var datas = {
                 promotion_info: this.studentRankInfo.newstudentPromotion,
                 student_id: this.student_id
@@ -382,17 +392,23 @@ var profile = new Vue({
                         title: e.data.message
                     })
                     if(e.data.success){
+                        profile.studentRankInfo.newstudentPromotion.rank_title = rank_title;
                         profile.studentRankInfo.newstudentPromotion.promotion_id = e.data.data.promotion_id;
+
                         if(profile.studentRankInfo.promotionlist!=null){ profile.studentRankInfo.promotionlist.push(profile.studentRankInfo.newstudentPromotion); }
                         else{ profile.studentRankInfo.promotionlist = [profile.studentRankInfo.newstudentPromotion]; }
+                        
+                        profile.studentRankInfo.currentRank = profile.studentRankInfo.newstudentPromotion;
+
+                        profile.studentRankInfo.newstudentPromotion = {
+                            next_rank: {
+                                rank_id: "",
+                                rank_title: "",
+                                ses_needed: ""
+                            },
+                            ses_attended: 0,
+                        };
                     }
-                    profile.studentRankInfo.newstudentPromotion = {
-                        next_rank: {
-                            rank_id: 0,
-                            rank_name: "",
-                            ses_needed: 0
-                        }
-                    };
                     $('#addNewPromotionModal').modal('hide');
                 })
                 .catch(function (error) {

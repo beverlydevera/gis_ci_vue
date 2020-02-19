@@ -104,7 +104,13 @@ class Students extends CI_Controller {
         $condition = [ "student_id" => $student_id ];
         $competitionslist = $this->Main->getDataOneJoin("*","tbl_studentcompetitions","",$condition,"","","","");
 
-        $promotionslist = $this->Main->getDataOneJoin("*","tbl_studentpromotions","",$condition,"","","","");
+        $join = [
+            "table"     => "tbl_ranks r",
+            "key"       => "r.rank_id=sp.rank_id",
+            "jointype"  => "inner"
+        ];
+        $rankinfo = $this->Main->getDataOneJoin("*","tbl_studentpromotions sp",$join,$condition,["limit"=>1,"offset"=>0],["column"=>"promotion_id","order"=>"DESC"],"","row");
+        $promotionslist = $this->Main->getDataOneJoin("*","tbl_studentpromotions sp",$join,$condition,"","","","");
         $rankslist = $this->Main->getDataOneJoin("*","tbl_ranks","","","","","","");
 
         if(!empty($studentinfo)){
@@ -119,6 +125,7 @@ class Students extends CI_Controller {
                         "summerpromo"   => $studentpackages_summerpromo,
                     ],
                     'competitionslist'  => $competitionslist,
+                    'rankinfo'          => $rankinfo,
                     'promotionlist'     => $promotionslist,
                     'rankslist'         => $rankslist,
                 ],
