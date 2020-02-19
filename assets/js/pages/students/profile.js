@@ -70,6 +70,7 @@ var profile = new Vue({
         },
         //sixth tab
         invoicelist: [],
+        invoiceinfo: {},
         invoicedetails: {
             details: {
                 paymentstotal: 0
@@ -100,6 +101,7 @@ var profile = new Vue({
             var datas = { student_id:this.student_id };
             var datas = frmdata(datas);
             var urls = window.App.baseUrl + "students/getStudentProfile";
+            showloading("Fetching Data from Server");
             axios.post(urls, datas)
                 .then(function (e) {
                     dat = e.data.data;
@@ -113,6 +115,7 @@ var profile = new Vue({
                     }
                     profile.studentRankInfo.promotionlist = dat.promotionlist;
                     profile.invoicelist = dat.invoicelist;
+                    profile.invoiceinfo = dat.invoiceinfo;
                     
                     if(dat.studentpackages.regular!=null){
                         profile.studentpackages.regular = dat.studentpackages.regular;
@@ -197,6 +200,7 @@ var profile = new Vue({
                     }
 
                     profile.calculate_age();
+                    Swal.close();
                 })
                 .catch(function (error) {
                     console.log(error)

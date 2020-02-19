@@ -115,6 +115,12 @@ class Students extends CI_Controller {
 
         $invoicelist = $this->Main->getDataOneJoin("*, si.status as invstatus","tbl_studentinvoice si","",$condition,"","","","");
 
+        if(!empty($invoicelist)){ 
+            $invoicetotal = $this->Main->getDataOneJoin("SUM(amount) as totalinvoice_amt","tbl_studentinvoice","",$condition,"","","","row")->totalinvoice_amt;
+        }else{ $invoicetotal=0; }
+        $paymenttotal = $this->Main->getDataOneJoin("SUM(amount) as totalpayment_amt","tbl_paymentshistory","",$condition,"","","","row");
+        if(!empty($paymenttotal)){ $paymenttotal = $paymenttotal->totalpayment_amt; }else{ $paymenttotal=0; }
+
         if(!empty($studentinfo)){
             $response = array(
                 "success"   => true,
@@ -130,7 +136,11 @@ class Students extends CI_Controller {
                     'rankinfo'          => $rankinfo,
                     'promotionlist'     => $promotionslist,
                     'rankslist'         => $rankslist,
-                    'invoicelist'       => $invoicelist
+                    'invoicelist'       => $invoicelist,
+                    'invoiceinfo'       => [
+                        "totalinvoice"  => $invoicetotal,
+                        "totalpayment"  => $paymenttotal
+                    ]
                 ],
             );
         }else{
