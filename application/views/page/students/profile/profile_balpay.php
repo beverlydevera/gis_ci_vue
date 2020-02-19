@@ -31,20 +31,16 @@
             <th>#</th>
             <th>Invoice No.</th>
             <th>Invoice Date</th>
-            <th>Student Ref No.</th>
-            <th>Student Name</th>
             <th>Status</th>
             <th>Amount</th>
             <th>Action</th>
         </tr>
     </thead>
-    <!-- <tbody v-for="(list,index) in invoicelist">
+    <tbody v-for="(list,index) in invoicelist">
         <tr>
             <td>{{index+1}}</td>
             <td>{{list.invoice_number}}</td>
             <td>{{list.date_added}}</td>
-            <td>{{list.reference_id}}</td>
-            <td>{{list.lastname}}, {{list.firstname}}</td>
             <td>
                 <span v-if="list.invstatus=='paid'" class="badge bg-success">PAID</span>
                 <span v-else-if="list.invstatus=='partial'" class="badge bg-warning">PARTIAL</span>
@@ -60,10 +56,10 @@
                 </button>
             </td>
         </tr>
-    </tbody> -->
+    </tbody>
 </table>
 
-<!-- <div class="modal fade" id="viewPaymentsModal">
+<div class="modal fade" id="viewPaymentsModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -184,4 +180,4 @@
             </div>
         </div>
     </div>
-</div> -->
+</div>

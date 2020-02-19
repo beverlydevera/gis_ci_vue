@@ -68,6 +68,23 @@ var profile = new Vue({
             },
             promotionlist: []
         },
+        //sixth tab
+        invoicelist: [],
+        invoicedetails: {
+            details: {
+                paymentstotal: 0
+            },
+            paymentslist: [],
+        },
+        paymentdetails: {
+            invoice_id: "",
+            student_id: "",
+            ornumber: "",
+            paymentdate: currentdate,
+            ordate: currentdate,
+            paymentoption: "full",
+            amount: 0,
+        }
     },
     methods: {
         //first tab
@@ -95,6 +112,7 @@ var profile = new Vue({
                         profile.studentRankInfo.currentRank.next_rank = JSON.parse(dat.rankinfo.next_rank);
                     }
                     profile.studentRankInfo.promotionlist = dat.promotionlist;
+                    profile.invoicelist = dat.invoicelist;
                     
                     if(dat.studentpackages.regular!=null){
                         profile.studentpackages.regular = dat.studentpackages.regular;
@@ -414,7 +432,94 @@ var profile = new Vue({
                 .catch(function (error) {
                     console.log(error)
                 });
-        }
+        },
+        //sixth tab
+        viewPaymentsModal(index){
+            this.paymentdetails = {
+                invoice_id: "",
+                student_id: "",
+                ornumber: "",
+                paymentdate: currentdate,
+                ordate: currentdate,
+                paymentoption: "full",
+                amount: 0,
+            }
+            var invoice_id = this.invoicelist[index].invoice_id;
+            var datas = {
+                "invoice_id": invoice_id
+            };
+            var urls = window.App.baseUrl + "invoice/viewPayments";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    profile.invoicedetails.paymentslist = e.data.data.paymentslist;
+                    profile.addPaymentModal(invoice_id);
+                    $('#viewPaymentsModal').modal('show');
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        addPaymentModal(invoice_id){
+            this.paymentdetails = {
+                invoice_id: "",
+                student_id: "",
+                ornumber: "",
+                paymentdate: currentdate,
+                ordate: currentdate,
+                paymentoption: "full",
+                amount: 0,
+            }
+            var datas = {
+                "invoice_id": invoice_id,
+            };
+            var urls = window.App.baseUrl + "invoice/getInvoiceDetails";
+            showloading("Loading Data");
+            axios.post(urls, datas)
+                .then(function (e) {
+                    profile.invoicedetails.details = e.data.data.invoicedetails;
+                    profile.invoicedetails.details.paymentstotal = e.data.data.paymentstotal;
+
+                    profile.paymentdetails.invoice_id = e.data.data.invoicedetails.invoice_id;
+                    profile.paymentdetails.amountmax = profile.invoicedetails.details.amount - profile.invoicedetails.details.paymentstotal;
+                    profile.paymentdetails.amount = profile.invoicedetails.details.amount - profile.invoicedetails.details.paymentstotal;
+                    Swal.close();
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        addPaymentModalshow(){
+            $('#viewPaymentsModal').modal('hide');
+            $('#addPaymentsModal').modal('show');
+        },
+        savePayment(){
+            if(this.invoicedetails.details.amount==(parseInt(this.invoicedetails.details.paymentstotal)+parseInt(this.paymentdetails.amount))){
+                var invstat = "paid";
+            }else{ var invstat = "partial"; }
+            
+            this.paymentdetails.student_id = this.invoicedetails.details.student_id;
+            this.paymentdetails.ordate += " " + currenttime;
+            var datas = {
+                "paymentdetails": this.paymentdetails,
+                "invoicestatus": invstat
+            };
+            var urls = window.App.baseUrl + "invoice/savePayment";
+            showloading();
+            axios.post(urls, datas)
+                .then(function (e) {
+                    Swal.close();
+                    Swal.fire({
+                        type: e.data.type,
+                        title: e.data.message
+                    }).then(function (e) {
+                        invoice.getInvoiceList();
+                        $('#addPaymentsModal').modal('hide');
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
     }, mounted: function () {
         this.getStudentProfile();
     },

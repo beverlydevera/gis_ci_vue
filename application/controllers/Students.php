@@ -113,6 +113,8 @@ class Students extends CI_Controller {
         $promotionslist = $this->Main->getDataOneJoin("*","tbl_studentpromotions sp",$join,$condition,"","","","");
         $rankslist = $this->Main->getDataOneJoin("*","tbl_ranks","","","","","","");
 
+        $invoicelist = $this->Main->getDataOneJoin("*, si.status as invstatus","tbl_studentinvoice si","",$condition,"","","","");
+
         if(!empty($studentinfo)){
             $response = array(
                 "success"   => true,
@@ -128,6 +130,7 @@ class Students extends CI_Controller {
                     'rankinfo'          => $rankinfo,
                     'promotionlist'     => $promotionslist,
                     'rankslist'         => $rankslist,
+                    'invoicelist'       => $invoicelist
                 ],
             );
         }else{
