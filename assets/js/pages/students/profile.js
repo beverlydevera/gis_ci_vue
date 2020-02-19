@@ -512,9 +512,39 @@ var profile = new Vue({
                         type: e.data.type,
                         title: e.data.message
                     }).then(function (e) {
-                        invoice.getInvoiceList();
+                        profile.getInvoiceList();
                         $('#addPaymentsModal').modal('hide');
                     })
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        amountchange(){
+            if(this.paymentdetails.amount == this.invoicedetails.details.amount - this.invoicedetails.details.paymentstotal){
+                this.paymentdetails.paymentoption = "full";
+                this.paymentdetails.amount = this.invoicedetails.details.amount - this.invoicedetails.details.paymentstotal;
+            }else{
+                this.paymentdetails.paymentoption = "staggered";
+            }
+        },
+        changePaymentOption(){
+            if(this.paymentdetails.paymentoption=="full"){
+                this.paymentdetails.amount = this.paymentdetails.amountmax;
+            }else if(this.paymentdetails.paymentoption=="staggered"){
+                this.paymentdetails.amount = "";
+            }
+        },
+        getInvoiceList(){
+            var datas = {
+                condition: { "si.student_id": this.student_id  }
+            }
+            var urls = window.App.baseUrl + "invoice/getInvoiceList";
+            showloading("Loading Data");
+            axios.post(urls, datas)
+                .then(function (e) {
+                    swal.close();
+                    profile.invoicelist = e.data.data.invoicelist;
                 })
                 .catch(function (error) {
                     console.log(error)

@@ -379,14 +379,10 @@ class Students extends CI_Controller {
                 "student_id"    => $studentid,
                 "rank_id"       => 1,
                 "ses_attended"  => 0,
-                "next_rank"     => [
-                        "rank_id"   => 2,
-                        "rank_name" => "Level 1",
-                        "ses_needed"=> 10
-                    ],
-                "status"        => 1,
+                "next_rank"     => '{"rank_id":"2","rank_title":"Level 1","ses_needed":"10"}',
                 "date_promoted" => date("Y-m-d H:i:s")
             ];
+
             $insert_promotion = $this->Main->insert("tbl_studentpromotions",$datainsert,true);
 
             $response = array(
