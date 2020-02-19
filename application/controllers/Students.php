@@ -28,7 +28,9 @@ class Students extends CI_Controller {
         if(!empty($students)){
             $response = array(
                 "success"   => true,
-                "data"      => $students
+                "data"      => [
+                    "studentslist" => $students
+                ]
             );
         }else{
             $response = array(

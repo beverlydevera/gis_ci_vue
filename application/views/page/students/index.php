@@ -45,7 +45,6 @@
               <th>Birthdate</th>
               <th>Membership</th>
               <th>Rank/Belt</th>
-              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -56,12 +55,11 @@
               <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
               <td>{{list.sex}}</td>
               <td>{{list.birthdate}}</td>
-              <td>Regular</td>
-              <td>7th Yellow</td>
               <td>
-                <span v-if="list.status" class="badge bg-success">Active</span>
-                <span v-else class="badge bg-danger">Inactive</span>
+                  <span v-if="list.status">Regular</span>
+                  <span v-else class="badge bg-danger">Inactive</span>
               </td>
+              <td>7th Yellow</td>
               <td>
                   <a v-bind:href="'students/profile/'+(list.firstname).replace(/ /g,'')+(list.lastname).replace(/ /g,'')+'-'+list.student_id" class="btn btn-primary btn-xs"><i class="fas fa-edit" style="color:#000;"></i></a>
                   <button type="button" class="btn btn-danger btn-xs"><i class="fas fa-archive"></i></i></button>
@@ -70,7 +68,6 @@
           </tbody>
         </table>
       </div>
-      <!-- /.card-body -->
       <div class="card-footer clearfix">
         <ul class="pagination pagination-sm m-0 float-right">
           <li class="page-item"><a class="page-link" href="#">«</a></li>
@@ -81,9 +78,5 @@
         </ul>
       </div>
     </div>
-    <!-- /.card -->
   </div>
-  <!-- /.col -->
 </div>
-
-if walang membership for the year = inactive siya => renew membership

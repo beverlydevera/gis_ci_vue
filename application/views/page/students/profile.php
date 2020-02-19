@@ -38,7 +38,7 @@
                                 <a><span class="badge bg-success">Active</span></a>
                             </li>
                         </ul>
-                    <!-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
+                        <!-- <a class="btn btn-primary btn-block btn-xs"><b>Change Photo</b></a> -->
                     </div>
                 </div>
             </div>

@@ -10,9 +10,8 @@ var students = new Vue({
             showloading("Loading Data");
             axios.post(urls, "")
                 .then(function (e) {
-                    // console.log(e);
                     Swal.close();
-                    students.studentslist=e.data.data;
+                    students.studentslist = e.data.data.studentslist;
                 })
                 .catch(function (error) {
                     console.log(error)
