@@ -51,7 +51,7 @@
 </section>
 
 <div class="modal fade" id="addNewAnnouncementModal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add New Announcement</h5>
@@ -79,7 +79,10 @@
                         </tr>
                         <tr>
                             <th width="10%">Photos:</th>
-                            <th><input type="file" accept="image/*" ref="filenew"></th>
+                            <th>
+                                <input type="file" accept="image/*" ref="filenew" @change="imageSelect">
+                                <img id="selectedImage" src="#" alt="your image" />
+                            </th>
                         </tr>
                     </table>
                     </div>
@@ -94,7 +97,7 @@
 </div>
 
 <div class="modal fade" id="editAnnouncementModal">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Edit Announcement</h5>
@@ -124,9 +127,7 @@
                             <th width="10%">Photos:</th>
                             <th>
                                 <input type="file" accept="image/*" ref="fileedit">
-                                <img style="width:90%;" v-bind:src="'data:image/jpeg;base64,'+announcementdetails.photos"/>
-                                <!-- {{announcementdetails.photos}} -->
-                                <!-- <img src="data:image/jpeg;base64,'.base64_encode( $result['image'] ).'"/> -->
+                                <img style="width:100%;" v-bind:src="'data:image/jpeg;base64,'+announcementdetails.photos"/>
                             </th>
                         </tr>
                     </table>

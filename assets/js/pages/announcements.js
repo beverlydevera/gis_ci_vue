@@ -8,9 +8,25 @@ var announcements = new Vue({
             photo: ""
         },
         announcementslist: [],
-        announcementdetails: {}
+        announcementdetails: {
+            photo: ""
+        }
     },
     methods: {
+        imageSelect(event){
+            if (event.target.files && event.target.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#selectedImage')
+                        .attr('src', e.target.result)
+                        .width("100%");
+                        // .height(200);
+                };
+
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        },
         saveNewAnnouncement: function(){
 
             this.newAnnouncement.photo = this.$refs.filenew.files[0];
