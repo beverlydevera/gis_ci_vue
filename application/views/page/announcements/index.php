@@ -82,8 +82,8 @@
                         <tr>
                             <th width="10%">Photos:</th>
                             <th>
-                                <input type="file" accept="image/*" ref="filenew" @change="imageSelect">
-                                <img id="selectedImage" src="#" alt="your image" />
+                                <input type="file" accept="image/*" ref="filenew" @change="newimageSelect">
+                                <img id="newselectedImage" src="#" alt="your image" />
                             </th>
                         </tr>
                     </table>
@@ -128,8 +128,8 @@
                         <tr>
                             <th width="10%">Photos:</th>
                             <th>
-                                <input :disabled="disabled_edit" type="file" accept="image/*" ref="fileedit">
-                                <img v-if="announcementdetails.photos!=null" style="width:100%;" v-bind:src="'data:image/jpeg;base64,'+announcementdetails.photos"/>
+                                <input :disabled="disabled_edit" type="file" accept="image/*" ref="fileedit" @change="editimageSelect">
+                                <img id="editselectedImage" v-if="announcementdetails.photos!=null" style="width:100%;" v-bind:src="'data:image/jpeg;base64,'+announcementdetails.photos"/>
                             </th>
                         </tr>
                     </table>
@@ -138,7 +138,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" v-if="announcementdetails.status!=1">Save Changes</button>
+                <button type="submit" class="btn btn-primary" v-if="announcementdetails.status!=1" @click="saveAnnouncementChanges()">Save Changes</button>
             </div>
         </div>
     </div>

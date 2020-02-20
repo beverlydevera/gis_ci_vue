@@ -14,12 +14,26 @@ var announcements = new Vue({
         disabled_edit: false
     },
     methods: {
-        imageSelect(event){
+        newimageSelect(event){
             if (event.target.files && event.target.files[0]) {
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
-                    $('#selectedImage')
+                    $('#newselectedImage')
+                        .attr('src', e.target.result)
+                        .width("100%");
+                        // .height(200);
+                };
+
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        },
+        editimageSelect(event){
+            if (event.target.files && event.target.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#editselectedImage')
                         .attr('src', e.target.result)
                         .width("100%");
                         // .height(200);
@@ -96,6 +110,41 @@ var announcements = new Vue({
                 .catch(function (error) {
                     console.log(error)
                 });
+        },
+        saveAnnouncementChanges(){
+            
+            this.announcementdetails.photo = this.$refs.fileedit.files[0];
+
+            let formData = new FormData();
+            formData.append('announcement_id', this.announcementdetails.announcement_id);
+            formData.append('title', this.announcementdetails.title);
+            formData.append('text', this.announcementdetails.text);
+            formData.append('file', this.announcementdetails.photo);
+
+            var urls = window.App.baseUrl + "Announcements/saveAnnouncementChanges";
+            showloading();
+            axios.post(urls, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+            .then(function (e) {
+                Swal.close();
+                Swal.fire({
+                    type: e.data.type,
+                    title: e.data.message
+                }).then(function (e) {
+                    $('#editAnnouncementModal').modal('hide');
+                    announcements.getAnnouncements();
+                    announcements.announcementdetails = {
+                        title: "",
+                        text: "",
+                        photo: ""
+                    };
+                    announcements.$refs.fileedit.type = 'text';
+                    announcements.$refs.fileedit.type = 'file';
+                })
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         },
         postAnnouncement(index){
             Swal.fire({

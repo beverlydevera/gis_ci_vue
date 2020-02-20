@@ -120,4 +120,41 @@ class Announcements extends CI_Controller {
         response_json($response);
     }
     
+    public function saveAnnouncementChanges()
+    {
+        $data = $this->input->post();
+        if(!empty($_FILES)){
+            $file = file_get_contents($_FILES['file']['tmp_name']);
+            $dataupdate = [
+                "title"     => $data['title'],
+                "text"      => $data['text'],
+                "photos"    => $file,
+            ];
+        }else{
+            $dataupdate = [
+                "title"     => $data['title'],
+                "text"      => $data['text']
+            ];
+        }
+
+        $announcement_id = $data["announcement_id"];
+        $updatequery = $this->Main->update("tbl_announcements",["announcement_id"=>$announcement_id],$dataupdate,"");
+
+        if(!empty($updatequery)){
+            $success = true;
+            $message = "Announcement Changes were saved successfully.";
+            $type = "success";
+        }else{
+            $success = false;
+            $message = "Announcement Changes were not saved.";
+            $type = "warning";
+        }
+
+        $response = array(
+            "success"   => $success,
+            "message"   => $message,
+            "type"      => $type
+        );
+        response_json($response);
+    }
 }
