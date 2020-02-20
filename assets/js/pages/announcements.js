@@ -9,7 +9,7 @@ var announcements = new Vue({
         },
         announcementslist: [],
         announcementdetails: {
-            photo: ""
+            photo: null
         }
     },
     methods: {

@@ -34,11 +34,7 @@ class Announcements extends CI_Controller {
             if(!empty($data['orderby'])){ $orderby = $data['orderby']; }
             if(!empty($data['join'])){ $join = $data['join']; }
         }
-        // $select = "announcement_id,title,text,photos,date_added";
-        // $type = "row";
-        // $condition = ["announcement_id"=>1];
         $announcementslist = $this->Main->getDataOneJoin($select,"tbl_announcements a",$join,$condition,$pager,$orderby,$groupby,$type);
-        // if(!empty($announcementslist->photos)){ $announcementslist->photos = '<img src="data:image/jpeg;base64,'.base64_encode( $announcementslist->photos ).'"/>'; }
         if(!empty($announcementslist->photos)){ $announcementslist->photos = base64_encode($announcementslist->photos); }
 
         if(!empty($announcementslist)){

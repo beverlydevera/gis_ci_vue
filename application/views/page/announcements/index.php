@@ -127,7 +127,7 @@
                             <th width="10%">Photos:</th>
                             <th>
                                 <input type="file" accept="image/*" ref="fileedit">
-                                <img style="width:100%;" v-bind:src="'data:image/jpeg;base64,'+announcementdetails.photos"/>
+                                <img v-if="announcementdetails.photos!=null" style="width:100%;" v-bind:src="'data:image/jpeg;base64,'+announcementdetails.photos"/>
                             </th>
                         </tr>
                     </table>
