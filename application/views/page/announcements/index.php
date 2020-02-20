@@ -69,17 +69,17 @@
                         </tr>
                         <tr>
                             <th width="10%">Title:</th>
-                            <th><input type="text" class="form-control smallerinput" required></th>
+                            <th><input type="text" class="form-control smallerinput" v-model="file.title" required></th>
                         </tr>
                         <tr>
                             <th width="10%">Text:</th>
                             <th>
-                                <textarea class="form-control" rows=2></textarea>
+                                <textarea class="form-control" rows=2 v-model="file.text"></textarea>
                             </th>
                         </tr>
                         <tr>
                             <th width="10%">Photos:</th>
-                            <th><input type="file" multiple></th>
+                            <th><input type="file" accept="image/*" ref="file"></th>
                         </tr>
                     </table>
                     </div>
@@ -87,7 +87,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save Announcement</button>
+                <button type="submit" class="btn btn-primary" @click="saveNewAnnouncement()">Save Announcement</button>
             </div>
         </div>
     </div>
