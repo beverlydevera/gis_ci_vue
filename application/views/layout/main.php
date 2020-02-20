@@ -98,12 +98,14 @@ to get the desired effect
 <body class="sidebar-mini layout-navbar-fixed accent-info text-sm sidebar-open">
 <!-- class="sidebar-mini layout-navbar-fixed sidebar-collapse" -->
     <div class="wrapper">
+        <div id="header_nav">
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <?php $this->load->view('layout/header_nav') ?>
         </nav>
         <!-- /.navbar -->
-
+        <?php $this->load->view('layout/profile_modal') ?>
+        </div>
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->

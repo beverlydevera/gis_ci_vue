@@ -99,7 +99,9 @@ if ($('#header_nav').length) {
 		el: '#header_nav',
 		data: {
 			user_id:$('#user_id').val(),
-			userdata: {},
+			userdata: {
+				photo: null
+			},
 			notifications: [],
 			chatlist: []
 		},
@@ -175,7 +177,84 @@ if ($('#header_nav').length) {
 						})
 					}
 				})
-			}
+			},
+			viewProfileDetails(){
+				var user_id = this.user_id;
+				var datas = {
+					condition: {
+						"user_id": user_id,
+						"u.status": 1
+					},
+					type: "row",
+					join: {
+						table: "tbl_branches b",
+						key: "b.branch_id=u.branch_id",
+						jointype: "left",
+					}
+				};
+				var urls = window.App.baseUrl + "Users/getUsersList";
+				showloading("Loading Data");
+				axios.post(urls, datas)
+					.then(function (e) {
+						swal.close();
+						systemconfigs.userdata=e.data.data;
+						$('#editUserProfileModal').modal('show');
+					})
+					.catch(function (error) {
+						console.log(error)
+					});
+			},
+			editProfileImageSelect(event){
+				if (event.target.files && event.target.files[0]) {
+					var reader = new FileReader();
+	
+					reader.onload = function (e) {
+						$('#editProfileImage')
+							.attr('src', e.target.result)
+							.width("40%");
+							// .height(200);
+					};
+	
+					reader.readAsDataURL(event.target.files[0]);
+				}
+			},
+			saveUserDataChanges(){
+				
+				this.userdata.photo = this.$refs.userprofileimage.files[0];
+	
+				let formData = new FormData();
+				formData.append('user_id', this.user_id);
+				formData.append('lastname', this.userdata.lastname);
+				formData.append('firstname', this.userdata.firstname);
+				formData.append('middlename', this.userdata.middlename);
+				formData.append('contactno', this.userdata.contactno);
+				formData.append('emailadd', this.userdata.emailadd);
+				formData.append('file', this.userdata.photo);
+	
+				var urls = window.App.baseUrl + "Users/saveUserDetails";
+				showloading();
+				axios.post(urls, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+				.then(function (e) {
+					Swal.close();
+					Swal.fire({
+						type: e.data.type,
+						title: e.data.message
+					}).then(function (e) {
+						$('#editUserProfileModal').modal('hide');
+						systemconfigs.userdata = {
+							title: "",
+							text: "",
+							photo: ""
+						};
+						systemconfigs.$refs.userprofileimage.type = 'text';
+						systemconfigs.$refs.userprofileimage.type = 'file';
+					})
+	
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
+			},
 		}
 	});
 }

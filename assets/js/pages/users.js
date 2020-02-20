@@ -8,6 +8,7 @@ var users = new Vue({
     methods: {
         getUsers(){
             var datas = {
+                select: "user_id,username,lastname,firstname,middlename,contactno,emailadd,role",
                 orderby: {
                     column: "u.lastname",
                     order: "ASC",

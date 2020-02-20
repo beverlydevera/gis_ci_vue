@@ -26,9 +26,11 @@ class Users extends CI_Controller {
     {
         $join = $condition = $pager = $orderby = [];
         $groupby = $type = $data = "";
+        $select = "*";
         $data = jsondata();
 
         if(!empty($data)){
+            if(!empty($data['select'])){ $select = $data['select']; }
             if(!empty($data['join'])){ $join = $data['join']; }
             if(!empty($data['condition'])){ $condition = $data['condition']; }
             if(!empty($data['pager'])){ $pager = $data['pager']; }
@@ -37,13 +39,14 @@ class Users extends CI_Controller {
             if(!empty($data['type'])){ $type = $data['type']; }
         }
         
-        $walkinlist = $this->Main->getDataOneJoin("*","tbl_users u",$join,$condition,$pager,$orderby,$groupby,$type);
+        $userlist = $this->Main->getDataOneJoin($select,"tbl_users u",$join,$condition,$pager,$orderby,$groupby,$type);
+        if(!empty($userlist->photo)){ $userlist->photo = base64_encode($userlist->photo); }
 
-        if(!empty($walkinlist)){
+        if(!empty($userlist)){
            
             $success = true;
             $type = "success";
-            $data = $walkinlist;
+            $data = $userlist;
         }else{
             $success = false;
             $type = "warning";
@@ -59,17 +62,31 @@ class Users extends CI_Controller {
 
     public function saveUserDetails()
     {
-        $data = jsondata();
+        $data = $this->input->post();
+        if(!empty($_FILES)){
+            $file = file_get_contents($_FILES['file']['tmp_name']);
+            $dataupdate = [
+                "lastname"  => $data['lastname'],
+                "firstname" => $data['firstname'],
+                "middlename"=> $data['middlename'],
+                "contactno" => $data['contactno'],
+                "emailadd"  => $data['emailadd'],
+                "photo"     => $file,
+            ];
+        }else{
+            $dataupdate = [
+                "lastname"  => $data['lastname'],
+                "firstname" => $data['firstname'],
+                "middlename"=> $data['middlename'],
+                "contactno" => $data['contactno'],
+                "emailadd"  => $data['emailadd'],
+            ];
+        }
 
         if(!empty($data)){
-            
-            $userdetails = $data['userdetails'];
-            $user_id = $userdetails['user_id'];
+            $user_id = $data['user_id'];
 
-            unset($userdetails['branch_name']);
-            unset($userdetails['date_added']);
-
-            $updatequery = $this->Main->update("tbl_users", ["user_id"=>$user_id], $userdetails,"");
+            $updatequery = $this->Main->update("tbl_users", ["user_id"=>$user_id], $dataupdate,"");
 
             $success = true;
             $message = "Changes were saved successfully.";

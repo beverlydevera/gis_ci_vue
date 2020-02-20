@@ -132,7 +132,7 @@
         </li>
         <li class="user-footer">
             <input type="hidden" id="user_id" value="<?=sesdata('id')?>"/>
-            <a href="#" class="btn btn-default btn-flat">View Profile</a><br>
+            <a href="#" @click="viewProfileDetails()" class="btn btn-default btn-flat">View Profile</a><br>
             <a href="#" @click="changePassword()" class="btn btn-default btn-flat">Change Password</a><br>
         </li>
         </ul>
