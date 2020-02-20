@@ -100,11 +100,11 @@ class Users extends CI_Controller {
     
             $updatequery = $this->Main->update("tbl_users", ["user_id"=>$user_id], ["password"=>$password],"");
             $success = true;
-            $message = "Password was reset successfully.";
+            $message = "Password was changed/reset successfully.";
             $type = "success";
         }else{
             $success = false;
-            $message = "Password was not reset.";
+            $message = "Password was not changed/reset.";
             $type = "warning";
         }
 

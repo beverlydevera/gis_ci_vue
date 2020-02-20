@@ -93,3 +93,89 @@ if ($('#navigationpanel').length) {
 		}
 	});
 }
+
+if ($('#header_nav').length) {
+	var systemconfigs = new Vue({
+		el: '#header_nav',
+		data: {
+			user_id:$('#user_id').val(),
+			userdata: {},
+			notifications: [],
+			chatlist: []
+		},
+		methods: {
+			changePassword(){
+				Swal.fire({
+					title: "Password Change",
+					input: 'password',
+					inputPlaceholder: 'Enter new password',
+					inputAttributes: {
+						maxlength: 15,
+						autocapitalize: 'off',
+						autocorrect: 'off'
+					},
+					showCancelButton: true,
+				}).then((result) => {
+					if(result.value){
+						Swal.fire({
+							title: "Password Change",
+							input: 'password',
+							inputPlaceholder: 'Confirm password',
+							inputAttributes: {
+								maxlength: 15,
+								autocapitalize: 'off',
+								autocorrect: 'off'
+							},
+							showCancelButton: true,
+						}).then((result1) => {
+							if(result1.value){
+								if (result.value==result1.value) {
+									Swal.fire({
+										title: "Are you sure you want to change your password?",
+										text: "You will be logged out after changing your password.",
+										type: 'warning',
+										showCancelButton: true,
+										confirmButtonColor: '#3085d6',
+										cancelButtonColor: '#d33',
+										confirmButtonText: 'Yes, change password and proceed',
+										}).then((e) => {
+											if(e.value){
+												var datas = {
+													user_id: this.user_id,
+													password: result.value
+												};
+												var urls = window.App.baseUrl + "users/resetUserPassword";
+												showloading();
+												axios.post(urls, datas)
+													.then(function (e) {
+														Swal.close();
+														Toast.fire({
+															type: e.data.type,
+															title: e.data.message
+														})
+														window.location.replace(window.App.baseUrl + "users/logout");
+													})
+													.catch(function (error) {
+														console.log(error)
+													});
+											}
+										})
+								}else{
+									Swal.fire({
+										type: "error",
+										title: "Passwords do not match"
+									})
+								}
+							}else{
+								Swal.fire({
+									type: "error",
+									title: "Change Password cancelled"
+								})
+							}
+						})
+					}
+				})
+			}
+		}
+	});
+}

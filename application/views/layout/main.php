@@ -95,7 +95,6 @@ to get the desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-
 <body class="sidebar-mini layout-navbar-fixed accent-info text-sm sidebar-open">
 <!-- class="sidebar-mini layout-navbar-fixed sidebar-collapse" -->
     <div class="wrapper">
