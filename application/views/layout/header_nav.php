@@ -11,18 +11,6 @@
     </li> -->
 </ul>
 
-<!-- SEARCH FORM -->
-<!-- <form class="form-inline ml-3">
-    <div class="input-group input-group-sm">
-    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-    <div class="input-group-append">
-        <button class="btn btn-navbar" type="submit">
-        <i class="fas fa-search"></i>
-        </button>
-    </div>
-    </div>
-</form> -->
-
 <!-- Right navbar links -->
 <ul class="navbar-nav ml-auto" id="header_nav">
     <!-- Messages Dropdown Menu -->
@@ -35,7 +23,7 @@
         <a href="#" class="dropdown-item">
         <!-- Message Start -->
         <div class="media">
-            <img src="<?=base_url('assets/img/other_avatar.png')?>" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+            <img src="<?=base_url('assets/img/other_avatar.png')?>" alt="User Avatar" class="img-size-50 img-circle mr-3">
             <div class="media-body">
             <h3 class="dropdown-item-title">
                 Brad Diesel
@@ -112,14 +100,13 @@
     </li>
     <li class="nav-item dropdown user-menu">
         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-        <img src="<?=base_url('assets/img/other_avatar.png')?>" class="user-image img-circle elevation-2" alt="User Image">
+        <img id="editProfileImage1" v-bind:src="'data:image/jpeg;base64,'+userdata.photo" class="user-image img-circle elevation-2" alt="User Image">
         <span class="d-none d-md-inline"><?=strtoupper(sesdata('fullname'))?></span>
         </a>
         <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
         <!-- User image -->
         <li class="user-header bg-primary">
-            <img src="<?=base_url('assets/img/other_avatar.png')?>" class="img-circle elevation-2" alt="User Image">
-
+            <img id="editProfileImage2" v-bind:src="'data:image/jpeg;base64,'+userdata.photo" class="img-circle elevation-2" alt="User Image">
             <p>
             <?=strtoupper(sesdata('fullname'))?>
             <small>Role: 
@@ -132,7 +119,7 @@
         </li>
         <li class="user-footer">
             <input type="hidden" id="user_id" value="<?=sesdata('id')?>"/>
-            <a href="#" @click="viewProfileDetails()" class="btn btn-default btn-flat">View Profile</a><br>
+            <a href="#" data-toggle="modal" data-target="#editUserProfileModal" class="btn btn-default btn-flat">View Profile</a><br>
             <a href="#" @click="changePassword()" class="btn btn-default btn-flat">Change Password</a><br>
         </li>
         </ul>

@@ -178,7 +178,7 @@ if ($('#header_nav').length) {
 					}
 				})
 			},
-			viewProfileDetails(){
+			getProfileData(){
 				var user_id = this.user_id;
 				var datas = {
 					condition: {
@@ -198,7 +198,6 @@ if ($('#header_nav').length) {
 					.then(function (e) {
 						swal.close();
 						systemconfigs.userdata=e.data.data;
-						$('#editUserProfileModal').modal('show');
 					})
 					.catch(function (error) {
 						console.log(error)
@@ -212,14 +211,18 @@ if ($('#header_nav').length) {
 						$('#editProfileImage')
 							.attr('src', e.target.result)
 							.width("40%");
-							// .height(200);
+						$('#editProfileImage1')
+							.attr('src', e.target.result);
+						$('#editProfileImage2')
+							.attr('src', e.target.result);
 					};
 	
 					reader.readAsDataURL(event.target.files[0]);
 				}
 			},
 			saveUserProfileChanges(){
-					
+				
+				// this.userdata.photo = this.$refs.userprofileimage.files[0];
 				let formData = new FormData();
 				formData.append('user_id', this.user_id);
 				formData.append('lastname', this.userdata.lastname);
@@ -239,11 +242,6 @@ if ($('#header_nav').length) {
 						title: e.data.message
 					}).then(function (e) {
 						$('#editUserProfileModal').modal('hide');
-						systemconfigs.userdata = {
-							title: "",
-							text: "",
-							photo: null
-						};
 					})
 	
 				})
@@ -251,6 +249,8 @@ if ($('#header_nav').length) {
 					console.log(error);
 				});
 			},
-		}
+		}, mounted: function () {
+			this.getProfileData();
+		},
 	});
 }
