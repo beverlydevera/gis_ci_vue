@@ -3,7 +3,9 @@ var users = new Vue({
     el: '#users_page',
     data: {
         userslist: [],
-        userdetails: {}
+        userdetails: {
+            photo: null
+        }
     },
     methods: {
         getUsers(){
@@ -56,27 +58,40 @@ var users = new Vue({
                 .catch(function (error) {
                     console.log(error)
                 });
-        },
+        },      
         saveUserDetailChanges(){
-            var datas = {
-                userdetails: this.userdetails
-            };
-            var urls = window.App.baseUrl + "users/saveUserDetails";
+            
+            let formData = new FormData();
+            formData.append('user_id', this.userdetails.user_id);
+            formData.append('lastname', this.userdetails.lastname);
+            formData.append('firstname', this.userdetails.firstname);
+            formData.append('middlename', this.userdetails.middlename);
+            formData.append('contactno', this.userdetails.contactno);
+            formData.append('emailadd', this.userdetails.emailadd);
+            formData.append('branch_id', this.userdetails.branch_id);
+            formData.append('role', this.userdetails.role);
+            formData.append('file', this.$refs.userdetailsimage.files[0]);
+
+            var urls = window.App.baseUrl + "Users/saveUserDetails";
             showloading();
-            axios.post(urls, datas)
-                .then(function (e) {
-                    Swal.close();
-                    Swal.fire({
-                        type: e.data.type,
-                        title: e.data.message
-                    }).then(function (e) {
-                        $('#editUserDetailsModal').modal('hide');
-                        users.getUsers();
-                    })
+            axios.post(urls, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+            .then(function (e) {                
+                users.userdetails = {
+                    photo: null
+                };
+                Swal.close();
+                Swal.fire({
+                    type: e.data.type,
+                    title: e.data.message
+                }).then(function (e) {
+                    $('#editUserDetailsModal').modal('hide');
+                    users.getUsers();
                 })
-                .catch(function (error) {
-                    console.log(error)
-                });
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         },
         resetPassword(user_id){
             Swal.fire({
@@ -153,6 +168,20 @@ var users = new Vue({
                             });
                     }
                 })
+        },
+        editUserImageSelect(event){
+            if (event.target.files && event.target.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#editUserImage')
+                        .attr('src', e.target.result)
+                        .width("40%");
+                        // .height(200);
+                };
+
+                reader.readAsDataURL(event.target.files[0]);
+            }
         },
     }, mounted: function () {
         this.getUsers();

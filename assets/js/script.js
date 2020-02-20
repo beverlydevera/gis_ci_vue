@@ -218,10 +218,8 @@ if ($('#header_nav').length) {
 					reader.readAsDataURL(event.target.files[0]);
 				}
 			},
-			saveUserDataChanges(){
-				
-				this.userdata.photo = this.$refs.userprofileimage.files[0];
-	
+			saveUserProfileChanges(){
+					
 				let formData = new FormData();
 				formData.append('user_id', this.user_id);
 				formData.append('lastname', this.userdata.lastname);
@@ -229,7 +227,7 @@ if ($('#header_nav').length) {
 				formData.append('middlename', this.userdata.middlename);
 				formData.append('contactno', this.userdata.contactno);
 				formData.append('emailadd', this.userdata.emailadd);
-				formData.append('file', this.userdata.photo);
+				formData.append('file', this.$refs.userprofileimage.files[0]);
 	
 				var urls = window.App.baseUrl + "Users/saveUserDetails";
 				showloading();
@@ -244,10 +242,8 @@ if ($('#header_nav').length) {
 						systemconfigs.userdata = {
 							title: "",
 							text: "",
-							photo: ""
+							photo: null
 						};
-						systemconfigs.$refs.userprofileimage.type = 'text';
-						systemconfigs.$refs.userprofileimage.type = 'file';
 					})
 	
 				})

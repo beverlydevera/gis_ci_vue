@@ -82,6 +82,8 @@ class Users extends CI_Controller {
                 "emailadd"  => $data['emailadd'],
             ];
         }
+        if(!empty($data['branch_id'])){ $dataupdate["branch_id"]=$data['branch_id']; }
+        if(!empty($data['role'])){ $dataupdate["role"]=$data['role']; }
 
         if(!empty($data)){
             $user_id = $data['user_id'];

@@ -76,8 +76,18 @@
                     <div class="col-md-12">
                     <table class="table table-bordered table-responsive-sm table-sm billing-table">
                         <tr>
+                            <th colspan=2>
+                                <img id="editUserImage" style="display:block; margin:auto; width:40%;" v-bind:src="'data:image/jpeg;base64,'+userdetails.photo"/>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan=2>
+                                <input type="file" accept="image/*" ref="userdetailsimage" @change="editUserImageSelect">
+                            </th>
+                        </tr>
+                        <tr>
                             <th width="25%">Username:</th>
-                            <th><input type="text" v-model="userdetails.date_added" class="form-control smallerinput" readonly></th>
+                            <th><input type="text" class="form-control smallerinput" v-model="userdetails.username" readonly></th>
                         </tr>
                         <tr>
                             <th width="25%">Last Name:</th>

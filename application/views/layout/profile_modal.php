@@ -13,7 +13,7 @@
                     <table class="table table-bordered table-responsive-sm table-sm billing-table">
                         <tr>
                             <th colspan=2>
-                                <img id="editProfileImage" style="display:block; margin:auto;" v-bind:src="'data:image/jpeg;base64,'+userdata.photo"/>
+                                <img id="editProfileImage" style="display:block; margin:auto;width:40%;" v-bind:src="'data:image/jpeg;base64,'+userdata.photo"/>
                             </th>
                         </tr>
                         <tr>
@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" @click="saveUserDataChanges()">Save Changes</button>
+                <button type="submit" class="btn btn-primary" @click="saveUserProfileChanges()">Save Changes</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
