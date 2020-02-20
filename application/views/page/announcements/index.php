@@ -69,12 +69,12 @@
                         </tr>
                         <tr>
                             <th width="10%">Title:</th>
-                            <th><input type="text" class="form-control smallerinput" v-model="file.title" required></th>
+                            <th><input type="text" class="form-control smallerinput" v-model="newAnnouncement.title" required></th>
                         </tr>
                         <tr>
                             <th width="10%">Text:</th>
                             <th>
-                                <textarea class="form-control" rows=2 v-model="file.text"></textarea>
+                                <textarea class="form-control" rows=2 v-model="newAnnouncement.text"></textarea>
                             </th>
                         </tr>
                         <tr>

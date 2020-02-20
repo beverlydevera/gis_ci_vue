@@ -2,7 +2,7 @@
 var announcements = new Vue({
     el: '#announcements_page',
     data: {
-        file: {
+        newAnnouncement: {
             title: "",
             text: "",
             photo: ""
@@ -12,12 +12,12 @@ var announcements = new Vue({
     methods: {
         saveNewAnnouncement: function(){
 
-            this.file.photo = this.$refs.file.files[0];
+            this.newAnnouncement.photo = this.$refs.file.files[0];
 
             let formData = new FormData();
-            formData.append('title', this.file.title);
-            formData.append('text', this.file.text);
-            formData.append('file', this.file.photo);
+            formData.append('title', this.newAnnouncement.title);
+            formData.append('text', this.newAnnouncement.text);
+            formData.append('file', this.newAnnouncement.photo);
 
             var urls = window.App.baseUrl + "Announcements/saveNewAnnouncement";
             showloading();
@@ -30,7 +30,7 @@ var announcements = new Vue({
                 }).then(function (e) {
                     $('#addNewAnnouncementModal').modal('hide');
                     announcements.getAnnouncements();
-                    announcements.file = {
+                    announcements.newAnnouncement = {
                         title: "",
                         text: "",
                         photo: ""
