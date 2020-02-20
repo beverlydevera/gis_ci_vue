@@ -7,12 +7,13 @@ var announcements = new Vue({
             text: "",
             photo: ""
         },
-        announcementslist: []
+        announcementslist: [],
+        announcementdetails: {}
     },
     methods: {
         saveNewAnnouncement: function(){
 
-            this.newAnnouncement.photo = this.$refs.file.files[0];
+            this.newAnnouncement.photo = this.$refs.filenew.files[0];
 
             let formData = new FormData();
             formData.append('title', this.newAnnouncement.title);
@@ -35,8 +36,8 @@ var announcements = new Vue({
                         text: "",
                         photo: ""
                     };
-                    announcements.$refs.file.type = 'text';
-                    announcements.$refs.file.type = 'file';
+                    announcements.$refs.filenew.type = 'text';
+                    announcements.$refs.filenew.type = 'file';
                 })
 
             })
@@ -45,9 +46,12 @@ var announcements = new Vue({
             });
         },
         getAnnouncements(){
+            var datas = {
+                "select"    : "announcement_id,title,date_added"
+            }
             var urls = window.App.baseUrl + "Announcements/getAnnouncements";
             showloading("Fetching Data from Server");
-            axios.post(urls, "")
+            axios.post(urls, datas)
                 .then(function (e) {
                     swal.close();
                     announcements.announcementslist = e.data.data.announcementslist;
@@ -56,11 +60,9 @@ var announcements = new Vue({
                     console.log(error)
                 });
         },
-        postAnnouncement(announcement_id){
-
-        },
         editAnnouncement(announcement_id){
             var datas = {
+                "select"    : "announcement_id,title,text,photos,date_added",
                 "condition" : { announcement_id: announcement_id },
                 "type"      : "row"
             }
@@ -70,12 +72,16 @@ var announcements = new Vue({
                 .then(function (e) {
                     Swal.close();
                     announcements.announcementdetails = e.data.data.announcementslist;
+                    announcements.$refs.fileedit.files[0] = e.data.data.announcementslist.photos;
                     $('#editAnnouncementModal').modal('show');
                 })
                 .catch(function (error) {
                     console.log(error)
                 });
-        }
+        },
+        postAnnouncement(announcement_id){
+
+        },
     }, mounted: function () {
         this.getAnnouncements();
     },

@@ -22,9 +22,11 @@ class Announcements extends CI_Controller {
     public function getAnnouncements()
     {
         $type = $groupby=""; $condition = $pager = $orderby = $join = [];
+        $select = "*";
         $data = jsondata();
 
         if(!empty($data)){
+            if(!empty($data['select'])){ $select = $data['select']; }
             if(!empty($data['type'])){ $type = $data['type']; }
             if(!empty($data['groupby'])){ $groupby = $data['groupby']; }
             if(!empty($data['condition'])){ $condition = $data['condition']; }
@@ -32,8 +34,13 @@ class Announcements extends CI_Controller {
             if(!empty($data['orderby'])){ $orderby = $data['orderby']; }
             if(!empty($data['join'])){ $join = $data['join']; }
         }
-        $announcementslist = $this->Main->getDataOneJoin("announcement_id,title,date_added","tbl_announcements a",$join,$condition,$pager,$orderby,$groupby,$type);
-        
+        // $select = "announcement_id,title,text,photos,date_added";
+        // $type = "row";
+        // $condition = ["announcement_id"=>1];
+        $announcementslist = $this->Main->getDataOneJoin($select,"tbl_announcements a",$join,$condition,$pager,$orderby,$groupby,$type);
+        // if(!empty($announcementslist->photos)){ $announcementslist->photos = '<img src="data:image/jpeg;base64,'.base64_encode( $announcementslist->photos ).'"/>'; }
+        if(!empty($announcementslist->photos)){ $announcementslist->photos = base64_encode($announcementslist->photos); }
+
         if(!empty($announcementslist)){
             $response = array(
                 "success"   => true,

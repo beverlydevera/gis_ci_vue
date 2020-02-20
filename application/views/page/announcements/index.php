@@ -79,7 +79,7 @@
                         </tr>
                         <tr>
                             <th width="10%">Photos:</th>
-                            <th><input type="file" accept="image/*" ref="file"></th>
+                            <th><input type="file" accept="image/*" ref="filenew"></th>
                         </tr>
                     </table>
                     </div>
@@ -88,6 +88,54 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary" @click="saveNewAnnouncement()">Save Announcement</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editAnnouncementModal">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Announcement</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                    <table class="table table-bordered table-responsive-sm table-sm billing-table">
+                        <tr>
+                            <th width="10%">Date Added:</th>
+                            <th><input type="text" class="form-control smallerinput" v-model="announcementdetails.date_added" disabled></th>
+                        </tr>
+                        <tr>
+                            <th width="10%">Title:</th>
+                            <th><input type="text" class="form-control smallerinput" v-model="announcementdetails.title" required></th>
+                        </tr>
+                        <tr>
+                            <th width="10%">Text:</th>
+                            <th>
+                                <textarea class="form-control" rows=2 v-model="announcementdetails.text"></textarea>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th width="10%">Photos:</th>
+                            <th>
+                                <input type="file" accept="image/*" ref="fileedit">
+                                <img style="width:90%;" v-bind:src="'data:image/jpeg;base64,'+announcementdetails.photos"/>
+                                <!-- {{announcementdetails.photos}} -->
+                                <!-- <img src="data:image/jpeg;base64,'.base64_encode( $result['image'] ).'"/> -->
+                            </th>
+                        </tr>
+                    </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
             </div>
         </div>
     </div>
