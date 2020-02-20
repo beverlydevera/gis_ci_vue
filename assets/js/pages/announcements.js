@@ -10,7 +10,8 @@ var announcements = new Vue({
         announcementslist: [],
         announcementdetails: {
             photo: null
-        }
+        },
+        disabled_edit: false
     },
     methods: {
         imageSelect(event){
@@ -63,7 +64,7 @@ var announcements = new Vue({
         },
         getAnnouncements(){
             var datas = {
-                "select"    : "announcement_id,title,date_added"
+                "select"    : "announcement_id,title,status,date_added"
             }
             var urls = window.App.baseUrl + "Announcements/getAnnouncements";
             showloading("Fetching Data from Server");
@@ -76,9 +77,9 @@ var announcements = new Vue({
                     console.log(error)
                 });
         },
-        editAnnouncement(announcement_id){
+        viewAnnouncementDetails(announcement_id){
             var datas = {
-                "select"    : "announcement_id,title,text,photos,date_added",
+                "select"    : "announcement_id,title,text,photos,status,date_added",
                 "condition" : { announcement_id: announcement_id },
                 "type"      : "row"
             }
@@ -89,14 +90,48 @@ var announcements = new Vue({
                     Swal.close();
                     announcements.announcementdetails = e.data.data.announcementslist;
                     announcements.$refs.fileedit.files[0] = e.data.data.announcementslist.photos;
+                    if(announcements.announcementdetails.status==1){ announcements.disabled_edit=true; }
                     $('#editAnnouncementModal').modal('show');
                 })
                 .catch(function (error) {
                     console.log(error)
                 });
         },
-        postAnnouncement(announcement_id){
-
+        postAnnouncement(index){
+            Swal.fire({
+                title: "Are you sure you want to post announcement to website?",
+                text: "You won't be able to undo this (and changes will be locked).",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Post Announcement',
+                }).then((result) => {
+                    if (result.value) {
+                        var datas = {
+                            announcement_id: this.announcementslist[index].announcement_id,
+                        };
+                        var urls = window.App.baseUrl + "Announcements/postAnnouncement";
+                        showloading();
+                        axios.post(urls, datas)
+                            .then(function (e) {
+                                Swal.close();
+                                Toast.fire({
+                                    type: e.data.type,
+                                    title: e.data.message
+                                })
+                                announcements.announcementslist[index].status = 1;
+                            })
+                            .catch(function (error) {
+                                console.log(error)
+                            }); 
+                    }else{
+                        Toast.fire({
+                            type: "error",
+                            title: "Cancelled Posting of Announcement."
+                        })
+                    }
+            })
         },
     }, mounted: function () {
         this.getAnnouncements();

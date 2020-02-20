@@ -36,9 +36,11 @@
                                     <td>{{list.title}}</td>
                                     <td>{{list.date_added}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-success btn-xs" @click="editAnnouncement(list.announcement_id)"><i class="fas fa-edit"></i></button>
-                                        <button type="button" class="btn btn-success btn-xs" @click="postAnnouncement(list.announcement_id)"><i class="fas fa-share-square"></i></button>
-                                        <!-- <span class="badge badge-success">POSTED</span> -->
+                                        <button v-if="list.status==1" type="button" class="btn btn-primary btn-xs" @click="viewAnnouncementDetails(list.announcement_id)"><i class="fas fa-eye"></i></button>
+                                        <button v-else type="button" class="btn btn-success btn-xs" @click="viewAnnouncementDetails(list.announcement_id)"><i class="fas fa-edit"></i></button>
+                                        
+                                        <span v-if="list.status==1" class="badge badge-primary">POSTED</span>
+                                        <button v-else type="button" class="btn btn-success btn-xs" @click="postAnnouncement(index)"><i class="fas fa-share-square"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -115,18 +117,18 @@
                         </tr>
                         <tr>
                             <th width="10%">Title:</th>
-                            <th><input type="text" class="form-control smallerinput" v-model="announcementdetails.title" required></th>
+                            <th><input type="text" :disabled="disabled_edit" class="form-control smallerinput" v-model="announcementdetails.title" required></th>
                         </tr>
                         <tr>
                             <th width="10%">Text:</th>
                             <th>
-                                <textarea class="form-control" rows=2 v-model="announcementdetails.text"></textarea>
+                                <textarea :disabled="disabled_edit" class="form-control" rows=2 v-model="announcementdetails.text"></textarea>
                             </th>
                         </tr>
                         <tr>
                             <th width="10%">Photos:</th>
                             <th>
-                                <input type="file" accept="image/*" ref="fileedit">
+                                <input :disabled="disabled_edit" type="file" accept="image/*" ref="fileedit">
                                 <img v-if="announcementdetails.photos!=null" style="width:100%;" v-bind:src="'data:image/jpeg;base64,'+announcementdetails.photos"/>
                             </th>
                         </tr>
@@ -136,7 +138,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <button type="submit" class="btn btn-primary" v-if="announcementdetails.status!=1">Save Changes</button>
             </div>
         </div>
     </div>

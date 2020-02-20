@@ -89,5 +89,35 @@ class Announcements extends CI_Controller {
         );
         response_json($response);
     }
+
+    public function postAnnouncement()
+    {
+        $data = jsondata();
+        
+        if(!empty($data)){
+            $announcement_id = $data["announcement_id"];
+
+            $dataupdate = [
+                "status"        => 1,
+                "date_posted"   => date("Y-m-d H:i:s")
+            ];
+            $updatequery = $this->Main->update("tbl_announcements",["announcement_id"=>$announcement_id],$dataupdate,"");
+
+            $success = true;
+            $message = "Announcement was posted successfully.";
+            $type = "success";
+        }else{
+            $success = false;
+            $message = "Announcement was not posted.";
+            $type = "warning";
+        }
+
+        $response = array(
+            "success"   => $success,
+            "message"   => $message,
+            "type"      => $type,
+        );
+        response_json($response);
+    }
     
 }
