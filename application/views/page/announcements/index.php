@@ -36,8 +36,8 @@
                                     <td>{{list.title}}</td>
                                     <td>{{list.date_added}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-success btn-xs"><i class="fas fa-edit"></i></button>
-                                        <button type="button" class="btn btn-success btn-xs"><i class="fas fa-share-square"></i></button>
+                                        <button type="button" class="btn btn-success btn-xs" @click="editAnnouncement(list.announcement_id)"><i class="fas fa-edit"></i></button>
+                                        <button type="button" class="btn btn-success btn-xs" @click="postAnnouncement(list.announcement_id)"><i class="fas fa-share-square"></i></button>
                                         <!-- <span class="badge badge-success">POSTED</span> -->
                                     </td>
                                 </tr>

@@ -56,6 +56,26 @@ var announcements = new Vue({
                     console.log(error)
                 });
         },
+        postAnnouncement(announcement_id){
+
+        },
+        editAnnouncement(announcement_id){
+            var datas = {
+                "condition" : { announcement_id: announcement_id },
+                "type"      : "row"
+            }
+            var urls = window.App.baseUrl + "Announcements/getAnnouncements";
+            showloading("Fetching Data from Server");
+            axios.post(urls, datas)
+                .then(function (e) {
+                    Swal.close();
+                    announcements.announcementdetails = e.data.data.announcementslist;
+                    $('#editAnnouncementModal').modal('show');
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        }
     }, mounted: function () {
         this.getAnnouncements();
     },
