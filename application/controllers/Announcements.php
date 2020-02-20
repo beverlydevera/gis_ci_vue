@@ -7,15 +7,6 @@ class Announcements extends CI_Controller {
     {
         parent::__construct();
         $this->load->model("Main");
-        
-        // $config['upload_path'] = './uploads/';
-        // $config['allowed_types'] = 'gif|jpg|png';
-        // $config['max_size']  = '100';
-        // $config['max_width'] = '1024';
-        // $config['max_height'] = '768';
-
-        // $this->load->library('upload', $config);
-
         checkLogin();
 	}
 	
@@ -26,6 +17,37 @@ class Announcements extends CI_Controller {
         $data['vfile'] = "page/announcements/index";
         $data['js'] = array('pages/announcements.js');
         $this->load->view('layout/main', $data);
+    }
+
+    public function getAnnouncements()
+    {
+        $type = $groupby=""; $condition = $pager = $orderby = $join = [];
+        $data = jsondata();
+
+        if(!empty($data)){
+            if(!empty($data['type'])){ $type = $data['type']; }
+            if(!empty($data['groupby'])){ $groupby = $data['groupby']; }
+            if(!empty($data['condition'])){ $condition = $data['condition']; }
+            if(!empty($data['pager'])){ $pager = $data['pager']; }
+            if(!empty($data['orderby'])){ $orderby = $data['orderby']; }
+            if(!empty($data['join'])){ $join = $data['join']; }
+        }
+        $announcementslist = $this->Main->getDataOneJoin("announcement_id,title,date_added","tbl_announcements a",$join,$condition,$pager,$orderby,$groupby,$type);
+        
+        if(!empty($announcementslist)){
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    "announcementslist" => $announcementslist
+                ]
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
     }
 
     public function saveNewAnnouncement()
@@ -63,34 +85,6 @@ class Announcements extends CI_Controller {
             ]
         );
         response_json($response);
-
-        // insert($table, $data, $return = false)
-        // $file = addslashes(file_get_contents($_FILES['file']['tmp_name']));
-        // $query = $this->Main->raw("INSERT INTO tbl_announcements (photos) VALUES ('$file')");
-        // File name
-
-        // $filename = $_FILES['file']['name'];
-
-        // // Valid file extensions
-        // $valid_extensions = array("jpg","jpeg","png","pdf");
-
-        // // File extension
-        // $extension = pathinfo($filename, PATHINFO_EXTENSION);
-
-        // // Check extension
-        // if(in_array(strtolower($extension),$valid_extensions) ) {
-
-        // // Upload file
-        // if(move_uploaded_file($_FILES['file']['tmp_name'], "uploads/".$filename)){
-        //     echo 1;
-        // }else{
-        //     echo 0;
-        // }
-        // }else{
-        // echo 0;
-        // }
-
-        // exit;
     }
     
 }

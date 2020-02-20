@@ -7,6 +7,7 @@ var announcements = new Vue({
             text: "",
             photo: ""
         },
+        announcementslist: []
     },
     methods: {
         saveNewAnnouncement: function(){
@@ -19,23 +20,43 @@ var announcements = new Vue({
             formData.append('file', this.file.photo);
 
             var urls = window.App.baseUrl + "Announcements/saveNewAnnouncement";
+            showloading();
             axios.post(urls, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
             .then(function (e) {
+                Swal.close();
                 Swal.fire({
                     type: e.data.type,
                     title: e.data.message
                 }).then(function (e) {
                     $('#addNewAnnouncementModal').modal('hide');
-                    //push to announcementslist
+                    announcements.getAnnouncements();
+                    announcements.file = {
+                        title: "",
+                        text: "",
+                        photo: ""
+                    };
+                    announcements.$refs.file.type = 'text';
+                    announcements.$refs.file.type = 'file';
                 })
 
             })
             .catch(function (error) {
                 console.log(error);
             });
-
-        }
+        },
+        getAnnouncements(){
+            var urls = window.App.baseUrl + "Announcements/getAnnouncements";
+            showloading("Fetching Data from Server");
+            axios.post(urls, "")
+                .then(function (e) {
+                    swal.close();
+                    announcements.announcementslist = e.data.data.announcementslist;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
     }, mounted: function () {
-        // this.getStudents();
+        this.getAnnouncements();
     },
 })

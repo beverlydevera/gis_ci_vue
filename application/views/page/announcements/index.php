@@ -30,11 +30,11 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody v-for="(list,index) in announcementslist">
                                 <tr>
-                                    <td>1</td>
-                                    <td>Sample Announcement 1</td>
-                                    <td>January 20, 2020</td>
+                                    <td>{{index+1}}</td>
+                                    <td>{{list.title}}</td>
+                                    <td>{{list.date_added}}</td>
                                     <td>
                                         <button type="button" class="btn btn-success btn-xs"><i class="fas fa-edit"></i></button>
                                         <button type="button" class="btn btn-success btn-xs"><i class="fas fa-share-square"></i></button>
