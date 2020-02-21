@@ -11,12 +11,35 @@ class Register extends CI_Controller {
 	
 	public function index()
 	{
-        $data['title'] = "Registration";
-        $data['vueid'] = "register_page";
-        // $data['vfile'] = "page/register";
-        // $data['js'] = array('pages/register.js');
-        // $this->load->view('layout/main', $data);
+        $data['title'] = "Bravehearts | User Registration";
+        $data['js'] = array('pages/register.js');
         $this->load->view('page/register',$data);
+    }
+
+    public function checkifAccountExist()
+    {
+        $data = jsondata();
+        
+        if(!empty($data)){
+            $inputcol = $data['inputcol'];
+            $datacheck = $data['datacheck'];
+
+            $count = $this->Main->count("tbl_users",$datacheck);
+            if($count>0){
+                $success = true;
+                $type = "warning";
+                $message = $inputcol." already exist.";
+            }
+        }else{
+            $success = false;
+            $message = $type = "";
+        }
+        $response = array(
+            "success"   => $success,
+            "type"      => $type,
+            "message"   => $message
+        );
+        response_json($response);
     }
     
 }
