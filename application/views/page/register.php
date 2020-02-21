@@ -76,7 +76,7 @@
             </div>
           </div>
           <div class="input-group col-md-4">
-            <input type="email" class="form-control" @blue="checkifAccountExist('Email Address')" placeholder="Email" v-model="registration_info.emailadd">
+            <input type="email" class="form-control" @blur="checkifAccountExist('Email Address')" placeholder="Email" v-model="registration_info.emailadd">
             <div class="input-group-append">
                 <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -95,7 +95,7 @@
 
       <div class="row mb-3">
           <div class="input-group col-md-6">
-            <input type="password" class="form-control" @blur="checkPasswordSame()" placeholder="Password" v-model="registration_info.password">
+            <input type="password" class="form-control" @blur="checkPasswordSame()" placeholder="Password" v-model="registration_info.password" required>
             <div class="input-group-append">
                 <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -103,7 +103,7 @@
             </div>
           </div>
           <div class="input-group col-md-6">
-            <input type="password" class="form-control" @blur="checkPasswordSame()" placeholder="Confirm Password" v-model="registration_info.confirmpass">
+            <input type="password" class="form-control" @blur="checkPasswordSame()" placeholder="Confirm Password" v-model="registration_info.confirmpass" required>
             <div class="input-group-append">
                 <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -115,7 +115,7 @@
       <div class="row">
         <div class="col-8">
         <div class="icheck-primary">
-            <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+            <input type="checkbox" id="agreeTerms" name="terms" value="agree" required>
             <label for="agreeTerms">
             I agree to the <a href="#modal">terms and conditions</a>
             </label>

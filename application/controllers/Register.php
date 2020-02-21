@@ -7,6 +7,7 @@ class Register extends CI_Controller {
     {
         parent::__construct();
         $this->load->model("Main");
+        $this->load->library("Bcrypt");
 	}
 	
 	public function index()
@@ -19,6 +20,8 @@ class Register extends CI_Controller {
     public function checkifAccountExist()
     {
         $data = jsondata();
+        $success = false;
+        $message = $type = "";
         
         if(!empty($data)){
             $inputcol = $data['inputcol'];
@@ -30,9 +33,40 @@ class Register extends CI_Controller {
                 $type = "warning";
                 $message = $inputcol." already exist.";
             }
+        }
+        $response = array(
+            "success"   => $success,
+            "type"      => $type,
+            "message"   => $message
+        );
+        response_json($response);
+    }
+
+    public function registerNewUser()
+    {
+        $data = jsondata();
+        $success = false;
+
+        if(!empty($data)){
+            unset($data['confirmpass']);
+            $data['status'] = 0;
+            $data['role'] = 0;
+            $data['password'] = $this->bcrypt->hash_password($data['password']);
+            $data['date_added'] = date("Y-m-d H:i:s");
+
+            $insertquery = $this->Main->insert("tbl_users",$data,"");
+
+            if(!empty($insertquery)){                
+                $success = true;
+                $message = "Registration complete.\nContact System Administrator for account activation.";
+                $type = "success";
+            }else{
+                $message = "Registration Error";
+                $type = "danger";                
+            }
         }else{
-            $success = false;
-            $message = $type = "";
+            $message = "Please fill out required fields";
+            $type = "warning";
         }
         $response = array(
             "success"   => $success,
