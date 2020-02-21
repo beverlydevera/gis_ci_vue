@@ -49,7 +49,17 @@ var register = new Vue({
                 });
         },
         checkPasswordSame(){
+            var newpass = this.registration_info.password;
+            var conpass = this.registration_info.confirmpass;
 
+            if(conpass!=""){
+                if(newpass!=conpass){
+                    Toast.fire({
+                        type: "warning",
+                        title: "Passwords do not match"
+                    }) 
+                }
+            }
         },
         registerNewAccount(){
 
