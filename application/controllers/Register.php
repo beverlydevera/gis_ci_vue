@@ -49,8 +49,8 @@ class Register extends CI_Controller {
 
         if(!empty($data)){
             unset($data['confirmpass']);
-            $data['status'] = 0;
-            $data['role'] = 0;
+            $data['status'] = 1;
+            $data['role'] = 2;
             $data['password'] = $this->bcrypt->hash_password($data['password']);
             $data['date_added'] = date("Y-m-d H:i:s");
 
@@ -58,7 +58,7 @@ class Register extends CI_Controller {
 
             if(!empty($insertquery)){                
                 $success = true;
-                $message = "Registration complete.\nContact System Administrator for account activation.";
+                $message = "Registration complete.\nYou may now login your account.";
                 $type = "success";
             }else{
                 $message = "Registration Error";

@@ -8,6 +8,7 @@ class Users extends CI_Controller {
         parent::__construct();
         $this->load->model("Main");
         $this->load->library("Bcrypt");
+        $this->load->library('session');
         checkLogin();
 	}
     
@@ -82,11 +83,17 @@ class Users extends CI_Controller {
                 "emailadd"  => $data['emailadd'],
             ];
         }
-        if(!empty($data['branch_id'])){ $dataupdate["branch_id"]=$data['branch_id']; }
-        if(!empty($data['role'])){ $dataupdate["role"]=$data['role']; }
 
         if(!empty($data)){
             $user_id = $data['user_id'];
+            
+            if(!empty($data['branch_id'])){ $dataupdate["branch_id"]=$data['branch_id']; }
+            if(!empty($data['role'])){ 
+                $dataupdate["role"]=$data['role'];
+                if($user_id==sesdata('id')){
+                    $this->session->set_userdata('role', $data['role']);                
+                }
+            }
 
             $updatequery = $this->Main->update("tbl_users", ["user_id"=>$user_id], $dataupdate,"");
 
