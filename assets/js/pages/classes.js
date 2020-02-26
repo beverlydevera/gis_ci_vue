@@ -5,7 +5,12 @@ var classsched = new Vue({
         class_id:$('#class_id').val(),
         classschedinfo: {},
         classschedsheld: [],
-        classstudents: []
+        classstudents: [],
+        newClassAttendance: [],
+        addStudent: {
+            searchInput: "",
+            searchstudentslist: []
+        }        
     },
     methods: {
         getClassSchedulesList(){
@@ -34,28 +39,48 @@ var classsched = new Vue({
             };
             var datas = frmdata(datas);
             var urls = window.App.baseUrl + "Classes/getclassSchedInfo";
+            showloading("Loading Data");
             axios.post(urls, datas)
                 .then(function (e) {
+                    Swal.close();
                     classsched.classschedinfo   = e.data.data.classschedinfo;
                     classsched.classschedsheld  = e.data.data.classschedsheld;
                     classsched.classstudents    = e.data.data.classstudents;
                     classsched.classstudents.forEach((e,index) => {
                         classsched.classstudents[index].details = JSON.parse(e.details);
                     });
-                    // classsched.classAttendanceInfo.schedule_date = formatDate(currentdate);
-                    // classsched.classAttendanceInfo.attendance = [];
-                    // e.data.data.classStudents.forEach(e => {
-                    //     classsched.classAttendanceInfo.attendance.push({
-                    //         student_id: e.student_id,
-                    //         studpack_id: e.studpack_id,
-                    //         status: true
-                    //     })
-                    // });
+                    // classsched.classschedinfo.schedule_date = formatDate(currentdate);
+                    e.data.data.classstudents.forEach(e => {
+                        classsched.newClassAttendance.push({
+                            student_id: e.student_id,
+                            studpack_id: e.studpack_id,
+                            status: true
+                        })
+                    });
                 })
                 .catch(function (error) {
                     console.log(error)
                 });
         },
+        searchStudent(){
+            var existing = ["0"];
+            this.newClassAttendance.forEach(e => {
+                existing.push(e.student_id);
+            });
+            var datas = { 
+                searchInput: this.addStudent.searchInput,
+                existing: existing
+            };
+            var datas = frmdata(datas);
+            var urls = window.App.baseUrl + "Classes/getStudentsList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    classsched.addStudent.searchstudentslist = e.data.data.studentslist;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        }
     }, mounted: function () {
         this.getClassSchedulesList();
         if(this.class_id!=0){

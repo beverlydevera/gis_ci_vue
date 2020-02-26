@@ -38,7 +38,7 @@
                         <!-- filters -->
                     </div>
                     <div class="col-md-3">
-                        <a style="float:right;" @click="getclassSchedInfo()" data-target="#addNewClassAttendanceModal" data-toggle="modal" class="btn bg-gradient-primary btn-xs">Add New Class Attendance</a>
+                        <a style="float:right;" data-target="#addNewClassAttendanceModal" data-toggle="modal" class="btn bg-gradient-primary btn-xs">Add New Class Attendance</a>
                     </div>
                 </div>
                 <table class="table table-bordered table-responsive-sm table-sm">
@@ -112,7 +112,7 @@
   </div>
 </div>
 
-<!-- <div class="modal fade" id="addNewClassAttendanceModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="addNewClassAttendanceModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -125,7 +125,7 @@
               <div class="row">
                 <div class="col-md-5">
                   <h6>Class Date:</h6>
-                  <input type="date" class="form-control smallerinput" max="<?=date("Y-m-d")?>" v-model="classAttendanceInfo.schedule_date"/>
+                  <input type="date" class="form-control smallerinput" max="<?=date("Y-m-d")?>" v-model="classschedinfo.schedule_date"/>
                 </div>
               </div>
               <hr>
@@ -148,30 +148,52 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(list,index) in classStudents" :value="list.student_id">
+                      <tr v-for="(list,index) in classstudents" :value="list.student_id">
                         <td>{{index+1}}</td>
                         <td>
                           <label class="container">
-                            <input type="checkbox" v-model="classAttendanceInfo.attendance[index].status"><span class="checkmark"></span>
+                            <input type="checkbox" v-if="newClassAttendance[index].student_id=list.student_id" v-model="newClassAttendance[index].status"><span class="checkmark"></span>
                           </label>
                         </td>
                         <td>{{list.reference_id}}</td>
                         <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
                         <td>{{list.sex}}</td>
-                        <td>{{list.sessions-list.sessions_attended}}</td>
+                        <td>{{list.details.sessions-list.details.sessions_attended}}</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
+              <br>
+              <div class="row">
+                <div class="col-md-6">
+                  <input type="text" class="form-control smallerinput" placeholder="Search Student" @input="searchStudent" v-model="addStudent.searchInput">
+                </div>
+                <table class="table table-bordered table-responsive-sm table-sm">
+                  <thead><tr>
+                    <th>#</th>
+                    <th>Student Reference ID</th>
+                    <th>Name</th>
+                    <th>Add to List</th>
+                  </tr></thead>
+                  <tbody v-for="(list,index) in addStudent.searchstudentslist">
+                    <tr>
+                      <td>{{index+1}}</td>
+                      <td>{{list.reference_id}}</td>
+                      <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
+                      <td><button class="btn btn-primary btn-xs">Add to Attendance List</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" @click="addNewAttendanceInfo()" class="btn btn-primary">Submit</button>
+                <!-- <button type="submit" @click="addNewAttendanceInfo()" class="btn btn-primary">Submit</button> -->
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-</div> -->
+</div>
 
 <!-- <div class="modal fade" id="editClassAttendanceModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">

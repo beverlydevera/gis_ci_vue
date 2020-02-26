@@ -8,6 +8,7 @@ class Classes extends CI_Controller {
         parent::__construct();
         $this->load->model("Main");
         $this->load->model("Classes_model", "classes");
+        $this->load->model("Students_model", "students");
         date_default_timezone_set("Asia/Manila");
         checkLogin();
 	}
@@ -349,6 +350,30 @@ class Classes extends CI_Controller {
             "type"      => $type,
             "data"      => $data
         );
+        response_json($response);
+    }
+
+    public function getStudentsList()
+    {
+        $searchInput = $this->input->post('searchInput');
+        $existing = $this->input->post('existing');
+        $condition = "(firstname LIKE '%$searchInput%' OR middlename LIKE '%$searchInput%' OR lastname LIKE '%$searchInput%' OR reference_id LIKE '%$searchInput%')
+        AND student_id NOT IN ($existing)";
+        $students = $this->students->getStudents("*","tbl_students",$condition,"","");
+        
+        if(!empty($students)){
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    "studentslist" => $students
+                ]
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
         response_json($response);
     }
 
