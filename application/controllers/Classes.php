@@ -8,7 +8,6 @@ class Classes extends CI_Controller {
         parent::__construct();
         $this->load->model("Main");
         $this->load->model("Classes_model", "classes");
-        $this->load->model("Students_model", "students");
         date_default_timezone_set("Asia/Manila");
         checkLogin();
 	}
@@ -358,8 +357,9 @@ class Classes extends CI_Controller {
         $searchInput = $this->input->post('searchInput');
         $existing = $this->input->post('existing');
         $condition = "(firstname LIKE '%$searchInput%' OR middlename LIKE '%$searchInput%' OR lastname LIKE '%$searchInput%' OR reference_id LIKE '%$searchInput%')
-        AND student_id NOT IN ($existing)";
-        $students = $this->students->getStudents("*","tbl_students",$condition,"","");
+        AND s.student_id NOT IN ($existing)";
+        // $students = $this->classes->getStudents("*","tbl_students",$condition,"","");
+        $students  = $this->classes->getStudentsEnrolled("*",$condition,"","","","");
         
         if(!empty($students)){
             $response = array(
@@ -387,7 +387,25 @@ class Classes extends CI_Controller {
             $datainsert['attendance'] = json_encode($datainsert['attendance']);
 
             $insertquery = $this->Main->insert("tbl_classscheds",$datainsert,true);
-            $lastid = $insertquery['lastid'];
+            $classsched_id = $insertquery['lastid'];
+
+            $studattarr = [];
+            foreach($data['attendanceinfo']['attendance'] as $dtk => $dtv){
+                $studatt = [
+                    "student_id"    => $dtv['student_id'],
+                    "classsched_id" => $classsched_id,
+                    "status"        => $dtv['status'],
+                    "date_added"    => date("Y-m-d H:i:s")
+                ];
+                array_push($studattarr,$studatt);
+
+                if($dtv['status']){
+                    $studpack_id = $dtv['studpack_id'];
+                    $sessions_attended = $this->Main->raw("SELECT JSON_EXTRACT(details, '$.sessions_attended') as sessions_attended FROM tbl_studentpackages WHERE studpack_id=$studpack_id",true)->sessions_attended;
+                    $this->Main->raw("UPDATE tbl_studentpackages SET details = JSON_SET(details,'$.sessions_attended',$sessions_attended+1) WHERE studpack_id=$studpack_id","","update");
+                }
+            }
+            $this->Main->insertbatch("tbl_studentattendance",$studattarr);
 
             if(!empty($insertquery)){
                 $success = true;

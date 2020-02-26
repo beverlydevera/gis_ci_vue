@@ -94,6 +94,10 @@ var classsched = new Vue({
 
                     classsched.classstudents = e.data.data.classstudents;
                     if(e.data.data.classstudents!=null){
+                        classsched.newClassAttendance = {
+                            schedule_date: "",
+                            attendance: []
+                        };
                         classsched.classstudents.forEach((e,index) => {
                             classsched.classstudents[index].details = JSON.parse(e.details);
                             if(classsched.newClassAttendance!=null){
@@ -155,7 +159,7 @@ var classsched = new Vue({
             this.classstudents.push(studentsdata);
 
             var attendancedata = {
-                studpack_id: 0,
+                studpack_id: this.addStudent.searchstudentslist[index].studpack_id,
                 student_id: this.addStudent.searchstudentslist[index].student_id,
                 status: true,
                 remove: true
@@ -175,7 +179,9 @@ var classsched = new Vue({
         },
         submitNewAttendanceInfo(){
             this.newClassAttendance.schedule_id = this.classschedinfo.schedule_id;
-            var datas = { attendanceinfo: this.newClassAttendance };
+            var datas = { 
+                attendanceinfo: this.newClassAttendance
+            };
             var urls = window.App.baseUrl + "Classes/submitNewAttendanceInfo";
             showloading();
             axios.post(urls, datas)
@@ -186,10 +192,7 @@ var classsched = new Vue({
                         title: e.data.message
                     }).then(function (e) {
                         $('#addNewClassAttendanceModal').modal('hide');
-                        classsched.newClassAttendance = {
-                            schedule_date: "",
-                            attendance: []
-                        };
+                        
                         classsched.addStudent = {
                             searchInput: "",
                             searchstudentslist: []
