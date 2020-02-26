@@ -6,7 +6,10 @@ var classsched = new Vue({
         classschedinfo: {},
         classschedsheld: [],
         classstudents: [],
-        newClassAttendance: [],
+        newClassAttendance: {
+            schedule_date: "",
+            attendance: []
+        },
         addStudent: {
             searchInput: "",
             searchstudentslist: []
@@ -51,7 +54,7 @@ var classsched = new Vue({
                     });
                     // classsched.classschedinfo.schedule_date = formatDate(currentdate);
                     e.data.data.classstudents.forEach(e => {
-                        classsched.newClassAttendance.push({
+                        classsched.newClassAttendance.attendance.push({
                             student_id: e.student_id,
                             studpack_id: e.studpack_id,
                             status: true,
@@ -66,7 +69,7 @@ var classsched = new Vue({
         searchStudent(){
             if(this.addStudent.searchInput!=""){
                 var existing = ["0"];
-                this.newClassAttendance.forEach(e => {
+                this.newClassAttendance.attendance.forEach(e => {
                     existing.push(e.student_id);
                 });
                 var datas = { 
@@ -105,18 +108,37 @@ var classsched = new Vue({
                 status: true,
                 remove: true
             };
-            this.newClassAttendance.push(attendancedata);
+            this.newClassAttendance.attendance.push(attendancedata);
 
             this.addStudent.searchstudentslist.splice(index, 1);
         },
         removefromAttendance(action,index){
             if(action=="add"){
                 this.classstudents.splice(index, 1);
-                this.newClassAttendance.splice(index, 1);
+                this.newClassAttendance.attendance.splice(index, 1);
                 this.searchStudent();
             }else if(action=="edit"){
 
             }
+        },
+        submitNewAttendanceInfo(){
+            this.newClassAttendance.schedule_id = this.classschedinfo.schedule_id;
+            var datas = { attendanceinfo: this.newClassAttendance };
+            var urls = window.App.baseUrl + "Classes/submitNewAttendanceInfo";
+            showloading();
+            axios.post(urls, datas)
+                .then(function (e) {
+                    Swal.close();
+                    Swal.fire({
+                        type: e.data.type,
+                        title: e.data.message
+                    })
+                    $('#addNewClassAttendanceModal').modal('hide');
+                    // classsched.addStudent.searchstudentslist = e.data.data.studentslist;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
         }
     }, mounted: function () {
         this.getClassSchedulesList();

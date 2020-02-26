@@ -125,7 +125,7 @@
               <div class="row">
                 <div class="col-md-5">
                   <h6>Class Date:</h6>
-                  <input type="date" class="form-control smallerinput" max="<?=date("Y-m-d")?>" v-model="classschedinfo.schedule_date"/>
+                  <input type="date" class="form-control smallerinput" max="<?=date("Y-m-d")?>" v-model="newClassAttendance.schedule_date"/>
                 </div>
               </div>
               <hr>
@@ -152,13 +152,13 @@
                         <td>{{index+1}}</td>
                         <td>
                           <label class="container">
-                            <input type="checkbox" v-if="newClassAttendance[index].student_id=list.student_id" v-model="newClassAttendance[index].status"><span class="checkmark"></span>
+                            <input type="checkbox" v-if="newClassAttendance.attendance[index].student_id=list.student_id" v-model="newClassAttendance.attendance[index].status"><span class="checkmark"></span>
                           </label>
                         </td>
                         <td>{{list.reference_id}}</td>
                         <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
                         <td>{{list.sex}}</td>
-                        <td v-if="newClassAttendance[index].remove">
+                        <td v-if="newClassAttendance.attendance[index].remove">
                           <button type="button" class="btn btn-danger btn-xs" @click="removefromAttendance('add',index)"><i class="fas fa-minus"></i></button>
                         </td>
                         <td v-else>{{list.details.sessions-list.details.sessions_attended}}</td>
@@ -193,7 +193,7 @@
               </div>
             </div>
             <div class="modal-footer">
-                <!-- <button type="submit" @click="addNewAttendanceInfo()" class="btn btn-primary">Submit</button> -->
+                <button type="submit" @click="submitNewAttendanceInfo()" class="btn btn-primary">Submit</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>

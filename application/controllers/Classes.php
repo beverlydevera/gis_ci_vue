@@ -377,4 +377,35 @@ class Classes extends CI_Controller {
         response_json($response);
     }
 
+    public function submitNewAttendanceInfo()
+    {
+        $data = jsondata();
+
+        if(!empty($data)){
+            $datainsert = $data['attendanceinfo'];
+            $datainsert['date_added'] = date("Y-m-d H:i:s");
+            $datainsert['attendance'] = json_encode($datainsert['attendance']);
+
+            $insertquery = $this->Main->insert("tbl_classscheds",$datainsert,true);
+            $lastid = $insertquery['lastid'];
+
+            if(!empty($insertquery)){
+                $success = true;
+                $type = "success";
+                $message = "Attendance was saved successfully.";
+            }
+        }else{
+            $success = false;
+            $type = "warning";
+            $message = "Attendance was not saved";
+        }
+
+        $response = array(
+            'success'   => $success,
+            'type'      => $type,
+            'message'   => $message,
+        );
+        response_json($response);
+    }
+
 }
