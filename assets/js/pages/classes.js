@@ -54,7 +54,8 @@ var classsched = new Vue({
                         classsched.newClassAttendance.push({
                             student_id: e.student_id,
                             studpack_id: e.studpack_id,
-                            status: true
+                            status: true,
+                            remove: false
                         })
                     });
                 })
@@ -63,23 +64,59 @@ var classsched = new Vue({
                 });
         },
         searchStudent(){
-            var existing = ["0"];
-            this.newClassAttendance.forEach(e => {
-                existing.push(e.student_id);
-            });
-            var datas = { 
-                searchInput: this.addStudent.searchInput,
-                existing: existing
-            };
-            var datas = frmdata(datas);
-            var urls = window.App.baseUrl + "Classes/getStudentsList";
-            axios.post(urls, datas)
-                .then(function (e) {
-                    classsched.addStudent.searchstudentslist = e.data.data.studentslist;
-                })
-                .catch(function (error) {
-                    console.log(error)
+            if(this.addStudent.searchInput!=""){
+                var existing = ["0"];
+                this.newClassAttendance.forEach(e => {
+                    existing.push(e.student_id);
                 });
+                var datas = { 
+                    searchInput: this.addStudent.searchInput,
+                    existing: existing
+                };
+                var datas = frmdata(datas);
+                var urls = window.App.baseUrl + "Classes/getStudentsList";
+                axios.post(urls, datas)
+                    .then(function (e) {
+                        classsched.addStudent.searchstudentslist = e.data.data.studentslist;
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+            }
+        },
+        addtoAttendance(index){
+            var studentsdata = {
+                student_id     : this.addStudent.searchstudentslist[index].student_id,
+                lastname       : this.addStudent.searchstudentslist[index].lastname,
+                firstname      : this.addStudent.searchstudentslist[index].firstname,
+                middlename     : this.addStudent.searchstudentslist[index].middlename,
+                reference_id   : this.addStudent.searchstudentslist[index].reference_id,
+                sex            : this.addStudent.searchstudentslist[index].sex,
+                details:{
+                    sessions: 0,
+                    sessions_attended: 0
+                }
+            };
+            this.classstudents.push(studentsdata);
+
+            var attendancedata = {
+                studpack_id: 0,
+                student_id: this.addStudent.searchstudentslist[index].student_id,
+                status: true,
+                remove: true
+            };
+            this.newClassAttendance.push(attendancedata);
+
+            this.addStudent.searchstudentslist.splice(index, 1);
+        },
+        removefromAttendance(action,index){
+            if(action=="add"){
+                this.classstudents.splice(index, 1);
+                this.newClassAttendance.splice(index, 1);
+                this.searchStudent();
+            }else if(action=="edit"){
+
+            }
         }
     }, mounted: function () {
         this.getClassSchedulesList();

@@ -158,7 +158,10 @@
                         <td>{{list.reference_id}}</td>
                         <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
                         <td>{{list.sex}}</td>
-                        <td>{{list.details.sessions-list.details.sessions_attended}}</td>
+                        <td v-if="newClassAttendance[index].remove">
+                          <button type="button" class="btn btn-danger btn-xs" @click="removefromAttendance('add',index)"><i class="fas fa-minus"></i></button>
+                        </td>
+                        <td v-else>{{list.details.sessions-list.details.sessions_attended}}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -174,6 +177,7 @@
                     <th>#</th>
                     <th>Student Reference ID</th>
                     <th>Name</th>
+                    <th>Sex</th>
                     <th>Add to List</th>
                   </tr></thead>
                   <tbody v-for="(list,index) in addStudent.searchstudentslist">
@@ -181,7 +185,8 @@
                       <td>{{index+1}}</td>
                       <td>{{list.reference_id}}</td>
                       <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
-                      <td><button class="btn btn-primary btn-xs">Add to Attendance List</button></td>
+                      <td>{{list.sex}}</td>
+                      <td><button class="btn btn-primary btn-xs" @click="addtoAttendance(index)">Add to Attendance List</button></td>
                     </tr>
                   </tbody>
                 </table>
