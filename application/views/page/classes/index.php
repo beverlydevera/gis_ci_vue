@@ -35,12 +35,6 @@
                                     <option>Monday</option>
                                 </select>
                             </div>
-                            <!-- <div class="col-md-2">
-                                <select class="form-control smallerinput">
-                                    <option disabled selected>Select Time</option>
-                                    <option>Monday</option>
-                                </select>
-                            </div> -->
                             <div class="col-md-1">
                                 <button class="btn btn-primary btn-xs">Filter</button>
                             </div>
@@ -63,7 +57,7 @@
                                 <td>{{list.class_title}}</td>
                                 <td>{{list.branch_name}}</td>
                                 <td>{{list.sched_day}}/{{list.sched_time}}</td>
-                                <td>{{list.enrollees}}</td>
+                                <td>000</td>
                                 <td>
                                     <span v-if="list.status" class="badge bg-success">Active</span>
                                     <span v-else class="badge bg-danger">Inactive</span>

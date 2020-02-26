@@ -214,6 +214,8 @@ class Classes extends CI_Controller {
         );
         response_json($response);
     }
+
+    //new functions
     
     public function getClassesList()
     {
@@ -266,6 +268,44 @@ class Classes extends CI_Controller {
                 "data"      => ""
             );
         }
+        response_json($response);
+    }
+
+    public function getClassSchedulesList()
+    {
+        $condition = $pager = $orderby = [];
+        $groupby = $type = $data = "";
+        $select = "*";
+        $data = jsondata();
+
+        if(!empty($data)){
+            if(!empty($data['select'])){ $select = $data['select']; }
+            if(!empty($data['condition'])){ $condition = $data['condition']; }
+            if(!empty($data['pager'])){ $pager = $data['pager']; }
+            if(!empty($data['orderby'])){ $orderby = $data['orderby']; }
+            if(!empty($data['groupby'])){ $groupby = $data['groupby']; }
+            if(!empty($data['type'])){ $type = $data['type']; }
+        }
+        
+        $classschedlist = $this->classes->getClassSchedList($select,$condition,$pager,$orderby,$groupby,$type);
+
+        if(!empty($classschedlist)){
+           
+            $success = true;
+            $type = "success";
+            $data = [
+                "classschedlist" => $classschedlist
+            ];
+        }else{
+            $success = false;
+            $type = "warning";
+        }
+
+        $response = array(
+            "success"   => $success,
+            "type"      => $type,
+            "data"      => $data
+        );
         response_json($response);
     }
 
