@@ -18,7 +18,7 @@
           </div>
           <div class="col-md-3">
             <b>Schedule:</b> <u>{{classschedinfo.sched_day}} / {{classschedinfo.sched_time}}</u><br>
-            <b>Enrolled:</b> <u>{{classStudents.length}}</u>
+            <b>Current Enrolled:</b> <u>{{classstudents.length}}</u>
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(list,index) in classschedsheld">
+                    <!-- <tr v-for="(list,index) in classschedsheld">
                       <td>{{index+1}}</td>
                       <td>{{changeDateFormat(list.schedule_date)}}</td>
                       <td>{{list.present + list.absent}}</td>
@@ -62,7 +62,7 @@
                       <td>{{list.absent}}</td>
                       <td>{{list.date_added}}</td>
                       <td><button class="btn btn-primary btn-xs" @click="editClassAttendanceModal(list.attendance_id)"><i class="fa fa-edit"></i></button></td>
-                    </tr>
+                    </tr> -->
                   </tbody>
                 </table>
               </div>
@@ -91,12 +91,12 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr v-for="(list,index) in classStudents" :value="list.student_id">
+                        <tr v-for="(list,index) in classstudents" :value="list.student_id">
                           <td>{{index+1}}</td>
                           <td>{{list.reference_id}}</td>
                           <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
                           <td>{{list.sex}}</td>
-                          <td>{{list.sessions-list.sessions_attended}}</td>
+                          <td>{{list.details.sessions-list.details.sessions_attended}}</td>
                           <td>
                             <a v-bind:href="'../.././students/profile/'+(list.firstname).replace(/ /g,'')+(list.lastname).replace(/ /g,'')+'-'+list.student_id" class="btn btn-primary btn-xs"><span style="color:#000;">View Profile</span></a>
                           </td>
@@ -108,23 +108,11 @@
               </div>
           </div>
       </div>
-      <!-- /.card-body -->
-      <div class="card-footer clearfix">
-        <ul class="pagination pagination-sm m-0 float-right">
-          <li class="page-item"><a class="page-link" href="#">«</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">»</a></li>
-        </ul>
-      </div>
     </div>
-    <!-- /.card -->
   </div>
-  <!-- /.col -->
 </div>
 
-<div class="modal fade" id="addNewClassAttendanceModal" tabindex="-1" role="dialog">
+<!-- <div class="modal fade" id="addNewClassAttendanceModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -150,7 +138,6 @@
                         <th style="width: 10px">#</th>
                         <th style="width: 10px">
                           <label class="container">Present
-                            <!-- <input type="checkbox"><span class="checkmark"></span> -->
                           </label>
                           <br/>
                         </th>
@@ -184,9 +171,9 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
-<div class="modal fade" id="editClassAttendanceModal" tabindex="-1" role="dialog">
+<!-- <div class="modal fade" id="editClassAttendanceModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -239,4 +226,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

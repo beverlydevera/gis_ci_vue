@@ -79,6 +79,44 @@ class Classes_model extends CI_Model {
 		return null;
 	}
 
+	public function getStudentsEnrolled($select="*",$condition=array(),$pager=array(),$orderby=array(),$groupby,$type="")
+	{
+		$this->db->select($select);
+		$this->db->from("tbl_studentpackages sp");
+		$this->db->join("tbl_students s","sp.student_id=s.student_id","inner");
+		$this->db->join("tbl_packages p","p.package_id=sp.package_id","inner");
+
+        if(!empty($condition)){
+            $this->db->where($condition);
+		}
+
+		if(!empty($orderby)){
+			$this->db->order_by($orderby['column'],$orderby['order']);
+		}
+		if(!empty($groupby)){
+			$this->db->group_by($groupby);
+		}
+
+		if (!empty($pager)) {
+		$this->db->limit($pager['limit'],$pager['offset']);
+		}
+
+		$query = $this->db->get();
+		if ($query->num_rows()) {
+
+			if ($type =="row") {
+				return $query->row();
+			}elseif($type =="count_row"){
+				return $query->num_rows();
+			}elseif($type =="is_array") {
+				return $query->result_array();
+			}else{
+				return $query->result();
+			}
+		}
+		return null;
+	}
+
 }
 
 /* End of file Recruitment_model.php */
