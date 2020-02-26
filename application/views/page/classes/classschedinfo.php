@@ -54,15 +54,15 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!-- <tr v-for="(list,index) in classschedsheld">
+                    <tr v-for="(list,index) in classschedsheld">
                       <td>{{index+1}}</td>
                       <td>{{changeDateFormat(list.schedule_date)}}</td>
                       <td>{{list.present + list.absent}}</td>
                       <td>{{list.present}}</td>
                       <td>{{list.absent}}</td>
                       <td>{{list.date_added}}</td>
-                      <td><button class="btn btn-primary btn-xs" @click="editClassAttendanceModal(list.attendance_id)"><i class="fa fa-edit"></i></button></td>
-                    </tr> -->
+                      <td><button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></button></td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -91,7 +91,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr v-for="(list,index) in classstudents" :value="list.student_id">
+                        <tr v-for="(list,index) in classstudents">
                           <td>{{index+1}}</td>
                           <td>{{list.reference_id}}</td>
                           <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
@@ -147,8 +147,8 @@
                         <th>Remaining Sessions</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr v-for="(list,index) in classstudents" :value="list.student_id">
+                    <tbody v-if="classstudents!=null">
+                      <tr v-for="(list,index) in classstudents">
                         <td>{{index+1}}</td>
                         <td>
                           <label class="container">
@@ -158,16 +158,16 @@
                         <td>{{list.reference_id}}</td>
                         <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
                         <td>{{list.sex}}</td>
-                        <td v-if="newClassAttendance.attendance[index].remove">
-                          <button type="button" class="btn btn-danger btn-xs" @click="removefromAttendance('add',index)"><i class="fas fa-minus"></i></button>
+                        <td v-if="newClassAttendance.attendance[index].student_id=list.student_id">
+                          <button v-if="newClassAttendance.attendance[index].remove" type="button" class="btn btn-danger btn-xs" @click="removefromAttendance('add',index)"><i class="fas fa-minus"></i></button>
+                          <span v-else>{{list.details.sessions-list.details.sessions_attended}}</span>
                         </td>
-                        <td v-else>{{list.details.sessions-list.details.sessions_attended}}</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
-              <br>
+              <hr>
               <div class="row">
                 <div class="col-md-6">
                   <input type="text" class="form-control smallerinput" placeholder="Search Student" @input="searchStudent" v-model="addStudent.searchInput">

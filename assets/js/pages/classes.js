@@ -1,3 +1,21 @@
+var monthlist = [ "", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+
+var currentdate = formatDate(new Date());
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
 var classsched = new Vue({
     el: '#classes_page',
     data: {
@@ -16,6 +34,17 @@ var classsched = new Vue({
         }        
     },
     methods: {
+        changeDateFormat(date){
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+            // if (month.length < 2) month = '0' + month;
+            // if (day.length < 2) day = '0' + day;
+            month = monthlist[month];
+            var returndateformat = month + " " + day + ", " + year;
+            return returndateformat;
+        },
         getClassSchedulesList(){
             var datas = {
                 select: "*",
@@ -47,20 +76,43 @@ var classsched = new Vue({
                 .then(function (e) {
                     Swal.close();
                     classsched.classschedinfo   = e.data.data.classschedinfo;
+
                     classsched.classschedsheld  = e.data.data.classschedsheld;
-                    classsched.classstudents    = e.data.data.classstudents;
-                    classsched.classstudents.forEach((e,index) => {
-                        classsched.classstudents[index].details = JSON.parse(e.details);
-                    });
-                    // classsched.classschedinfo.schedule_date = formatDate(currentdate);
-                    e.data.data.classstudents.forEach(e => {
-                        classsched.newClassAttendance.attendance.push({
-                            student_id: e.student_id,
-                            studpack_id: e.studpack_id,
-                            status: true,
-                            remove: false
-                        })
-                    });
+                    if(e.data.data.classschedsheld!=null){
+                        classsched.classschedsheld.forEach((e,index) => {
+                            classsched.classschedsheld[index].attendance = JSON.parse(e.attendance);
+
+                            var present = absent = 0;
+                            e.attendance.forEach(el => {    
+                                if(el.status){ present++; }
+                                else{ absent++; }
+                                classsched.classschedsheld[index].present = present;
+                                classsched.classschedsheld[index].absent = absent;
+                            });
+                        });
+                    }
+
+                    classsched.classstudents = e.data.data.classstudents;
+                    if(e.data.data.classstudents!=null){
+                        classsched.classstudents.forEach((e,index) => {
+                            classsched.classstudents[index].details = JSON.parse(e.details);
+                            if(classsched.newClassAttendance!=null){
+                                classsched.newClassAttendance.attendance.push({
+                                    student_id: e.student_id,
+                                    studpack_id: e.studpack_id,
+                                    status: true,
+                                    remove: false
+                                })
+                            }else{
+                                classsched.newClassAttendance.attendance = ({
+                                    student_id: e.student_id,
+                                    studpack_id: e.studpack_id,
+                                    status: true,
+                                    remove: false
+                                })
+                            }
+                        });
+                    }
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -132,9 +184,18 @@ var classsched = new Vue({
                     Swal.fire({
                         type: e.data.type,
                         title: e.data.message
+                    }).then(function (e) {
+                        $('#addNewClassAttendanceModal').modal('hide');
+                        classsched.newClassAttendance = {
+                            schedule_date: "",
+                            attendance: []
+                        };
+                        classsched.addStudent = {
+                            searchInput: "",
+                            searchstudentslist: []
+                        }
+                        classsched.getclassSchedInfo();
                     })
-                    $('#addNewClassAttendanceModal').modal('hide');
-                    // classsched.addStudent.searchstudentslist = e.data.data.studentslist;
                 })
                 .catch(function (error) {
                     console.log(error)
