@@ -8,7 +8,7 @@
             <ul class="nav nav-pills">
               <a  style="border-bottom:1px solid #000; border-radius: .3em; margin-right: 2px;" href="<?= base_url('classes/') ?>" class="btn bg-gradient-primary btn-sm"><i class="fas fa-arrow-left" style="color:#fff;"></i></a>
               <li style="border-bottom:1px solid #000; border-radius: .3em; margin-right: 2px;" class="nav-item"><a class="nav-link active" id="classscheds-tab" data-toggle="tab" href="#classscheds" role="tab" aria-controls="classscheds" aria-selected="true">Class Schedules Held</a></li>
-              <li style="border-bottom:1px solid #000; border-radius: .3em; margin-right: 2px;" class="nav-item"><a class="nav-link" id="classstudents-tab" data-toggle="tab" href="#classstudents" role="tab" aria-controls="classstudents" aria-selected="false" @click="getclassSchedInfo()">Students Enrolled</a></li>
+              <li style="border-bottom:1px solid #000; border-radius: .3em; margin-right: 2px;" class="nav-item"><a class="nav-link" id="classstudents-tab" data-toggle="tab" href="#classstudents" role="tab" aria-controls="classstudents" aria-selected="false">Students Enrolled</a></li>
             </ul>
           </div>
           <div class="col-md-2"></div>
