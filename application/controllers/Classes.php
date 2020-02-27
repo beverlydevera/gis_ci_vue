@@ -154,7 +154,7 @@ class Classes extends CI_Controller {
                 "column" => "lastname",
                 "order"  => "ASC"
             ];
-            $classstudents = $this->classes->getStudentsEnrolled("*",$condition,"",$orderby,"","");
+            $classstudents = $this->classes->getStudentsEnrolled("s.student_id,studpack_id,reference_id,lastname,firstname,middlename,sex,details",$condition,"",$orderby,"","");
            
             $success = true;
             $type = "success";
@@ -183,7 +183,7 @@ class Classes extends CI_Controller {
         $existing = $this->input->post('existing');
         $condition = "(firstname LIKE '%$searchInput%' OR middlename LIKE '%$searchInput%' OR lastname LIKE '%$searchInput%' OR reference_id LIKE '%$searchInput%')
         AND s.student_id NOT IN ($existing)";
-        $students  = $this->classes->getStudentsEnrolled("*",$condition,"","","","");
+        $students  = $this->classes->getStudentsEnrolled("s.student_id,reference_id,lastname,firstname,middlename,sex",$condition,"","","","");
         
         if(!empty($students)){
             $response = array(
