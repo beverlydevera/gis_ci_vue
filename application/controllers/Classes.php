@@ -254,7 +254,7 @@ class Classes extends CI_Controller {
     {
         $classsched_id = $this->input->post('classsched_id');
         $classattendanceinfo = $this->Main->getDataOneJoin("*","tbl_classscheds","",["classsched_id"=>$classsched_id],"","","","row");
-        $select = "st.student_id,reference_id,lastname,firstname,middlename,sex,sp.details";
+        $select = "st.student_id,reference_id,lastname,firstname,middlename,sex,sp.details,sp.studpack_id";
         $classattendancestudents = $this->classes->getClassStudentsInfo($select,["ca.classsched_id"=>$classsched_id],"","","","");
 
         if(!empty($classattendanceinfo)){
@@ -269,6 +269,51 @@ class Classes extends CI_Controller {
             $response = array(
                 "success"   => false,
                 "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
+    public function saveAttendanceChanges()
+    {
+        $data = jsondata();
+
+        if(!empty($data)){
+            $attendanceinfo = $data['attendanceinfo'];
+            
+            $classsched_id = $attendanceinfo['classsched_id'];
+            unset($attendanceinfo['classsched_id']);
+            unset($attendanceinfo['schedule_id']);
+            unset($attendanceinfo['date_added']);
+
+            foreach($attendanceinfo['attendance'] as $attk => $attv){
+                if(!empty($attv['origstat'])){
+                    unset($attv['origstat']);
+                }
+                if(!empty($attv['studpack_id'])){
+                    $studpack_id = $attv['studpack_id'];
+                    unset($attv['studpack_id']);
+                }
+                if(!empty($attv['tmp_sessions_attended'])){
+                    $sessions_attended = $attv['tmp_sessions_attended'];
+                    $this->Main->raw("UPDATE tbl_studentpackages SET details = JSON_SET(details,'$.sessions_attended',$sessions_attended) WHERE studpack_id=$studpack_id","","update");
+                    unset($attv['tmp_sessions_attended']);
+                }
+                $attendanceinfo['attendance'][$attk] = $attv;
+            }
+            $attendanceinfo['attendance'] = json_encode($attendanceinfo['attendance']);
+            $this->Main->update("tbl_classscheds",["classsched_id"=>$classsched_id],$attendanceinfo);
+
+            $response = array(
+                "success"   => true,
+                "type"      => "success",
+                "message"   => "Attendance changes were saved successfully"
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "type"      => "warning",
+                "message"   => "Changes were not saved"
             );
         }
         response_json($response);

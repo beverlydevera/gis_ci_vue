@@ -251,7 +251,7 @@
               </div>
             </div>
             <div class="modal-footer">
-                <!-- <button type="submit" @click="submitAttendanceChanges()" class="btn btn-primary">Save Changes</button> -->
+                <button type="submit" @click="submitAttendanceChanges()" class="btn btn-primary">Save Changes</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>

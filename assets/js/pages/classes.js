@@ -36,7 +36,7 @@ var classsched = new Vue({
             schedule_date: "",
             attendance: []
         },
-        classattendancestudents: []
+        classattendancestudents: [],
     },
     methods: {
         changeDateFormat(date){
@@ -248,6 +248,41 @@ var classsched = new Vue({
                 }
             }
         },
+        submitAttendanceChanges(){
+            Swal.fire({
+                text: "Are you sure you want to save changes?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, save changes',
+                }).then((result) => {
+                    if (result.value) {
+                        this.classattendancestudents.forEach((e,index) => {    
+                            this.classattendanceinfo.attendance[index].studpack_id = e.studpack_id
+                        });
+                        var datas = {
+                            attendanceinfo: this.classattendanceinfo
+                        };
+                        var urls = window.App.baseUrl + "classes/saveAttendanceChanges";
+                        axios.post(urls, datas)
+                            .then(function (e) {
+                                Swal.fire({
+                                    type: e.data.type,
+                                    title: e.data.message
+                                }).then(function (ev) {
+                                    if(e.data.success){
+                                        classsched.getclassSchedInfo();
+                                    }
+                                    $('#editClassAttendanceModal').modal('hide');
+                                })
+                            })
+                            .catch(function (error) {
+                                console.log(error)
+                            });
+                    }
+            })
+        }
     }, mounted: function () {
         this.getClassSchedulesList();
         if(this.class_id!=0){
