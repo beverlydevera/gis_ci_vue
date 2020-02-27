@@ -127,12 +127,18 @@ var classsched = new Vue({
                     console.log(error)
                 });
         },
-        searchStudent(){
+        searchStudent(action){
             if(this.addStudent.searchInput!=""){
                 var existing = ["0"];
-                this.newClassAttendance.attendance.forEach(e => {
-                    existing.push(e.student_id);
-                });
+                if(action=='add'){
+                    this.newClassAttendance.attendance.forEach(e => {
+                        existing.push(e.student_id);
+                    });
+                }else if(action=='edit'){
+                    this.classattendanceinfo.attendance.forEach(e => {
+                        existing.push(e.student_id);
+                    });
+                }
                 var datas = { 
                     searchInput: this.addStudent.searchInput,
                     existing: existing
@@ -150,6 +156,7 @@ var classsched = new Vue({
         },
         addtoAttendance(action,index){
             if(action=='add'){
+
                 var studentsdata = {
                     student_id     : this.addStudent.searchstudentslist[index].student_id,
                     lastname       : this.addStudent.searchstudentslist[index].lastname,
@@ -163,6 +170,7 @@ var classsched = new Vue({
                     }
                 };
                 this.classstudents.push(studentsdata);
+
                 var attendancedata = {
                     studpack_id: this.addStudent.searchstudentslist[index].studpack_id,
                     student_id: this.addStudent.searchstudentslist[index].student_id,
@@ -171,18 +179,43 @@ var classsched = new Vue({
                 };
                 this.newClassAttendance.attendance.push(attendancedata);
                 this.addStudent.searchstudentslist.splice(index, 1);
+
+            }else if(action=='edit'){
+
+                var studentsdata = {
+                    student_id     : this.addStudent.searchstudentslist[index].student_id,
+                    lastname       : this.addStudent.searchstudentslist[index].lastname,
+                    firstname      : this.addStudent.searchstudentslist[index].firstname,
+                    middlename     : this.addStudent.searchstudentslist[index].middlename,
+                    reference_id   : this.addStudent.searchstudentslist[index].reference_id,
+                    sex            : this.addStudent.searchstudentslist[index].sex,
+                    details:{
+                        sessions: 0,
+                        sessions_attended: 0
+                    }
+                };
+                this.classattendancestudents.push(studentsdata);
+
+                var attendancedata = {
+                    studpack_id: this.addStudent.searchstudentslist[index].studpack_id,
+                    student_id: this.addStudent.searchstudentslist[index].student_id,
+                    status: true,
+                    remove: true
+                };
+                this.classattendanceinfo.attendance.push(attendancedata);
+                this.addStudent.searchstudentslist.splice(index, 1);
+
             }
         },
         removefromAttendance(action,index){
             if(action=="add"){
                 this.classstudents.splice(index, 1);
                 this.newClassAttendance.attendance.splice(index, 1);
-                this.searchStudent();
             }else if(action=="edit"){
                 this.classattendancestudents.splice(index, 1);
                 this.classattendanceinfo.attendance.splice(index, 1);
-                // this.searchStudent();
             }
+            this.searchStudent(action);
         },
         submitNewAttendanceInfo(){
             this.newClassAttendance.schedule_id = this.classschedinfo.schedule_id;
@@ -289,5 +322,17 @@ var classsched = new Vue({
             this.getclassSchedInfo();
             this.classschedlist=[];
         }
+        $(this.$refs.addmodal).on('hidden.bs.modal', () => {
+            this.addStudent = {
+                searchInput: "",
+                searchstudentslist: []
+            }
+        })
+        $(this.$refs.editmodal).on('hidden.bs.modal', () => {
+            this.addStudent = {
+                searchInput: "",
+                searchstudentslist: []
+            }
+        })
     },
 })

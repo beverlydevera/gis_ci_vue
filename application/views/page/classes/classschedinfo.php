@@ -112,7 +112,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="addNewClassAttendanceModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="addNewClassAttendanceModal" tabindex="-1" role="dialog" ref="addmodal">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -170,7 +170,7 @@
               <hr>
               <div class="row">
                 <div class="col-md-6">
-                  <input type="text" class="form-control smallerinput" placeholder="Search Student" @input="searchStudent" v-model="addStudent.searchInput">
+                  <input type="text" class="form-control smallerinput" placeholder="Search Student" @input="searchStudent('add')" v-model="addStudent.searchInput">
                 </div>
                 <table class="table table-bordered table-responsive-sm table-sm">
                   <thead><tr>
@@ -200,7 +200,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="editClassAttendanceModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="editClassAttendanceModal" tabindex="-1" role="dialog" ref="editmodal">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -248,6 +248,30 @@
                     </tbody>
                   </table>
                 </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-md-6">
+                  <input type="text" class="form-control smallerinput" placeholder="Search Student" @input="searchStudent('edit')" v-model="addStudent.searchInput">
+                </div>
+                <table class="table table-bordered table-responsive-sm table-sm">
+                  <thead><tr>
+                    <th>#</th>
+                    <th>Student Reference ID</th>
+                    <th>Name</th>
+                    <th>Sex</th>
+                    <th>Add to List</th>
+                  </tr></thead>
+                  <tbody v-for="(list,index) in addStudent.searchstudentslist">
+                    <tr>
+                      <td>{{index+1}}</td>
+                      <td>{{list.reference_id}}</td>
+                      <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
+                      <td>{{list.sex}}</td>
+                      <td><button class="btn btn-primary btn-xs" @click="addtoAttendance('edit',index)">Add to Attendance List</button></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
             <div class="modal-footer">
