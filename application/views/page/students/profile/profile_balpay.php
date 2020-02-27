@@ -1,7 +1,7 @@
 
 
 <h5 style="float:right;">
-    Account Balance: <u>{{invoiceinfo.totalinvoice-invoiceinfo.totalpayment}}</u>
+    Account Balance: <u>{{invoiceinfo.totalinvoice - invoiceinfo.totalpayment}}</u>
 </h5>
 
 <div class="row">

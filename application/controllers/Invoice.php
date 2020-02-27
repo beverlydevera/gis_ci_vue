@@ -131,7 +131,7 @@ class Invoice extends CI_Controller {
                 "key"      => "s.student_id=si.student_id",
                 "jointype" => "inner"
             ];
-            $invoicedetails = $this->Main->getDataOneJoin("invoice_id,invoice_number,lastname,firstname,amount,si.status as invstatus","tbl_studentinvoice si",$join,$condition,"",$orderby,$groupby,"row");
+            $invoicedetails = $this->Main->getDataOneJoin("s.student_id,invoice_id,invoice_number,lastname,firstname,amount,si.status as invstatus","tbl_studentinvoice si",$join,$condition,"",$orderby,$groupby,"row");
             $paymentstotal = $this->Main->getDataOneJoin("SUM(ph.amount) as paymentstotal","tbl_paymentshistory ph","",$condition,"",$orderby,"invoice_id","row");
 
             $response = array(

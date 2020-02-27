@@ -545,7 +545,7 @@ var profile = new Vue({
                 var invstat = "paid";
             }else{ var invstat = "partial"; }
             
-            this.paymentdetails.student_id = this.invoicedetails.details.student_id;
+            this.paymentdetails.student_id = this.student_id;
             this.paymentdetails.ordate += " " + currenttime;
             var datas = {
                 "paymentdetails": this.paymentdetails,
