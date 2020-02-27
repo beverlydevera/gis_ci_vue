@@ -117,6 +117,46 @@ class Classes_model extends CI_Model {
 		return null;
 	}
 
+	public function getClassStudentsInfo($select="*",$condition=array(),$pager=array(),$orderby=array(),$groupby,$type="")
+	{
+		$this->db->select($select);
+		$this->db->from("tbl_studentattendance sa");
+		$this->db->join("tbl_classscheds ca","ca.`classsched_id` = sa.`classsched_id`","inner");
+		$this->db->join("tbl_schedules sc","sc.`schedule_id` = ca.`schedule_id`","inner");
+		$this->db->join("tbl_studentpackages sp","sp.`student_id`=sa.`student_id`","inner");
+		$this->db->join("tbl_students st","st.`student_id` = sa.`student_id`","inner");
+
+        if(!empty($condition)){
+            $this->db->where($condition);
+		}
+
+		if(!empty($orderby)){
+			$this->db->order_by($orderby['column'],$orderby['order']);
+		}
+		if(!empty($groupby)){
+			$this->db->group_by($groupby);
+		}
+
+		if (!empty($pager)) {
+		$this->db->limit($pager['limit'],$pager['offset']);
+		}
+
+		$query = $this->db->get();
+		if ($query->num_rows()) {
+
+			if ($type =="row") {
+				return $query->row();
+			}elseif($type =="count_row"){
+				return $query->num_rows();
+			}elseif($type =="is_array") {
+				return $query->result_array();
+			}else{
+				return $query->result();
+			}
+		}
+		return null;
+	}
+
 }
 
 /* End of file Recruitment_model.php */

@@ -31,7 +31,12 @@ var classsched = new Vue({
         addStudent: {
             searchInput: "",
             searchstudentslist: []
-        }        
+        },
+        classattendanceinfo: {
+            schedule_date: "",
+            attendance: []
+        },
+        classattendancestudents: []
     },
     methods: {
         changeDateFormat(date){
@@ -174,7 +179,9 @@ var classsched = new Vue({
                 this.newClassAttendance.attendance.splice(index, 1);
                 this.searchStudent();
             }else if(action=="edit"){
-
+                this.classattendancestudents.splice(index, 1);
+                this.classattendanceinfo.attendance.splice(index, 1);
+                // this.searchStudent();
             }
         },
         submitNewAttendanceInfo(){
@@ -192,7 +199,6 @@ var classsched = new Vue({
                         title: e.data.message
                     }).then(function (e) {
                         $('#addNewClassAttendanceModal').modal('hide');
-                        
                         classsched.addStudent = {
                             searchInput: "",
                             searchstudentslist: []
@@ -203,7 +209,50 @@ var classsched = new Vue({
                 .catch(function (error) {
                     console.log(error)
                 });
-        }
+        },
+        editAttendance(classsched_id){
+            var datas = { 
+                classsched_id: classsched_id
+            };
+            var datas = frmdata(datas);
+            var urls = window.App.baseUrl + "Classes/getClassAttendanceInfo";
+            showloading("Loading Data");
+            axios.post(urls, datas)
+                .then(function (e) {
+                    Swal.close();
+                    classsched.classattendanceinfo = e.data.data.classattendanceinfo;
+                    classsched.classattendanceinfo.attendance = JSON.parse(classsched.classattendanceinfo.attendance);
+                    classsched.classattendancestudents = e.data.data.classattendancestudents;
+                    classsched.classattendancestudents.forEach((e,index) => {
+                        classsched.classattendancestudents[index].details = JSON.parse(e.details);
+                    });
+                    $('#editClassAttendanceModal').modal('show');
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        changeAttendanceStat(index){
+            var attinfo = this.classattendanceinfo.attendance[index];
+            if(attinfo.status){
+                attinfo.status = false;
+            }else{
+                attinfo.status = true;
+            }
+        //  attinfo.tmp_sessions_attended = parseInt(this.classStudents[index].sessions_attended);
+            
+        //     if(attinfo.status==true){
+        //         attinfo.status=false;
+        //         if(attinfo.origstat!=attinfo.status){
+        //             attinfo.tmp_sessions_attended -= 1;
+        //         }
+        //     }else{ 
+        //         attinfo.status=true;
+        //         if(attinfo.origstat!=attinfo.status){
+        //             attinfo.tmp_sessions_attended += 1;
+        //         }
+        //     }
+        },
     }, mounted: function () {
         this.getClassSchedulesList();
         if(this.class_id!=0){

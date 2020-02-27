@@ -129,7 +129,7 @@ class Classes extends CI_Controller {
 
     public function getclassSchedInfo()
     {
-        $class_id = $this->input->post('class_id');
+        $class_id = $this->input->post('class_id'); //should be schedule id
 
         if(!empty($class_id)){
             $classschedinfo = $this->classes->getClassSchedList("*",['s.class_id'=>$class_id],"","","","row");
@@ -183,7 +183,6 @@ class Classes extends CI_Controller {
         $existing = $this->input->post('existing');
         $condition = "(firstname LIKE '%$searchInput%' OR middlename LIKE '%$searchInput%' OR lastname LIKE '%$searchInput%' OR reference_id LIKE '%$searchInput%')
         AND s.student_id NOT IN ($existing)";
-        // $students = $this->classes->getStudents("*","tbl_students",$condition,"","");
         $students  = $this->classes->getStudentsEnrolled("*",$condition,"","","","");
         
         if(!empty($students)){
@@ -248,6 +247,30 @@ class Classes extends CI_Controller {
             'type'      => $type,
             'message'   => $message,
         );
+        response_json($response);
+    }
+
+    public function getClassAttendanceInfo()
+    {
+        $classsched_id = $this->input->post('classsched_id');
+        $classattendanceinfo = $this->Main->getDataOneJoin("*","tbl_classscheds","",["classsched_id"=>$classsched_id],"","","","row");
+        $select = "st.student_id,reference_id,lastname,firstname,middlename,sex,sp.details";
+        $classattendancestudents = $this->classes->getClassStudentsInfo($select,["ca.classsched_id"=>$classsched_id],"","","","");
+
+        if(!empty($classattendanceinfo)){
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    "classattendanceinfo"       => $classattendanceinfo,
+                    "classattendancestudents"   => $classattendancestudents
+                ]
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
         response_json($response);
     }
 

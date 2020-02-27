@@ -61,7 +61,7 @@
                       <td>{{list.present}}</td>
                       <td>{{list.absent}}</td>
                       <td>{{list.date_added}}</td>
-                      <td><button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></button></td>
+                      <td><button class="btn btn-primary btn-xs" @click="editAttendance(list.classsched_id)"><i class="fa fa-edit"></i></button></td>
                     </tr>
                   </tbody>
                 </table>
@@ -200,7 +200,7 @@
     </div>
 </div>
 
-<!-- <div class="modal fade" id="editClassAttendanceModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="editClassAttendanceModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -213,7 +213,7 @@
               <div class="row">
                 <div class="col-md-5">
                   <h6>Class Date:</h6>
-                  <input type="date" class="form-control smallerinput" max="<?=date("Y-m-d")?>" v-model="classAttendanceInfo.schedule_date"/>
+                  <input type="date" class="form-control smallerinput" max="<?=date("Y-m-d")?>" v-model="classattendanceinfo.schedule_date"/>
                 </div>
               </div>
               <hr>
@@ -231,16 +231,19 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(list,index) in classStudents" :value="list.student_id">
+                      <tr v-for="(list,index) in classattendancestudents" :value="list.student_id">
                         <td>{{index+1}}</td>
-                        <td v-if="classAttendanceInfo.attendance[index].student_id==list.student_id">
-                          <button @click="changeAttendanceStat(index)" class="btn btn-primary btn-xs" v-if="classAttendanceInfo.attendance[index].status">Present</button>
+                        <td v-if="classattendanceinfo.attendance[index].student_id==list.student_id">
+                          <button @click="changeAttendanceStat(index)" class="btn btn-primary btn-xs" v-if="classattendanceinfo.attendance[index].status">Present</button>
                           <button @click="changeAttendanceStat(index)" class="btn btn-danger btn-xs" v-else>Absent</button>
                         </td>
                         <td>{{list.reference_id}}</td>
                         <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
                         <td>{{list.sex}}</td>
-                        <td>{{list.sessions-list.sessions_attended}}</td>
+                        <td v-if="classattendanceinfo.attendance[index].student_id=list.student_id">
+                          <button v-if="classattendanceinfo.attendance[index].remove" type="button" class="btn btn-danger btn-xs" @click="removefromAttendance('edit',index)"><i class="fas fa-minus"></i></button>
+                          <span v-else>{{list.details.sessions-list.details.sessions_attended}}</span>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -248,9 +251,9 @@
               </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" @click="submitAttendanceChanges()" class="btn btn-primary">Save Changes</button>
+                <!-- <button type="submit" @click="submitAttendanceChanges()" class="btn btn-primary">Save Changes</button> -->
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-</div> -->
+</div>
