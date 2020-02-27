@@ -186,7 +186,7 @@
                       <td>{{list.reference_id}}</td>
                       <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
                       <td>{{list.sex}}</td>
-                      <td><button class="btn btn-primary btn-xs" @click="addtoAttendance(index)">Add to Attendance List</button></td>
+                      <td><button class="btn btn-primary btn-xs" @click="addtoAttendance('add',index)">Add to Attendance List</button></td>
                     </tr>
                   </tbody>
                 </table>

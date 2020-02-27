@@ -148,30 +148,30 @@ var classsched = new Vue({
                     });
             }
         },
-        addtoAttendance(index){
-            var studentsdata = {
-                student_id     : this.addStudent.searchstudentslist[index].student_id,
-                lastname       : this.addStudent.searchstudentslist[index].lastname,
-                firstname      : this.addStudent.searchstudentslist[index].firstname,
-                middlename     : this.addStudent.searchstudentslist[index].middlename,
-                reference_id   : this.addStudent.searchstudentslist[index].reference_id,
-                sex            : this.addStudent.searchstudentslist[index].sex,
-                details:{
-                    sessions: 0,
-                    sessions_attended: 0
-                }
-            };
-            this.classstudents.push(studentsdata);
-
-            var attendancedata = {
-                studpack_id: this.addStudent.searchstudentslist[index].studpack_id,
-                student_id: this.addStudent.searchstudentslist[index].student_id,
-                status: true,
-                remove: true
-            };
-            this.newClassAttendance.attendance.push(attendancedata);
-
-            this.addStudent.searchstudentslist.splice(index, 1);
+        addtoAttendance(action,index){
+            if(action=='add'){
+                var studentsdata = {
+                    student_id     : this.addStudent.searchstudentslist[index].student_id,
+                    lastname       : this.addStudent.searchstudentslist[index].lastname,
+                    firstname      : this.addStudent.searchstudentslist[index].firstname,
+                    middlename     : this.addStudent.searchstudentslist[index].middlename,
+                    reference_id   : this.addStudent.searchstudentslist[index].reference_id,
+                    sex            : this.addStudent.searchstudentslist[index].sex,
+                    details:{
+                        sessions: 0,
+                        sessions_attended: 0
+                    }
+                };
+                this.classstudents.push(studentsdata);
+                var attendancedata = {
+                    studpack_id: this.addStudent.searchstudentslist[index].studpack_id,
+                    student_id: this.addStudent.searchstudentslist[index].student_id,
+                    status: true,
+                    remove: true
+                };
+                this.newClassAttendance.attendance.push(attendancedata);
+                this.addStudent.searchstudentslist.splice(index, 1);
+            }
         },
         removefromAttendance(action,index){
             if(action=="add"){
@@ -234,24 +234,19 @@ var classsched = new Vue({
         },
         changeAttendanceStat(index){
             var attinfo = this.classattendanceinfo.attendance[index];
+            attinfo.origstat = attinfo.status;
+            attinfo.tmp_sessions_attended = parseInt(this.classattendancestudents[index].details.sessions_attended);
             if(attinfo.status){
                 attinfo.status = false;
+                if(attinfo.origstat!=attinfo.status){
+                    attinfo.tmp_sessions_attended -= 1;
+                }
             }else{
                 attinfo.status = true;
+                if(attinfo.origstat!=attinfo.status){
+                    attinfo.tmp_sessions_attended += 1;
+                }
             }
-        //  attinfo.tmp_sessions_attended = parseInt(this.classStudents[index].sessions_attended);
-            
-        //     if(attinfo.status==true){
-        //         attinfo.status=false;
-        //         if(attinfo.origstat!=attinfo.status){
-        //             attinfo.tmp_sessions_attended -= 1;
-        //         }
-        //     }else{ 
-        //         attinfo.status=true;
-        //         if(attinfo.origstat!=attinfo.status){
-        //             attinfo.tmp_sessions_attended += 1;
-        //         }
-        //     }
         },
     }, mounted: function () {
         this.getClassSchedulesList();
