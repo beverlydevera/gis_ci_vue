@@ -179,7 +179,6 @@ var users = new Vue({
                         .width("40%");
                         // .height(200);
                 };
-
                 reader.readAsDataURL(event.target.files[0]);
             }
         },

@@ -88,6 +88,50 @@ var profile = new Vue({
         }
     },
     methods: {
+        inputImage(){ 
+            $("input[id='studentpicture']").click();
+        },
+        editStudentImageSelect(event){
+            Swal.fire({
+                title: "Are you sure you want to set selected image as student picture?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, set and save',
+                }).then((result) => {
+                    if(result.value){
+                        if (event.target.files && event.target.files[0]) {
+                            var reader = new FileReader();
+            
+                            reader.onload = function (e) {
+                                $('#editStudentImage')
+                                    .attr('src', e.target.result)
+                                    .width("80%");
+                            };
+                            reader.readAsDataURL(event.target.files[0]);
+    
+                            let formData = new FormData();
+                            formData.append('student_id', this.student_id);
+                            formData.append('file', this.$refs.studentimage.files[0]);
+                
+                            var urls = window.App.baseUrl + "Students/saveStudentImage";
+                            showloading();
+                            axios.post(urls, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+                            .then(function (e) {
+                                Swal.close();
+                                Swal.fire({
+                                    title: e.data.message,
+                                    type: e.data.type
+                                })
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                        }
+                    }
+                })
+        },
         //first tab
         calculate_age() {
             var dob = this.studentinfo.birthdate;

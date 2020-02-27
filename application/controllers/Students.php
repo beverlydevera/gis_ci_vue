@@ -23,7 +23,8 @@ class Students extends CI_Controller {
     
     public function getStudents()
     {
-        $students = $this->student->getStudents("*","tbl_students","","","");
+        $select = "student_id,reference_id,lastname,firstname,middlename,sex,birthdate,status";
+        $students = $this->student->getStudents($select,"tbl_students","","","");
         
         if(!empty($students)){
             $response = array(
@@ -42,7 +43,41 @@ class Students extends CI_Controller {
     }
     //end of index
 
-    //profile function
+    //profile functions
+    public function saveStudentImage()
+    {
+        $data = $this->input->post();
+        $student_id = $data['student_id'];
+        if(!empty($_FILES)){
+            $file = file_get_contents($_FILES['file']['tmp_name']);
+            $dataupdate = [
+                "photo"  => $file
+            ];
+            $updatequery = $this->Main->update("tbl_students", ["student_id"=>$student_id], $dataupdate,"");
+
+            if(!empty($updatequery)){
+                $success = true;
+                $message = "Student Image was saved successfully.";
+                $type = "success";
+            }else{
+                $success = false;
+                $message = "Image was not save.";
+                $type = "danger";
+            }
+        }else{
+            $success = false;
+            $message = "No image selected.";
+            $type = "warning";
+        }
+
+        $response = array(
+            "success"   => $success,
+            "message"   => $message,
+            "type"      => $type,
+        );
+        response_json($response);
+    }
+
     //first tab
     public function profile($string = "")
     {
@@ -61,6 +96,8 @@ class Students extends CI_Controller {
     {
         $student_id = $this->input->post('student_id');
         $studentinfo = $this->student->getStudents("*","tbl_students",["student_id"=>$student_id],"","row");
+        if(!empty($studentinfo->photo)){ $studentinfo->photo = base64_encode($studentinfo->photo); }
+
         $studentmembership = $this->student->getStudents("*","tbl_studentmembership",["student_id"=>$student_id],["limit"=>1,"offset"=>0],"row"); 
 
         $join = [
