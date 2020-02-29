@@ -6,10 +6,10 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     text-align: justify;
 
-    /* background-image: url("<?=FCPATH?>assets/img/bravehearts_logo.jpg");
+    background-image: url("<?=FCPATH?>assets/img/braveheartspng.png");
     background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0.5; */
+    /* opacity: 0.5; */
 }
 #frontpage {
     padding-top: 30px;
