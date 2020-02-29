@@ -117,8 +117,8 @@ class Classes extends CI_Controller {
     public function classSchedInfo($string = "")
     {
         $string = explode("-", $string);
-        $class_id = end($string);
-        $data['class_id'] = $class_id;
+        $schedule_id = end($string);
+        $data['schedule_id'] = $schedule_id;
 
         $data['title'] = "Class Information";
         $data['vueid'] = "classes_page";
@@ -129,10 +129,11 @@ class Classes extends CI_Controller {
 
     public function getclassSchedInfo()
     {
-        $class_id = $this->input->post('class_id'); //should be schedule id
+        $schedule_id = $this->input->post('schedule_id');
 
-        if(!empty($class_id)){
-            $classschedinfo = $this->classes->getClassSchedList("*",['s.class_id'=>$class_id],"","","","row");
+        if(!empty($schedule_id)){
+            $classschedinfo = $this->classes->getClassSchedList("*",['s.schedule_id'=>$schedule_id],"","","","row");
+            $class_id = $classschedinfo->class_id;
 
             $join = [
                 "table"     => "tbl_schedules s",

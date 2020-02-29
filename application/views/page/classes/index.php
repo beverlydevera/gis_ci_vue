@@ -63,7 +63,7 @@
                                     <span v-else class="badge bg-danger">Inactive</span>
                                 </td>
                                 <td>
-                                    <a v-bind:href="'classSchedInfo/'+(list.class_title).replace(/ /g,'')+'-'+list.class_id" class="btn btn-primary btn-xs"><i class="fas fa-eye" style="color:#000;"></i></a>
+                                    <a v-bind:href="'classSchedInfo/'+(list.class_title).replace(/ /g,'')+'-'+list.schedule_id" class="btn btn-primary btn-xs"><i class="fas fa-eye" style="color:#000;"></i></a>
                                 </td>
                                 </tr>
                             </tbody>

@@ -1,5 +1,5 @@
 <div class="row">
-<input type="hidden" value="<?=$class_id?>" id="class_id"/>
+<input type="hidden" value="<?=$schedule_id?>" id="schedule_id"/>
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">

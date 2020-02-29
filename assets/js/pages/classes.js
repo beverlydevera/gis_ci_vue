@@ -20,7 +20,7 @@ var classsched = new Vue({
     el: '#classes_page',
     data: {
         classschedlist: [],
-        class_id:$('#class_id').val(),
+        schedule_id:$('#schedule_id').val(),
         classschedinfo: {},
         classschedsheld: [],
         classstudents: [],
@@ -71,8 +71,8 @@ var classsched = new Vue({
                 });
         },
         getclassSchedInfo(){
-            var datas = { 
-                class_id:this.class_id
+            var datas = {
+                schedule_id : this.schedule_id
             };
             var datas = frmdata(datas);
             var urls = window.App.baseUrl + "Classes/getclassSchedInfo";
@@ -318,7 +318,7 @@ var classsched = new Vue({
         }
     }, mounted: function () {
         this.getClassSchedulesList();
-        if(this.class_id!=0){
+        if(this.schedule_id!=0){
             this.getclassSchedInfo();
             this.classschedlist=[];
         }
