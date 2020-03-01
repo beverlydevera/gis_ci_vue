@@ -6,8 +6,9 @@
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
                         <div class="text-center">
-                            <img v-if="studentinfo.photo!=null" id="editStudentImage" @click="inputImage" class="profile-user-img img-fluid img-circle" v-bind:src="'data:image/jpeg;base64,'+studentinfo.photo" alt="User profile picture">
-                            <img v-else class="profile-user-img img-fluid img-circle" src="<?= base_url("assets/img/student_avatar.png") ?>" alt="User profile picture">
+                            <img id="editStudentImage" @click="inputImage" class="profile-user-img img-fluid img-circle" v-bind:src="'data:image/jpeg;base64,'+studentinfo.photo" alt="User profile picture">
+                            <!-- <img v-if="studentinfo.photo!=null" id="editStudentImage" @click="inputImage" class="profile-user-img img-fluid img-circle" v-bind:src="'data:image/jpeg;base64,'+studentinfo.photo" alt="User profile picture"> -->
+                            <!-- <img v-else class="profile-user-img img-fluid img-circle" @click="inputImage" src="<?= base_url("assets/img/student_avatar.png") ?>" alt="User profile picture"> -->
                             <input type="file" id="studentpicture" accept="image/*" ref="studentimage" @change="editStudentImageSelect" style="display: none;">
                         </div>
                         <h3 class="profile-username text-center">

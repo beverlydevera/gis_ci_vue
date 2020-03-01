@@ -104,11 +104,19 @@ var profile = new Vue({
                         if (event.target.files && event.target.files[0]) {
                             var reader = new FileReader();
             
-                            reader.onload = function (e) {
-                                $('#editStudentImage')
-                                    .attr('src', e.target.result)
-                                    .width("80%");
-                            };
+                            if(enroll.studentinfo.photo!=null){
+                                reader.onload = function (e) {
+                                    $('#editStudentImage')
+                                        .attr('src', e.target.result)
+                                        .width("80%");
+                                };
+                            }else{
+                                reader.onload = function (e) {
+                                    $('#editStudentImage1')
+                                        .attr('src', e.target.result)
+                                        .width("80%");
+                                };
+                            }
                             reader.readAsDataURL(event.target.files[0]);
     
                             let formData = new FormData();
