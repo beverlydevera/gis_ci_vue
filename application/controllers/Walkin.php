@@ -27,7 +27,7 @@ class Walkin extends CI_Controller {
         if(!empty($data)){
             $newwalkin = $data['newWalkinInfo'];
             unset($newwalkin['age']);
-            unset($newwalkin['branch_name']);
+            unset($newwalkin['branchname']);
             $data['date_added'] = date('Y-m-d H:i:s');
 
             $insertquery = $this->Main->insert("tbl_walkins", $newwalkin,true);
@@ -74,6 +74,7 @@ class Walkin extends CI_Controller {
         }else{
             $success = false;
             $type = "warning";
+            $data = "";
         }
 
         $response = array(

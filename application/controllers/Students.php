@@ -224,8 +224,8 @@ class Students extends CI_Controller {
             $student_id = $data['student_id'];
 
             $join = [
-                "table"     => "tbl_attendance a",
-                "key"       => "sa.attendance_id=a.attendance_id",
+                "table"     => "tbl_classscheds cs",
+                "key"       => "sa.classsched_id=cs.classsched_id",
                 "jointype"  => "inner"
             ];
             $condition = [

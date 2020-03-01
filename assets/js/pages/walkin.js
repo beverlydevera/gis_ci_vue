@@ -44,6 +44,22 @@ var walkin = new Vue({
                     }).then(function (e) {
                         $('#addNewWalkinClientModal').modal('hide');
                         walkin.getWalkins();
+                        walkin.newWalkinInfo = {
+                            lastname: "",
+                            firstname: "",
+                            middlename: "",
+                            extname: "",
+                            birthdate: "",
+                            age: "",
+                            sex: "",
+                            homeaddress: "",
+                            contactno: "",
+                            emailaddress: "",
+                            branch_id: 1,
+                            branchname: "Abanao",
+                            walkintype: "Walk-in",
+                            status: 1
+                        }
                     })
                 })
                 .catch(function (error) {

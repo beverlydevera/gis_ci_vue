@@ -91,7 +91,7 @@
                         </thead>
                         <tbody v-for="(list,index) in studentattendance">
                             <tr>
-                                <td>{{index}}</td>
+                                <td>{{index+1}}</td>
                                 <td>{{list.schedule_date}}</td>
                                 <td>
                                     <span v-if="list.status==1" class="badge bg-success">PRESENT</span>

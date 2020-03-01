@@ -82,7 +82,7 @@
                             <th>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <input type="text" v-model="newWalkinInfo.branch_name" class="form-control smallerinput" readonly>
+                                        <input type="text" v-model="newWalkinInfo.branchname" class="form-control smallerinput" readonly>
                                     </div>
                                     <div class="col-md-6">
                                         <input type="text" v-model="newWalkinInfo.walkintype" class="form-control smallerinput" readonly>
