@@ -586,6 +586,26 @@ var enroll = new Vue({
                             }); 
                     }
             })
+        },
+        updateInvoiceAmount(){
+            var datas = {
+                invoice_id: this.otherinfo.invoice_id,
+                invoiceamount: this.otherinfo.invoicetotal
+            };
+            var datas = frmdata(datas);
+            var urls = window.App.baseUrl + "Students/updateInvoiceAmount";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    enroll.printInvoice();
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        printInvoice(){
+            var invoice_id = this.otherinfo.invoice_id;
+            var urls = window.App.baseUrl + "Invoice/printInvoice/"+invoice_id;
+            window.open(urls, "_blank");
         }
     },
     watch: {

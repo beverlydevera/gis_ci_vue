@@ -157,8 +157,15 @@ th {
 
                         <?php }else if($spv->packagetype=="Summer Promo"){ ?>
 
-                        //
-
+                        Details:
+                            <?php
+                                foreach($spv->details as $spdk => $spdv){
+                                    if($spdv->type=='input'){
+                                        if($spdk>0){ echo ", "; }
+                                        echo $spdv->particular;
+                                    }
+                                }
+                            ?>
                         <?php } ?>
                     </td>
                     <td style="text-align:right;">P <?=number_format($spv->pricerate,2)?></td>

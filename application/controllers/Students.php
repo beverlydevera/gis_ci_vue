@@ -479,6 +479,8 @@ class Students extends CI_Controller {
             
             $insert_studpackages = $this->Main->insertbatch("tbl_studentpackages", $studentpackages);
 
+            //update amount in tbl_studentinvoice
+
             $response = array(
                 "success"   => true,
                 "message"   => "Student Packages were saved successfully.\nContinue to billing.",
@@ -532,6 +534,13 @@ class Students extends CI_Controller {
             );
         }
         response_json($response);
+    }
+
+    public function updateInvoiceAmount()
+    {
+        $invoice_id = $this->input->post('invoice_id');
+        $invoiceamount = $this->input->post('invoiceamount');
+        $this->Main->update("tbl_studentinvoice",['invoice_id'=>$invoice_id],['amount'=>$invoiceamount]);
     }
 
     public function enroll_savePayment()

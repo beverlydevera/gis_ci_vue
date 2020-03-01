@@ -113,8 +113,8 @@
                             <th><input type="text" class="form-control smallerinput" v-model="studentRankInfo.newstudentPromotion.remarks"></th>
                         </tr>
                         <tr>
-                            <th width="30%">Upload Photos:</th>
-                            <th><input type="file" multiple accept=".jpeg,.jpg,.png"></th>
+                            <th width="30%">Upload Photo:</th>
+                            <th><input type="file" accept=".jpeg,.jpg,.png"></th>
                         </tr>
                     </table>
                     </div>
