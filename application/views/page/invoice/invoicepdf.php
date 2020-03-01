@@ -73,18 +73,20 @@ th {
     <table cellpadding="1">
         <tr>
             <th style="width:30%;">Billed to</th>
-            <th style="width:20%;">Date of Issue</th>
+            <th style="width:20%;">Invoice Date</th>
             <th style="width:20%;">Invoice Number</th>
             <th style="width:30%; text-align:right;">Amount Due (PHP)</th>
         </tr>
         <tr>
             <td rowspan=2>
-                <u> ABC </u> <br>
-                ID No. <u> 123 </u>
+                <u> <?=strtoupper($invoicedetails->lastname)?>, <?=strtoupper($invoicedetails->firstname)?> <?=substr($invoicedetails->middlename, 0, 1);?>.</u> <br>
+                ID No. <u> <?=$invoicedetails->reference_id?> </u>
             </td>
-            <td>01/01/2020</td>
-            <td>INV-00001</td>
-            <th rowspan=3 style="text-align:right; color:#800000; font-size:30px;">P1,800.00</th>
+            <td> <?=date_format(date_create($invoicedetails->sidate_added),"m/d/Y")?> </td>
+            <td> <?=$invoicedetails->invoice_number?> </td>
+            <th rowspan=3 style="text-align:right; color:#800000; font-size:30px;">
+                P <?=number_format($invoicedetails->amount-$paymentstotal,2)?>
+            </th>
         </tr>
         <tr>
             <td colspan=2></td>
@@ -99,7 +101,6 @@ th {
             <td>Enter Value</td>
         </tr>
     </table>
-    <br>
 
     <hr style="border-top: 3px solid #800000">
 
@@ -112,40 +113,76 @@ th {
                 <th style="text-align:center;">Qty</th>
                 <th style="text-align:center;">Total</th>
             </tr>
-            <tr>
-                <td>Package 1</td>
-                <td style="text-align:center;">P 1,500.00</td>
-                <td style="text-align:center;">2</td>
-                <td style="text-align:right;">P 3,000.00</td>
-            </tr>
-            <tr>
-                <td>Package 2</td>
-                <td style="text-align:center;">P 1,800.00</td>
-                <td style="text-align:center;">1</td>
-                <td style="text-align:right;">P 1,800.00</td>
-            </tr>
-            <tr>
-                <td colspan=4><hr style="border-top: 1px dotted #800000"></td>
-            </tr>
-            <tr>
-                <td rowspan=2></td>
-                <th colspan=2 style="text-align:right;">Total Invoice Amount (PHP)</th>
-                <td style="text-align:right;">P 4,800.00</td>
-            </tr>
+            <?php
+                if(!empty($studentmembership)){
+            ?>
+                <tr>
+                    <td>Membership (<?=$studentmembership->year?>)</td>
+                    <td style="text-align:right;">P <?=number_format($studentmembership->membership_price,2)?></td>
+                    <td style="text-align:center;">1</td>
+                    <td style="text-align:right;">P <?=number_format($studentmembership->membership_price,2)?></td>
+                </tr>
+            <?php
+                    if($studentmembership->insurance_avail){
+            ?>
+                <tr>
+                    <td>Insurance (<?=$studentmembership->year?>)</td>
+                    <td style="text-align:right;">P <?=number_format($studentmembership->insurance_price,2)?></td>
+                    <td style="text-align:center;">1</td>
+                    <td style="text-align:right;">P <?=number_format($studentmembership->insurance_price,2)?></td>
+                </tr>
+            <?php
+                    }
+                }
+            ?>
+            <?php
+                if(!empty($studentpackages)){
+                    foreach($studentpackages as $spk => $spv){
+                        $spv->details = json_decode($spv->details);
+            ?>
+                
+                <tr>
+                    <td>
+                        Package Type: <?=$spv->packagetype?> <br>
+
+                        <?php if($spv->packagetype=="Regular"){ ?>
+
+                        Class: <?=$spv->details->class?><br>
+                        Schedule: <?=$spv->details->sched_day?> / <?=$spv->details->sched_time?> <br>
+                        Sessions: <?=$spv->details->sessions?>
+
+                        <?php }else if($spv->packagetype=="Unlimited"){ ?>
+
+                        Details: <?=$spv->details->detail?>
+
+                        <?php }else if($spv->packagetype=="Summer Promo"){ ?>
+
+                        //
+
+                        <?php } ?>
+                    </td>
+                    <td style="text-align:right;">P <?=number_format($spv->pricerate,2)?></td>
+                    <td style="text-align:center;">1</td>
+                    <td style="text-align:right;">P <?=number_format($spv->pricerate,2)?></td>
+                </tr>
+            <?php
+                    }
+                }
+            ?>
         </table>
     </div>
 
-    <hr style="border-top: 2px solid #800000">
+    <hr style="border-top: 1px dotted #800000">
 
     <div style="width:45%; float:right;">
         <table>
             <tr>
                 <th>Total Invoice Amount</th>
-                <td style="text-align:right;">P 4,800.00</td>
+                <td style="text-align:right;">P <?=number_format($invoicedetails->amount,2)?></td>
             </tr>
             <tr>
                 <th>Total Amount Paid</th>
-                <td style="text-align:right;">- P 3,000.00</td>
+                <td style="text-align:right;">- P <?=number_format($paymentstotal,2)?></td>
             </tr>
             <tr>
                 <td colspan=2 style="font-size:10px;">(See payment history at the back)</td>
@@ -155,7 +192,7 @@ th {
             </tr>
             <tr>
                 <th>Remaining Balance</th>
-                <td style="text-align:right;">P 1,800.00</td>
+                <td style="text-align:right;">P <?=number_format($invoicedetails->amount-$paymentstotal,2)?></td>
             </tr>
         </table>
     </div>
@@ -163,7 +200,10 @@ th {
     </div>
     <footer>
         Bravehearts Martial Arts Institute <br>
-        Statement of Account for: <span style="color:blue;">Student ABC</span><br>
+        Statement of Account for: 
+        <span style="color:blue;"> 
+            <?=$invoicedetails->lastname?>, <?=$invoicedetails->firstname?> <?=substr($invoicedetails->middlename, 0, 1);?>.
+        </span><br>
         <?=date("F d, Y")?>
     </footer>
 </body>
@@ -177,23 +217,26 @@ th {
                 <th>OR Number</th>
                 <th>Total</th>
             </tr>
+            <?php
+                if(!empty($paymentshistory)){
+                    foreach($paymentshistory as $phk => $phv){
+            ?>
             <tr>
-                <td>01/01/2020</td>
-                <td>2020-00001</td>
-                <td>P 1,000.00</td>
+                <td><?=date_format(date_create($phv->ordate),"m/d/Y")?></td>
+                <td><?=$phv->ornumber?></td>
+                <td>P <?=number_format($phv->amount,2)?></td>
             </tr>
-            <tr>
-                <td>01/01/2020</td>
-                <td>2020-00002</td>
-                <td>P 2,000.00</td>
-            </tr>
+            <?php
+                    }
+                }
+            ?>
             <tr>
                 <td colspan=3><hr style="border-top: 1px dotted #800000"></td>
             </tr>
             <tr>
                 <td rowspan=2></td>
                 <th>Total Amount Paid (PHP)</th>
-                <td>P 3,000.00</td>
+                <td>P <?=number_format($paymentstotal,2)?></td>
             </tr>
         </table>
     </div>

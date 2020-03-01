@@ -159,7 +159,22 @@ class Invoice extends CI_Controller {
             "key"      => "s.student_id=si.student_id",
             "jointype" => "inner"
         ];
-        $data['invoicedetails'] = $this->Main->getDataOneJoin("*, si.status as invstatus","tbl_studentinvoice si",$join,$condition,"",$orderby,$groupby,"row");
+        $data['invoicedetails'] = $this->Main->getDataOneJoin("lastname,firstname,middlename,reference_id,invoice_number,amount,si.date_added as sidate_added","tbl_studentinvoice si",$join,$condition,"",$orderby,$groupby,"row");
+
+        $data['studentmembership'] = $this->Main->getDataOneJoin("*","tbl_studentmembership sm","",$condition,"","","","row");
+        $data['studentmembership']->insurance = json_decode($data['studentmembership']->insurance);
+        $data['studentmembership']->insurance_avail = $data['studentmembership']->insurance->avail;
+        $data['studentmembership']->insurance_price = $data['studentmembership']->insurance->price;
+
+        $join = [
+            "table" => "tbl_packages p",
+            "key"   => "p.package_id=sp.package_id",
+            "jointype" => "inner"
+        ];
+        $data['studentpackages'] = $this->Main->getDataOneJoin("*","tbl_studentpackages sp",$join,$condition,"","","","");
+        $data['paymentshistory'] = $this->Main->getDataOneJoin("*","tbl_paymentshistory ph","",$condition,"","","","");
+        $data['paymentstotal'] = $this->Main->getDataOneJoin("SUM(ph.amount) as paymentstotal","tbl_paymentshistory ph","",$condition,"","","invoice_id","row");
+        if(!empty($data['paymentstotal'])){ $data['paymentstotal'] = $data['paymentstotal']->paymentstotal; }else{ $data['paymentstotal']=0; }
         
         $this->load->view('page/invoice/invoicepdf',$data);
         $html = $this->output->get_output();
