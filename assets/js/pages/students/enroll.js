@@ -94,6 +94,8 @@ var enroll = new Vue({
 
             if(this.derivedinfo.studentage>=25){
                 this.otherinfo.insurance.price = 150;
+            }else{
+                this.otherinfo.insurance.price = 60;
             }
         },
         saveNewStudentRegistration(){
@@ -461,8 +463,12 @@ var enroll = new Vue({
                 .then(function (e) {
                     enroll.otherinfo.invoicedetails.studmembership = e.data.data.invoice_membership;
                     enroll.otherinfo.invoicetotal = parseInt(1000);
-                    if(e.data.data.invoice_membership.insurance_avail!=0){
-                        enroll.otherinfo.invoicetotal += parseInt(60);
+                    if(enroll.otherinfo.insurance.avail!=0){
+                        if(enroll.derivedinfo.studentage>=25){
+                            enroll.otherinfo.invoicetotal += parseInt(150);
+                        }else{
+                            enroll.otherinfo.invoicetotal += parseInt(60);
+                        }
                     }
 
                     e.data.data.invoice_packages.forEach(e => {
@@ -545,11 +551,12 @@ var enroll = new Vue({
                             paymentdetails: this.paymentdetails,
                             invoiceamount: this.otherinfo.invoicetotal
                         };
-                        console.log(datas);
+                        showloading();
                         var urls = window.App.baseUrl + "Students/enroll_savePayment";
                         axios.post(urls, datas)
                             .then(function (e) {
                                 if(e.data.success){
+                                    Swal.close();
                                     Swal.fire({
                                         text: e.data.message,
                                         type: 'success',
