@@ -7,7 +7,20 @@
     <div class="row">
         <div class="col-md-12">
             <div class="main-timeline3">
-                <div class="timeline">
+                <template v-for="(list,index) in studentRankInfo.promotionlist">
+                    <div class="timeline">
+                        <a href="#" class="timeline-content">
+                            <span class="year">{{list.rank_title}}</span>
+                            <h3 class="title">{{list.date_promoted}}</h3>
+                            <p class="description">
+                                <div class="text-center">
+                                    <img class="profile-user-img img-fluid img-circle" v-bind:src="'data:image/jpeg;base64,'+list.photo" alt="Promotion picture">
+                                </div>
+                            </p>
+                        </a>
+                    </div>
+                </template>
+                <!-- <div class="timeline">
                     <a href="#" class="timeline-content">
                         <span class="year">2018</span>
                         <h3 class="title">2nd Brown</h3>
@@ -17,8 +30,8 @@
                             </div>
                         </p>
                     </a>
-                </div>
-                <div class="timeline">
+                </div> -->
+                <!-- <div class="timeline">
                     <a href="#" class="timeline-content">
                         <span class="year">2017</span>
                         <h3 class="title">3rd Red</h3>
@@ -28,8 +41,8 @@
                             </div>
                         </p>
                     </a>
-                </div>
-                <div class="timeline">
+                </div> -->
+                <!-- <div class="timeline">
                     <a href="#" class="timeline-content">
                         <span class="year">2016</span>
                         <h3 class="title">6th Blue</h3>
@@ -39,8 +52,8 @@
                             </div>
                         </p>
                     </a>
-                </div>
-                <div class="timeline">
+                </div> -->
+                <!-- <div class="timeline">
                     <a href="#" class="timeline-content">
                         <span class="year">2015</span>
                         <h3 class="title">8th Yellow</h3>
@@ -50,7 +63,7 @@
                             </div>
                         </p>
                     </a>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

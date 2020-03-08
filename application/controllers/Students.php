@@ -153,6 +153,7 @@ class Students extends CI_Controller {
         if(!empty($promotionslist)){
             foreach($promotionslist as $plk => $plv){
                 if(!empty($plv->photo)){ $promotionslist[$plk]->photo = base64_encode($plv->photo); }
+                $promotionslist[$plk]->date_promoted = date_format(date_create($plv->date_promoted), "F d, Y");
             }
         }
 
