@@ -78,6 +78,26 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
+    public function getMembershipList()
+    {
+        $membershiplist = $this->Main->getDataOneJoin("*","tbl_membership",$join=array(),$condition=array(),$pager=array(),$orderby=array(),$groupby="",$type="");
+        
+        if(!empty($membershiplist)){
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    "membershiplist" => $membershiplist
+                ]
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
     //first tab
     public function profile($string = "")
     {

@@ -136,9 +136,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h6>Membership Type:</h6>
-                            <input v-model="membership_info.membership_update.membership_type" type="checkbox"> Regular <br>
-                            <input v-model="membership_info.membership_update.membership_type" type="checkbox"> BBC <br>
-                            <input v-model="membership_info.membership_update.membership_type" type="checkbox"> Pomsae <br>
+                            <template v-for="(list,index) in membership_info.membershiplist">
+                                <input name="list.membership_name" :value="list.membership_id" v-model="membership_info.membership_update.membership_type" type="checkbox"> {{list.membership_name}} <br>
+                            </template>
                         </div>
                     </div>
                     <br>

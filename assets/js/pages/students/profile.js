@@ -34,6 +34,7 @@ var profile = new Vue({
                     avail: 1,
                     price: 60
                 },
+                membership_type: [],
             },
         },
         //second tab
@@ -239,7 +240,6 @@ var profile = new Vue({
                 confirmButtonText: 'Update Membership',
                 }).then((result) => {
                     if (result.value) {
-                        //get all membership types
                         this.changeMembershipModal(studmem_id);
                     }else{
                         Toast.fire({
@@ -250,6 +250,14 @@ var profile = new Vue({
             })
         },
         changeMembershipModal(studmem_id){
+            var urls = window.App.baseUrl + "students/getMembershipList";
+            axios.post(urls, "")
+                .then(function (e) {
+                    profile.membership_info.membershiplist=e.data.data.membershiplist;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
             $('#updateMembershipModal').modal('show');
         },
         //first tab
