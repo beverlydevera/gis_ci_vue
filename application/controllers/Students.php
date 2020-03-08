@@ -398,6 +398,34 @@ class Students extends CI_Controller {
         }
         response_json($response);
     }
+
+    public function getPromotionList()
+    {
+        $student_id = $this->input->post('student_id');
+        $condition = [
+            "student_id" => $student_id
+        ];
+        $join = [
+            "table"     => "tbl_ranks r",
+            "key"       => "r.rank_id = sp.rank_id",
+            "jointype"  => "inner"
+        ];
+        $promotionslist = $this->Main->getDataOneJoin("*","tbl_studentpromotions sp",$join,$condition,"","","","");
+        if(!empty($promotionslist)){
+            foreach($promotionslist as $plk => $plv){
+                if(!empty($plv->photo)){ $promotionslist[$plk]->photo = base64_encode($plv->photo); }
+                $promotionslist[$plk]->date_promoted = date_format(date_create($plv->date_promoted), "F d, Y");
+            }
+        }
+        
+        $response = array(
+            "success"   => true,
+            "data"      => [
+                "promotionlist" => $promotionslist
+            ]
+        );
+        response_json($response);
+    }
     //end of profile
 
     //enrollment functions

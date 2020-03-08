@@ -551,12 +551,12 @@ var profile = new Vue({
                         title: e.data.message
                     })
                     if(e.data.success){
-                        //this.getPromotionsList()
                         profile.studentRankInfo.newstudentPromotion.rank_title = rank_title;
                         profile.studentRankInfo.newstudentPromotion.promotion_id = e.data.data.promotion_id;
 
-                        if(profile.studentRankInfo.promotionlist!=null){ profile.studentRankInfo.promotionlist.push(profile.studentRankInfo.newstudentPromotion); }
-                        else{ profile.studentRankInfo.promotionlist = [profile.studentRankInfo.newstudentPromotion]; }
+                        profile.getPromotionsList();
+                        // if(profile.studentRankInfo.promotionlist!=null){ profile.studentRankInfo.promotionlist.push(profile.studentRankInfo.newstudentPromotion); }
+                        // else{ profile.studentRankInfo.promotionlist = [profile.studentRankInfo.newstudentPromotion]; }
                         
                         profile.studentRankInfo.currentRank = profile.studentRankInfo.newstudentPromotion;
 
@@ -570,6 +570,22 @@ var profile = new Vue({
                         };
                     }
                     $('#addNewPromotionModal').modal('hide');
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        getPromotionsList(){
+            var datas = {
+                student_id: this.student_id,
+            };
+            var datas = frmdata(datas);
+            var urls = window.App.baseUrl + "students/getPromotionList";
+            showloading("Loading Data");
+            axios.post(urls, datas)
+                .then(function (e) {
+                    Swal.close();
+                    profile.studentRankInfo.promotionlist = e.data.data.promotionlist;
                 })
                 .catch(function (error) {
                     console.log(error)
