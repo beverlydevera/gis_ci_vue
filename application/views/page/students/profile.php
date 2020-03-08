@@ -22,7 +22,8 @@
                                 <a>{{studentinfo.reference_id}}</a>
                             </li>
                             <li class="list-group-item">
-                                <b>Membership/s: </b><span class="btn btn-success btn-xs float-right" @click="changeMembership(studentmembership.studmem_id)"><i class="fas fa-edit"></i></span><br>
+                                <b>Membership/s:</b>
+                                <span class="btn btn-success btn-xs float-right" v-if="studentmembership.year<currentyear" @click="changeMembershipModal(studentmembership.studmem_id)"><i class="fas fa-edit"></i></span><br>
                                 <a v-for="(list,index) in derivedinfo.studentmembership">
                                     <span class="badge bg-success">{{list}}</span> <br/>
                                 </a>
@@ -115,11 +116,11 @@
         </div>
     </div>
 
-    <div class="modal fade" id="changeMembershipModal">
+    <div class="modal fade" id="updateMembershipModal">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Membership</h5>
+                    <h5 class="modal-title">Update Membership</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -127,10 +128,28 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
+                            <h6>Year:</h6>
+                            <input type="text" v-model="currentyear" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
                             <h6>Membership Type:</h6>
-                            <input type="checkbox"> Regular <br>
-                            <input type="checkbox" checked> BBC <br>
-                            <input type="checkbox" checked> Pomsae <br>
+                            <input v-model="membership_info.membership_update.membership_type" type="checkbox"> Regular <br>
+                            <input v-model="membership_info.membership_update.membership_type" type="checkbox"> BBC <br>
+                            <input v-model="membership_info.membership_update.membership_type" type="checkbox"> Pomsae <br>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6>Insurance:</h6>
+                            <select class="form-control smallerinput" required v-model="membership_info.membership_update.insurance.avail">
+                                <option disabled selected>Select Insurance</option>
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
                         </div>
                     </div>
                 </div>

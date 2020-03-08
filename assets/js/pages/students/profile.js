@@ -26,6 +26,16 @@ var profile = new Vue({
             companyaddress: "",
             studentmembership: {}
         },
+        currentyear: new Date().getFullYear(),
+        membership_info: {
+            membershiplist: [],
+            membership_update: {
+                insurance: {
+                    avail: 1,
+                    price: 60
+                },
+            },
+        },
         //second tab
         studentpackages: {
             regular: [],
@@ -218,6 +228,30 @@ var profile = new Vue({
                     }
                 })
         },
+        updateMembershipPrompt(studmem_id){
+            Swal.fire({
+                title: "Student Membership Warning",
+                text: "Student membership has not been updated, please update for the current year.",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Update Membership',
+                }).then((result) => {
+                    if (result.value) {
+                        //get all membership types
+                        this.changeMembershipModal(studmem_id);
+                    }else{
+                        Toast.fire({
+                            type: "error",
+                            title: "Please update membership ASAP."
+                        })
+                    }
+            })
+        },
+        changeMembershipModal(studmem_id){
+            $('#updateMembershipModal').modal('show');
+        },
         //first tab
         calculate_age() {
             var dob = this.studentinfo.birthdate;
@@ -331,6 +365,9 @@ var profile = new Vue({
 
                     profile.calculate_age();
                     Swal.close();
+                    if(profile.studentmembership.year<profile.currentyear){
+                        profile.updateMembershipPrompt(profile.studentmembership.studmem_id);
+                    }
                 })
                 .catch(function (error) {
                     console.log(error)
