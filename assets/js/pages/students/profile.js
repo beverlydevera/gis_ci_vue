@@ -69,6 +69,80 @@ var profile = new Vue({
             },
             promotionlist: []
         },
+        evaluation: {
+            eval_technique: [{
+                name: "POOMSAE",
+                rate_o: 1,
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            },{
+                name: "DEFENSE FORM",
+                rate_o: 1,
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            },{
+                name: "KICKINGS",
+                rate_o: 1,
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            },{
+                name: "COMBINATIONS",
+                rate_o: 1,
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            },{
+                name: "SPARRING",
+                rate_o: 1,
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            }],
+            eval_attitude: [{
+                name: "Attendance and Punctuality",
+                rate_o: 1,
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            },{
+                name: "Accomplishment of Tasks",
+                rate_o: 1,
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            },{
+                name: "Intereset and Initiative",
+                rate_o: 1,
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            },{
+                name: "Courtesy and Discipline",
+                rate_o: 1,
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            },{
+                name: "Consent for Other",
+                rate_o: 1,
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            }]
+        },
         //sixth tab
         invoicelist: [],
         invoiceinfo: {},
@@ -436,6 +510,18 @@ var profile = new Vue({
                 });
         },
         //fourth tab
+        checked_eval(index,type,rating){
+            if(type=='technique'){
+                var data = this.evaluation.eval_technique[index];
+            }else if(type=='attitude'){
+                var data = this.evaluation.eval_attitude[index];
+            }
+            if(rating!='rate_o'){ data.rate_o = ''; }
+            if(rating!='rate_vg'){ data.rate_vg = ''; }
+            if(rating!='rate_g'){ data.rate_g = ''; }
+            if(rating!='rate_s'){ data.rate_s = ''; }
+            if(rating!='rate_ni'){ data.rate_ni = ''; }
+        },
         saveStudentPromotion(){
             var pt_index = this.studentRankInfo.newstudentPromotion.rank_id;
             this.studentRankInfo.newstudentPromotion.rank_id = this.rankslist[pt_index].rank_id;

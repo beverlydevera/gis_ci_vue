@@ -117,6 +117,53 @@
                             <th><input type="file" accept=".jpeg,.jpg,.png"></th>
                         </tr>
                     </table>
+                    <hr>
+                    <h6>EVALUATION</h6>
+                    <table class="table table-bordered table-responsive-sm table-sm">
+                        <thead>
+                            <tr>
+                                <th style="width:3%;">#</th>
+                                <th>CRITERIA</th>
+                                <th>O</th>
+                                <th>VG</th>
+                                <th>G</th>
+                                <th>S</th>
+                                <th>NI</th>
+                            </tr>
+                        </thead>
+                            <tr><td colspan=7><b>- - - TECHNIQUE - - -</b></td></tr>
+                        <tbody v-for="(list,index) in evaluation.eval_technique">
+                            <tr>
+                                <td>{{index+1}}</td>
+                                <td>{{list.name}}</td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'technique','rate_o')" :value="1" v-model="list.rate_o"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'technique','rate_vg')" :value="1" v-model="list.rate_vg"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'technique','rate_g')" :value="1" v-model="list.rate_g"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'technique','rate_s')" :value="1" v-model="list.rate_s"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'technique','rate_ni')" :value="1" v-model="list.rate_ni"></td>
+                            </tr>
+                        </tbody>
+                            <tr><td colspan=7><b>- - - ATTITUDE - - -</b></td></tr>
+                        <tbody v-for="(list,index) in evaluation.eval_attitude">
+                            <tr>
+                                <td>{{index+1}}</td>
+                                <td>{{list.name}}</td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'attitude','rate_o')" :value="1" v-model="list.rate_o"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'attitude','rate_vg')" :value="1" v-model="list.rate_vg"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'attitude','rate_g')" :value="1" v-model="list.rate_g"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'attitude','rate_s')" :value="1" v-model="list.rate_s"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'attitude','rate_ni')" :value="1" v-model="list.rate_ni"></td>
+                            </tr>
+                        </tbody>
+                            <tr><td colspan=7></td></tr>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Remarks</th>
+                                <td colspan=5><textarea v-model="evaluation.eval_remarks" class="form-control"></textarea></td>
+                            </tr>
+                        </thead>
+                    </table>
                     </div>
                 </div>
             </div>
