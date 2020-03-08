@@ -5,6 +5,7 @@ var invoice = new Vue({
         invoicelist: [],
         invoicedetails: {
             details: {
+                amount: 0,
                 paymentstotal: 0
             },
             paymentslist: [],

@@ -126,7 +126,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button v-if="invoicedetails.details.paymentstotal<invoicedetails.details.amount" type="button" class="btn btn-primary" @click="addPaymentModalshow()"><i class="fas fa-plus"></i> Add a New Payment</button>
+                <button v-if="invoicedetails.details.paymentstotal!=invoicedetails.details.amount" type="button" class="btn btn-primary" @click="addPaymentModalshow()"><i class="fas fa-plus"></i> Add a New Payment</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
