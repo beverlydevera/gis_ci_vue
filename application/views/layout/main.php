@@ -37,17 +37,6 @@
         };
     </script>
 </head>
-<!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to to the body tag
-to get the desired effect
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -73,7 +62,6 @@ to get the desired effect
     <link rel="stylesheet" href="<?= base_url("assets/template/plugins/sweetalert2/sweetalert2.min.css") ?>">
     <link rel="stylesheet" href="<?= base_url("assets/template/plugins/toastr/toastr.min.css") ?>">
 
-
     <link rel="stylesheet" href="<?= base_url('assets/css/custom.css') ?>">
 
 
@@ -85,16 +73,6 @@ to get the desired effect
         };
     </script>
 </head>
-<!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to to the body tag
-to get the desired effect
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
 <body class="sidebar-mini layout-navbar-fixed accent-info text-sm sidebar-open">
 <!-- class="sidebar-mini layout-navbar-fixed sidebar-collapse" -->
     <div class="wrapper">
@@ -215,6 +193,11 @@ to get the desired effect
     <script src="<?= base_url("assets/template/plugins/sweetalert2/sweetalert2.min.js") ?>"></script>
     <script src="<?= base_url('assets/template/plugins/toastr/toastr.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/script.js') ?>"></script>
+
+    <!-- DASHBOARD SCRIPTS -->
+    <script v-if="activenav='dashboard'" src="<?=base_url()?>assets/template/plugins/chart.js/Chart.min.js"></script>
+    <script v-if="activenav='dashboard'" src="<?=base_url()?>assets/template/dist/js/demo.js"></script>
+    <script v-if="activenav='dashboard'" src="<?=base_url()?>assets/template/dist/js/pages/dashboard3.js"></script>
 
     <?php if (!empty($js)) : ?>
         <?php foreach ($js as $j) : ?>

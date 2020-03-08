@@ -1,68 +1,10 @@
-<!-- <section class="content" id="dashboard_page">
-    <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-10">
-            <div class="card">
-                <div class="card-header">
-                <h3 class="card-title">Other Dashboard</h3>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-2">
-            <div class="card">
-                <div class="card-header">
-                <h3 class="card-title">Announcements</h3>
-                </div>
-                <div class="card-body">
-                    <div class="post">
-                        Sample text 1
-                    </div>
-                    <div class="post">
-                        Sample text 2
-                    </div>
-                </div>
-            </div>
-
-            <div class="info-box mb-3">
-                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">Active Students</span>
-                    <span class="info-box-number">300</span>
-                </div>
-            </div>
-            
-            <div class="info-box mb-3">
-                <span class="info-box-icon bg-success elevation-1"><i class="nav-icon fas fa-tasks"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">Active Classes</span>
-                    <span class="info-box-number">10</span>
-                </div>
-            </div>
-
-            <div class="info-box mb-3">
-                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-address-card nav-icon"></i></span>
-
-                <div class="info-box-content">
-                    <span class="info-box-text">New Enrollees</span>
-                    <span class="info-box-number">5</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-</section> -->
-
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>150</h3>
+                        <h3>{{reportsummary.students}}</h3>
                         <p>Students</p>
                     </div>
                     <div class="icon">
@@ -71,11 +13,10 @@
                     <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>44</h3>
+                        <h3>{{reportsummary.newstudents}}</h3>
                         <p>New Students</p>
                     </div>
                     <div class="icon">
@@ -84,11 +25,10 @@
                     <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>53<sup style="font-size: 20px">%</sup></h3>
+                        <h3>{{reportsummary.classes}}<sup style="font-size: 20px">%</sup></h3>
                         <p>Active Classes</p>
                     </div>
                     <div class="icon">
@@ -96,12 +36,11 @@
                     </div>
                     <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
-            </div>
-            
+            </div>            
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>65</h3>
+                        <h3>{{reportsummary.medals}}</h3>
                         <p>Medals</p>
                     </div>
                     <div class="icon">
@@ -110,11 +49,9 @@
                     <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-
         </div>
         <div class="row">
             <div class="col-md-8">
-
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
@@ -306,9 +243,3 @@
         </div>
     </div>
 </section>
-
-
-<!-- OPTIONAL SCRIPTS -->
-<script src="<?=base_url()?>assets/template/plugins/chart.js/Chart.min.js"></script>
-<script src="<?=base_url()?>assets/template/dist/js/demo.js"></script>
-<script src="<?=base_url()?>assets/template/dist/js/pages/dashboard3.js"></script>
