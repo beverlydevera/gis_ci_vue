@@ -149,7 +149,12 @@ class Students extends CI_Controller {
             "jointype"  => "inner"
         ];
         $rankinfo = $this->Main->getDataOneJoin("sp.rank_id,rank_title,ses_attended,next_rank,student_id,promotion_id,date_promoted","tbl_studentpromotions sp",$join,$condition,["limit"=>1,"offset"=>0],["column"=>"promotion_id","order"=>"DESC"],"","row");
-        $promotionslist = $this->Main->getDataOneJoin("*","tbl_studentpromotions sp",$join,$condition,"","","","");
+        
+        $orderby = [
+            "column" => "promotion_id",
+            "order" => "DESC"
+        ];
+        $promotionslist = $this->Main->getDataOneJoin("*","tbl_studentpromotions sp",$join,$condition,"",$orderby,"","");
         if(!empty($promotionslist)){
             foreach($promotionslist as $plk => $plv){
                 if(!empty($plv->photo)){ $promotionslist[$plk]->photo = base64_encode($plv->photo); }
@@ -401,27 +406,43 @@ class Students extends CI_Controller {
 
     public function getPromotionList()
     {
-        $student_id = $this->input->post('student_id');
-        $condition = [
-            "student_id" => $student_id
-        ];
+        if(!empty($this->input->post('student_id'))){ 
+            $student_id = $this->input->post('student_id');
+            $condition = [ "student_id" => $student_id ];
+            $type = "";
+        }
+        if(!empty($this->input->post('promotion_id'))){ 
+            $promotion_id = $this->input->post('promotion_id');
+            $condition = [ "promotion_id" => $promotion_id ];
+            $type = "row";
+        }
+        
         $join = [
             "table"     => "tbl_ranks r",
             "key"       => "r.rank_id = sp.rank_id",
             "jointype"  => "inner"
         ];
-        $promotionslist = $this->Main->getDataOneJoin("*","tbl_studentpromotions sp",$join,$condition,"","","","");
-        if(!empty($promotionslist)){
-            foreach($promotionslist as $plk => $plv){
-                if(!empty($plv->photo)){ $promotionslist[$plk]->photo = base64_encode($plv->photo); }
-                $promotionslist[$plk]->date_promoted = date_format(date_create($plv->date_promoted), "F d, Y");
+        $orderby = [
+            "column" => "promotion_id",
+            "order" => "DESC"
+        ];
+        $promotioninfo = $this->Main->getDataOneJoin("*","tbl_studentpromotions sp",$join,$condition,"",$orderby,"",$type);
+
+        if(!empty($promotioninfo)){
+            if($type!="row"){
+                foreach($promotioninfo as $plk => $plv){
+                    if(!empty($plv->photo)){ $promotioninfo[$plk]->photo = base64_encode($plv->photo); }
+                    $promotioninfo[$plk]->date_promoted = date_format(date_create($plv->date_promoted), "F d, Y");
+                }
+            }else{
+                $promotioninfo->photo = base64_encode($promotioninfo->photo);
             }
         }
         
         $response = array(
             "success"   => true,
             "data"      => [
-                "promotionlist" => $promotionslist
+                "promotioninfos" => $promotioninfo
             ]
         );
         response_json($response);

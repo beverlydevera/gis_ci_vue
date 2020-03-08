@@ -68,6 +68,15 @@ var profile = new Vue({
                 ses_attended: 0,
                 photo: ""
             },
+            viewStudentPromotion: {
+                next_rank: {
+                    rank_id: "",
+                    rank_title: "",
+                    ses_needed: ""
+                },
+                ses_attended: 0,
+                photo: ""
+            },
             promotionlist: []
         },
         evaluation: {
@@ -533,7 +542,7 @@ var profile = new Vue({
             this.studentRankInfo.newstudentPromotion.next_rank.rank_id = this.rankslist[nr_index].rank_id;
             this.studentRankInfo.newstudentPromotion.next_rank.rank_title = this.rankslist[nr_index].rank_title;
 
-            this.studentRankInfo.newstudentPromotion.photo = this.$refs.promotion_photo.files[0];
+            this.studentRankInfo.newstudentPromotion.photo = this.$refs.promotion_photo_add.files[0];
             let formData = new FormData();
 
             formData.append('promotion_info', JSON.stringify(this.studentRankInfo.newstudentPromotion));
@@ -549,27 +558,28 @@ var profile = new Vue({
                     Swal.fire({
                         type: e.data.type,
                         title: e.data.message
+                    }).then(function (el) {
+                        if(e.data.success){
+                            profile.studentRankInfo.newstudentPromotion.rank_title = rank_title;
+                            profile.studentRankInfo.newstudentPromotion.promotion_id = e.data.data.promotion_id;
+
+                            profile.getPromotionsList();
+                            // if(profile.studentRankInfo.promotionlist!=null){ profile.studentRankInfo.promotionlist.push(profile.studentRankInfo.newstudentPromotion); }
+                            // else{ profile.studentRankInfo.promotionlist = [profile.studentRankInfo.newstudentPromotion]; }
+                            
+                            profile.studentRankInfo.currentRank = profile.studentRankInfo.newstudentPromotion;
+
+                            profile.studentRankInfo.newstudentPromotion = {
+                                next_rank: {
+                                    rank_id: "",
+                                    rank_title: "",
+                                    ses_needed: ""
+                                },
+                                ses_attended: 0,
+                            };
+                        }
+                        $('#addNewPromotionModal').modal('hide');
                     })
-                    if(e.data.success){
-                        profile.studentRankInfo.newstudentPromotion.rank_title = rank_title;
-                        profile.studentRankInfo.newstudentPromotion.promotion_id = e.data.data.promotion_id;
-
-                        profile.getPromotionsList();
-                        // if(profile.studentRankInfo.promotionlist!=null){ profile.studentRankInfo.promotionlist.push(profile.studentRankInfo.newstudentPromotion); }
-                        // else{ profile.studentRankInfo.promotionlist = [profile.studentRankInfo.newstudentPromotion]; }
-                        
-                        profile.studentRankInfo.currentRank = profile.studentRankInfo.newstudentPromotion;
-
-                        profile.studentRankInfo.newstudentPromotion = {
-                            next_rank: {
-                                rank_id: "",
-                                rank_title: "",
-                                ses_needed: ""
-                            },
-                            ses_attended: 0,
-                        };
-                    }
-                    $('#addNewPromotionModal').modal('hide');
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -590,6 +600,29 @@ var profile = new Vue({
                 .catch(function (error) {
                     console.log(error)
                 });
+        },
+        viewPromotionInfo(index){
+            var datas = {
+                promotion_id: this.studentRankInfo.promotionlist[index].promotion_id,
+            };
+            var datas = frmdata(datas);
+            var urls = window.App.baseUrl + "students/getPromotionList";
+            showloading("Loading Data");
+            axios.post(urls, datas)
+                .then(function (e) {
+                    Swal.close();
+                    profile.studentRankInfo.viewStudentPromotion = e.data.data.promotioninfos;
+                    profile.eval_attitude = JSON.parse(profile.studentRankInfo.viewStudentPromotion.eval_attitude);
+                    profile.eval_technique = JSON.parse(profile.studentRankInfo.viewStudentPromotion.eval_technique);
+                    profile.studentRankInfo.viewStudentPromotion.next_rank = JSON.parse(profile.studentRankInfo.viewStudentPromotion.next_rank);
+                    $('#editPromotionModal').modal('show');
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        changePromotionImage(){
+            $("input[id='changePromImage']").click();
         },
         //sixth tab
         viewPaymentsModal(index){
