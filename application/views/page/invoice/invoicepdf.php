@@ -94,7 +94,8 @@ th {
         <tr>
             <td rowspan=2></td>
             <th>Due Date</th>
-            <th>Reference</th>
+            <th>Invoice Status</th>
+            <!-- <th>Reference</th> -->
         </tr>
         <tr>
             <td>
@@ -106,7 +107,8 @@ th {
                     }
                 ?>
             </td>
-            <td>_____________</td>
+            <td><?=ucwords($invoicedetails->invstatus)?></td>
+            <!-- <td>_____________</td> -->
         </tr>
     </table>
 

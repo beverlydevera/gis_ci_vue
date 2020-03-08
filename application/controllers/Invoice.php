@@ -39,18 +39,22 @@ class Invoice extends CI_Controller {
         $invoicelist = $this->Main->getDataOneJoin("invoice_number, date_added, reference_id, lastname, firstname, amount, invoice_id, si.status as invstatus","tbl_studentinvoice si",$join,$condition,$pager,$orderby,$groupby,$type);
         
         if(!empty($invoicelist)){
-            $response = array(
-                "success"   => true,
-                "data"      => [
-                    "invoicelist" => $invoicelist
+            $invoicetotal = $this->Main->getDataOneJoin("SUM(amount) as totalinvoice_amt","tbl_studentinvoice si","",$condition,"","","","row")->totalinvoice_amt;
+        }else{ $invoicetotal=0; }
+        $paymenttotal = $this->Main->getDataOneJoin("SUM(amount) as totalpayment_amt","tbl_paymentshistory si","",$condition,"","","","row");
+        if(!empty($paymenttotal)){ $paymenttotal = $paymenttotal->totalpayment_amt; }else{ $paymenttotal=0; }
+
+        $response = array(
+            "success"   => true,
+            "data"      => [
+                "invoicelist" => $invoicelist,
+                'invoiceinfo'       => [
+                    "totalinvoice"  => $invoicetotal,
+                    "totalpayment"  => $paymenttotal
                 ]
-            );
-        }else{
-            $response = array(
-                "success"   => false,
-                "data"      => ""
-            );
-        }
+            ]
+        );
+        
         response_json($response);
     }
 
@@ -68,12 +72,13 @@ class Invoice extends CI_Controller {
             ];
             $paymentslist = $this->Main->getDataOneJoin("*","tbl_paymentshistory ph",$join,$condition,"",$orderby,$groupby,$type);
             $paymentstotal = $this->Main->getDataOneJoin("SUM(ph.amount) as paymentstotal","tbl_paymentshistory ph",$join,$condition,"",$orderby,"invoice_id","row");
+            if(!empty($paymentstotal)){ $paymentstotal = $paymentstotal->paymentstotal; }else{ $paymentstotal=0; }
 
             $response = array(
                 "success"   => true,
                 "data"      => [
                     "paymentslist" => $paymentslist,
-                    "paymentstotal" => $paymentstotal->paymentstotal
+                    "paymentstotal" => $paymentstotal
                 ]
             );
         }else{
@@ -133,12 +138,13 @@ class Invoice extends CI_Controller {
             ];
             $invoicedetails = $this->Main->getDataOneJoin("s.student_id,invoice_id,invoice_number,lastname,firstname,amount,si.status as invstatus","tbl_studentinvoice si",$join,$condition,"",$orderby,$groupby,"row");
             $paymentstotal = $this->Main->getDataOneJoin("SUM(ph.amount) as paymentstotal","tbl_paymentshistory ph","",$condition,"",$orderby,"invoice_id","row");
+            if(!empty($paymentstotal)){ $paymentstotal = $paymentstotal->paymentstotal; }else{ $paymentstotal=0; }
 
             $response = array(
                 "success"   => true,
                 "data"      => [
                     "invoicedetails" => $invoicedetails,
-                    "paymentstotal" => $paymentstotal->paymentstotal
+                    "paymentstotal" => $paymentstotal
                 ]
             );
         }else{
@@ -159,7 +165,7 @@ class Invoice extends CI_Controller {
             "key"      => "s.student_id=si.student_id",
             "jointype" => "inner"
         ];
-        $data['invoicedetails'] = $this->Main->getDataOneJoin("lastname,firstname,middlename,reference_id,invoice_number,amount,si.date_added as sidate_added","tbl_studentinvoice si",$join,$condition,"",$orderby,$groupby,"row");
+        $data['invoicedetails'] = $this->Main->getDataOneJoin("lastname,firstname,middlename,reference_id,invoice_number,amount,,si.status as invstatus,si.date_added as sidate_added","tbl_studentinvoice si",$join,$condition,"",$orderby,$groupby,"row");
 
         $data['studentmembership'] = $this->Main->getDataOneJoin("*","tbl_studentmembership sm","",$condition,"","","","row");
         $data['studentmembership']->insurance = json_decode($data['studentmembership']->insurance);

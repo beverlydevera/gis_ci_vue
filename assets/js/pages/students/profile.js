@@ -285,7 +285,7 @@ var profile = new Vue({
                         title: e.data.message
                     })
                     $('#updateMembershipModal').modal('hide');
-                    
+                    profile.getInvoiceList();
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -813,11 +813,10 @@ var profile = new Vue({
                 condition: { "si.student_id": this.student_id  }
             }
             var urls = window.App.baseUrl + "invoice/getInvoiceList";
-            showloading("Loading Data");
             axios.post(urls, datas)
                 .then(function (e) {
-                    swal.close();
                     profile.invoicelist = e.data.data.invoicelist;
+                    profile.invoiceinfo = e.data.data.invoiceinfo;
                 })
                 .catch(function (error) {
                     console.log(error)

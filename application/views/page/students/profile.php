@@ -42,7 +42,6 @@
                                 <a><span class="badge bg-success">Active</span></a>
                             </li>
                         </ul>
-                        <!-- <a class="btn btn-primary btn-block btn-xs"><b>Change Photo</b></a> -->
                     </div>
                 </div>
             </div>
@@ -147,8 +146,8 @@
                             <h6>Insurance:</h6>
                             <select class="form-control smallerinput" required v-model="membership_info.membership_update.insurance.avail">
                                 <option disabled selected>Select Insurance</option>
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
+                                <option value=1>Yes</option>
+                                <option value=0>No</option>
                             </select>
                         </div>
                     </div>
