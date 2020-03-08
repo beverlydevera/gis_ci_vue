@@ -98,6 +98,71 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
+    public function saveMembershipUpdate()
+    {
+        $data = jsondata();
+        $branch_id = 1;
+
+        if(!empty($data)){
+            $membership_info = $data['membership_info'];
+            $membership_info['student_id'] = $data['student_id'];
+            $membership_info['membership_price'] = "1000";
+
+            $invoicedata = [
+                "student_id" => $data['student_id'],
+                "status"     => "unpaid",
+                "amount"     => $membership_info['membership_price']+$membership_info['insurance']['price'],
+                "date_added" => date("Y-m-d H:i:s")
+            ];
+            $invoice_id = $this->Main->insert("tbl_studentinvoice", $invoicedata, true)['lastid'];
+            $invoice_number = "INV".date("Y")."-".str_pad($invoice_id, 4, '0', STR_PAD_LEFT);
+            $this->Main->update("tbl_studentinvoice",['invoice_id'=>$invoice_id],['invoice_number'=>$invoice_number]);
+
+            $membership_info['year'] = date("Y");
+            $membership_info['membership_type'] = json_encode($membership_info['membership_type']);
+            $membership_info['insurance'] = json_encode($membership_info['insurance']);
+            $membership_info['invoice_id'] = $invoice_id;
+            $membership_info['branch_id'] = $branch_id;
+            $membership_info['date_added'] = date("Y-m-d H:i:s");
+            
+            $studmem_id = $this->Main->insert("tbl_studentmembership", $membership_info, true)['lastid'];
+            $membership_info['studmem_id'] = $studmem_id;
+            
+            if(!empty($membership_info)){
+                $memberships = $data['membership_info']['membership_type'];
+                if(count($memberships)>1){
+                    $membershiptype = "";
+                    foreach($memberships as $mk => $mv){
+                        $membershipname = $this->Main->getDataOneJoin("*","tbl_membership","",["membership_id"=>$mv],"","","","row")->membership_name;
+                        $membershiptype .= $membershipname . "/";
+                    }
+                    $membershiptype = substr($membershiptype, 0, -1);
+                }else{
+                    $membershiptype = $this->Main->getDataOneJoin("*","tbl_membership","",["membership_id"=>$membershiptype],"","","","row")->membership_name;
+                }
+            }
+    
+            $membership_info['membership_type'] = $membershiptype;
+
+            $response = array(
+                "success"   => true,
+                "type"      => "success",
+                "message"   => "Student Membership was updated successfully.",
+                "data"      => [
+                    "membership_info" => $membership_info
+                ]
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "type"      => "warning",
+                "message"   => "Student Membership was not updated.",
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
     //first tab
     public function profile($string = "")
     {
@@ -146,7 +211,7 @@ class Students extends CI_Controller {
         if(!empty($studentmembership)){
             $membershiptype = $studentmembership->membership_type;
             if(strlen($membershiptype)>1){
-                $memberships = explode("/",$membershiptype);
+                $memberships = json_decode($membershiptype);
                 $membershiptype = "";
                 foreach($memberships as $mk => $mv){
                     $membershipname = $this->Main->getDataOneJoin("*","tbl_membership","",["membership_id"=>$mv],"","","","row")->membership_name;
@@ -157,7 +222,6 @@ class Students extends CI_Controller {
                 $membershiptype = $this->Main->getDataOneJoin("*","tbl_membership","",["membership_id"=>$membershiptype],"","","","row")->membership_name;
             }
         }
-
         $studentmembership->membership_type = $membershiptype;
 
         $condition = [ "student_id" => $student_id ];
@@ -227,6 +291,7 @@ class Students extends CI_Controller {
     {
         $datas = $this->input->post();
         $student_id = $this->input->post('student_id');
+        unset($datas['photo']);
         $result = $this->Main->update("tbl_students",['student_id'=>$student_id],$datas);
 
         if(!empty($result)){

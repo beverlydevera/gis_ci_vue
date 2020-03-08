@@ -137,7 +137,7 @@
                         <div class="col-md-12">
                             <h6>Membership Type:</h6>
                             <template v-for="(list,index) in membership_info.membershiplist">
-                                <input name="list.membership_name" :value="list.membership_id" v-model="membership_info.membership_update.membership_type" type="checkbox"> {{list.membership_name}} <br>
+                                <input :name="list.membership_name" :id="list.membership_name" :value="list.membership_id" v-model="membership_info.membership_update.membership_type" type="checkbox"> {{list.membership_name}} <br>
                             </template>
                         </div>
                     </div>
@@ -155,7 +155,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="submit" @click="saveMembershipUpdate()" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>

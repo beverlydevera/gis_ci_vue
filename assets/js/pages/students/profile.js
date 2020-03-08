@@ -260,6 +260,37 @@ var profile = new Vue({
                 });
             $('#updateMembershipModal').modal('show');
         },
+        saveMembershipUpdate(){
+            if(this.membership_info.membership_update.insurance.avail==0){ this.membership_info.membership_update.insurance.price=0; }
+            var datas = {
+                "membership_info" : this.membership_info.membership_update,
+                "student_id" : this.student_id
+            };
+            var urls = window.App.baseUrl + "students/saveMembershipUpdate";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    var dat = e.data.data.membership_info;
+                    profile.studentmembership=dat;
+                    profile.studentmembership.insurance = JSON.parse(dat.insurance);
+                    if(dat!=null){
+                        if(dat.membership_type.includes("/")){
+                            profile.derivedinfo.studentmembership[0] = dat.membership_type.split("/")['0'];
+                            profile.derivedinfo.studentmembership[1] = dat.membership_type.split("/")['1'];
+                        }else{
+                            profile.derivedinfo.studentmembership[0] = dat.membership_type;
+                        }
+                    }
+                    Swal.fire({
+                        type: e.data.type,
+                        title: e.data.message
+                    })
+                    $('#updateMembershipModal').modal('hide');
+                    
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
         //first tab
         calculate_age() {
             var dob = this.studentinfo.birthdate;
@@ -268,6 +299,12 @@ var profile = new Vue({
             var diff_ms = Date.now() - dob.getTime();
             var age_dt = new Date(diff_ms);
             this.derivedinfo.studentage = Math.abs(age_dt.getUTCFullYear() - 1970);
+
+            if(this.derivedinfo.studentage>=25){
+                this.membership_info.membership_update.insurance.price = 150;
+            }else{
+                this.membership_info.membership_update.insurance.price = 60;
+            }
         },
         getStudentProfile(){
             var datas = { student_id:this.student_id };
