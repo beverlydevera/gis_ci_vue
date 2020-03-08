@@ -145,11 +145,17 @@ class Students extends CI_Controller {
 
         $join = [
             "table"     => "tbl_ranks r",
-            "key"       => "r.rank_id=sp.rank_id",
+            "key"       => "r.rank_id = sp.rank_id",
             "jointype"  => "inner"
         ];
-        $rankinfo = $this->Main->getDataOneJoin("*","tbl_studentpromotions sp",$join,$condition,["limit"=>1,"offset"=>0],["column"=>"promotion_id","order"=>"DESC"],"","row");
+        $rankinfo = $this->Main->getDataOneJoin("sp.rank_id,rank_title,ses_attended,next_rank,student_id,promotion_id,date_promoted","tbl_studentpromotions sp",$join,$condition,["limit"=>1,"offset"=>0],["column"=>"promotion_id","order"=>"DESC"],"","row");
         $promotionslist = $this->Main->getDataOneJoin("*","tbl_studentpromotions sp",$join,$condition,"","","","");
+        if(!empty($promotionslist)){
+            foreach($promotionslist as $plk => $plv){
+                if(!empty($plv->photo)){ $promotionslist[$plk]->photo = base64_encode($plv->photo); }
+            }
+        }
+
         $rankslist = $this->Main->getDataOneJoin("*","tbl_ranks","","","","","","");
 
         $invoicelist = $this->Main->getDataOneJoin("*, si.status as invstatus","tbl_studentinvoice si","",$condition,"","","","");
