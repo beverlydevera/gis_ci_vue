@@ -97,8 +97,16 @@ th {
             <th>Reference</th>
         </tr>
         <tr>
-            <td>02/19/2020</td>
-            <td>Enter Value</td>
+            <td>
+                <?php
+                    if($invoicedetails->amount==$paymentstotal){
+                        echo "-";
+                    }else{
+                        echo date('M d, Y', strtotime("+14 day", strtotime(date("M d, Y"))));
+                    }
+                ?>
+            </td>
+            <td>_____________</td>
         </tr>
     </table>
 
