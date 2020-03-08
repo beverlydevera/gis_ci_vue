@@ -533,6 +533,7 @@ var profile = new Vue({
 
             var datas = {
                 promotion_info: this.studentRankInfo.newstudentPromotion,
+                evaluation_info: this.evaluation,
                 student_id: this.student_id
             }
             var urls = window.App.baseUrl + "students/saveStudentPromotion";

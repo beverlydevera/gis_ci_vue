@@ -362,6 +362,9 @@ class Students extends CI_Controller {
             $prominfo = $data['promotion_info'];
             $prominfo["next_rank"] = json_encode($prominfo["next_rank"]);
             $prominfo["student_id"] = $student_id;
+            $prominfo['eval_technique'] = json_encode($data['evaluation_info']['eval_technique']);
+            $prominfo['eval_attitude'] = json_encode($data['evaluation_info']['eval_attitude']);
+            $prominfo['eval_remarks'] = $data['evaluation_info']['eval_remarks'];
 
             $result = $this->Main->insert("tbl_studentpromotions",$prominfo,true);
         }
