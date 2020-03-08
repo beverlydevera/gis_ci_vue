@@ -354,17 +354,20 @@ class Students extends CI_Controller {
     //fourth tab
     public function saveStudentPromotion()
     {
-        $data = jsondata();
+        $data = $this->input->post();
+        $file = file_get_contents($_FILES['file']['tmp_name']);
         $result = "";
         
         if(!empty($data)){
-            $student_id = $data['student_id'];
-            $prominfo = $data['promotion_info'];
-            $prominfo["next_rank"] = json_encode($prominfo["next_rank"]);
-            $prominfo["student_id"] = $student_id;
-            $prominfo['eval_technique'] = json_encode($data['evaluation_info']['eval_technique']);
-            $prominfo['eval_attitude'] = json_encode($data['evaluation_info']['eval_attitude']);
-            $prominfo['eval_remarks'] = $data['evaluation_info']['eval_remarks'];
+            $prominfo = json_decode($data['promotion_info']);
+            $prominfo->next_rank = json_encode($prominfo->next_rank);
+            $prominfo->student_id = $data['student_id'];
+
+            $evalinfo = json_decode($data['evaluation_info']);
+            $prominfo->eval_technique = json_encode($evalinfo->eval_technique);
+            $prominfo->eval_attitude = json_encode($evalinfo->eval_attitude);
+            $prominfo->eval_remarks = $evalinfo->eval_remarks;
+            $prominfo->photo = $file;
 
             $result = $this->Main->insert("tbl_studentpromotions",$prominfo,true);
         }

@@ -126,7 +126,7 @@
                             </th>
                         </tr>
                         <tr>
-                            <th width="10%">Photos:</th>
+                            <th width="10%">Photo:</th>
                             <th>
                                 <input :disabled="disabled_edit" type="file" accept="image/*" ref="fileedit" @change="editimageSelect">
                                 <img id="editselectedImage" v-if="announcementdetails.photos!=null" style="width:100%;" v-bind:src="'data:image/jpeg;base64,'+announcementdetails.photos"/>

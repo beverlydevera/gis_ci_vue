@@ -114,7 +114,7 @@
                         </tr>
                         <tr>
                             <th width="30%">Upload Photo:</th>
-                            <th><input type="file" accept=".jpeg,.jpg,.png"></th>
+                            <th><input type="file" ref="promotion_photo" accept=".jpeg,.jpg,.png"></th>
                         </tr>
                     </table>
                     <hr>

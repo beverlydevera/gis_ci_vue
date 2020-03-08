@@ -66,6 +66,7 @@ var profile = new Vue({
                     ses_needed: ""
                 },
                 ses_attended: 0,
+                photo: ""
             },
             promotionlist: []
         },
@@ -141,7 +142,8 @@ var profile = new Vue({
                 rate_g: '',
                 rate_s: '',
                 rate_ni: ''
-            }]
+            }],
+            eval_remarks: null
         },
         //sixth tab
         invoicelist: [],
@@ -531,14 +533,17 @@ var profile = new Vue({
             this.studentRankInfo.newstudentPromotion.next_rank.rank_id = this.rankslist[nr_index].rank_id;
             this.studentRankInfo.newstudentPromotion.next_rank.rank_title = this.rankslist[nr_index].rank_title;
 
-            var datas = {
-                promotion_info: this.studentRankInfo.newstudentPromotion,
-                evaluation_info: this.evaluation,
-                student_id: this.student_id
-            }
+            this.studentRankInfo.newstudentPromotion.photo = this.$refs.promotion_photo.files[0];
+            let formData = new FormData();
+
+            formData.append('promotion_info', JSON.stringify(this.studentRankInfo.newstudentPromotion));
+            formData.append('evaluation_info', JSON.stringify(this.evaluation));
+            formData.append('student_id', this.student_id);
+            formData.append('file', this.studentRankInfo.newstudentPromotion.photo);
+
             var urls = window.App.baseUrl + "students/saveStudentPromotion";
             showloading();
-            axios.post(urls, datas)
+            axios.post(urls, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
                 .then(function (e) {
                     Swal.close();
                     Swal.fire({
