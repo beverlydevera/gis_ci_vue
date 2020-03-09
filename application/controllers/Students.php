@@ -281,7 +281,7 @@ class Students extends CI_Controller {
         $studentmembership->membership_type = $membershiptype;
 
         $condition = [ "student_id" => $student_id ];
-        $competitionslist = $this->Main->getDataOneJoin("*","tbl_studentcompetitions","",$condition,"","","","");
+        $competitionslist = $this->Main->getDataOneJoin("studcomp_id,student_id,comp_title,comp_type","tbl_studentcompetitions","",$condition,"","","","");
 
         $join = [
             "table"     => "tbl_ranks r",
@@ -674,12 +674,16 @@ class Students extends CI_Controller {
             ];
             $insert_membership = $this->Main->insert("tbl_studentmembership",$insert_membership_data,true);
             
+            $eval_technique = '[{"name":"POOMSAE","rate_o":"","rate_vg":"","rate_g":"","rate_s":"","rate_ni":""},{"name":"DEFENSE FORM","rate_o":"","rate_vg":"","rate_g":"","rate_s":"","rate_ni":""},{"name":"KICKINGS","rate_o":"","rate_vg":"","rate_g":"","rate_s":"","rate_ni":""},{"name":"COMBINATIONS","rate_o":"","rate_vg":"","rate_g":"","rate_s":"","rate_ni":""},{"name":"SPARRING","rate_o":"","rate_vg":"","rate_g":"","rate_s":"","rate_ni":""}]';
+            $eval_attitude = '[{"name":"Attendance and Punctuality","rate_o":"","rate_vg":"","rate_g":"","rate_s":"","rate_ni":""},{"name":"Accomplishment of Tasks","rate_o":"","rate_vg":"","rate_g":"","rate_s":"","rate_ni":""},{"name":"Intereset and Initiative","rate_o":"","rate_vg":"","rate_g":"","rate_s":"","rate_ni":""},{"name":"Courtesy and Discipline","rate_o":"","rate_vg":"","rate_g":"","rate_s":"","rate_ni":""},{"name":"Consent for Other","rate_o":"","rate_vg":"","rate_g":"","rate_s":"","rate_ni":""}]';
             $datainsert = [
                 "student_id"    => $studentid,
                 "rank_id"       => 1,
                 "ses_attended"  => 0,
                 "next_rank"     => '{"rank_id":"2","rank_title":"Level 1","ses_needed":"10"}',
-                "date_promoted" => date("Y-m-d H:i:s")
+                "date_promoted" => date("Y-m-d H:i:s"),
+                "eval_technique"=> $eval_technique,
+                "eval_attitude" => $eval_attitude
             ];
 
             $insert_promotion = $this->Main->insert("tbl_studentpromotions",$datainsert,true);
