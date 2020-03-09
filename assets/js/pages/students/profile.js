@@ -694,8 +694,9 @@ var profile = new Vue({
                 .then(function (e) {
                     Swal.close();
                     profile.studentRankInfo.viewStudentPromotion = e.data.data.promotioninfos;
-                    profile.eval_attitude = JSON.parse(profile.studentRankInfo.viewStudentPromotion.eval_attitude);
-                    profile.eval_technique = JSON.parse(profile.studentRankInfo.viewStudentPromotion.eval_technique);
+                    profile.evaluation.eval_remarks = profile.studentRankInfo.viewStudentPromotion.eval_remarks;
+                    profile.evaluation.eval_attitude = JSON.parse(profile.studentRankInfo.viewStudentPromotion.eval_attitude);
+                    profile.evaluation.eval_technique = JSON.parse(profile.studentRankInfo.viewStudentPromotion.eval_technique);
                     profile.studentRankInfo.viewStudentPromotion.next_rank = JSON.parse(profile.studentRankInfo.viewStudentPromotion.next_rank);
                     $('#editPromotionModal').modal('show');
                 })
@@ -767,6 +768,81 @@ var profile = new Vue({
                                 ses_attended: 0,
                                 // photo: ""
                             };
+                            profile.evaluation = {
+                                eval_technique: [{
+                                    name: "POOMSAE",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                },{
+                                    name: "DEFENSE FORM",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                },{
+                                    name: "KICKINGS",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                },{
+                                    name: "COMBINATIONS",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                },{
+                                    name: "SPARRING",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                }],
+                                eval_attitude: [{
+                                    name: "Attendance and Punctuality",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                },{
+                                    name: "Accomplishment of Tasks",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                },{
+                                    name: "Intereset and Initiative",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                },{
+                                    name: "Courtesy and Discipline",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                },{
+                                    name: "Consent for Other",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                }],
+                                eval_remarks: null
+                            }
                         }
                         $('#editPromotionModal').modal('hide');
                     })

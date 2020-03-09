@@ -52,7 +52,6 @@ class Students extends CI_Controller {
         $page = $this->input->get('page');
         $orderBy = !empty($this->input->get('orderBy')) ? $this->input->get('orderBy') : "lastname";
         $ascending = !empty($this->input->get('ascending')) ? $this->input->get('ascending') : "ASC";
-        // $ascending = $this->input->get('ascending');
         $byColumn = $this->input->get('byColumn');
 
         if ($page == 1) { $offset = 0; } 
