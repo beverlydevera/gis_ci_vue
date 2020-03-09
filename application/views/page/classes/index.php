@@ -1,7 +1,7 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <input type="hidden" value="0" id="class_id"/>
+            <input type="hidden" value="0" id="schedule_id"/>
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">

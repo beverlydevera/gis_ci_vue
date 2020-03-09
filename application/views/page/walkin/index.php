@@ -148,10 +148,6 @@
                             <th width="25%">Email Address:</th>
                             <th><input type="email" class="form-control smallerinput" v-model="newWalkinInfo.emailaddress" required></th>
                         </tr>
-                        <tr>
-                            <th width="25%">Upload Photo:</th>
-                            <th><input type="file" accept=".jpg,.png,.jpeg"></th>
-                        </tr>
                     </table>
                     </div>
                 </div>
@@ -251,10 +247,6 @@
                         <tr>
                             <th width="25%">Email Address:</th>
                             <th><input type="email" class="form-control smallerinput" v-model="walkindetails.emailaddress" required></th>
-                        </tr>
-                        <tr>
-                            <th width="25%">Upload Photo:</th>
-                            <th><input type="file" accept=".jpg,.png,.jpeg"></th>
                         </tr>
                         <tr>
                             <th width="25%">Status:</th>
