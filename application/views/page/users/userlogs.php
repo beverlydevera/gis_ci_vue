@@ -7,32 +7,24 @@
                         <h3 class="card-title">Audit Trail</h3>
                     </div>
                     <div class="card-body">
-                        <table class="table table-bordered table-responsive-sm table-sm">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>User Name</th>
-                                    <th>Log Title</th>
-                                    <th colspan=2>Log Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Beverly De Vera</td>
-                                    <td>User Login</td>
-                                    <td>January 21, 2019 / 2:59 AM</td>
-                                    <td>10 mins ago</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Beverly De Vera</td>
-                                    <td>Added Class Attendance</td>
-                                    <td>January 21, 2019 / 2:58 AM</td>
-                                    <td>11 mins ago</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <v-server-table url="<?= base_url('Users/getUserLogs') ?>" :columns="table.column" :options="table.options">
+                            <template slot="date_added" slot-scope="e">
+                                {{properDateFormat(e.row.date_added)}}
+                            </template>
+                            <template slot="log_time" slot-scope="e">
+                                {{computerLogTime(e.row.date_added)}}
+                            </template>
+                            <!-- <template slot="age" slot-scope="e">
+                            {{getAge(e.row.birthdate)}}
+                            </template>
+                            <template slot="status" slot-scope="e">
+                            <span class="badge bg-success" v-if="e.row.status">Active</span>
+                            <span class="badge bg-danger" v-else-if="e.row.status">Inactive</span>
+                            </template>
+                            <template slot="action" slot-scope="e">
+                            <a v-bind:href="'students/profile/'+(e.row.firstname).replace(/ /g,'')+(e.row.lastname).replace(/ /g,'')+'-'+e.row.student_id" class="btn btn-primary btn-xs"><i class="fas fa-edit" style="color:#000;"></i></a>
+                            </template> -->
+                        </v-server-table>
                     </div>
                 </div>
             </div>

@@ -7,6 +7,7 @@ class Users extends CI_Controller {
     {
         parent::__construct();
         $this->load->model("Main");
+        $this->load->model("Users_model",'users');
         $this->load->library("Bcrypt");
         $this->load->library('session');
         checkLogin();
@@ -178,8 +179,48 @@ class Users extends CI_Controller {
         $data['title'] = "User Logs";
         $data['vueid'] = "userlogs_page";
         $data['vfile'] = "page/users/userlogs";
-        // $data['js'] = array('pages/users.js');
+        $data['js'] = array('pages/userlogs.js');
         $this->load->view('layout/main', $data);
+    }
+
+    public function getUserLogs()
+    {
+        $count_data = 0;
+        $data = [];
+        
+        $query = $this->input->get('query');
+        $limit = $this->input->get('limit');
+        $page = $this->input->get('page');
+        $orderBy = !empty($this->input->get('orderBy')) ? $this->input->get('orderBy') : "userlog_id";
+        
+        if(!empty($this->input->get('ascending'))){
+            $ascending = $this->input->get('ascending')!=1 ? $this->input->get('ascending') : "DESC";
+        }
+        $byColumn = $this->input->get('byColumn');
+
+        if ($page == 1) { $offset = 0; } 
+        else { $offset = ($page - 1) * $limit; }
+        
+        $condition = array();
+        $select = "userlog_id,username,CONCAT(lastname,', ',firstname) AS fullname,module,ulog_title,ul.date_added";
+        $order = array(
+            'col'       => $orderBy,
+            'order_by'  => $ascending,
+        );
+        $like = array('column' => ["lastname", "firstname", "middlename", "username", "module", "ulog_title"], 'data' => $query);
+        $limit = empty($query) ? $limit : 15;
+
+        $data = $this->users->getUserLogs($select,$condition,$like,$offset,$order,$limit);
+
+        if(!empty($data)){
+            $count_data = count($data);
+        }else{ $count_data=0; }
+        
+        $response = array(
+            'count' => $count_data,
+            'data'  => $data,
+        );
+        response_json($response);
     }
 
     //end of user logs

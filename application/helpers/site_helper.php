@@ -81,6 +81,7 @@ function getUser($select = "*",$condition = array(),$type=false,$offset = array(
 
 function userLogs($module,$ulog_title){
 	$_CI =& get_instance();
+	date_default_timezone_set("Asia/Manila");
 	$datainsert = [
 		"user_id" 	=> sesdata('id'),
 		"module"	=> $module,
