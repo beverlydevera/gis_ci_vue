@@ -83,7 +83,10 @@
                         </tr>
                         <tr>
                             <th width="30%">Upload Photo:</th>
-                            <th><input type="file" ref="promotion_photo_add" accept=".jpeg,.jpg,.png"></th>
+                            <th>
+                                <input id="selectPromImage_add" type="file" @change="addPromotionImageSelect" ref="promotion_photo_add" accept=".jpeg,.jpg,.png">
+                                <img id="addselectedImage_Promotion" src="#" alt="your image" style="display:none;" @click="changePromotionImage_add"/>
+                                </th>
                         </tr>
                     </table>
                     <hr>
@@ -186,8 +189,8 @@
                         <tr>
                             <th width="30%">Upload Photo:</th>
                             <th>
-                                <img id="editselectedImage_Promotion" @click="changePromotionImage" style="width:100%;" v-bind:src="'data:image/jpeg;base64,'+studentRankInfo.viewStudentPromotion.photo" alt="Promotion picture">
-                                <input type="file" id="changePromImage" accept="image/*" ref="promotion_photo_edit" @change="editPromotionImageSelect" style="display: none;">
+                                <img id="editselectedImage_Promotion" @click="changePromotionImage_edit" style="width:100%;" v-bind:src="'data:image/jpeg;base64,'+studentRankInfo.viewStudentPromotion.photo" alt="Promotion picture">
+                                <input type="file" id="selectPromImage_edit" accept="image/*" ref="promotion_photo_edit" @change="editPromotionImageSelect" style="display: none;">
                             </th>
                         </tr>
                     </table>

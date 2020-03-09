@@ -677,7 +677,8 @@ var profile = new Vue({
             axios.post(urls, datas)
                 .then(function (e) {
                     Swal.close();
-                    profile.studentRankInfo.promotionlist = e.data.data.promotionlist;
+                    console.log(e.data.data);
+                    profile.studentRankInfo.promotionlist = e.data.data.promotioninfos;
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -703,8 +704,23 @@ var profile = new Vue({
                     console.log(error)
                 });
         },
-        changePromotionImage(){
-            $("input[id='changePromImage']").click();
+        changePromotionImage_add(){
+            $("input[id='selectPromImage_add']").click();
+        },
+        addPromotionImageSelect(event){
+            if (event.target.files && event.target.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#addselectedImage_Promotion')
+                        .attr('src', e.target.result)
+                        .width("100%");
+                };
+                $('#addselectedImage_Promotion').css({'display': '',});
+                $('#selectPromImage_add').css({'display': 'none',});
+
+                reader.readAsDataURL(event.target.files[0]);
+            }
         },
         editPromotionImageSelect(event){
             if (event.target.files && event.target.files[0]) {
@@ -719,8 +735,46 @@ var profile = new Vue({
                 reader.readAsDataURL(event.target.files[0]);
             }
         },
+        changePromotionImage_edit(){
+            $("input[id='selectPromImage_edit']").click();
+        },
         savePromotionChanges(){
+            this.studentRankInfo.viewStudentPromotion.photosel = this.$refs.promotion_photo_edit.files[0];
+            let formData = new FormData();
 
+            formData.append('next_rank', JSON.stringify(this.studentRankInfo.viewStudentPromotion.next_rank));
+            formData.append('remarks', this.studentRankInfo.viewStudentPromotion.remarks);
+            formData.append('evaluation_info', JSON.stringify(this.evaluation));
+            formData.append('promotion_id', this.studentRankInfo.viewStudentPromotion.promotion_id);
+            formData.append('file', this.studentRankInfo.viewStudentPromotion.photosel);
+
+            var urls = window.App.baseUrl + "students/savePromotionChanges";
+            showloading();
+            axios.post(urls, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+                .then(function (e) {
+                    Swal.close();
+                    Swal.fire({
+                        type: e.data.type,
+                        title: e.data.message
+                    }).then(function (el) {
+                        if(e.data.success){
+                            profile.getPromotionsList();
+                            profile.studentRankInfo.viewStudentPromotion = {
+                                next_rank: {
+                                    rank_id: "",
+                                    rank_title: "",
+                                    ses_needed: ""
+                                },
+                                ses_attended: 0,
+                                // photo: ""
+                            };
+                        }
+                        $('#editPromotionModal').modal('hide');
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
         },
         //sixth tab
         viewPaymentsModal(index){

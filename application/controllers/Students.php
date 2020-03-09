@@ -532,6 +532,46 @@ class Students extends CI_Controller {
         );
         response_json($response);
     }
+
+    public function savePromotionChanges()
+    {
+        $data = $this->input->post();
+        
+        $result = ""; $prominfo = [];
+
+        if(!empty($data)){
+            $promotion_id = $data['promotion_id'];
+
+            $prominfo['next_rank'] = $data['next_rank'];
+            $prominfo['remarks'] = $data['remarks'];
+
+            $evalinfo = json_decode($data['evaluation_info']);
+            $prominfo['eval_technique'] = json_encode($evalinfo->eval_technique);
+            $prominfo['eval_attitude'] = json_encode($evalinfo->eval_attitude);
+            $prominfo['eval_remarks'] = $evalinfo->eval_remarks;
+
+            if(!empty($_FILES['file'])){ 
+                $file = file_get_contents($_FILES['file']['tmp_name']);
+                $prominfo['photo'] = $file; 
+            }
+            $result = $this->Main->update("tbl_studentpromotions", ["promotion_id"=>$promotion_id], $prominfo,"");
+        }
+
+        if(!empty($result)){
+            $response = array(
+                "success"   => true,
+                "type"      => "success",
+                "message"   => "Changes were saved successfully."
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "type"      => "warning",
+                "message"   => "Changes were not saved."
+            );
+        }
+        response_json($response);
+    }
     //end of profile
 
     //enrollment functions
