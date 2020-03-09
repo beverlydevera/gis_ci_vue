@@ -109,6 +109,8 @@ class Invoice extends CI_Controller {
             
             $dataupdate = ["status"=>$invoicestatus];
             $updatequery = $this->Main->update("tbl_studentinvoice",["invoice_id"=>$invoice_id],$dataupdate,"");
+
+            userLogs("Invoice","Saved Payment (payment_id #".$insertquery['lastid'].")");
         }else{
             $success = false;
             $type = "warning";
@@ -160,6 +162,8 @@ class Invoice extends CI_Controller {
     {
         $type = $groupby = ""; $condition = $orderby = $join = [];
         $condition = ["invoice_id"=>$invoice_id];
+        
+        userLogs("Invoice","Printed Invoice (invoice_id #".$invoice_id.")");
         $join = [
             "table"    => "tbl_students s",
             "key"      => "s.student_id=si.student_id",

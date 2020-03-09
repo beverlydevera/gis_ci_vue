@@ -84,6 +84,7 @@ class Libraries extends CI_Controller {
                 $success = true;
                 $type = "success";
                 $message = "Package was added successfully.";
+                userLogs("Package","Added New Package (packaged_id #".$insertquery['lastid'].")");
             }
         }else{
             $success = false;
@@ -116,6 +117,7 @@ class Libraries extends CI_Controller {
                 $success = true;
                 $type = "success";
                 $message = "Package was updated successfully.";
+                userLogs("Package","Edited Package Info (packaged_id #".$package_id.")");
             }
         }else{
             $success = false;

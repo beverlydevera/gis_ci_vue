@@ -35,6 +35,7 @@ class Walkin extends CI_Controller {
             $success = true;
             $message = "New Walk-in was registered successfully.";
             $type = "success";
+            userLogs("Walkin","Registered New Walk-in (walkin_id #".$insertquery['lastid'].")");
         }else{
             $success = false;
             $message = "New Walk-in was not saved successfully.";
@@ -108,6 +109,7 @@ class Walkin extends CI_Controller {
             $success = true;
             $message = "Changes were saved successfully.";
             $type = "success";
+            userLogs("Walkin","Edit Walk-in Info (walkin_id #".$walkin_id.")");
         }else{
             $success = false;
             $message = "Changes were not saved.";

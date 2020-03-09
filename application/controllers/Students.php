@@ -113,6 +113,7 @@ class Students extends CI_Controller {
                 $success = true;
                 $message = "Student Image was saved successfully.";
                 $type = "success";
+                userLogs("Students","Edited Student Image (student_id #".$student_id.")");
             }else{
                 $success = false;
                 $message = "Image was not save.";
@@ -206,6 +207,7 @@ class Students extends CI_Controller {
                     "membership_info" => $membership_info
                 ]
             );
+            userLogs("Students","Updated Student Membership (student_id #".$data['student_id'].")");
         }else{
             $response = array(
                 "success"   => false,
@@ -354,6 +356,7 @@ class Students extends CI_Controller {
                 "message"   => "Profile changes saved successfully.",
                 "data"      => $result
             );
+            userLogs("Students","Edited Student Profile (student_id #".$student_id.")");
         }else{
             $response = array(
                 "success"   => false,
@@ -433,6 +436,7 @@ class Students extends CI_Controller {
                     "studcomp_id" => $result['lastid']
                 ]
             );
+            userLogs("Students","Saved Student New Competition (studcomp_id #".$result['lastid'].")");
         }else{
             $response = array(
                 "success"   => false,
@@ -485,13 +489,13 @@ class Students extends CI_Controller {
             $dataupdate['comp_awards'] = json_encode($dataupdate['comp_awards']);
 
             $result = $this->Main->update("tbl_studentcompetitions",['studcomp_id'=>$studcomp_id],$dataupdate);
-
         
             $response = array(
                 "success"   => true,
                 "message"   => "Competition Data changes were saved successfully.",
                 "data"      => $result
             );
+            userLogs("Students","Edited Student Competition Info (studcomp_id #".$studcomp_id.")");
         }else{
             $response = array(
                 "success"   => false,
@@ -535,6 +539,7 @@ class Students extends CI_Controller {
                     "promotion_id" => $result['lastid']
                 ]
             );
+            userLogs("Students","Saved Student New Promotion (promotion_id #".$result['lastid'].")");
         }else{
             $response = array(
                 "success"   => false,
@@ -620,6 +625,7 @@ class Students extends CI_Controller {
                 "type"      => "success",
                 "message"   => "Changes were saved successfully."
             );
+            userLogs("Students","Edited Student Competition Info (promotion_id #".$promotion_id.")");
         }else{
             $response = array(
                 "success"   => false,
@@ -691,6 +697,7 @@ class Students extends CI_Controller {
                     "result"        => $result
                 ],
             );
+            userLogs("Students","Enrolled New Student (student_id #".$studentid.")");
         }else{
             $response = array(
                 "success"   => false,

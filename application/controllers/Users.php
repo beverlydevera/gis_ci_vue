@@ -99,7 +99,8 @@ class Users extends CI_Controller {
 
             $success = true;
             $message = "Changes were saved successfully.";
-            $type = "success";
+            $type = "success";            
+            userLogs("Users","Edited User Profile (user_id #$user_id)");
         }else{
             $success = false;
             $message = "Changes were not saved.";
@@ -128,6 +129,7 @@ class Users extends CI_Controller {
             $success = true;
             $message = "Password was changed/reset successfully.";
             $type = "success";
+            userLogs("Users","Reset User Password (user_id #$user_id)");
         }else{
             $success = false;
             $message = "Password was not changed/reset.";
@@ -153,6 +155,7 @@ class Users extends CI_Controller {
             $success = true;
             $message = "Account was archived successfully.";
             $type = "success";
+            userLogs("Users","Archive User Profile (user_id #$user_id)");
         }else{
             $success = false;
             $message = "Account was not archived.";
@@ -183,7 +186,7 @@ class Users extends CI_Controller {
 
     public function logout()
     {
-		// userLogs(sesdata('id') , sesdata('fullname') , "Logout", "User Logout");
+        userLogs("Users","User Logout (user_id #".sesdata('id').")");
 		$this->session->sess_destroy();
 		redirect('login');
 	}

@@ -54,12 +54,13 @@ class Register extends CI_Controller {
             $data['password'] = $this->bcrypt->hash_password($data['password']);
             $data['date_added'] = date("Y-m-d H:i:s");
 
-            $insertquery = $this->Main->insert("tbl_users",$data,"");
+            $insertquery = $this->Main->insert("tbl_users",$data,true);
 
             if(!empty($insertquery)){                
                 $success = true;
                 $message = "Registration complete.\nYou may now login your account.";
                 $type = "success";
+                userLogs("Users","User Registration (user_id #".$insertquery['lastid'].")");
             }else{
                 $message = "Registration Error";
                 $type = "danger";                

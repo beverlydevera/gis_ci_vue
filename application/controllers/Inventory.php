@@ -70,6 +70,7 @@ class Inventory extends CI_Controller {
                 $success = true;
                 $type = "success";
                 $message = "Inventory Item was added successfully.";
+                userLogs("Inventory","Saved New Inventory Item (inventory_id #$lastid)");
             }
         }else{
             $success = false;
@@ -123,6 +124,7 @@ class Inventory extends CI_Controller {
                 $success = true;
                 $type = "success";
                 $message = "Stocks were added successfully.";
+                userLogs("Inventory","Added New Stocks to Inventory (inventory_id #".$data['inventory_id'].")");
             }
         }else{
             $success = false;

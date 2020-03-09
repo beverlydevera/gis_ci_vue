@@ -51,9 +51,11 @@ class Login extends CI_Controller {
 
                 $success = true;
                 $message = "Successfully logged in";
+                userLogs("Users","User Login (user_id #$r->user_id)");
             } else{
                 $success = false;
                 $message = "Incorrect Username or Password.";
+                userLogs("Users","Login Failed (user_id #$r->user_id)");
             }
         }else{
             $success = false;

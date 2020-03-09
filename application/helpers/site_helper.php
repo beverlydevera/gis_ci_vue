@@ -78,3 +78,14 @@ function getUser($select = "*",$condition = array(),$type=false,$offset = array(
 	);     
 	return	$_CI->Main->select($qry);
 }
+
+function userLogs($module,$ulog_title){
+	$_CI =& get_instance();
+	$datainsert = [
+		"user_id" 	=> sesdata('id'),
+		"module"	=> $module,
+		"ulog_title"=> $ulog_title,
+		"date_added"=> date("Y-m-d H:i:s")
+	];
+	$_CI->Main->insert("tbl_userlogs",$datainsert);
+}

@@ -236,6 +236,7 @@ class Classes extends CI_Controller {
                 $success = true;
                 $type = "success";
                 $message = "Attendance was saved successfully.";
+                userLogs("Classes","Added New Attendance (classsched_id #$classsched_id)");
             }
         }else{
             $success = false;
@@ -310,6 +311,7 @@ class Classes extends CI_Controller {
                 "type"      => "success",
                 "message"   => "Attendance changes were saved successfully"
             );
+            userLogs("Classes","Edit Attendance (classsched_id #$classsched_id)");
         }else{
             $response = array(
                 "success"   => false,

@@ -72,6 +72,7 @@ class Announcements extends CI_Controller {
             $message = "Announcement was saved successfully.";
             $type = "success";
             $announcement_id = $insertquery['lastid'];
+            userLogs("Announcements","Added New Announcement (announcement_id #$announcement_id)");
         }else{
             $success = false;
             $message = "Announcement was not saved.";
@@ -106,6 +107,7 @@ class Announcements extends CI_Controller {
             $success = true;
             $message = "Announcement was posted successfully.";
             $type = "success";
+            userLogs("Announcements","Posted Announcement (announcement_id #$announcement_id)");
         }else{
             $success = false;
             $message = "Announcement was not posted.";
@@ -144,6 +146,7 @@ class Announcements extends CI_Controller {
             $success = true;
             $message = "Announcement Changes were saved successfully.";
             $type = "success";
+            userLogs("Announcements","Edited Announcement (announcement_id #$announcement_id)");
         }else{
             $success = false;
             $message = "Announcement Changes were not saved.";
