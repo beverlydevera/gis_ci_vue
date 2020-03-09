@@ -18,7 +18,7 @@
                         <a class="nav-link disabled" id="payment-tab" data-toggle="pill" href="#payment" role="tab" aria-controls="payment" aria-selected="false">Payment</a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link disabled" id="complete-tab" data-toggle="pill" href="#complete" role="tab" aria-controls="complete" aria-selected="false">Complete</a>
+                        <a class="nav-link " id="complete-tab" data-toggle="pill" href="#complete" role="tab" aria-controls="complete" aria-selected="false">Complete</a>
                         </li>
                     </ul>
                 </div>
