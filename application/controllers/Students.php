@@ -51,17 +51,18 @@ class Students extends CI_Controller {
         $limit = $this->input->get('limit');
         $page = $this->input->get('page');
         $orderBy = !empty($this->input->get('orderBy')) ? $this->input->get('orderBy') : "lastname";
-        $ascending = $this->input->get('ascending');
+        $ascending = !empty($this->input->get('ascending')) ? $this->input->get('ascending') : "ASC";
+        // $ascending = $this->input->get('ascending');
         $byColumn = $this->input->get('byColumn');
 
         if ($page == 1) { $offset = 0; } 
         else { $offset = ($page - 1) * $limit; }
         
         $condition = array();
-        $select = "student_id,reference_id,firstname,lastname,CONCAT(lastname, ',', firstname, middlename) AS fullname,sex,birthdate,status";
+        $select = "s.student_id,reference_id,firstname,lastname,CONCAT(lastname, ',', firstname, ' ' ,middlename) AS fullname,sex,birthdate,s.status,membership_type,rank_title";
         $order = array(
             'col'       => $orderBy,
-            'order_by'  => $ascending ? "DESC" : "ASC",
+            'order_by'  => $ascending,
         );
         $like = array('column' => ["lastname", "firstname", "middlename", "reference_id"], 'data' => $query);
         $limit = empty($query) ? $limit : 10;
@@ -69,8 +70,26 @@ class Students extends CI_Controller {
 
         if(!empty($data)){
             $count_data = count($data);
-        }else{ $count_data=0; }
 
+            foreach($data as $dtk => $dtv){
+                if(!empty($dtv->membership_type)){
+                    $membershiptype = $dtv->membership_type;
+                    if(strlen($membershiptype)>1){
+                        $memberships = json_decode($membershiptype);
+                        $membershiptype = "";
+                        foreach($memberships as $mk => $mv){
+                            $membershipname = $this->Main->getDataOneJoin("*","tbl_membership","",["membership_id"=>$mv],"","","","row")->membership_name;
+                            $membershiptype .= $membershipname . "/";
+                        }
+                        $membershiptype = substr($membershiptype, 0, -1);
+                    }else{
+                        $membershiptype = $this->Main->getDataOneJoin("*","tbl_membership","",["membership_id"=>$membershiptype],"","","","row")->membership_name;
+                    }
+                    $data[$dtk]->membership_type = $membershiptype;
+                }
+            }
+        }else{ $count_data=0; }
+        
         $response = array(
             'count' => $count_data,
             'data'  => $data,

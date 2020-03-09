@@ -10,8 +10,8 @@ var students = new Vue({
                 "sex",
                 "birthdate",
                 "age",
-                "membership",
-                "rank/belt",
+                "membership_type",
+                "rank_title",
                 "status",
                 "action" ],
             data: [],
@@ -19,6 +19,7 @@ var students = new Vue({
                 headings: {
                     reference_id: 'Student Reference ID',
                     fullname: 'Names (Lastname, Firstname, Middlename)',
+                    rank_title: 'Rank/Belt',
                 },
                 sortable: ['fullname','reference_id'],
                 filterable: ['fullname','reference_id']

@@ -46,7 +46,12 @@ class Students_model extends CI_Model {
 
 	public function getStudentList($select = "*", $condition = array(), $like = array(), $offset = 0, $order = array(), $limit = 10){
         $this->db->select($select);
-        $this->db->from("tbl_students");
+		$this->db->from("tbl_students s");
+		$table = "(SELECT student_id,membership_type FROM tbl_studentmembership WHERE studmem_id IN (SELECT MAX(studmem_id) FROM tbl_studentmembership GROUP BY student_id )) AS sm";
+        $this->db->join($table,"s.student_id = sm.student_id","inner");
+		$table = "(SELECT student_id,rank_id FROM tbl_studentpromotions WHERE promotion_id IN (SELECT MAX(promotion_id) FROM tbl_studentpromotions GROUP BY student_id )) AS sp";
+        $this->db->join($table,"s.student_id = sp.student_id","inner");
+        $this->db->join("tbl_ranks r","r.rank_id = sp.rank_id","inner");
         $this->db->limit($limit, $offset);
         if (!empty($like)) {
             if (is_array($like['column'])) {

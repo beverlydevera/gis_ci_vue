@@ -15,9 +15,6 @@
                   <span class="badge bg-success" v-if="e.row.status">Active</span>
                   <span class="badge bg-danger" v-else-if="e.row.status">Inactive</span>
                 </template>
-                <!-- <template slot="membership" slot-scope="e">
-                  {{getMembership(e.row.student_id)}}
-                </template> -->
                 <template slot="action" slot-scope="e">
                   <a v-bind:href="'students/profile/'+(e.row.firstname).replace(/ /g,'')+(e.row.lastname).replace(/ /g,'')+'-'+e.row.student_id" class="btn btn-primary btn-xs"><i class="fas fa-edit" style="color:#000;"></i></a>
                 </template>
