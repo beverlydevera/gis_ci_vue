@@ -186,8 +186,8 @@
                         <tr>
                             <th width="30%">Upload Photo:</th>
                             <th>
-                                <img @click="changePromotionImage" style="width:100%;" v-bind:src="'data:image/jpeg;base64,'+studentRankInfo.viewStudentPromotion.photo" alt="Promotion picture">
-                                <input type="file" id="changePromImage" ref="promotion_photo_edit" accept=".jpeg,.jpg,.png" style="display: none;">
+                                <img id="editselectedImage_Promotion" @click="changePromotionImage" style="width:100%;" v-bind:src="'data:image/jpeg;base64,'+studentRankInfo.viewStudentPromotion.photo" alt="Promotion picture">
+                                <input type="file" id="changePromImage" accept="image/*" ref="promotion_photo_edit" @change="editPromotionImageSelect" style="display: none;">
                             </th>
                         </tr>
                     </table>
@@ -243,7 +243,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <button type="submit" class="btn btn-primary" @click="savePromotionChanges()">Save Changes</button>
             </div>
         </div>
     </div>

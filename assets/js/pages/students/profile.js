@@ -706,6 +706,22 @@ var profile = new Vue({
         changePromotionImage(){
             $("input[id='changePromImage']").click();
         },
+        editPromotionImageSelect(event){
+            if (event.target.files && event.target.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#editselectedImage_Promotion')
+                        .attr('src', e.target.result)
+                        .width("100%");
+                };
+
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        },
+        savePromotionChanges(){
+
+        },
         //sixth tab
         viewPaymentsModal(index){
             this.paymentdetails = {
