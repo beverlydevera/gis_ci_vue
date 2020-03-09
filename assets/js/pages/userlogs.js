@@ -21,8 +21,8 @@ var userlogs = new Vue({
                 date_added: 'Log Date',
                 log_duration: 'Log Time',
             },
-            sortable: ['username','ulog_title','fullname','module'],
-            filterable: ['username','ulog_title','fullname','module']
+            sortable: ['username','ulog_title','fullname','module','date_added'],
+            filterable: ['username','ulog_title','fullname','module','date_added']
         }
     },
     },

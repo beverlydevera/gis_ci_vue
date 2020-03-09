@@ -195,7 +195,7 @@ class Users extends CI_Controller {
         
         if(!empty($this->input->get('ascending'))){
             $ascending = $this->input->get('ascending')!=1 ? $this->input->get('ascending') : "DESC";
-        }
+        }else{ $ascending = "ASC"; }
         $byColumn = $this->input->get('byColumn');
 
         if ($page == 1) { $offset = 0; } 
