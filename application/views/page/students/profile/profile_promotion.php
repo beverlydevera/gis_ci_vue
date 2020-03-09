@@ -104,27 +104,27 @@
                             </tr>
                         </thead>
                             <tr><td colspan=7><b>- - - TECHNIQUE - - -</b></td></tr>
-                        <tbody v-for="(list,index) in evaluation.eval_technique">
+                        <tbody v-for="(list,index) in evaluation_add.eval_technique">
                             <tr>
                                 <td>{{index+1}}</td>
                                 <td>{{list.name}}</td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'technique','rate_o')" :value="1" v-model="list.rate_o"></td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'technique','rate_vg')" :value="1" v-model="list.rate_vg"></td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'technique','rate_g')" :value="1" v-model="list.rate_g"></td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'technique','rate_s')" :value="1" v-model="list.rate_s"></td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'technique','rate_ni')" :value="1" v-model="list.rate_ni"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'add','technique','rate_o')" :value="1" v-model="list.rate_o"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'add','technique','rate_vg')" :value="1" v-model="list.rate_vg"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'add','technique','rate_g')" :value="1" v-model="list.rate_g"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'add','technique','rate_s')" :value="1" v-model="list.rate_s"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'add','technique','rate_ni')" :value="1" v-model="list.rate_ni"></td>
                             </tr>
                         </tbody>
                             <tr><td colspan=7><b>- - - ATTITUDE - - -</b></td></tr>
-                        <tbody v-for="(list,index) in evaluation.eval_attitude">
+                        <tbody v-for="(list,index) in evaluation_add.eval_attitude">
                             <tr>
                                 <td>{{index+1}}</td>
                                 <td>{{list.name}}</td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'attitude','rate_o')" :value="1" v-model="list.rate_o"></td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'attitude','rate_vg')" :value="1" v-model="list.rate_vg"></td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'attitude','rate_g')" :value="1" v-model="list.rate_g"></td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'attitude','rate_s')" :value="1" v-model="list.rate_s"></td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'attitude','rate_ni')" :value="1" v-model="list.rate_ni"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'add','attitude','rate_o')" :value="1" v-model="list.rate_o"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'add','attitude','rate_vg')" :value="1" v-model="list.rate_vg"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'add','attitude','rate_g')" :value="1" v-model="list.rate_g"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'add','attitude','rate_s')" :value="1" v-model="list.rate_s"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'add','attitude','rate_ni')" :value="1" v-model="list.rate_ni"></td>
                             </tr>
                         </tbody>
                             <tr><td colspan=7></td></tr>
@@ -132,7 +132,7 @@
                             <tr>
                                 <th></th>
                                 <th>Remarks</th>
-                                <td colspan=5><textarea v-model="evaluation.eval_remarks" class="form-control"></textarea></td>
+                                <td colspan=5><textarea v-model="evaluation_add.eval_remarks" class="form-control"></textarea></td>
                             </tr>
                         </thead>
                     </table>
@@ -209,27 +209,27 @@
                             </tr>
                         </thead>
                             <tr><td colspan=7><b>- - - TECHNIQUE - - -</b></td></tr>
-                        <tbody v-for="(list,index) in evaluation.eval_technique">
+                        <tbody v-for="(list,index) in evaluation_edit.eval_technique">
                             <tr>
                                 <td>{{index+1}}</td>
                                 <td>{{list.name}}</td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'technique','rate_o')" :value="1" v-model="list.rate_o"></td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'technique','rate_vg')" :value="1" v-model="list.rate_vg"></td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'technique','rate_g')" :value="1" v-model="list.rate_g"></td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'technique','rate_s')" :value="1" v-model="list.rate_s"></td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'technique','rate_ni')" :value="1" v-model="list.rate_ni"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'edit','technique','rate_o')" :value="1" v-model="list.rate_o"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'edit','technique','rate_vg')" :value="1" v-model="list.rate_vg"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'edit','technique','rate_g')" :value="1" v-model="list.rate_g"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'edit','technique','rate_s')" :value="1" v-model="list.rate_s"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'edit','technique','rate_ni')" :value="1" v-model="list.rate_ni"></td>
                             </tr>
                         </tbody>
                             <tr><td colspan=7><b>- - - ATTITUDE - - -</b></td></tr>
-                        <tbody v-for="(list,index) in evaluation.eval_attitude">
+                        <tbody v-for="(list,index) in evaluation_edit.eval_attitude">
                             <tr>
                                 <td>{{index+1}}</td>
                                 <td>{{list.name}}</td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'attitude','rate_o')" :value="1" v-model="list.rate_o"></td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'attitude','rate_vg')" :value="1" v-model="list.rate_vg"></td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'attitude','rate_g')" :value="1" v-model="list.rate_g"></td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'attitude','rate_s')" :value="1" v-model="list.rate_s"></td>
-                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'attitude','rate_ni')" :value="1" v-model="list.rate_ni"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'edit','attitude','rate_o')" :value="1" v-model="list.rate_o"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'edit','attitude','rate_vg')" :value="1" v-model="list.rate_vg"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'edit','attitude','rate_g')" :value="1" v-model="list.rate_g"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'edit','attitude','rate_s')" :value="1" v-model="list.rate_s"></td>
+                                <td><input type="radio" :name="list.name" @change="checked_eval(index,'edit','attitude','rate_ni')" :value="1" v-model="list.rate_ni"></td>
                             </tr>
                         </tbody>
                             <tr><td colspan=7></td></tr>
@@ -237,7 +237,7 @@
                             <tr>
                                 <th></th>
                                 <th>Remarks</th>
-                                <td colspan=5><textarea v-model="evaluation.eval_remarks" class="form-control"></textarea></td>
+                                <td colspan=5><textarea v-model="evaluation_edit.eval_remarks" class="form-control"></textarea></td>
                             </tr>
                         </thead>
                     </table>

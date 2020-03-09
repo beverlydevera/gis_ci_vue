@@ -77,7 +77,8 @@ var profile = new Vue({
                     ses_needed: ""
                 },
                 ses_attended: 0,
-                photo: ""
+                photo: "",
+                remarks: ""
             },
             viewStudentPromotion: {
                 next_rank: {
@@ -86,11 +87,87 @@ var profile = new Vue({
                     ses_needed: ""
                 },
                 ses_attended: 0,
-                photo: ""
+                photo: "",
+                remarks: ""
             },
             promotionlist: []
         },
-        evaluation: {
+        evaluation_add: {
+            eval_technique: [{
+                name: "POOMSAE",
+                rate_o: '1',
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            },{
+                name: "DEFENSE FORM",
+                rate_o: '1',
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            },{
+                name: "KICKINGS",
+                rate_o: '1',
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            },{
+                name: "COMBINATIONS",
+                rate_o: '1',
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            },{
+                name: "SPARRING",
+                rate_o: '1',
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            }],
+            eval_attitude: [{
+                name: "Attendance and Punctuality",
+                rate_o: '1',
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            },{
+                name: "Accomplishment of Tasks",
+                rate_o: '1',
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            },{
+                name: "Intereset and Initiative",
+                rate_o: '1',
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            },{
+                name: "Courtesy and Discipline",
+                rate_o: '1',
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            },{
+                name: "Consent for Other",
+                rate_o: '1',
+                rate_vg: '',
+                rate_g: '',
+                rate_s: '',
+                rate_ni: ''
+            }],
+            eval_remarks: null
+        },
+        evaluation_edit: {
             eval_technique: [{
                 name: "POOMSAE",
                 rate_o: 1,
@@ -603,11 +680,14 @@ var profile = new Vue({
                 });
         },
         //fourth tab
-        checked_eval(index,type,rating){
-            if(type=='technique'){
-                var data = this.evaluation.eval_technique[index];
-            }else if(type=='attitude'){
-                var data = this.evaluation.eval_attitude[index];
+        checked_eval(index,action,type,rating){
+            if(action=='add'){
+                if(type=='technique'){ var data = this.evaluation_add.eval_technique[index]; }
+                else if(type=='attitude'){ var data = this.evaluation_add.eval_attitude[index]; }
+            }
+            else if(action=='edit'){
+                if(type=='technique'){ var data = this.evaluation_edit.eval_technique[index]; }
+                else if(type=='attitude'){ var data = this.evaluation_edit.eval_attitude[index]; }
             }
             if(rating!='rate_o'){ data.rate_o = ''; }
             if(rating!='rate_vg'){ data.rate_vg = ''; }
@@ -628,7 +708,7 @@ var profile = new Vue({
             let formData = new FormData();
 
             formData.append('promotion_info', JSON.stringify(this.studentRankInfo.newstudentPromotion));
-            formData.append('evaluation_info', JSON.stringify(this.evaluation));
+            formData.append('evaluation_info', JSON.stringify(this.evaluation_add));
             formData.append('student_id', this.student_id);
             formData.append('file', this.studentRankInfo.newstudentPromotion.photo);
 
@@ -646,9 +726,6 @@ var profile = new Vue({
                             profile.studentRankInfo.newstudentPromotion.promotion_id = e.data.data.promotion_id;
 
                             profile.getPromotionsList();
-                            // if(profile.studentRankInfo.promotionlist!=null){ profile.studentRankInfo.promotionlist.push(profile.studentRankInfo.newstudentPromotion); }
-                            // else{ profile.studentRankInfo.promotionlist = [profile.studentRankInfo.newstudentPromotion]; }
-                            
                             profile.studentRankInfo.currentRank = profile.studentRankInfo.newstudentPromotion;
 
                             profile.studentRankInfo.newstudentPromotion = {
@@ -659,6 +736,81 @@ var profile = new Vue({
                                 },
                                 ses_attended: 0,
                             };
+                            profile.evaluation_add = {
+                                eval_technique: [{
+                                    name: "POOMSAE",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                },{
+                                    name: "DEFENSE FORM",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                },{
+                                    name: "KICKINGS",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                },{
+                                    name: "COMBINATIONS",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                },{
+                                    name: "SPARRING",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                }],
+                                eval_attitude: [{
+                                    name: "Attendance and Punctuality",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                },{
+                                    name: "Accomplishment of Tasks",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                },{
+                                    name: "Intereset and Initiative",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                },{
+                                    name: "Courtesy and Discipline",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                },{
+                                    name: "Consent for Other",
+                                    rate_o: 1,
+                                    rate_vg: '',
+                                    rate_g: '',
+                                    rate_s: '',
+                                    rate_ni: ''
+                                }],
+                                eval_remarks: null
+                            }
                         }
                         $('#addNewPromotionModal').modal('hide');
                     })
@@ -694,9 +846,9 @@ var profile = new Vue({
                 .then(function (e) {
                     Swal.close();
                     profile.studentRankInfo.viewStudentPromotion = e.data.data.promotioninfos;
-                    profile.evaluation.eval_remarks = profile.studentRankInfo.viewStudentPromotion.eval_remarks;
-                    profile.evaluation.eval_attitude = JSON.parse(profile.studentRankInfo.viewStudentPromotion.eval_attitude);
-                    profile.evaluation.eval_technique = JSON.parse(profile.studentRankInfo.viewStudentPromotion.eval_technique);
+                    profile.evaluation_edit.eval_remarks = profile.studentRankInfo.viewStudentPromotion.eval_remarks;
+                    profile.evaluation_edit.eval_attitude = JSON.parse(profile.studentRankInfo.viewStudentPromotion.eval_attitude);
+                    profile.evaluation_edit.eval_technique = JSON.parse(profile.studentRankInfo.viewStudentPromotion.eval_technique);
                     profile.studentRankInfo.viewStudentPromotion.next_rank = JSON.parse(profile.studentRankInfo.viewStudentPromotion.next_rank);
                     $('#editPromotionModal').modal('show');
                 })
@@ -744,7 +896,7 @@ var profile = new Vue({
 
             formData.append('next_rank', JSON.stringify(this.studentRankInfo.viewStudentPromotion.next_rank));
             formData.append('remarks', this.studentRankInfo.viewStudentPromotion.remarks);
-            formData.append('evaluation_info', JSON.stringify(this.evaluation));
+            formData.append('evaluation_info', JSON.stringify(this.evaluation_edit));
             formData.append('promotion_id', this.studentRankInfo.viewStudentPromotion.promotion_id);
             formData.append('file', this.studentRankInfo.viewStudentPromotion.photosel);
 
@@ -766,9 +918,9 @@ var profile = new Vue({
                                     ses_needed: ""
                                 },
                                 ses_attended: 0,
-                                // photo: ""
+                                photo: ""
                             };
-                            profile.evaluation = {
+                            profile.evaluation_edit = {
                                 eval_technique: [{
                                     name: "POOMSAE",
                                     rate_o: 1,

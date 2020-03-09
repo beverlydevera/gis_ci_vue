@@ -506,7 +506,6 @@ class Students extends CI_Controller {
     public function saveStudentPromotion()
     {
         $data = $this->input->post();
-        $file = file_get_contents($_FILES['file']['tmp_name']);
         $result = "";
         
         if(!empty($data)){
@@ -518,7 +517,11 @@ class Students extends CI_Controller {
             $prominfo->eval_technique = json_encode($evalinfo->eval_technique);
             $prominfo->eval_attitude = json_encode($evalinfo->eval_attitude);
             $prominfo->eval_remarks = $evalinfo->eval_remarks;
-            $prominfo->photo = $file;
+
+            if(!empty($_FILES['file'])){
+                $file = file_get_contents($_FILES['file']['tmp_name']);
+                $prominfo->photo = $file;
+            }
 
             $result = $this->Main->insert("tbl_studentpromotions",$prominfo,true);
         }
