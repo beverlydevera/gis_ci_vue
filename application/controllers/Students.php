@@ -41,6 +41,42 @@ class Students extends CI_Controller {
         }
         response_json($response);
     }
+
+    public function getStudentsList()
+    {
+        $count_data = 0;
+        $data = [];
+        
+        $query = $this->input->get('query');
+        $limit = $this->input->get('limit');
+        $page = $this->input->get('page');
+        $orderBy = !empty($this->input->get('orderBy')) ? $this->input->get('orderBy') : "lastname";
+        $ascending = $this->input->get('ascending');
+        $byColumn = $this->input->get('byColumn');
+
+        if ($page == 1) { $offset = 0; } 
+        else { $offset = ($page - 1) * $limit; }
+        
+        $condition = array();
+        $select = "student_id,reference_id,firstname,lastname,CONCAT(lastname, ',', firstname, middlename) AS fullname,sex,birthdate,status";
+        $order = array(
+            'col'       => $orderBy,
+            'order_by'  => $ascending ? "DESC" : "ASC",
+        );
+        $like = array('column' => ["lastname", "firstname", "middlename", "reference_id"], 'data' => $query);
+        $limit = empty($query) ? $limit : 10;
+        $data = $this->student->getStudentList($select, $condition, $like, $offset, $order, $limit);
+
+        if(!empty($data)){
+            $count_data = count($data);
+        }else{ $count_data=0; }
+
+        $response = array(
+            'count' => $count_data,
+            'data'  => $data,
+        );
+        response_json($response);
+    }
     //end of index
 
     //profile functions

@@ -677,7 +677,6 @@ var profile = new Vue({
             axios.post(urls, datas)
                 .then(function (e) {
                     Swal.close();
-                    console.log(e.data.data);
                     profile.studentRankInfo.promotionlist = e.data.data.promotioninfos;
                 })
                 .catch(function (error) {
