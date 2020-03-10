@@ -577,6 +577,24 @@ var profile = new Vue({
                 });
         },
         //third tab
+        addCompetitionImageSelect(event){
+            if (event.target.files && event.target.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#addselectedImage_Competition')
+                        .attr('src', e.target.result)
+                        .width("100%");
+                };
+                $('#addselectedImage_Competition').css({'display': '',});
+                $('#selectCompImage_add').css({'display': 'none',});
+
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        },
+        changeCompetitionImage_add(){
+            $("input[id='selectCompImage_add']").click();
+        },
         submitNewStudentCompetition(){
             var datas = {
                 competition_info: this.newstudentCompetition,

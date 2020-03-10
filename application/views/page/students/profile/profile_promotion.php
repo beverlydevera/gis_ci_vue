@@ -84,7 +84,7 @@
                         <tr>
                             <th width="30%">Upload Photo:</th>
                             <th>
-                                <input id="selectPromImage_add" type="file" @change="addPromotionImageSelect" ref="promotion_photo_add" accept=".jpeg,.jpg,.png">
+                                <input id="selectPromImage_add" type="file" @change="addPromotionImageSelect" ref="promotion_photo_add" accept="image/*">
                                 <img id="addselectedImage_Promotion" src="#" alt="your image" style="display:none;" @click="changePromotionImage_add"/>
                                 </th>
                         </tr>

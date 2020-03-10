@@ -208,7 +208,7 @@ class Users extends CI_Controller {
             'order_by'  => $ascending,
         );
         $like = array('column' => ["lastname", "firstname", "middlename", "username", "module", "ulog_title"], 'data' => $query);
-        $limit = empty($query) ? $limit : 15;
+        $limit = empty($query) ? $limit : 10;
 
         $data = $this->users->getUserLogs($select,$condition,$like,$offset,$order,$limit);
 
