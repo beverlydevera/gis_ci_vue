@@ -417,14 +417,19 @@ class Students extends CI_Controller {
     //third tab
     public function saveStudentCompetition()
     {
-        $data = jsondata();
+        $data = $this->input->post();
         $result = "";
         
         if(!empty($data)){
             $student_id = $data['student_id'];
-            $compinfo = $data['competition_info'];
-            $compinfo["comp_awards"] = json_encode($compinfo["comp_awards"]);
-            $compinfo["student_id"] = $student_id;
+            $compinfo = json_decode($data['competition_info']);
+            $compinfo->comp_awards = json_encode($compinfo->comp_awards);
+            $compinfo->student_id = $student_id;
+
+            if(!empty($_FILES['file'])){
+                $file = file_get_contents($_FILES['file']['tmp_name']);
+                $compinfo->photos = $file;
+            }
 
             $result = $this->Main->insert("tbl_studentcompetitions",$compinfo,true);
         }

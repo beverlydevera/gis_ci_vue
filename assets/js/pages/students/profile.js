@@ -596,13 +596,14 @@ var profile = new Vue({
             $("input[id='selectCompImage_add']").click();
         },
         submitNewStudentCompetition(){
-            var datas = {
-                competition_info: this.newstudentCompetition,
-                student_id: this.student_id
-            }
+            let formData = new FormData();
+            formData.append('competition_info', JSON.stringify(this.newstudentCompetition));
+            formData.append('student_id', this.student_id);
+            formData.append('file', this.$refs.competition_photo_add.files[0]);
+
             var urls = window.App.baseUrl + "students/saveStudentCompetition";
             showloading();
-            axios.post(urls, datas)
+            axios.post(urls, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
                 .then(function (e) {
                     Swal.close();
                     Swal.fire({
