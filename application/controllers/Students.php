@@ -283,7 +283,7 @@ class Students extends CI_Controller {
         $studentmembership->membership_type = $membershiptype;
 
         $condition = [ "student_id" => $student_id ];
-        $competitionslist = $this->Main->getDataOneJoin("studcomp_id,student_id,comp_title,comp_type","tbl_studentcompetitions","",$condition,"","","","");
+        $competitionslist = $this->Main->getDataOneJoin("studcomp_id,student_id,comp_title,comp_type,comp_date","tbl_studentcompetitions","",$condition,"","","","");
 
         $join = [
             "table"     => "tbl_ranks r",

@@ -51,12 +51,14 @@ var profile = new Vue({
         newstudentCompetition: {
             comp_awards: [{
                 award_name: ""
-            }]
+            }],
+            photos: ""
         },
         competitionDetails: {
             comp_awards: [{
                 award_name: ""
-            }]
+            }],
+            photos: ""
         },
         competitionslist: [],
         //fourth tab
