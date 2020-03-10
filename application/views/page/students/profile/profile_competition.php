@@ -84,7 +84,7 @@
                             <th><input type="text" v-model="newstudentCompetition.remarks" class="form-control smallerinput"></th>
                         </tr>
                         <tr>
-                            <th width="30%">Upload Photo:</th>
+                            <th width="30%">Upload Photos:</th>
                             <th>
                                 <input id="selectCompImage_add" type="file" @change="addCompetitionImageSelect" ref="competition_photo_add" accept="image/*">
                                 <img id="addselectedImage_Competition" src="#" alt="your image" style="display:none;" @click="changeCompetitionImage_add"/>
@@ -151,7 +151,10 @@
                         </tr>
                         <tr>
                             <th width="30%">Upload Photos:</th>
-                            <th><input type="file" multiple accept=".jpeg,.jpg,.png"></th>
+                            <th>
+                                <img id="editselectedImage_Competition" @click="changeCompetitionImage_edit" style="width:100%;" v-bind:src="'data:image/jpeg;base64,'+competitionDetails.photos" alt="Competition picture">
+                                <input type="file" id="selectCompImage_edit" accept="image/*" ref="competition_photo_edit" @change="editCompetitionImageSelect" style="display: none;">
+                            </th>
                         </tr>
                     </table>
                     </div>

@@ -595,6 +595,24 @@ var profile = new Vue({
         changeCompetitionImage_add(){
             $("input[id='selectCompImage_add']").click();
         },
+        editCompetitionImageSelect(event){
+            if (event.target.files && event.target.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#editselectedImage_Competition')
+                        .attr('src', e.target.result)
+                        .width("100%");
+                };
+                $('#editselectedImage_Competition').css({'display': '',});
+                $('#selectCompImage_edit').css({'display': 'none',});
+
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        },
+        changeCompetitionImage_edit(){
+            $("input[id='selectCompImage_edit']").click();
+        },
         submitNewStudentCompetition(){
             let formData = new FormData();
             formData.append('competition_info', JSON.stringify(this.newstudentCompetition));

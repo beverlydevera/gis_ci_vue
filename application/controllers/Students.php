@@ -468,6 +468,8 @@ class Students extends CI_Controller {
             ];
             $competitiondetails = $this->Main->getDataOneJoin("*","tbl_studentcompetitions","",$condition,"","","","row");
 
+            if(!empty($competitiondetails->photos)){ $competitiondetails->photos = base64_encode($competitiondetails->photos); }
+
             $response = array(
                 "success"   => true,
                 "data"      => [
