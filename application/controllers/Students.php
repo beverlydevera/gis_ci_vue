@@ -370,44 +370,55 @@ class Students extends CI_Controller {
     }
 
     //second tab
-    public function getStudentAttendance()
+    public function getStudentPackages()
     {
-        $data = jsondata();
+        $student_id = $this->input->post('student_id');
 
-        if(!empty($data)){
+        $select = "studpack_id,student_id,invoice_id,sp.package_id,sp.details,p.packagetype,p.pricerate,p.year";
+        $join = [
+            "table"     => "tbl_packages p",
+            "key"       => "p.package_id=sp.package_id",
+            "jointype"  => "inner"
+        ];
+        $studentpackages = $this->Main->getDataOneJoin($select,"tbl_studentpackages sp",$join,['student_id'=>$student_id],$pager=array(),$orderby=array(),$groupby="",$type="");
 
-            $schedule_id = $data['schedule_id'];
-            $student_id = $data['student_id'];
-
-            $join = [
-                "table"     => "tbl_classscheds cs",
-                "key"       => "sa.classsched_id=cs.classsched_id",
-                "jointype"  => "inner"
-            ];
-            $condition = [
-                "schedule_id"   => $schedule_id,
-                "student_id"    => $student_id
-            ];
-            $studentattendance = $this->Main->getDataOneJoin("*","tbl_studentattendance sa",$join,$condition,"","","","");
-
-            if(!empty($studentattendance)){
-                $response = array(
-                    "success"   => true,
-                    "data"      => [
-                        "studentattendance" => $studentattendance
-                    ]
-                );
-            }else{
-                $response = array(
-                    "success"   => false,
-                    "message"   => "No existing attendance yet.",
-                    "data"      => ""
-                );
-            }
+        if(!empty($studentpackages)){
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    'studentpackages' => $studentpackages,
+                ],
+            );
         }else{
             $response = array(
                 "success"   => false,
-                "message"   => "Error Loading Data",
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
+    public function getStudentAttendance()
+    {
+        $studpack_id = $this->input->post('studpack_id');
+        $select = "sa.`student_id`,sa.`classsched_id`,sa.`studpack_id`,sa.`status`,cs.`schedule_id`,cs.`schedule_date`";
+        $join = [
+            "table"     => "tbl_classscheds cs",
+            "key"       => "cs.classsched_id=sa.classsched_id",
+            "jointype"  => "inner"
+        ];
+        $studentattendance = $this->Main->getDataOneJoin($select,"tbl_studentattendance sa",$join,['studpack_id'=>$studpack_id],$pager=array(),$orderby=array(),$groupby="",$type="");
+
+        if(!empty($studentattendance)){
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    'studentattendance' => $studentattendance,
+                ],
+            );
+        }else{
+            $response = array(
+                "success"   => false,
                 "data"      => ""
             );
         }

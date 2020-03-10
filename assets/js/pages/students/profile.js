@@ -38,14 +38,7 @@ var profile = new Vue({
             },
         },
         //second tab
-        studentpackages: {
-            regular: [],
-            unlimited: [],
-            summerpromo: []
-        },
-        package_select: {
-            packagetype: "Regular"
-        },
+        studentpackages: [],
         studentattendance: [],
         //third tab
         newstudentCompetition: {
@@ -405,35 +398,6 @@ var profile = new Vue({
                     profile.invoicelist = dat.invoicelist;
                     profile.invoiceinfo = dat.invoiceinfo;
                     
-                    if(dat.studentpackages.regular!=null){
-                        profile.studentpackages.regular = dat.studentpackages.regular;
-                        profile.studentpackages.regular.forEach(e => {
-                            e.details = JSON.parse(e.details);
-                            e.packagedetails = JSON.parse(e.packagedetails);
-                        })
-                    }
-
-                    if(dat.studentpackages.unlimited!=null){
-                        profile.studentpackages.unlimited = dat.studentpackages.unlimited;
-                        profile.studentpackages.unlimited.forEach(e => {
-                            e.details = JSON.parse(e.details);
-                            e.date_from = formatDate(e.date_added);
-                            
-                            var d = new Date(e.date_added);
-                            var date_to = new Date(d.getFullYear(), (d.getMonth() + 1), d.getDate());
-                            date_to.setMonth(d.getMonth()+1);
-                            e.date_to = formatDate(date_to);
-                        })
-                    }
-
-                    if(dat.studentpackages.summerpromo!=null){
-                        profile.studentpackages.summerpromo = dat.studentpackages.summerpromo;
-                        profile.studentpackages.summerpromo.forEach(e => {
-                            e.details = JSON.parse(e.details);
-                            e.packagedetails = JSON.parse(e.packagedetails);
-                        })
-                    }
-                    
                     profile.studentinfo=dat.studentprofile;
 
                     profile.studentmembership=dat.studentmembership;
@@ -527,52 +491,33 @@ var profile = new Vue({
                 });
         },
         //second tab
-        changePackagetype(){
-            var packagetype = this.package_select.packagetype;
-
-            if(packagetype=="Regular"){
-                $('#package_regular_add').css({'display': '',});
-                $('#package_regular').css({'display': '',});
-                $('#package_unlimited_add').css({'display': 'none',});
-                $('#package_unlimited').css({'display': 'none',});
-                $('#package_summerpromo_add').css({'display': 'none',});
-                $('#package_summerpromo').css({'display': 'none',});
-            }else if(packagetype=="Unlimited"){
-                $('#package_regular_add').css({'display': 'none',});
-                $('#package_regular').css({'display': 'none',});
-                $('#package_unlimited_add').css({'display': '',});
-                $('#package_unlimited').css({'display': '',});
-                $('#package_summerpromo_add').css({'display': 'none',});
-                $('#package_summerpromo').css({'display': 'none',});                
-            }else if(packagetype=="Summer Promo"){
-                $('#package_regular_add').css({'display': 'none',});
-                $('#package_regular').css({'display': 'none',});
-                $('#package_unlimited_add').css({'display': 'none',});
-                $('#package_unlimited').css({'display': 'none',});
-                $('#package_summerpromo_add').css({'display': '',});
-                $('#package_summerpromo').css({'display': '',});
-            }
-        },
-        viewAttendance(schedule_id,type){
-            var datas = {
-                schedule_id: schedule_id,
-                student_id: this.student_id
-            }
-            console.log(datas);
-            var urls = window.App.baseUrl + "students/getStudentAttendance";
-            showloading();
+        getStudentPackages(){
+            var datas = { student_id:this.student_id };
+            var datas = frmdata(datas);
+            var urls = window.App.baseUrl + "students/getStudentPackages";
             axios.post(urls, datas)
                 .then(function (e) {
-                    Swal.close();
-                    if(e.data.success){
-                        profile.studentattendance = e.data.data.studentattendance;
-                        $('#'+type+'_attendanceModal').modal('show');
-                    }else{
-                        Toast.fire({
-                            type: "warning",
-                            title: e.data.message
+                    profile.studentpackages = e.data.data.studentpackages;
+                    if(profile.studentpackages!=null){
+                        profile.studentpackages.forEach((el,ind) => {
+                            profile.studentpackages[ind].details = JSON.parse(el.details);
                         })
                     }
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        viewAttendance(studpack_id){
+            var datas = {
+                studpack_id: studpack_id
+            };
+            var datas = frmdata(datas);
+            var urls = window.App.baseUrl + "students/getStudentAttendance";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    profile.studentattendance = e.data.data.studentattendance;
+                    $('#viewAttendanceModal').modal('show');
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -1167,5 +1112,6 @@ var profile = new Vue({
         }
     }, mounted: function () {
         this.getStudentProfile();
+        this.getStudentPackages();
     },
 })
