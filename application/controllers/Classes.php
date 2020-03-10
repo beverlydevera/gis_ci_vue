@@ -216,19 +216,20 @@ class Classes extends CI_Controller {
 
             $studattarr = [];
             foreach($data['attendanceinfo']['attendance'] as $dtk => $dtv){
+                $studpack_id = $dtv['studpack_id'];
+
+                if($dtv['status']){
+                    $this->Main->raw("UPDATE tbl_studentpackages SET details = JSON_SET(details, '$.sessions_attended', JSON_EXTRACT(details, '$.sessions_attended') + 1) WHERE studpack_id=$studpack_id","","update");
+                }
+
                 $studatt = [
                     "student_id"    => $dtv['student_id'],
                     "classsched_id" => $classsched_id,
+                    "studpack_id"   => $studpack_id,
                     "status"        => $dtv['status'],
                     "date_added"    => date("Y-m-d H:i:s")
                 ];
                 array_push($studattarr,$studatt);
-
-                if($dtv['status']){
-                    $studpack_id = $dtv['studpack_id'];
-                    $sessions_attended = $this->Main->raw("SELECT JSON_EXTRACT(details, '$.sessions_attended') as sessions_attended FROM tbl_studentpackages WHERE studpack_id=$studpack_id",true)->sessions_attended;
-                    $this->Main->raw("UPDATE tbl_studentpackages SET details = JSON_SET(details,'$.sessions_attended',$sessions_attended+1) WHERE studpack_id=$studpack_id","","update");
-                }
             }
             $this->Main->insertbatch("tbl_studentattendance",$studattarr);
 
