@@ -638,7 +638,8 @@ var profile = new Vue({
                     profile.newstudentCompetition = {
                         comp_awards: [{
                             award_name: ""
-                        }]
+                        }],
+                        photos: ""
                     };
                     $('#addNewCompetitionModal').modal('hide');
                 })
@@ -690,12 +691,13 @@ var profile = new Vue({
                 });
         },
         submitCompetitionDataChanges(){
-            var datas = {
-                competitiondata: this.competitionDetails
-            }
+            let formData = new FormData();
+            formData.append('competitiondata', JSON.stringify(this.competitionDetails));
+            formData.append('file', this.$refs.competition_photo_edit.files[0]);
+
             var urls = window.App.baseUrl + "students/saveCompetitionDataChanges";
             showloading();
-            axios.post(urls, datas)
+            axios.post(urls, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
                 .then(function (e) {
                     Swal.close();
                     Swal.fire({
@@ -710,7 +712,8 @@ var profile = new Vue({
                     profile.competitionDetails = {
                         comp_awards: [{
                             award_name: ""
-                        }]
+                        }],
+                        photos: ""
                     };
                     $('#editCompetitionModal').modal('hide');
                 })

@@ -488,14 +488,20 @@ class Students extends CI_Controller {
 
     public function saveCompetitionDataChanges()
     {
-        $data = jsondata();
+        $data = $this->input->post();
+        $dataupdate = [];
 
         if(!empty($data)){
-            $dataupdate = $data['competitiondata'];
-            $studcomp_id = $dataupdate['studcomp_id'];
-            unset($dataupdate['studcomp_id']);
-            unset($dataupdate['complistindex']);
-            $dataupdate['comp_awards'] = json_encode($dataupdate['comp_awards']);
+            $dataupdate = json_decode($data['competitiondata']);
+            $studcomp_id = $dataupdate->studcomp_id;
+            unset($dataupdate->studcomp_id);
+            unset($dataupdate->complistindex);
+            $dataupdate->comp_awards = json_encode($dataupdate->comp_awards);
+            
+            if(!empty($_FILES['file'])){
+                $file = file_get_contents($_FILES['file']['tmp_name']);
+                $dataupdate->photos = $file;
+            }
 
             $result = $this->Main->update("tbl_studentcompetitions",['studcomp_id'=>$studcomp_id],$dataupdate);
         
