@@ -18,52 +18,12 @@
     <link rel="stylesheet" href="<?=base_url("assets/template/plugins/daterangepicker/daterangepicker.css")?>">
     <!-- Google Font: Source Sans Pro -->
     <link href="<?= base_url('assets/css/fonts.css') ?>" rel="stylesheet">
-    <!-- Ekko Lightbox -->
-    <link rel="stylesheet" href="<?=base_url()?>assets/template/plugins/ekko-lightbox/ekko-lightbox.css">
-    
-    <link rel="stylesheet" href="<?= base_url("assets/template/plugins/select2/css/select2.min.css") ?>">
-    <link rel="stylesheet" href="<?= base_url("assets/template/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css") ?>">
-    <link rel="stylesheet" href="<?= base_url("assets/template/plugins/sweetalert2/sweetalert2.min.css") ?>">
-    <link rel="stylesheet" href="<?= base_url("assets/template/plugins/toastr/toastr.min.css") ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/custom.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/style.css') ?>">
-    
-    <script src="<?= base_url('assets/js/plugins/vue.js') ?>"></script>
-    <script src="<?= base_url('assets/js/jquery-3.4.1.min.js') ?>"></script>
-    <script type="text/javascript">
-        window.App = {
-            "baseUrl": "<?= base_url() ?>",
-            "removeDOM": "",
-        };
-    </script>
-</head>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-
-    <title><?= $title ?></title>
-
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="<?= base_url("assets/template/plugins/fontawesome-free/css/all.min.css") ?>">
-    <!-- IonIcons -->
-    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="<?= base_url("assets/template/dist/css/adminlte.min.css") ?>">
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="<?=base_url("assets/template/plugins/daterangepicker/daterangepicker.css")?>">
-    <!-- Google Font: Source Sans Pro -->
-    <link href="<?= base_url('assets/css/fonts.css') ?>" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url("assets/template/plugins/select2/css/select2.min.css") ?>">
     <link rel="stylesheet" href="<?= base_url("assets/template/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css") ?>">
     <link rel="stylesheet" href="<?= base_url("assets/template/plugins/sweetalert2/sweetalert2.min.css") ?>">
     <link rel="stylesheet" href="<?= base_url("assets/template/plugins/toastr/toastr.min.css") ?>">
 
     <link rel="stylesheet" href="<?= base_url('assets/css/custom.css') ?>">
-
 
     <script src="<?= base_url('assets/js/plugins/vue.js') ?>"></script>
     <script type="text/javascript">

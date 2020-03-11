@@ -11,11 +11,25 @@
   <link rel="stylesheet" href="<?=base_url()?>assets/landing/css/register.css">
   <link rel="stylesheet" href="<?=base_url()?>assets/landing/css/hover.css">
   <link rel="icon" href="<?=base_url()?>assets/landing/images/icon.png">
+  
+  <link rel="stylesheet" href="<?= base_url("assets/template/plugins/select2/css/select2.min.css") ?>">
+  <link rel="stylesheet" href="<?= base_url("assets/template/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css") ?>">
+  <link rel="stylesheet" href="<?= base_url("assets/template/plugins/sweetalert2/sweetalert2.min.css") ?>">
+  <link rel="stylesheet" href="<?= base_url("assets/template/plugins/toastr/toastr.min.css") ?>">
+
+  <script src="<?= base_url('assets/js/plugins/vue.js') ?>"></script>
+  <script type="text/javascript">
+      window.App = {
+          "baseUrl": "<?= base_url() ?>",
+          "removeDOM": "",
+      };
+  </script>
+
 </head>
 
 <body>
 
-  <div class="container">
+  <div class="container" id="<?= !empty($vueid) ? $vueid : "" ?>">
     <video autoplay muted loop id="myVideo">
       <source src="<?=base_url()?>assets/landing/video/header.mp4" type="video/mp4">
     </video>
@@ -36,62 +50,63 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-user-check"></i></span>
                 </div>
-                <input type="text" class="form-control" placeholder="Last Name">
+                <input type="text" class="form-control" placeholder="Last Name" v-model="preRegistration_Data.lastname">
               </div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-user-check"></i></span>
                 </div>
-                <input type="text" class="form-control" placeholder="First Name">
+                <input type="text" class="form-control" placeholder="First Name" v-model="preRegistration_Data.firstname">
               </div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-user-check"></i></span>
                 </div>
-                <input type="text" class="form-control" placeholder="Middle Name">
+                <input type="text" class="form-control" placeholder="Middle Name" v-model="preRegistration_Data.middlename">
               </div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-birthday-cake"></i></span>
                 </div>
-                <input type="date" class="form-control" placeholder="Birthdate">
+                <input type="date" class="form-control" placeholder="Birthdate" v-model="preRegistration_Data.birthdate">
               </div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa fa-venus-mars"></i></span>
                 </div>
-                <select class="form-control">
+                <select class="form-control" v-model="preRegistration_Data.sex">
                   <option disabled selected>Select Sex</option>
-                  <option>Male</option>
-                  <option>Female</option>
+                  <option value="M">Male</option>
+                  <option value="F">Female</option>
                 </select>
               </div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-home"></i></span>
                 </div>
-                <input type="text" class="form-control" placeholder="Address">
+                <input type="text" class="form-control" placeholder="Address" v-model="preRegistration_Data.homeaddress">
               </div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                 </div>
-                <input type="email" class="form-control" placeholder="Email">
+                <input type="email" class="form-control" placeholder="Email" v-model="preRegistration_Data.emailaddress">
               </div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-mobile"></i></span>
                 </div>
-                <input type="text" class="form-control" placeholder="Contact Number">
+                <input type="text" class="form-control" placeholder="Contact Number" v-model="preRegistration_Data.contactno">
               </div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa fa-dumbbell"></i></span>
                 </div>
-                <select class="form-control">
+                <select class="form-control" v-model="preRegistration_Data.branch_id">
                   <option disabled selected>Select Branch</option>
-                  <option>Abanao</option>
-                  <option>La Trinidad</option>
+                  <template v-for="(list,index) in brancheslist">
+                    <option :value="list.branch_id">{{list.branch_name}}</option>
+                  </template>
                 </select>
               </div>
               <button type="button" class="btn btn-primary">Register</button>
@@ -106,6 +121,56 @@
   <!-- <script src="<?=base_url()?>assets/landing/vendor/popper/popper.min.js"></script></script> --> <!-- commented to remove error -->
   <script src="<?=base_url()?>assets/landing/vendor/bootstrap/js/bootstrap.min.js"></script>
   <script src="<?=base_url()?>assets/landing/js/baguettebox.min.js"></script>
+
+  <!-- REQUIRED SCRIPTS -->
+
+  <!-- jQuery -->
+  <script src="<?= base_url("assets/template/plugins/jquery/jquery.min.js") ?>"></script>
+  <!-- Bootstrap -->
+  <script src="<?= base_url("assets/template/plugins/bootstrap/js/bootstrap.bundle.min.js") ?>"></script>
+  <script src="<?= base_url("assets/js/plugins/sweetalert.min.js") ?>"></script>
+  <script src="<?= base_url("assets/template/plugins/select2/js/select2.full.min.js") ?>"></script>
+  <!-- AdminLTE -->
+  <!-- <script src="<?= base_url("assets/template/dist/js/adminlte.js") ?>"></script> -->
+  <script src="<?= base_url('assets/js/plugins/axios.min.js') ?>"></script>
+  <script src="<?= base_url('assets/js/plugins/vue-tables-2.min.js') ?>"></script>
+  <!-- Ekko Lightbox -->
+  <!-- <script src="<?=base_url()?>assets/template/plugins/ekko-lightbox/ekko-lightbox.min.js"></script> -->
+  <script src="<?= base_url("assets/template/plugins/sweetalert2/sweetalert2.min.js") ?>"></script>
+  <script src="<?= base_url('assets/template/plugins/toastr/toastr.min.js') ?>"></script>
+  <script src="<?= base_url('assets/js/script.js') ?>"></script>
+
+  <?php if (!empty($js)) : ?>
+      <?php foreach ($js as $j) : ?>
+          <script src="<?= base_url('assets/js/' . $j . '?ver=') . filemtime(FCPATH) ?>"></script>
+      <?php endforeach ?>
+  <?php endif ?>
+
+  <script>
+      $(function() {
+          //Initialize Select2 Elements
+          $('.select-picker').select2({
+              theme: 'bootstrap4'
+          })
+      });
+
+      const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000
+      });
+      
+      $(function () {
+          $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+          event.preventDefault();
+          $(this).ekkoLightbox({
+              alwaysShowClose: true
+          });
+          });
+      })
+  </script>
+
 </body>
 
 </html>

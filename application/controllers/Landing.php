@@ -27,8 +27,37 @@ class Landing extends CI_Controller {
     public function preregister()
 	{
         $data['title'] = "Bravehearts | Pre-Register";
-        // $data['js'] = array('pages/landing/preregister.js');
+        $data['vueid'] = "preregister_page";
+        $data['js'] = array('pages/landing/preregister.js');
         $this->load->view('page/landing/preregister',$data);
     }
     
+    public function getBranches()
+    {
+        $type = $groupby = "";
+        $orderby = [];
+
+        $condition = jsondata();
+        if(!empty($condition['branch_id'])){ $type="row"; }
+        $orderby = [
+            'column' => "branch_name",
+            'order' => "ASC",
+        ];
+        $brancheslist = $this->Main->getDataOneJoin("*","tbl_branches","",$condition,"",$orderby,$groupby,$type);
+        
+        if(!empty($brancheslist)){
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    "brancheslist" => $brancheslist
+                ]
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
 }
