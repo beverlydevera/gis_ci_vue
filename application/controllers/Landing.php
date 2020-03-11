@@ -67,9 +67,21 @@ class Landing extends CI_Controller {
         $data = $this->input->post();
         if(!empty($data)){
             
-            $insertquery = $this->Main->insert("tbl_walkins",$data);
+            //insert to tbl_walkins
+            $insertquery1 = $this->Main->insert("tbl_walkins",$data,true);
 
-            if(!empty($insertquery)){
+            //insert to tbl_notifications
+            $notification = [
+                "type"      => "PreRegistration",
+                "title"     => "Student Pre-Registration in Website",
+                "details"   => "walkin_id#".$insertquery1['lastid'],
+                "branch_id" => $data['branch_id'],
+                "status"    => 1,
+                "date_added"=> date("Y-m-d H:i:s")
+            ];
+            $insertquery2 = $this->Main->insert("tbl_notifications",$notification);
+
+            if(!empty($insertquery1) && !empty($insertquery2)){
                 $response = array(
                     "success"   => true,
                     "type"      => "success",
