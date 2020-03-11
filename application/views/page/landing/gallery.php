@@ -35,7 +35,7 @@
             <a class="nav-link" href="<?=base_url()?>#programs">Programs</a>
           </li>
           <li class="nav-item hvr-underline-reveal">
-            <a class="nav-link" href="<?=base_url()?>landing/gallery">Gallery</a>
+            <a class="nav-link" href="<?=base_url()?>bravehearts-gallery">Gallery</a>
           </li>
           <li class="nav-item hvr-underline-reveal">
             <a class="nav-link" href="<?=base_url()?>#footer">Contact</a>

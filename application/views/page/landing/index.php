@@ -35,7 +35,7 @@
             <a class="nav-link" href="#programs">Programs</a>
           </li>
           <li class="nav-item hvr-underline-reveal">
-            <a class="nav-link" href="<?=base_url()?>landing/gallery">Gallery</a>
+            <a class="nav-link" href="<?=base_url()?>bravehearts-gallery">Gallery</a>
           </li>
           <li class="nav-item hvr-underline-reveal">
             <a class="nav-link" href="#footer">Contact</a>
@@ -438,7 +438,7 @@
   <section id="cta">
     <div class="container-fluid">
       <h1 class="big-heading">Experience fun, fellowship and friendship in an atmosphere of <span class="yellow">discipline</span>, <span class="yellow">character</span> and <span class="yellow">excellence</span>. Join now!</h1>
-    <a href="<?=base_url("landing/preregister")?>">  <button class="btn btn-lg btn-outline-light button-download" type="button"><i class="fas fa-user-plus"></i> Register</button></a>
+    <a href="<?=base_url()?>bravehearts-register">  <button class="btn btn-lg btn-outline-light button-download" type="button"><i class="fas fa-user-plus"></i> Register</button></a>
     </div>
   </section>
 
