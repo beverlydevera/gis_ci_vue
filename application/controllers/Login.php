@@ -44,6 +44,7 @@ class Login extends CI_Controller {
                     'middle_name' => $r->middlename,
                     'fullname' => $r->firstname . " " .$r->lastname,
                     'role' => $r->role,
+                    'branch_id' => $r->branch_id,
                     'id' => $r->user_id,
                 );
                 $this->session->set_userdata($sessiondata);

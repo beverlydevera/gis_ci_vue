@@ -53,6 +53,10 @@ hr {
     min-width: 200px;
 }
 
+.notification-menu {
+    min-width: 300px !important;
+}
+
 .billing-desc{
     text-align: left !important;
 }

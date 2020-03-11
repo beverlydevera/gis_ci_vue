@@ -11,8 +11,8 @@
     </li> -->
 </ul>
 
-<!-- Right navbar links -->
 <ul class="navbar-nav ml-auto" id="header_nav">
+    
     <!-- Messages Dropdown Menu -->
     <li class="nav-item dropdown">
     <a class="nav-link" data-toggle="dropdown" href="#">
@@ -71,8 +71,34 @@
         <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
     </div>
     </li>
-    <!-- Notifications Dropdown Menu -->
+    <!-- End of Messages Menu -->
+
+    <!-- Pre-Registered Notifs -->
     <li class="nav-item dropdown">
+    <a class="nav-link" data-toggle="dropdown" href="#">
+        <i class="fas fa-walking nav-icon"></i>
+        <span class="badge badge-danger navbar-badge">{{preregisteredlist.length}}</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-lg notification-menu dropdown-menu-right">
+        <template v-for="(list,index) in preregisteredlist">
+            <a href="#" class="dropdown-item">
+                <div class="media">
+                    <div class="media-body">
+                    <h3 class="dropdown-item-title"> NEW PRE-REGISTRATION </h3>
+                    <p class="text-sm">Name: {{list.lastname}}, {{list.firstname}}</p>
+                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>{{list.timeinterval}}</p>
+                    </div>
+                </div>
+            </a>
+            <div class="dropdown-divider"></div>
+        </template>
+        <a href="#" class="dropdown-item dropdown-footer">See All Walk-in/Pre-Registrations</a>
+    </div>
+    </li>
+    <!-- End of PreRegistered Menu -->
+
+    <!-- Notifications Dropdown Menu -->
+    <!-- <li class="nav-item dropdown">
     <a class="nav-link" data-toggle="dropdown" href="#">
         <i class="far fa-bell"></i>
         <span class="badge badge-warning navbar-badge">15</span>
@@ -97,7 +123,9 @@
         <div class="dropdown-divider"></div>
         <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
     </div>
-    </li>
+    </li> -->
+    <!-- End of Notifications Menu -->
+
     <li class="nav-item dropdown user-menu">
         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
         <img id="editProfileImage1" v-bind:src="'data:image/jpeg;base64,'+userdata.photo" class="user-image img-circle elevation-2" alt="User Image">
@@ -124,6 +152,7 @@
         </li>
         </ul>
     </li>
+
     <li class="nav-item">
         <a href="<?= base_url('users/logout') ?>" class="nav-link">
             <i class="nav-icon fas fa-sign-out-alt"></i> Logout

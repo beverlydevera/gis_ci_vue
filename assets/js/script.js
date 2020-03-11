@@ -31,6 +31,44 @@ function formatTime(date) {
     return [hr, min, sec].join(':');
 }
 
+function computeTimeInterval(date_added) {
+	var d = new Date(date_added);
+	var d_year = d.getFullYear();
+	var d_month = '' + (d.getMonth() + 1);
+	var d_day = '' + d.getDate();
+	var d_hr = d.getHours();
+	var d_min = d.getMinutes();
+	var d_sec = d.getSeconds();
+
+	var n = new Date();
+	var n_year = n.getFullYear();
+	var n_month = '' + (n.getMonth() + 1);
+	var n_day = '' + n.getDate();
+	var n_hr = n.getHours();
+	var n_min = n.getMinutes();
+	var n_sec = n.getSeconds();
+
+	if(n_year-d_year > 0){
+		var time = n_year-d_year > 1 ? " years ago" : " year ago";
+		return n_year-d_year + time;
+	}else if(n_month-d_month > 0){
+		var time = n_month-d_month > 1 ? " months ago" : " month ago";
+		return n_month-d_month + time;
+	}else if(n_day-d_day > 0){
+		var time = n_day-d_day > 1 ? " days ago" : " day ago";
+		return n_day-d_day + time;
+	}else if(n_hr-d_hr > 0){
+		var time = n_hr-d_hr > 1 ? " hrs ago" : " hr ago";
+		return n_hr-d_hr + time;
+	}else if(n_min-d_min > 0){
+		var time = n_min-d_min > 1 ? " mins ago" : " min ago";
+		return n_min-d_min + time;
+	}else if(n_sec-d_sec > 0){
+		var time = n_sec-d_sec > 1 ? " secs ago" : " sec ago";
+		return n_sec-d_sec + time;
+	}
+};
+
 function showloading(message = '') {
 	var message = (message.length > 0) ? message : "Submitting Data . . .";
 	Swal.fire({
@@ -103,7 +141,8 @@ if ($('#header_nav').length) {
 				photo: null
 			},
 			notifications: [],
-			chatlist: []
+			chatlist: [],
+			preregisteredlist: []
 		},
 		methods: {
 			changePassword(){
@@ -221,8 +260,6 @@ if ($('#header_nav').length) {
 				}
 			},
 			saveUserProfileChanges(){
-				
-				// this.userdata.photo = this.$refs.userprofileimage.files[0];
 				let formData = new FormData();
 				formData.append('user_id', this.user_id);
 				formData.append('lastname', this.userdata.lastname);
@@ -249,8 +286,41 @@ if ($('#header_nav').length) {
 					console.log(error);
 				});
 			},
+			getNewRegistrations(){
+				var datas = {
+					join: { 
+						table: "tbl_notifications n",
+						key: "JSON_EXTRACT(n.details, '$.walkin_id') = w.walkin_id",
+						jointype: "inner"
+					},
+					condition: { 
+						"n.status": 1,
+						walkintype: "website"
+					}
+				};
+				var urls = window.App.baseUrl + "Notifications/getNewRegistrations";
+				axios.post(urls, datas)
+					.then(function (e) {
+						e.data.data.preregisteredlist.forEach((el,index) => {
+							e.data.data.preregisteredlist[index].timeinterval = computeTimeInterval(el.date_added);
+                        });
+						if(systemconfigs.preregisteredlist==""){
+							systemconfigs.preregisteredlist = e.data.data.preregisteredlist;
+						}else{
+							//push if not existing in current list
+							//notif at upper right
+							toastr.success('New Pre-Pregistration in Website (Name: ABC, qwe)')
+						}
+					})
+					.catch(function (error) {
+						console.log(error)
+					});
+			},
 		}, mounted: function () {
 			this.getProfileData();
+			this.getNewRegistrations();
+		}, created() {
+			this.interval = setInterval(() => this.getNewRegistrations(), 30000);
 		},
 	});
 }

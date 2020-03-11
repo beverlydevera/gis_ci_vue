@@ -74,7 +74,7 @@ class Landing extends CI_Controller {
             $notification = [
                 "type"      => "PreRegistration",
                 "title"     => "Student Pre-Registration in Website",
-                "details"   => "walkin_id#".$insertquery1['lastid'],
+                "details"   => json_encode(["walkin_id"=>$insertquery1['lastid']]),
                 "branch_id" => $data['branch_id'],
                 "status"    => 1,
                 "date_added"=> date("Y-m-d H:i:s")
