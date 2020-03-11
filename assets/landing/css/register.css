@@ -1,5 +1,5 @@
 body{
-  margin-top: 50px;
+  margin-top: 40px;
   /* margin-top: 200px; */
   font-family: 'Montserrat', 'sans-serif';
 
@@ -26,6 +26,7 @@ body{
   text-align: center;
   color: #fff;
   padding: 30px;
+  margin-top: 5%; /* added */
 }
 
 .register-left p{

@@ -8,6 +8,7 @@ class Landing extends CI_Controller {
         parent::__construct();
         $this->load->model("Main");
         $this->load->library("Bcrypt");
+        date_default_timezone_set("Asia/Manila");
 	}
 	
 	public function index()

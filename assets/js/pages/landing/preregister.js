@@ -3,8 +3,8 @@ var preregister = new Vue({
     el: '#preregister_page',
     data: {
         preRegistration_Data: {
-            sex: "Select Sex",
-            branch_id: "Select Branch",
+            sex: 0,
+            branch_id: 0,
             walkintype: "Website",
             status: 1
         },

@@ -48,62 +48,62 @@
             <div class="register-form">
               <div class="form-group input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-user-check"></i></span>
+                  <span class="input-group-text"> <span style="color:red;">*</span> <i class="fas fa-user-check"></i></span>
                 </div>
-                <input type="text" class="form-control" placeholder="Last Name" v-model="preRegistration_Data.lastname">
+                <input type="text" class="form-control" placeholder="Last Name"  requiredv-model="preRegistration_Data.lastname">
               </div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-user-check"></i></span>
+                  <span class="input-group-text"> <span style="color:red;">*</span> <i class="fas fa-user-check"></i></span>
                 </div>
-                <input type="text" class="form-control" placeholder="First Name" v-model="preRegistration_Data.firstname">
+                <input type="text" class="form-control" placeholder="First Name"  requiredv-model="preRegistration_Data.firstname">
               </div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-user-check"></i></span>
+                  <span class="input-group-text"> <span style="color:white;">*</span> <i class="fas fa-user-check"></i></span>
                 </div>
                 <input type="text" class="form-control" placeholder="Middle Name" v-model="preRegistration_Data.middlename">
               </div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-birthday-cake"></i></span>
+                  <span class="input-group-text"> <span style="color:red;">*</span> <i class="fas fa-birthday-cake"></i></span>
                 </div>
-                <input type="date" class="form-control" placeholder="Birthdate" v-model="preRegistration_Data.birthdate">
+                <input type="date" class="form-control" placeholder="Birthdate" max="<?=date("Y-m-d")?>"  requiredv-model="preRegistration_Data.birthdate">
               </div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa fa-venus-mars"></i></span>
+                  <span class="input-group-text"> <span style="color:red;">*</span> <i class="fas fa fa-venus-mars"></i></span>
                 </div>
-                <select class="form-control" v-model="preRegistration_Data.sex">
-                  <option disabled selected>Select Sex</option>
+                <select class="form-control" v-model="preRegistration_Data.sex" required>
+                  <option value=0 disabled selected>Select Sex</option>
                   <option value="M">Male</option>
                   <option value="F">Female</option>
                 </select>
               </div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-home"></i></span>
+                  <span class="input-group-text"> <span style="color:red;">*</span> <i class="fas fa-home"></i></span>
                 </div>
-                <input type="text" class="form-control" placeholder="Address" v-model="preRegistration_Data.homeaddress">
+                <input type="text" class="form-control" placeholder="Address" v-model="preRegistration_Data.homeaddress" required>
               </div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                  <span class="input-group-text"> <span style="color:red;">*</span> <i class="fas fa-envelope"></i></span>
                 </div>
-                <input type="email" class="form-control" placeholder="Email" v-model="preRegistration_Data.emailaddress">
+                <input type="email" class="form-control" placeholder="Email" v-model="preRegistration_Data.emailaddress" required>
               </div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-mobile"></i></span>
+                  <span class="input-group-text"> <span style="color:red;">*</span> <i class="fas fa-mobile"></i></span>
                 </div>
-                <input type="text" class="form-control" placeholder="Contact Number" v-model="preRegistration_Data.contactno">
+                <input type="text" class="form-control" placeholder="Contact Number" v-model="preRegistration_Data.contactno" required>
               </div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa fa-dumbbell"></i></span>
+                  <span class="input-group-text"> <span style="color:red;">*</span> <i class="fas fa fa-dumbbell"></i></span>
                 </div>
                 <select class="form-control" v-model="preRegistration_Data.branch_id">
-                  <option disabled selected>Select Branch</option>
+                  <option value=0 disabled selected>Select Branch</option>
                   <template v-for="(list,index) in brancheslist">
                     <option :value="list.branch_id">{{list.branch_name}}</option>
                   </template>
