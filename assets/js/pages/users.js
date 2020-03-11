@@ -2,15 +2,27 @@
 var users = new Vue({
     el: '#users_page',
     data: {
+        brancheslist: [],
         userslist: [],
         userdetails: {
-            photo: null
+            photo: null,
+            branch_id: 0
         }
     },
     methods: {
+        getBranchesList(){
+            var urls = window.App.baseUrl + "Libraries/getBranches";
+            axios.post(urls, "")
+                .then(function (e) {
+                    users.brancheslist=e.data.data.brancheslist;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
         getUsers(){
             var datas = {
-                select: "user_id,username,lastname,firstname,middlename,contactno,emailadd,role",
+                select: "user_id,username,lastname,firstname,middlename,contactno,emailadd,role,branch_name",
                 orderby: {
                     column: "u.lastname",
                     order: "ASC",
@@ -184,5 +196,6 @@ var users = new Vue({
         },
     }, mounted: function () {
         this.getUsers();
+        this.getBranchesList();
     },
 })

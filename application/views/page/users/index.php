@@ -119,9 +119,16 @@
                                 </select>
                             </th>
                         </tr>
-                        <tr>
+                        <tr v-if="userdetails.role==2">
                             <th width="25%">Branch:</th>
-                            <th><input type="text" class="form-control smallerinput" v-model="userdetails.branch_name" required></th>
+                            <th>
+                                <select class="form-control select2 smallerinput" v-model="userdetails.branch_id" required>
+                                <option value=0 disabled selected>Select Branch</option>
+                                <template v-for="(list,index) in brancheslist">
+                                    <option :value="list.branch_id">{{list.branch_name}}</option>
+                                </template>
+                                </select>
+                            </th>
                         </tr>
                     </table>
                     </div>
