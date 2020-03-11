@@ -595,7 +595,7 @@
     </div>
   </div>
 
-   
+    <!-- commented to remove error -->
   <!-- <script type="text/javascript">
     $('#myModal').on('shown.bs.modal', function() {
       $('#myInput').trigger('focus')
@@ -606,7 +606,7 @@
 
   <script src="<?=base_url()?>assets/landing/vendor/font-awesome/font-awesome.min.js"></script>
   <script src="<?=base_url()?>assets/landing/vendor/jquery/jquery.min.js"></script>
-  <!-- <script src="<?=base_url()?>assets/landing/vendor/popper/popper.min.js"></script> -->
+  <!-- <script src="<?=base_url()?>assets/landing/vendor/popper/popper.min.js"></script> --> <!-- commented to remove error -->
   <script src="<?=base_url()?>assets/landing/vendor/bootstrap/js/bootstrap.min.js"></script>
   <script src="<?=base_url()?>assets/landing/js/baguettebox.min.js"></script>
 
