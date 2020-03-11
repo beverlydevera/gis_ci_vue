@@ -28,15 +28,23 @@
             "removeDOM": "",
         };
     </script>
+    <style>
+      .login-page {
+        background-color: lightgrey !important;
+        background-image: url("<?=base_url()?>assets/img/bravehearts_banner.png") !important;
+        background-repeat: no-repeat !important;
+        background-position: center;
+        background-size: 100% !important;
+      }
+    </style>
 </head>
 <body class="hold-transition login-page">
 <div class="login-box" id="login_page">
-  <div class="login-logo">
-    <img src="<?=base_url('assets/img/bravehearts_logo.jpg')?>" width="15%">
-    <a href="#"><b>Bravehearts<br>Martial Arts Institute</b></a>
-  </div>
-  <!-- /.login-logo -->
   <div class="card">
+    <div class="card-header login-logo">
+      <img src="<?=base_url('assets/img/bravehearts_logo.jpg')?>" width="15%">
+      <a href="#"><b>Bravehearts<br>Martial Arts Institute</b></a>
+    </div>
     <div class="card-body login-card-body">
       <h3 style="text-align:center;">- - - LOGIN - - -</h3>
       <p class="login-box-msg">Sign in to start your session</p>

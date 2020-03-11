@@ -27,15 +27,23 @@
             "removeDOM": "",
         };
     </script>
+    <style>
+      .register-page {
+        background-color: lightgrey !important;
+        background-image: url("<?=base_url()?>assets/img/bravehearts_banner.png") !important;
+        background-repeat: no-repeat !important;
+        background-position: center;
+        background-size: 100% !important;
+      }
+    </style>
 </head>
 <body class="hold-transition register-page">
 <div class="register-box" id="register_page" style="width:700px;">
-  <div class="register-logo">
-    <img src="<?=base_url('assets/img/bravehearts_logo.jpg')?>" width="10%">
-    <a href="#"><b>Bravehearts Martial Arts Institute</b></a>
-  </div>
-
   <div class="card">
+    <div class="card-header register-logo">
+      <img src="<?=base_url('assets/img/bravehearts_logo.jpg')?>" width="10%">
+      <a href="#"><b>Bravehearts Martial Arts Institute</b></a>
+    </div>
     <div class="card-body register-card-body">
       <p class="login-box-msg">User Registration</p>
 
