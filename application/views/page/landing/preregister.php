@@ -50,13 +50,13 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"> <span style="color:red;">*</span> <i class="fas fa-user-check"></i></span>
                 </div>
-                <input type="text" class="form-control" placeholder="Last Name"  requiredv-model="preRegistration_Data.lastname">
+                <input type="text" class="form-control" placeholder="Last Name"  required v-model="preRegistration_Data.lastname">
               </div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"> <span style="color:red;">*</span> <i class="fas fa-user-check"></i></span>
                 </div>
-                <input type="text" class="form-control" placeholder="First Name"  requiredv-model="preRegistration_Data.firstname">
+                <input type="text" class="form-control" placeholder="First Name"  required v-model="preRegistration_Data.firstname">
               </div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
@@ -68,7 +68,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"> <span style="color:red;">*</span> <i class="fas fa-birthday-cake"></i></span>
                 </div>
-                <input type="date" class="form-control" placeholder="Birthdate" max="<?=date("Y-m-d")?>"  requiredv-model="preRegistration_Data.birthdate">
+                <input type="date" class="form-control" placeholder="Birthdate" max="<?=date("Y-m-d")?>"  required v-model="preRegistration_Data.birthdate">
               </div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
@@ -102,14 +102,14 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"> <span style="color:red;">*</span> <i class="fas fa fa-dumbbell"></i></span>
                 </div>
-                <select class="form-control" v-model="preRegistration_Data.branch_id">
+                <select class="form-control" v-model="preRegistration_Data.branch_id" required>
                   <option value=0 disabled selected>Select Branch</option>
                   <template v-for="(list,index) in brancheslist">
                     <option :value="list.branch_id">{{list.branch_name}}</option>
                   </template>
                 </select>
               </div>
-              <button type="button" class="btn btn-primary">Register</button>
+              <button type="button" class="btn btn-primary" @click="savePreRegistration()">Register</button>
             </div>
           </div>
         </div>

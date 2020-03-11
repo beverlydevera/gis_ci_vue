@@ -61,4 +61,37 @@ class Landing extends CI_Controller {
         }
         response_json($response);
     }
+
+    public function savePreRegistration()
+    {
+        $data = $this->input->post();
+        if(!empty($data)){
+            
+            $insertquery = $this->Main->insert("tbl_walkins",$data);
+
+            if(!empty($insertquery)){
+                $response = array(
+                    "success"   => true,
+                    "type"      => "success",
+                    "title"     => "Registered Successfully.",
+                    "message"   => "You will be notified once the staff have seen your registration. Thank you."
+                );
+            }else{
+                $response = array(
+                    "success"   => false,
+                    "type"      => "error",
+                    "title"     => "Oops! Something went wrong",
+                    "message"   => "Kindly contact the branch you wish to register to Thank you."
+                );
+            }
+        }else{
+            $response = array(
+                "success"   => false,
+                "type"      => "warning",
+                "title"     => "Registration Unsuccessful",
+                "message"   => "Please fill out the required details."
+            );
+        }
+        response_json($response);
+    }
 }
