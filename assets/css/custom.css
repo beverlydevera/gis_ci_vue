@@ -55,6 +55,7 @@ hr {
 
 .notification-menu {
     min-width: 300px !important;
+    background-color: lightgrey;
 }
 
 .billing-desc{

@@ -301,15 +301,29 @@ if ($('#header_nav').length) {
 				var urls = window.App.baseUrl + "Notifications/getNewRegistrations";
 				axios.post(urls, datas)
 					.then(function (e) {
-						e.data.data.preregisteredlist.forEach((el,index) => {
-							e.data.data.preregisteredlist[index].timeinterval = computeTimeInterval(el.date_added);
-                        });
+
 						if(systemconfigs.preregisteredlist==""){
 							systemconfigs.preregisteredlist = e.data.data.preregisteredlist;
+							systemconfigs.preregisteredlist.forEach((el,index) => {
+								systemconfigs.preregisteredlist[index].timeinterval = computeTimeInterval(el.date_added);
+							});
+							// toastr.success('New Pre-Pregistrations in Website');
 						}else{
-							//push if not existing in current list
-							//notif at upper right
-							toastr.success('New Pre-Pregistration in Website (Name: ABC, qwe)')
+							systemconfigs.preregisteredlist.forEach((el,index) => {
+								systemconfigs.preregisteredlist[index].timeinterval = computeTimeInterval(el.date_added);
+	
+								if(systemconfigs.preregisteredlist!=null){
+									if(systemconfigs.preregisteredlist.length!=e.data.data.preregisteredlist.length){
+										
+										systemconfigs.preregisteredlist.filter(function(elem){
+											if(elem.walkin_id == el.walkin_id){
+												toastr.success('New Pre-Pregistration in Website (Name: '+el.lastname+', '+el.firstname+')');
+												systemconfigs.preregisteredlist.push(el);
+											}
+										});
+									}
+								}
+							});
 						}
 					})
 					.catch(function (error) {
@@ -320,7 +334,7 @@ if ($('#header_nav').length) {
 			this.getProfileData();
 			this.getNewRegistrations();
 		}, created() {
-			this.interval = setInterval(() => this.getNewRegistrations(), 30000);
+			this.interval = setInterval(() => this.getNewRegistrations(), 15000);
 		},
 	});
 }
