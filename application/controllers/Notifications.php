@@ -13,9 +13,22 @@ class Notifications extends CI_Controller {
 
     public function getNewRegistrations()
     {
-        $join = $condition = $pager = $orderby = [];
+        $condition = $pager = $orderby = [];
         $groupby = $type = $data = "";
         $data = jsondata();
+        $join = [
+            "table"     => "tbl_notifications n",
+            "key"       => "JSON_EXTRACT(n.details, '$.walkin_id') = w.walkin_id",
+            "jointype"  => "inner"
+        ];
+        $condition = [
+            "n.status"   => 1,
+            "walkintype" => "website"
+        ];
+        $orderby = [
+            "column" => "walkin_id",
+            "order" => "DESC"
+        ];
 
         if(!empty($data)){
             if(!empty($data['join'])){ $join = $data['join']; }
@@ -45,6 +58,24 @@ class Notifications extends CI_Controller {
             "success"   => $success,
             "type"      => $type,
             "data"      => $data
+        );
+        response_json($response);
+    }
+
+    public function changeWalkinNotifStatus()
+    {
+        $data = jsondata();
+
+        if(!empty($data)){
+            $notification_id = $data['notification_id'];
+            $updatequery = $this->Main->update("tbl_notifications", ["notification_id"=>$notification_id],["status"=>2],"");
+            $success = true;
+        }else{
+            $success = false;
+        }
+
+        $response = array(
+            "success"   => $success
         );
         response_json($response);
     }

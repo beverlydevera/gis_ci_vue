@@ -82,7 +82,17 @@
                             <th>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <input type="text" v-model="newWalkinInfo.branchname" class="form-control smallerinput" readonly>
+                                        <input type="hidden" id="branch_id" value="<?=sesdata('branch_id')?>" disabled>
+                                        <?php if(sesdata('role')==2){ ?>
+                                            <select class="form-control select2 smallerinput" v-model="newWalkinInfo.branch_id" required disabled>
+                                        <?php }else{ ?>
+                                            <select class="form-control select2 smallerinput" v-model="newWalkinInfo.branch_id" required>
+                                        <?php } ?>
+                                                <option value=0 disabled selected>Select Branch</option>
+                                                <template v-for="(list,index) in brancheslist">
+                                                    <option :value="list.branch_id">{{list.branch_name}}</option>
+                                                </template>
+                                            </select>
                                     </div>
                                     <div class="col-md-6">
                                         <input type="text" v-model="newWalkinInfo.walkintype" class="form-control smallerinput" readonly>
@@ -182,7 +192,16 @@
                             <th>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <input type="text" v-model="walkindetails.branch_name" class="form-control smallerinput" readonly>
+                                        <?php if(sesdata('role')==2){ ?>
+                                        <select class="form-control select2 smallerinput" v-model="walkindetails.branch_id" required disabled>
+                                        <?php }else{ ?>
+                                        <select class="form-control select2 smallerinput" v-model="walkindetails.branch_id" required>
+                                        <?php } ?>
+                                            <option value=0 disabled selected>Select Branch</option>
+                                            <template v-for="(list,index) in brancheslist">
+                                                <option :value="list.branch_id">{{list.branch_name}}</option>
+                                            </template>
+                                        </select>
                                     </div>
                                     <div class="col-md-6">
                                         <input type="text" v-model="walkindetails.walkintype" class="form-control smallerinput" readonly>

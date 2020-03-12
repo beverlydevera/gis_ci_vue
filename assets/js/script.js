@@ -287,54 +287,62 @@ if ($('#header_nav').length) {
 				});
 			},
 			getNewRegistrations(){
-				var datas = {
-					join: { 
-						table: "tbl_notifications n",
-						key: "JSON_EXTRACT(n.details, '$.walkin_id') = w.walkin_id",
-						jointype: "inner"
-					},
-					condition: { 
-						"n.status": 1,
-						walkintype: "website"
-					}
-				};
 				var urls = window.App.baseUrl + "Notifications/getNewRegistrations";
-				axios.post(urls, datas)
+				axios.post(urls, "")
 					.then(function (e) {
 
-						if(systemconfigs.preregisteredlist==""){
-							systemconfigs.preregisteredlist = e.data.data.preregisteredlist;
-							systemconfigs.preregisteredlist.forEach((el,index) => {
-								systemconfigs.preregisteredlist[index].timeinterval = computeTimeInterval(el.date_added);
-							});
-							// toastr.success('New Pre-Pregistrations in Website');
-						}else{
-							systemconfigs.preregisteredlist.forEach((el,index) => {
-								systemconfigs.preregisteredlist[index].timeinterval = computeTimeInterval(el.date_added);
-	
-								if(systemconfigs.preregisteredlist!=null){
-									if(systemconfigs.preregisteredlist.length!=e.data.data.preregisteredlist.length){
-										
-										systemconfigs.preregisteredlist.filter(function(elem){
-											if(elem.walkin_id == el.walkin_id){
-												toastr.success('New Pre-Pregistration in Website (Name: '+el.lastname+', '+el.firstname+')');
-												systemconfigs.preregisteredlist.push(el);
-											}
-										});
+						if(e.data.data!=""){
+							if(systemconfigs.preregisteredlist.length==0){
+								systemconfigs.preregisteredlist = e.data.data.preregisteredlist;
+								systemconfigs.preregisteredlist.forEach((el,index) => {
+									systemconfigs.preregisteredlist[index].timeinterval = computeTimeInterval(el.date_added);
+								});
+							}else{
+								e.data.data.preregisteredlist.forEach((el,index) => {
+									e.data.data.preregisteredlist[index].timeinterval = computeTimeInterval(el.date_added);
+		
+									if(systemconfigs.preregisteredlist!=null){
+										if(systemconfigs.preregisteredlist.length!=e.data.data.preregisteredlist.length){	
+
+											systemconfigs.preregisteredlist.filter(elem => {
+												if(elem.walkin_id == el.walkin_id){
+													e.data.data.preregisteredlist.splice(index, 1);
+												}
+											});
+
+											toastr.success('New Pre-Pregistration in Website (Name: '+el.lastname+', '+el.firstname+')');
+											systemconfigs.preregisteredlist.unshift(el);
+										}
 									}
-								}
-							});
+								});
+							}
 						}
 					})
 					.catch(function (error) {
 						console.log(error)
 					});
 			},
+			setStatusRead(index,action){
+					var notification_id = this.preregisteredlist[index].notification_id;
+					var datas = { notification_id: notification_id };
+					var urls = window.App.baseUrl + "Notifications/changeWalkinNotifStatus";
+					axios.post(urls, datas)
+						.then(function (e) {
+							systemconfigs.preregisteredlist.splice(index, 1);
+							if(action=='view'){
+								var urls = window.App.baseUrl + "Walkin";
+								window.open(urls, "_self");
+							}
+						})
+						.catch(function (error) {
+							console.log(error)
+						});
+			}
 		}, mounted: function () {
 			this.getProfileData();
 			this.getNewRegistrations();
 		}, created() {
-			this.interval = setInterval(() => this.getNewRegistrations(), 15000);
+			this.interval = setInterval(() => this.getNewRegistrations(), 10000);
 		},
 	});
 }

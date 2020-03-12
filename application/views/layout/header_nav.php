@@ -78,20 +78,28 @@
         <span class="badge badge-warning navbar-badge">{{preregisteredlist.length}}</span>
     </a>
     <div class="dropdown-menu dropdown-menu-lg notification-menu dropdown-menu-right">
+        <div v-if="preregisteredlist==''" class="dropdown-item">
+            No existing notifications.
+            <div class="dropdown-divider"></div>
+        </div>
         <template v-for="(list,index) in preregisteredlist">
             <a href="#" class="dropdown-item">
                 <div class="media">
                     <img src="<?=base_url('assets/img/bravehearts_logo.jpg')?>" alt="User Avatar" class="img-size-50 img-circle mr-3">
                     <div class="media-body">
-                    <h3 class="dropdown-item-title"> NEW PRE-REGISTRATION </h3>
-                    <p class="text-sm">Name: {{list.lastname}}, {{list.firstname}}</p>
-                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>{{list.timeinterval}}</p>
+                        <h3 class="dropdown-item-title"> NEW PRE-REGISTRATION </h3>
+                        <p class="text-sm">Name: {{list.lastname}}, {{list.firstname}}</p>
+                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>{{list.timeinterval}}</p>
+                        <p class="text-sm text-muted">
+                            <span @click="setStatusRead(index,'view')" class="btn btn-xxs btn-info">View</span>
+                            <span @click="setStatusRead(index,'setRead')" class="btn btn-xxs btn-info">Mark as Read</span>
+                        </p>
                     </div>
                 </div>
             </a>
             <div class="dropdown-divider"></div>
         </template>
-        <a href="#" class="dropdown-item dropdown-footer">See All Walk-in/Pre-Registrations</a>
+        <a href="<?=base_url()?>walkin" class="dropdown-item dropdown-footer">See All Walk-in/Pre-Registrations</a>
     </div>
     </li>
     <!-- End of PreRegistered Menu -->

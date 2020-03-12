@@ -14,14 +14,24 @@ var walkin = new Vue({
             homeaddress: "",
             contactno: "",
             emailaddress: "",
-            branch_id: 1,
-            branchname: "Abanao",
+            branch_id: $('#branch_id').val(),
             walkintype: "Walk-in",
             status: 1
         },
-        walkindetails: {}
+        walkindetails: {},
+        brancheslist: []
     },
     methods: {
+        getBranchesList(){
+            var urls = window.App.baseUrl + "Libraries/getBranches";
+            axios.post(urls, "")
+                .then(function (e) {
+                    walkin.brancheslist=e.data.data.brancheslist;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
         calculate_age() {
             var dob = this.newWalkinInfo.birthdate;
             var dob = dob.split("-");
@@ -55,8 +65,7 @@ var walkin = new Vue({
                             homeaddress: "",
                             contactno: "",
                             emailaddress: "",
-                            branch_id: 1,
-                            branchname: "Abanao",
+                            branch_id: $('#branch_id').val(),
                             walkintype: "Walk-in",
                             status: 1
                         }
@@ -132,8 +141,9 @@ var walkin = new Vue({
                 .catch(function (error) {
                     console.log(error)
                 });
-        }
+        },
     }, mounted: function () {
         this.getWalkins();
+        this.getBranchesList();
     },
 })
