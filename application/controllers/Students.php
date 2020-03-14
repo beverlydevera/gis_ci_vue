@@ -425,6 +425,49 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
+    public function saveStudentAvailedPackage()
+    {
+        $data = jsondata();
+        $totalamount = 0;
+
+        if(!empty($data)){
+            $student_id = $data["student_id"];
+            $studentpackages = $data["studentpackages"];
+
+            $insert_studinvoice = $this->Main->insert("tbl_studentinvoice", ["student_id" => $student_id, "status"=>"unpaid", "amount"=>0], true);
+            $invoice_id = $insert_studinvoice['lastid'];
+            $invoice_number = "INV".date("Y")."-".str_pad($invoice_id, 4, '0', STR_PAD_LEFT);
+
+            foreach($studentpackages as $spkey => $spval){
+                $studentpackages[$spkey]['invoice_id'] = $invoice_id;
+                $studentpackages[$spkey]['details'] = json_encode($spval['details']);
+                unset($studentpackages[$spkey]['package_type']);
+                unset($studentpackages[$spkey]['price_rate']);
+                $totalamount += $spval['price_rate'];
+            }
+            
+            $this->Main->update("tbl_studentinvoice",['invoice_id'=>$invoice_id],['invoice_number'=>$invoice_number,'amount'=>$totalamount]);
+            $insert_studpackages = $this->Main->insertbatch("tbl_studentpackages", $studentpackages);
+
+            $response = array(
+                "success"   => true,
+                "message"   => "Student Packages were saved successfully.\nContinue to billing.",
+                "type"      => "success",
+                "data"      => [
+                    "result" => $insert_studpackages
+                ],
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "message"   => "Insurance and Packages were not saved.",
+                "type"      => "warning",
+                "data"      => "",
+            );
+        }
+        response_json($response);
+    }
+
     //third tab
     public function saveStudentCompetition()
     {

@@ -172,9 +172,11 @@ class Invoice extends CI_Controller {
         $data['invoicedetails'] = $this->Main->getDataOneJoin("lastname,firstname,middlename,reference_id,invoice_number,amount,,si.status as invstatus,si.date_added as sidate_added","tbl_studentinvoice si",$join,$condition,"",$orderby,$groupby,"row");
 
         $data['studentmembership'] = $this->Main->getDataOneJoin("*","tbl_studentmembership sm","",$condition,"","","","row");
-        $data['studentmembership']->insurance = json_decode($data['studentmembership']->insurance);
-        $data['studentmembership']->insurance_avail = $data['studentmembership']->insurance->avail;
-        $data['studentmembership']->insurance_price = $data['studentmembership']->insurance->price;
+        if(!empty($data['studentmembership'])){
+            $data['studentmembership']->insurance = json_decode($data['studentmembership']->insurance);
+            $data['studentmembership']->insurance_avail = $data['studentmembership']->insurance->avail;
+            $data['studentmembership']->insurance_price = $data['studentmembership']->insurance->price;
+        }
 
         $join = [
             "table" => "tbl_packages p",

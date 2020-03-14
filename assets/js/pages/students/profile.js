@@ -731,7 +731,10 @@ var profile = new Vue({
                     "package_id": this.packagelist[packageindex].package_id,
                     "package_type": this.packagelist[packageindex].packagetype,
                     "price_rate": this.packagelist[packageindex].pricerate,
-                    "details": this.packagelist[packageindex].packagedetails
+                    "details": {
+                        "detail": this.packagelist[packageindex].packagedetails,
+                        "sessions_attended": 0
+                    }
                 };
             }
             
@@ -742,6 +745,55 @@ var profile = new Vue({
             }else{
                 this.selectedPackages = selected;
             }
+        },
+        saveSelectedPackages(){
+            Swal.fire({
+                title: "Are you sure you want to save selected packages and proceed to billing?",
+                text: "You won't be able to undo this.",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, save and proceed',
+                }).then((result) => {
+                    if (result.value) {
+                        var datas = { 
+                            studentpackages: this.selectedPackages,
+                            student_id: this.student_id
+                        };
+                        var urls = window.App.baseUrl + "Students/saveStudentAvailedPackage";
+                        showloading();
+                        axios.post(urls, datas)
+                            .then(function (e) {
+                                Swal.close();
+                                Toast.fire({
+                                    type: e.data.type,
+                                    title: e.data.message
+                                })
+                                if(e.data.success){
+                                    profile.getStudentPackages();
+                                    profile.getInvoiceList();
+                                    profile.packagelist = [];
+                                    profile.packages_selects.packagetype = "";
+                                    profile.disabled_packages = true;
+                                    
+                                    $('#packagetype_regular').css({'display': 'none',});
+                                    $('#regular_schedules').css({'display': 'none',});
+                                    $('#packagetype_unlimited').css({'display': 'none',});
+                                    $('#packagetype_summerpromo').css({'display': 'none',});
+                                    $('#savenewstudentpackages').css({'display': 'none',});
+
+                                    $('.active').removeClass('active');
+                                    $('#balancepayments-tab').addClass('active');
+                                    $('#balancepayments').addClass('active show');
+                                    $('#availNewPackage').modal('hide');
+                                }
+                            })
+                            .catch(function (error) {
+                                console.log(error)
+                            }); 
+                    }
+            })
         },
         //third tab
         addCompetitionImageSelect(event){

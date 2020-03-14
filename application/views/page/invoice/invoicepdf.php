@@ -169,7 +169,7 @@ th {
 
                         Details:
                             <?php
-                                foreach($spv->details as $spdk => $spdv){
+                                foreach($spv->details->detail as $spdk => $spdv){
                                     if($spdv->type=='input'){
                                         if($spdk>0){ echo ", "; }
                                         echo $spdv->particular;
