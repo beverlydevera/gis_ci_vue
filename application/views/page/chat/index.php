@@ -68,7 +68,7 @@
 								<div v-if="list.from_user_id==user_id" class="d-flex justify-content-end mb-4">
 									<div class="msg_cotainer_send">
 										{{list.message_text}}
-										<span class="msg_time_send">8:55 AM, Today</span>
+										<span class="msg_time_send">{{list.proper_datetime}}</span>
 									</div>
 									<div class="img_cont_msg">
 										<img v-bind:src="'data:image/jpeg;base64,'+from_userdata.photo" class="rounded-circle user_img_msg">
@@ -81,16 +81,16 @@
 									</div>
 									<div class="msg_cotainer">
 										{{list.message_text}}
-										<span class="msg_time">8:40 AM, Today</span>
+										<span class="msg_time">{{list.proper_datetime}}</span>
 									</div>
 								</div>
 							</template>
 						</div>
 						<div id="chat_footer" class="card-footer" style="display:none;">
 							<div class="input-group">
-								<textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+								<textarea name="" class="form-control type_msg" placeholder="Type your message..." v-model="newMessage.message_text"></textarea>
 								<div class="input-group-append">
-									<span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
+									<span @click="sendNewMessage()" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
 								</div>
 							</div>
 						</div>

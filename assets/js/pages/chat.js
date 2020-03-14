@@ -1,3 +1,4 @@
+var monthlist = [ "", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 var chat = new Vue({
     el: '#chat_page',
     data: {
@@ -9,10 +10,49 @@ var chat = new Vue({
             photo: ""
         },
         to_userdata: {
-            photo: ""
+            photo: "",
+            user_id: 1
+        },
+        newMessage: {
+            "message_text": "",
+            "date_added": currentdate + " " + currenttime
         }
     },
     methods: {
+        format_datetime(date_added){
+            var time = "AM";
+            var todate = "";
+            var d = new Date(date_added),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            var hr = d.getHours();
+            var min = d.getMinutes();
+            var sec = d.getSeconds();
+
+            hr = hr < 10 ? "0" + hr : hr;
+            min = min < 10 ? "0" + min : min;
+            sec = sec < 10 ? "0" + sec : sec;
+
+            month1 = month;
+            month = month.length < 2 ? "0" + month : month;
+            day = day.length < 2 ? "0" + day : day;
+
+            time = hr < 12 ? 'AM' : 'PM';
+            hr = hr % 12 || 12
+
+            if(currentdate==[year, month, day].join('-')){
+                todate = "Today";
+            }else{
+                month = monthlist[month1];
+                todate = month + " " + day + ", " + year;
+            }
+
+            // var returndateformat = month + " " + day + ", " + year + " | " + hr + ":" + min + ":" + sec + " " + time;
+            var returndatetimeformat = hr + ":" + min + " " + time + ", " + todate;
+            return returndatetimeformat;
+        },
         getUsersList(){
             var datas = {
                 select: "user_id,username,lastname,firstname,middlename,contactno,emailadd,role,branch_name,photo",
@@ -34,6 +74,7 @@ var chat = new Vue({
             axios.post(urls, datas)
                 .then(function (e) {
                     chat.userlist = e.data.data;
+                    chat.to_userdata.user_id = chat.userlist[0].user_id
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -76,10 +117,45 @@ var chat = new Vue({
                 .then(function (e) {
                     chat.to_userdata = e.data.data.to_userdata;
                     chat.chatmessages = e.data.data.chatmessages;
+                    if(chat.chatmessages!=null){
+                        chat.chatmessages.forEach((el,index) => {
+                            chat.chatmessages[index].proper_datetime = chat.format_datetime(el.date_added);
+                        })
+                    }
                     chat.chatmessagescount = e.data.data.chatmessagescount;
                     $('#chat_header').css({'display': '',});
                     $('#chat_body').css({'display': '',});
                     $('#chat_footer').css({'display': '',});
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        sendNewMessage(){
+            this.newMessage.to_user_id = this.to_userdata.user_id;
+            this.newMessage.from_user_id = this.user_id;
+            this.newMessage.proper_datetime = this.format_datetime(this.newMessage.date_added);
+
+            // if(chat.chatmessages!=null){ chat.chatmessages.push(chat.newMessage); }
+            // else{ chat.chatmessages = [chat.newMessage]; }
+            var urls = window.App.baseUrl + "Chat/sendNewMessage";
+            axios.post(urls, this.newMessage)
+                .then(function (e) {
+                    if(e.data.success){
+                        chat.newMessage.message_id = e.data.data.message_id;
+                        chat.newMessage.date_added = e.data.data.date_added;
+                        chat.newMessage.proper_datetime = chat.format_datetime(e.data.data.date_added);
+                        if(chat.chatmessages!=null){ chat.chatmessages.push(chat.newMessage); }
+                        else{ chat.chatmessages = [chat.newMessage]; }
+
+                        chat.newMessage = { 
+                            "message_text": "",
+                            "date_added": e.data.data.date_added
+                        }
+                        chat.chatmessagescount = parseInt(chat.chatmessagescount) + 1;
+                    }else{
+                        alert(e.data.message);
+                    }
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -89,8 +165,6 @@ var chat = new Vue({
         this.getUsersList();
         this.getUserData();
     }, created() {
-        if(this.to_userdata!=null){
-            this.interval = setInterval(() => this.getChatMessages(this.to_userdata.user_id), 5000);
-        }
+        this.interval = setInterval(() => this.getChatMessages(this.to_userdata.user_id), 5000);
     },
 })
