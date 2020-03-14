@@ -15,7 +15,7 @@ class Schedules extends CI_Controller {
         $data['title'] = "Schedules";
         $data['vueid'] = "schedules_page";
         $data['vfile'] = "page/schedules/index";
-        $data['js'] = array('pages/schedules/schedules.js');
+        // $data['js'] = array('pages/schedules/schedules.js');
         $this->load->view('layout/main', $data);
     }
 
