@@ -115,9 +115,9 @@
                             </tr>
                             <tr>
                                 <td class="stroke-text">2:00 - 2:30</td>
-                                <td rowspan="3" class="fill-yellow"><a href="class_schedule.php"><span class="stroke-text">White Belts All Ages</span></a></td>
-                                <td rowspan="3" class="fill-yellow"><a href="class_schedule.php"><span class="stroke-text">White Belts All Ages</span></a></td>
-                                <td rowspan="3" class="fill-yellow"><a href="class_schedule.php"><span class="stroke-text">White Belts All Ages</span></a></td>
+                                <td rowspan="3" class="fill-yellow"><a href="<?=base_url('classes/classSchedInfo/132')?>"><span class="stroke-text">White Belts All Ages</span></a></td>
+                                <td rowspan="3" class="fill-yellow"><a href="<?=base_url('classes/classSchedInfo/133')?>"><span class="stroke-text">White Belts All Ages</span></a></td>
+                                <td rowspan="3" class="fill-yellow"><a href="<?=base_url('classes/classSchedInfo/134')?>"><span class="stroke-text">White Belts All Ages</span></a></td>
                             </tr>
                             <tr> 
                                 <td class="stroke-text">2:30 - 3:00</td>
@@ -126,19 +126,19 @@
                             <tr> <td class="stroke-text">3:00 - 3:30</td></tr>
                             <tr>
                                 <td><span class="stroke-text">3:30 - 4:00</span></td>
-                                <td rowspan="3" class="fill-semi-orange"><a href="class_schedule.php"><span class="stroke-text">All Levels Regular Class</span></a></td>
-                                <td rowspan="3" class="fill-semi-orange"><a href="class_schedule.php"><span class="stroke-text">All Levels Regular Class</span></a></td>
-                                <td rowspan="3" class="fill-semi-orange"><a href="class_schedule.php"><span class="stroke-text">All Levels Regular Class</span></a></td>
+                                <td rowspan="3" class="fill-semi-orange"><a href="<?=base_url('classes/classSchedInfo/135')?>"><span class="stroke-text">All Levels Regular Class</span></a></td>
+                                <td rowspan="3" class="fill-semi-orange"><a href="<?=base_url('classes/classSchedInfo/136')?>"><span class="stroke-text">All Levels Regular Class</span></a></td>
+                                <td rowspan="3" class="fill-semi-orange"><a href="<?=base_url('classes/classSchedInfo/137')?>"><span class="stroke-text">All Levels Regular Class</span></a></td>
                             
                             </tr>
                             <tr> <td class="stroke-text">4:00 - 4:30</td></tr>
                             <tr> <td class="stroke-text">4:30 - 5:00</td></tr>
                             <tr>
                                 <td class="stroke-text">5:00 - 5:30</td>
-                                <td rowspan="3" class="fill-dark-orange"><a href="class_schedule.php"><span class="stroke-text">All Levels Regular Class</span></a></td>
+                                <td rowspan="3" class="fill-dark-orange"><a href="<?=base_url('classes/classSchedInfo/138')?>"><span class="stroke-text">All Levels Regular Class</span></a></td>
                              
-                                <td rowspan="3" class="fill-red"><a href="class_schedule.php"><span class="stroke-text">All Levels Sparring Class</span></a></td>
-                                <td rowspan="3" class="fill-red"><a href="class_schedule.php"><span class="stroke-text">All Levels Sparring Class</span></a></td>
+                                <td rowspan="3" class="fill-red"><a href="<?=base_url('classes/classSchedInfo/139')?>"><span class="stroke-text">All Levels Sparring Class</span></a></td>
+                                <td rowspan="3" class="fill-red"><a href="<?=base_url('classes/classSchedInfo/140')?>"><span class="stroke-text">All Levels Sparring Class</span></a></td>
                             
                             </tr>
                             <tr> <td class="stroke-text">5:30 - 6:00</td></tr>
