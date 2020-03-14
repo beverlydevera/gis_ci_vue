@@ -167,7 +167,8 @@ var classsched = new Vue({
                         sessions_attended: 0
                     }
                 };
-                this.classstudents.push(studentsdata);
+                if(this.classstudents!=null){ this.classstudents.push(studentsdata); }
+                else{ this.classstudents = [studentsdata]; }
 
                 var attendancedata = {
                     studpack_id: this.addStudent.searchstudentslist[index].studpack_id,
@@ -175,7 +176,9 @@ var classsched = new Vue({
                     status: true,
                     remove: true
                 };
-                this.newClassAttendance.attendance.push(attendancedata);
+                if(this.newClassAttendance!=null){ this.newClassAttendance.attendance.push(attendancedata); }
+                else{ this.newClassAttendance = [attendancedata]; }
+                
                 this.addStudent.searchstudentslist.splice(index, 1);
 
             }else if(action=='edit'){
@@ -192,7 +195,8 @@ var classsched = new Vue({
                         sessions_attended: 0
                     }
                 };
-                this.classattendancestudents.push(studentsdata);
+                if(this.classstudents!=null){ this.classstudents.push(studentsdata); }
+                else{ this.classstudents=studentsdata; }
 
                 var attendancedata = {
                     studpack_id: this.addStudent.searchstudentslist[index].studpack_id,
@@ -200,7 +204,9 @@ var classsched = new Vue({
                     status: true,
                     remove: true
                 };
-                this.classattendanceinfo.attendance.push(attendancedata);
+                if(this.newClassAttendance!=null){ this.newClassAttendance.attendance.push(attendancedata); }
+                else{ this.newClassAttendance=attendancedata; }
+
                 this.addStudent.searchstudentslist.splice(index, 1);
 
             }

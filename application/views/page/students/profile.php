@@ -73,12 +73,12 @@
                                 Promotion
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" href="#gallery" data-toggle="tab">
                                 <i class="far fa-images"></i>
                                 Gallery
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a class="nav-link" href="#balancepayments" data-toggle="tab">
                                 <i class="far fa-credit-card"></i>
@@ -102,9 +102,9 @@
                             <div class="tab-pane" id="promotion">
                                 <?php include('profile/profile_promotion.php');?>
                             </div>
-                            <div class="tab-pane" id="gallery">
-                                <?php include('profile/profile_gallery.php');?>
-                            </div>
+                            <!-- <div class="tab-pane" id="gallery">
+                                <?php //include('profile/profile_gallery.php'); ?>
+                            </div> -->
                             <div class="tab-pane" id="balancepayments">
                                 <?php include('profile/profile_balpay.php');?>
                             </div>

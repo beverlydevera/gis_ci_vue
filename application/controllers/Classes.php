@@ -92,6 +92,7 @@ class Classes extends CI_Controller {
             if(!empty($data['type'])){ $type = $data['type']; }
         }
         
+        if(sesdata('branch_id')>0) $condition['s.branch_id'] = sesdata('branch_id');
         $classschedlist = $this->classes->getClassSchedList($select,$condition,$pager,$orderby,$groupby,$type);
 
         if(!empty($classschedlist)){
