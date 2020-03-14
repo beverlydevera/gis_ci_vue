@@ -56,7 +56,7 @@
                                 <td>{{index+1}}</td>
                                 <td>{{list.class_title}}</td>
                                 <td>{{list.branch_name}}</td>
-                                <td>{{list.sched_day}}/{{list.sched_time}}</td>
+                                <td>{{list.sched_day}} / {{list.sched_time}}</td>
                                 <td>000</td>
                                 <td>
                                     <span v-if="list.status" class="badge bg-success">Active</span>

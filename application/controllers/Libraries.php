@@ -162,4 +162,33 @@ class Libraries extends CI_Controller {
         response_json($response);
     }
 
+    public function getClassesList()
+    {
+        $type = $groupby = "";
+        $orderby = [];
+
+        $condition = jsondata();
+        if(!empty($condition['class_id'])){ $type="row"; }
+        $orderby = [
+            'column' => "class_title",
+            'order' => "ASC",
+        ];
+        $classeslist = $this->Main->getDataOneJoin("*","tbl_classes","",$condition,"",$orderby,$groupby,$type);
+        
+        if(!empty($classeslist)){
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    "classeslist" => $classeslist
+                ]
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
 }

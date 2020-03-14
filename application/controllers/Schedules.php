@@ -8,15 +8,74 @@ class Schedules extends CI_Controller {
         parent::__construct();
         $this->load->model("Main");
         checkLogin();
-	}
-	
+    }
+    
 	public function index()
 	{
         $data['title'] = "Schedules";
-        $data['vueid'] = "schedules";
+        $data['vueid'] = "schedules_page";
         $data['vfile'] = "page/schedules/index";
-        // $data['js'] = array('pages/users.js');
+        $data['js'] = array('pages/schedules/schedules.js');
         $this->load->view('layout/main', $data);
+    }
+
+    public function addSchedules()
+	{
+        $data['title'] = "Add Schedules";
+        $data['vueid'] = "scheduleadd_page";
+        $data['vfile'] = "page/schedules/scheduleadd";
+        $data['js'] = array('pages/schedules/scheduleadd.js');
+        $this->load->view('layout/main', $data);
+    }
+
+    public function saveSchedule()
+    {
+        $data = jsondata();
+
+        if(!empty($data)){
+            $data['date_added'] = date("Y-m-d H:i:s");
+            $insertquery = $this->Main->insert("tbl_schedules",$data,true);
+
+            if(!empty($insertquery)){
+                $success = true;
+                $type = "success";
+                $message = "Schedule was added successfully.";
+            }
+        }else{
+            $success = false;
+            $type = "warning";
+            $message = "Schedule was not added";
+        }
+
+        $response = array(
+            'success'   => $success,
+            'type'      => $type,
+            'message'   => $message,
+        );
+        response_json($response);
+    }
+
+    public function getScheduleTable()
+    {
+        $condition = [
+            "branch_id" => jsondata()['branch_id']
+        ];
+        $schedlist = $this->Main->getDataOneJoin("*","tbl_scheduletable",$join=array(),$condition,$pager=array(),$orderby=array(),$groupby="",$type="");
+        
+        if(!empty($schedlist)){
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    "schedlist" => $schedlist
+                ]
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
     }
 
     public function albergo()
