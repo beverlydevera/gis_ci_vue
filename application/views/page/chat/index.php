@@ -22,7 +22,10 @@
 				<div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
 					<div class="card-header">
 						<div class="input-group">
-							<input type="text" placeholder="Search..." name="" class="form-control search">
+							<div class="input-group-append">
+								<span class="input-group-text attach_btn"><a href="<?=base_url("dashboard")?>"><i class="fas fa-arrow-left"></i></a></span>
+							</div>
+							<input type="text" placeholder="Search..." name="" class="form-control search formcontrolsearch">
 							<div class="input-group-prepend">
 								<span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
 							</div>

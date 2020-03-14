@@ -66,7 +66,7 @@
         <p>Invoice Statements</p>
       </a>
     </li>
-    <li class="nav-item has-treeview menu-open">
+    <li class="nav-item has-treeview menu-close">
       <a href="#" class="nav-link" v-bind:class="checkactive('libraries')">
         <i class="nav-icon fas fa-book"></i>
         <p>
@@ -87,18 +87,6 @@
             <p>Inventory</p>
           </a>
         </li>
-        <!-- <li class="nav-item">
-          <a href="<?= base_url('libraries/branches') ?>" class="nav-link">
-            <i class="nav-icon fas fa-dumbbell nav-icon"></i>
-            <p>Branches</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="<?= base_url('libraries/classes') ?>" class="nav-link">
-            <i class="nav-icon fas fa-chalkboard-teacher nav-icon"></i>
-            <p>Classes</p>
-          </a>
-        </li> -->
       </ul>
     </li>
     <li class="nav-item has-treeview menu-close">
@@ -123,6 +111,12 @@
           </a>
         </li>
       </ul>
+    </li>
+    <li class="nav-item">
+      <a href="<?= base_url('bravehearts-chat') ?>" class="nav-link">
+        <i class="nav-icon fas fa-comments"></i>
+        <p>Messaging / Chat</p>
+      </a>
     </li>
   </ul>
 </nav>
