@@ -40,6 +40,21 @@ var profile = new Vue({
         //second tab
         studentpackages: [],
         studentattendance: [],
+        packages_selects: {
+            packagetype: ""
+        },
+        packagelist: [],
+        packagedetails: {
+            package_id: "",
+            package_data: []
+        },
+        disabled_showbtn: false,
+        disabled_hidebtn: true,
+        scheduleslist: {
+            package_id: "",
+            data: []
+        },        
+        selectedPackages: [],
         //third tab
         newstudentCompetition: {
             comp_awards: [{
@@ -522,6 +537,211 @@ var profile = new Vue({
                 .catch(function (error) {
                     console.log(error)
                 });
+        },
+        changePackageType() {
+            this.disabled_showbtn=false,
+            this.disabled_hidebtn=true,
+            this.packagelist=[];
+            var packagetype = this.packages_selects.packagetype;
+            var datas={ 
+                packagetype: packagetype
+            };
+            var urls = window.App.baseUrl + "Libraries/getPackageList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    if(packagetype=="Regular"){
+
+                        e.data.data.packagelist.forEach((e,index) => {
+                            profile.packagelist.push({
+                                package_id: e.package_id,
+                                packagetype: e.packagetype,
+                                packagedetails: JSON.parse(e.packagedetails),
+                                pricerate: e.pricerate,
+                                year: e.year,
+                                remarks: e.remarks,
+                            })
+                            profile.getClassDetails(index);
+                        });
+                        $('#packagetype_regular').css({'display': '',});
+                        $('#regular_schedules').css({'display': 'none',});
+                        $('#packagetype_unlimited').css({'display': 'none',});
+                        $('#packagetype_summerpromo').css({'display': 'none',});
+
+                    }else if(packagetype=="Unlimited"){
+
+                        profile.packagelist = e.data.data.packagelist;
+                        $('#packagetype_regular').css({'display': 'none',});
+                        $('#regular_schedules').css({'display': 'none',});
+                        $('#packagetype_unlimited').css({'display': '',});
+                        $('#packagetype_summerpromo').css({'display': 'none',});
+
+                    }else if(packagetype=="Summer Promo"){
+                        
+                        e.data.data.packagelist.forEach((e,index) => {
+                            profile.packagelist.push({
+                                package_id: e.package_id,
+                                packagetype: e.packagetype,
+                                packagedetails: JSON.parse(e.packagedetails),
+                                pricerate: e.pricerate,
+                                year: e.year,
+                                remarks: e.remarks,
+                            })
+                        });
+                        $('#packagetype_regular').css({'display': 'none',});
+                        $('#regular_schedules').css({'display': 'none',});
+                        $('#packagetype_unlimited').css({'display': 'none',});
+                        $('#packagetype_summerpromo').css({'display': '',});
+
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        getClassDetails(index){
+            var class_id = this.packagelist[index].packagedetails.class;
+            var datas = {
+                condition: { "c.class_id": class_id },
+            };
+            var urls = window.App.baseUrl + "Classes/getClassesList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    profile.packagelist[index].packagedetails.class_id = profile.packagelist[index].packagedetails.class;
+                    profile.packagelist[index].packagedetails.class = e.data.data.classeslist.class_title;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                }); 
+        },
+        getSchedulesList(class_id,package_id,packageindex){
+            var datas = {
+                condition: { "s.class_id": class_id },
+            };
+            var urls = window.App.baseUrl + "Classes/getSchedulesList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    $('#regular_schedules').css({'display': '',});
+                    profile.scheduleslist.package_id = package_id;
+                    profile.scheduleslist.packageindex = packageindex;
+                    profile.scheduleslist.data = e.data.data.scheduleslist;
+                    
+                    $('#showSchedulesbtn-'+package_id).css({'display': 'none',});
+                    $('#hideSchedulesbtn-'+package_id).css({'display': '',});
+                    profile.disabled_showbtn = true;
+                    profile.disabled_hidebtn = false;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                }); 
+        },
+        hideSchedules(package_id){
+            profile.scheduleslist = {};
+            $('#regular_schedules').css({'display': 'none',});
+            $('#showSchedulesbtn-'+package_id).css({'display': '',});
+            $('#hideSchedulesbtn-'+package_id).css({'display': 'none',});
+            profile.disabled_showbtn = false;
+            profile.disabled_hidebtn = true;
+        },
+        showDetails(package_id){
+            var datas = {package_id:package_id}
+            var urls = window.App.baseUrl + "Libraries/getPackageList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    JSON.parse(e.data.data.packagelist.packagedetails).forEach((e,index) => {
+                        profile.packagedetails.package_data.push({
+                            particular: e.particular,
+                            price: e.price,
+                            type: e.type
+                        })
+                        if(e.type=='inventory'){ profile.getItemDetails(index); }
+                    });
+
+                    profile.packagedetails.package_id = package_id;
+                    $('#summerpromodetails-'+package_id).css({'display': '',});
+                    $('#showDetailsbtn-'+package_id).css({'display': 'none',});
+                    $('#hideDetailsbtn-'+package_id).css({'display': '',});
+                    profile.disabled_showbtn = true;
+                    profile.disabled_hidebtn = false;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        hideDetails(package_id){
+            profile.packagedetails = {
+                package_id: "",
+                package_data: []
+            };
+            $('#summerpromodetails-'+package_id).css({'display': 'none',});
+            $('#showDetailsbtn-'+package_id).css({'display': '',});
+            $('#hideDetailsbtn-'+package_id).css({'display': 'none',});
+            profile.disabled_showbtn = false;
+            profile.disabled_hidebtn = true;
+        },
+        getItemDetails(index){
+            var stock_id = this.packagedetails.package_data[index].particular;
+            var datas = {
+                condition: { "s.stock_id": stock_id },
+                groupby: ""
+            };
+            var urls = window.App.baseUrl + "Inventory/getInventoryList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    profile.packagedetails.package_data[index].stock_id = profile.packagedetails.package_data[index].particular;
+                    // console.log( e.data.data.inventorylist);
+                    profile.packagedetails.package_data[index].particular = e.data.data.inventorylist.item_name;
+                    // console.log(profile.packagedetails.package_data[index]);
+                })
+                .catch(function (error) {
+                    console.log(error)
+                }); 
+        },
+        selectPackage(scheduleindex,packagetype,packageindex){
+            if(packagetype=="regular"){
+                var selected = {
+                    "student_id": this.student_id,
+                    "package_id": this.packagelist[packageindex].package_id,
+                    "package_type": this.packagelist[packageindex].packagetype,
+                    "price_rate": this.packagelist[packageindex].pricerate,
+                    "details": {
+                        "class": this.packagelist[packageindex].packagedetails.class,
+                        "class_id": this.packagelist[packageindex].packagedetails.class_id,
+                        "schedule_id": this.scheduleslist.data[scheduleindex].schedule_id,
+                        "sched_day": this.scheduleslist.data[scheduleindex].sched_day,
+                        "sched_time": this.scheduleslist.data[scheduleindex].sched_time,
+                        "branch": this.scheduleslist.data[scheduleindex].branch_name,
+                        "sessions": this.packagelist[packageindex].packagedetails.sessions,
+                        "sessions_attended": 0,
+                    },
+                };
+            }else if(packagetype=="unlimited"){
+                var selected = {
+                    "student_id": this.student_id,
+                    "package_id": this.packagelist[packageindex].package_id,
+                    "package_type": this.packagelist[packageindex].packagetype,
+                    "price_rate": this.packagelist[packageindex].pricerate,
+                    "details": {
+                        "detail": this.packagelist[packageindex].packagedetails,
+                        "sessions_attended": 0
+                    }
+                };
+            }else if(packagetype=="summer promo"){
+                var selected = {
+                    "student_id": this.student_id,
+                    "package_id": this.packagelist[packageindex].package_id,
+                    "package_type": this.packagelist[packageindex].packagetype,
+                    "price_rate": this.packagelist[packageindex].pricerate,
+                    "details": this.packagelist[packageindex].packagedetails
+                };
+            }
+            
+            $('.selectpack'). prop('disabled', true);
+            $('#selected_packages').css({'display': '',});
+            if(this.selectedPackages!=null){
+                this.selectedPackages.push(selected);
+            }else{
+                this.selectedPackages = selected;
+            }
         },
         //third tab
         addCompetitionImageSelect(event){
