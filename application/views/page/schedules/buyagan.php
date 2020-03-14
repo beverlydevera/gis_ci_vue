@@ -48,34 +48,34 @@
                         <tbody>
                             <tr>
                                 <td class="stroke-text">9:00 - 9:30</td>
-                                <td rowspan="2" class="fill-light-white"><a href="class_schedule.php"><span class="stroke-text">White 5-7</span></a></td>
-                                <td rowspan="2" class="fill-light-white"><a href="class_schedule.php"><span class="stroke-text">White 5-7</span></a></td>
-                                <td rowspan="2" class="fill-light-white"><a href="class_schedule.php"><span class="stroke-text">White 5-7</span></a></td>
-                                <td rowspan="2" class="fill-light-white"><a href="class_schedule.php"><span class="stroke-text">White 5-7</span></a></td>
-                                <td rowspan="2" class="fill-light-white"><a href="class_schedule.php"><span class="stroke-text">White 5-7</span></a></td>
-                                <td rowspan="2" class="fill-light-white"><a href="class_schedule.php"><span class="stroke-text">White 5-7</span></a></td>
+                                <td rowspan="2" class="fill-light-white"><a href="<?=base_url('classes/classSchedInfo/63')?>"><span class="stroke-text">White 5-7</span></a></td>
+                                <td rowspan="2" class="fill-light-white"><a href="<?=base_url('classes/classSchedInfo/64')?>"><span class="stroke-text">White 5-7</span></a></td>
+                                <td rowspan="2" class="fill-light-white"><a href="<?=base_url('classes/classSchedInfo/65')?>"><span class="stroke-text">White 5-7</span></a></td>
+                                <td rowspan="2" class="fill-light-white"><a href="<?=base_url('classes/classSchedInfo/66')?>"><span class="stroke-text">White 5-7</span></a></td>
+                                <td rowspan="2" class="fill-light-white"><a href="<?=base_url('classes/classSchedInfo/67')?>"><span class="stroke-text">White 5-7</span></a></td>
+                                <td rowspan="2" class="fill-light-white"><a href="<?=base_url('classes/classSchedInfo/68')?>"><span class="stroke-text">White 5-7</span></a></td>
                                 <td rowspan="22" class="fill-dark-gray stroke-text">Gym Closed</span></td>
                             </tr>
                             <tr> <td class="stroke-text">9:30 - 10:00</td></tr>
                             
                             <tr> 
                                 <td class="stroke-text">10:00 - 10:30</td>
-                                <td rowspan="2" class="fill-semi-white"><a href="class_schedule.php"><span class="stroke-text">White 8-10</span></a></td>
-                                <td rowspan="2" class="fill-semi-white"><a href="class_schedule.php"><span class="stroke-text">White 8-10</span></a></td>
-                                <td rowspan="2" class="fill-semi-white"><a href="class_schedule.php"><span class="stroke-text">White 8-10</span></a></td>
-                                <td rowspan="2" class="fill-semi-white"><a href="class_schedule.php"><span class="stroke-text">White 8-10</span></a></td>
-                                <td rowspan="2" class="fill-semi-white"><a href="class_schedule.php"><span class="stroke-text">White 8-10</span></a></td>
-                                <td rowspan="2" class="fill-semi-white"><a href="class_schedule.php"><span class="stroke-text">White 8-10</span></a></td>
+                                <td rowspan="2" class="fill-semi-white"><a href="<?=base_url('classes/classSchedInfo/69')?>"><span class="stroke-text">White 8-10</span></a></td>
+                                <td rowspan="2" class="fill-semi-white"><a href="<?=base_url('classes/classSchedInfo/70')?>"><span class="stroke-text">White 8-10</span></a></td>
+                                <td rowspan="2" class="fill-semi-white"><a href="<?=base_url('classes/classSchedInfo/71')?>"><span class="stroke-text">White 8-10</span></a></td>
+                                <td rowspan="2" class="fill-semi-white"><a href="<?=base_url('classes/classSchedInfo/72')?>"><span class="stroke-text">White 8-10</span></a></td>
+                                <td rowspan="2" class="fill-semi-white"><a href="<?=base_url('classes/classSchedInfo/73')?>"><span class="stroke-text">White 8-10</span></a></td>
+                                <td rowspan="2" class="fill-semi-white"><a href="<?=base_url('classes/classSchedInfo/74')?>"><span class="stroke-text">White 8-10</span></a></td>
                             </tr>
                             <tr> <td class="stroke-text">10:30 - 11:00</td></tr>
                             <tr> 
                                 <td class="stroke-text">11:00 - 11:30</td>
-                                <td rowspan="2" class="fill-dark-white"><a href="class_schedule.php"><span class="stroke-text">White 11 and Above</span></a></td>
-                                <td rowspan="2" class="fill-dark-white"><a href="class_schedule.php"><span class="stroke-text">White 11 and Above</span></a></td>
-                                <td rowspan="2" class="fill-dark-white"><a href="class_schedule.php"><span class="stroke-text">White 11 and Above</span></a></td>
-                                <td rowspan="2" class="fill-dark-white"><a href="class_schedule.php"><span class="stroke-text">White 11 and Above</span></a></td>
-                                <td rowspan="2" class="fill-dark-white"><a href="class_schedule.php"><span class="stroke-text">White 11 and Above</span></a></td>
-                                <td rowspan="2" class="fill-dark-white"><a href="class_schedule.php"><span class="stroke-text">White 11 and Above</span></a></td>
+                                <td rowspan="2" class="fill-dark-white"><a href="<?=base_url('classes/classSchedInfo/75')?>"><span class="stroke-text">White 11 and Above</span></a></td>
+                                <td rowspan="2" class="fill-dark-white"><a href="<?=base_url('classes/classSchedInfo/76')?>"><span class="stroke-text">White 11 and Above</span></a></td>
+                                <td rowspan="2" class="fill-dark-white"><a href="<?=base_url('classes/classSchedInfo/77')?>"><span class="stroke-text">White 11 and Above</span></a></td>
+                                <td rowspan="2" class="fill-dark-white"><a href="<?=base_url('classes/classSchedInfo/78')?>"><span class="stroke-text">White 11 and Above</span></a></td>
+                                <td rowspan="2" class="fill-dark-white"><a href="<?=base_url('classes/classSchedInfo/79')?>"><span class="stroke-text">White 11 and Above</span></a></td>
+                                <td rowspan="2" class="fill-dark-white"><a href="<?=base_url('classes/classSchedInfo/80')?>"><span class="stroke-text">White 11 and Above</span></a></td>
                             </tr>
                             <tr> <td class="stroke-text">11:30 - 12:00</td></tr>
                             <tr>
@@ -92,12 +92,12 @@
                             </tr>
                             <tr>
                                 <td class="stroke-text">1:00 - 1:30</td>
-                                <td rowspan="3" class="fill-light-orange"><a href="class_schedule.php"><span class="stroke-text">Level 1 Gears Required</span></a></td>
-                                <td rowspan="3" class="fill-blue"><a href="class_schedule.php"><span class="stroke-text">Level 1 Pomsae Class</span></a></td>
-                                <td rowspan="3" class="fill-semi-yellow"><a href="class_schedule.php"><span class="stroke-text">Level 1 High Intensity</span></a></td>
-                                <td rowspan="3" class="fill-blue"><a href="class_schedule.php"><span class="stroke-text">Level 1 Pomsae Class</span></a></td>
-                                <td rowspan="3" class="fill-blue"><a href="class_schedule.php"><span class="stroke-text">Level 1 Pomsae Class</span></a></td>
-                                <td rowspan="3" class="fill-light-orange"><a href="class_schedule.php"><span class="stroke-text">Level 1 Gears Required</span></a></td>
+                                <td rowspan="3" class="fill-light-orange"><a href="<?=base_url('classes/classSchedInfo/81')?>"><span class="stroke-text">Level 1 Gears Required</span></a></td>
+                                <td rowspan="3" class="fill-blue"><a href="<?=base_url('classes/classSchedInfo/82')?>"><span class="stroke-text">Level 1 Pomsae Class</span></a></td>
+                                <td rowspan="3" class="fill-semi-yellow"><a href="<?=base_url('classes/classSchedInfo/83')?>"><span class="stroke-text">Level 1 High Intensity</span></a></td>
+                                <td rowspan="3" class="fill-blue"><a href="<?=base_url('classes/classSchedInfo/84')?>"><span class="stroke-text">Level 1 Pomsae Class</span></a></td>
+                                <td rowspan="3" class="fill-blue"><a href="<?=base_url('classes/classSchedInfo/85')?>"><span class="stroke-text">Level 1 Pomsae Class</span></a></td>
+                                <td rowspan="3" class="fill-light-orange"><a href="<?=base_url('classes/classSchedInfo/86')?>"><span class="stroke-text">Level 1 Gears Required</span></a></td>
                             </tr>
                             <tr>
                                 <td class="stroke-text">1:30 - 2:00</td>
@@ -107,34 +107,34 @@
                             </tr>
                             <tr> 
                                 <td class="stroke-text">2:30 - 3:00</td>
-                                <td rowspan="3" class="fill-semi-orange"><a href="class_schedule.php"><span class="stroke-text">Level 2 Gears Required</span></a></td>
-                                <td rowspan="3" class="fill-dark-blue"><a href="class_schedule.php"><span class="stroke-text">Level 2 Pomsae Class</span></a></td>
-                                <td rowspan="3" class="fill-yellow"><a href="class_schedule.php"><span class="stroke-text">Level 2 High Intensity</span></a></td>
-                                <td rowspan="3" class="fill-dark-blue"><a href="class_schedule.php"><span class="stroke-text">Level 2 Pomsae Class</span></a></td>
-                                <td rowspan="3" class="fill-semi-orange"><a href="class_schedule.php"><span class="stroke-text">Level 2 Gears Required</span></a></td>
-                                <td rowspan="3" class="fill-semi-orange"><a href="class_schedule.php"><span class="stroke-text">Level 2 Gears Required</span></a></td>
+                                <td rowspan="3" class="fill-semi-orange"><a href="<?=base_url('classes/classSchedInfo/87')?>"><span class="stroke-text">Level 2 Gears Required</span></a></td>
+                                <td rowspan="3" class="fill-dark-blue"><a href="<?=base_url('classes/classSchedInfo/88')?>"><span class="stroke-text">Level 2 Pomsae Class</span></a></td>
+                                <td rowspan="3" class="fill-yellow"><a href="<?=base_url('classes/classSchedInfo/89')?>"><span class="stroke-text">Level 2 High Intensity</span></a></td>
+                                <td rowspan="3" class="fill-dark-blue"><a href="<?=base_url('classes/classSchedInfo/90')?>"><span class="stroke-text">Level 2 Pomsae Class</span></a></td>
+                                <td rowspan="3" class="fill-semi-orange"><a href="<?=base_url('classes/classSchedInfo/91')?>"><span class="stroke-text">Level 2 Gears Required</span></a></td>
+                                <td rowspan="3" class="fill-semi-orange"><a href="<?=base_url('classes/classSchedInfo/92')?>"><span class="stroke-text">Level 2 Gears Required</span></a></td>
                             </tr>
                             <tr> <td class="stroke-text">3:00 - 3:30</td></tr>
                             <tr><td><span class="stroke-text">3:30 - 4:00</span></td></tr>
                             <tr> 
                                 <td class="stroke-text">4:00 - 4:30</td>
-                                <td rowspan="3" class="fill-red"><a href="class_schedule.php"><span class="stroke-text">All Levels Sparring Class</span></a></td>
-                                <td rowspan="3" class="fill-dark-violet"><a href="class_schedule.php"><span class="stroke-text">All Levels Pomsae Class</span></a></td>
-                                <td rowspan="3" class="fill-red"><a href="class_schedule.php"><span class="stroke-text">All Levels Sparring Class</span></a></td>
-                                <td rowspan="3" class="fill-dark-violet"><a href="class_schedule.php"><span class="stroke-text">All Levels Pomsae Class</span></a></td>
-                                <td rowspan="3" class="fill-red"><a href="class_schedule.php"><span class="stroke-text">All Levels Sparring Class</span></a></td>
-                                <td rowspan="3" class="fill-red"><a href="class_schedule.php"><span class="stroke-text">All Levels Sparring Class</span></a></td>
+                                <td rowspan="3" class="fill-red"><a href="<?=base_url('classes/classSchedInfo/93')?>"><span class="stroke-text">All Levels Sparring Class</span></a></td>
+                                <td rowspan="3" class="fill-dark-violet"><a href="<?=base_url('classes/classSchedInfo/94')?>"><span class="stroke-text">All Levels Pomsae Class</span></a></td>
+                                <td rowspan="3" class="fill-red"><a href="<?=base_url('classes/classSchedInfo/95')?>"><span class="stroke-text">All Levels Sparring Class</span></a></td>
+                                <td rowspan="3" class="fill-dark-violet"><a href="<?=base_url('classes/classSchedInfo/96')?>"><span class="stroke-text">All Levels Pomsae Class</span></a></td>
+                                <td rowspan="3" class="fill-red"><a href="<?=base_url('classes/classSchedInfo/97')?>"><span class="stroke-text">All Levels Sparring Class</span></a></td>
+                                <td rowspan="3" class="fill-red"><a href="<?=base_url('classes/classSchedInfo/98')?>"><span class="stroke-text">All Levels Sparring Class</span></a></td>
                                 
                             </tr>
                             <tr> <td class="stroke-text">4:30 - 5:00</td></tr>
                             <tr> <td class="stroke-text">5:00 - 5:30</td></tr>
                             <tr> 
                                 <td class="stroke-text">5:30 - 6:00</td>
-                                <td rowspan="2" class="fill-green"><a href="class_schedule.php"><span class="stroke-text">Active for Life</span></a></td>
+                                <td rowspan="2" class="fill-green"><a href="<?=base_url('classes/classSchedInfo/99')?>"><span class="stroke-text">Active for Life</span></a></td>
                                 <td rowspan="3" class="fill-gray stroke-text">Open Mats</td>
-                                <td rowspan="2" class="fill-green"><a href="class_schedule.php"><span class="stroke-text">Active for Life</span></a></td>
+                                <td rowspan="2" class="fill-green"><a href="<?=base_url('classes/classSchedInfo/100')?>"><span class="stroke-text">Active for Life</span></a></td>
                                 <td rowspan="3" class="fill-gray stroke-text">Open Mats</td>
-                                <td rowspan="2" class="fill-green"><a href="class_schedule.php"><span class="stroke-text">Active for Life</span></a></td>
+                                <td rowspan="2" class="fill-green"><a href="<?=base_url('classes/classSchedInfo/101')?>"><span class="stroke-text">Active for Life</span></a></td>
                                 <td rowspan="3" class="fill-gray stroke-text">Open Mats</td>
                             </tr>
                             <tr> <td class="stroke-text">6:00 - 6:30</td></tr>
