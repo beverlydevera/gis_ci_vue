@@ -35,7 +35,7 @@
                                 <th>PARTICULAR</th>
                                 <th>PRICE</th>
                             </tr>
-                        <template v-for="(ll,ii) in list.details">
+                        <template v-for="(ll,ii) in list.details.detail">
                             <tr v-if="ll.type=='input'">
                                 <td>{{ll.particular}}</td>
                                 <td>{{ll.price}}</td>
