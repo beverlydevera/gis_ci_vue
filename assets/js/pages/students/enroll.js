@@ -389,7 +389,10 @@ var enroll = new Vue({
                     "package_id": this.packagelist[packageindex].package_id,
                     "package_type": this.packagelist[packageindex].packagetype,
                     "price_rate": this.packagelist[packageindex].pricerate,
-                    "details": this.packagelist[packageindex].packagedetails
+                    "details": {
+                        "detail": this.packagelist[packageindex].packagedetails,
+                        "sessions_attended": 0
+                    }
                 };
             }
             
