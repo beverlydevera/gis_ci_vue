@@ -42,7 +42,14 @@ class Users extends CI_Controller {
         }
         
         $userlist = $this->Main->getDataOneJoin($select,"tbl_users u",$join,$condition,$pager,$orderby,$groupby,$type);
-        if(!empty($userlist->photo)){ $userlist->photo = base64_encode($userlist->photo); }
+        
+        if($type=="" && strpos($select, 'photo')){
+            foreach($userlist as $ulk => $ulv){
+                $userlist[$ulk]->photo = base64_encode($ulv->photo);
+            }
+        }else{
+            if(!empty($userlist->photo)){ $userlist->photo = base64_encode($userlist->photo); }
+        }
 
         if(!empty($userlist)){
            
