@@ -11,14 +11,16 @@
               <li style="border-bottom:1px solid #000; border-radius: .3em; margin-right: 2px;" class="nav-item"><a class="nav-link" id="classstudents-tab" data-toggle="tab" href="#classstudents" role="tab" aria-controls="classstudents" aria-selected="false">Students Enrolled</a></li>
             </ul>
           </div>
-          <div class="col-md-2"></div>
-          <div class="col-md-3">
+          <div class="col-md-1"></div>
+          <div class="col-md-4">
             <b>Class Title:</b> <u>{{classschedinfo.class_title}}</u><br>
             <b>Branch Name:</b> <u>{{classschedinfo.branch_name}}</u>
           </div>
           <div class="col-md-3">
             <b>Schedule:</b> <u>{{classschedinfo.sched_day}} / {{classschedinfo.sched_time}}</u><br>
-            <b>Current Enrolled:</b> <u>{{classstudents.length}}</u>
+            <b>Current Enrolled:</b> 
+              <u v-if="classstudents!=null">{{classstudents.length}}</u>
+              <u v-else>0</u>
           </div>
         </div>
       </div>
