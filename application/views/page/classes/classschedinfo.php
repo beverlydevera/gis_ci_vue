@@ -238,8 +238,14 @@
                       <tr v-for="(list,index) in classattendancestudents">
                         <td>{{index+1}}</td>
                         <td v-if="classattendanceinfo.attendance[index].student_id==list.student_id">
-                          <button @click="changeAttendanceStat(index)" class="btn btn-primary btn-xs" v-if="classattendanceinfo.attendance[index].status">Present</button>
-                          <button @click="changeAttendanceStat(index)" class="btn btn-danger btn-xs" v-else>Absent</button>
+                          <template v-if="classattendanceinfo.attendance[index].remove">
+                            <span v-if="classattendanceinfo.attendance[index].status">Present</span>
+                            <span v-else>Absent</span>
+                          </template>
+                          <template v-else>
+                            <button @click="changeAttendanceStat(index)" class="btn btn-primary btn-xs" v-if="classattendanceinfo.attendance[index].status">Present</button>
+                            <button @click="changeAttendanceStat(index)" class="btn btn-danger btn-xs" v-else>Absent</button>
+                          </template>
                         </td>
                         <td>{{list.reference_id}}</td>
                         <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
