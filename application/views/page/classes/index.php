@@ -9,35 +9,27 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-3">
-                                <div class="input-group mb-3">
-                                <div class="input-group-prepend smallerinput">
-                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                </div>
-                                <input type="text" class="form-control smallerinput" placeholder="Search">
-                                </div>
-                            </div>
                             <?php if(sesdata('role')==1){ ?>
                             <div class="col-md-2">
-                                <select class="form-control smallerinput">
+                                <select class="form-control smallerinput" v-model="filterdetails.branch_id" @change="filterData('filter')">
                                     <option value=0 disabled selected>Select Branch</option>
                                     <template v-for="(list,index) in brancheslist">
-                                    <option :value="list.branch_id">{{list.branch_name}}</option>
+                                    <option :value=list.branch_id>{{list.branch_name}}</option>
                                     </template>
                                 </select>
                             </div>
                             <?php } ?>
                             <div class="col-md-2">
-                                <select class="form-control smallerinput">
-                                    <option disabled selected>Select Class</option>
+                                <select class="form-control smallerinput" v-model="filterdetails.class_id" @change="filterData('filter')">
+                                    <option value=0 disabled selected>Select Class</option>
                                     <template v-for="(list,index) in classeslist">
-                                    <option :value="list.class_id">{{list.class_title}}</option>
+                                    <option :value=list.class_id>{{list.class_title}}</option>
                                     </template>
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <select class="form-control smallerinput">
-                                    <option disabled selected>Select Class SchedDay</option>
+                                <select class="form-control smallerinput" v-model="filterdetails.sched_day" @change="filterData('filter')">
+                                    <option value=0 disabled selected>Select Class SchedDay</option>
                                     <option>Monday</option>
                                     <option>Tuesday</option>
                                     <option>Wednesday</option>
@@ -47,10 +39,11 @@
                                     <option>Sunday</option>
                                 </select>
                             </div>
-                            <div class="col-md-1">
-                                <button class="btn btn-primary btn-xs">Filter</button>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary btn-xs" @click="filterData('clear')">Clear Filter</button>
                             </div>
                         </div>
+                        <br>
                         <table class="table table-bordered table-responsive-sm table-sm">
                             <thead>                  
                                 <tr>

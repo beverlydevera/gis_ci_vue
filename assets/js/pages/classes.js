@@ -38,7 +38,12 @@ var classsched = new Vue({
         },
         classattendancestudents: [],
         brancheslist: [],
-        classeslist: []
+        classeslist: [],
+        filterdetails: {
+            branch_id: 0,
+            class_id: 0,
+            sched_day: 0
+        }
     },
     methods: {
         getBranchesList(){
@@ -341,6 +346,46 @@ var classsched = new Vue({
                             });
                     }
             })
+        },
+        filterData(action){
+            var condition = { "s.status": 1, };
+            if(action=='filter'){
+                if(this.filterdetails.class_id!=0){ condition['s.class_id'] = this.filterdetails.class_id; }
+                if(this.filterdetails.branch_id!=0){ condition['s.branch_id'] = this.filterdetails.branch_id; }
+                if(this.filterdetails.sched_day!=0){ condition['s.sched_day'] = this.filterdetails.sched_day; }
+
+                var datas = {
+                    select: "*",
+                    orderby: {
+                        column: "c.class_title",
+                        order: "ASC",
+                    },
+                    condition: condition
+                };
+            }else{
+                this.filterdetails = {
+                    class_id: 0,
+                    branch_id: 0,
+                    sched_day: 0
+                };
+                var datas = {
+                    select: "*",
+                    orderby: {
+                        column: "c.class_title",
+                        order: "ASC",
+                    },
+                    condition: condition
+                };
+            }
+            
+            var urls = window.App.baseUrl + "Classes/getClassSchedulesList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    classsched.classschedlist=e.data.data.classschedlist;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
         }
     }, mounted: function () {
         this.getClassSchedulesList();
