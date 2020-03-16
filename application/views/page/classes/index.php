@@ -53,7 +53,6 @@
                                 <th>Branch</th>
                                 <?php } ?>
                                 <th>Class Schedule</th>
-                                <th>Enrollees</th>
                                 <th>Status</th>
                                 <th>Action</th>
                                 </tr>
@@ -66,9 +65,8 @@
                                 <td>{{list.branch_name}}</td>
                                 <?php } ?>
                                 <td>{{list.sched_day}} / {{list.sched_time}}</td>
-                                <td>000</td>
                                 <td>
-                                    <span v-if="list.status" class="badge bg-success">Active</span>
+                                    <span v-if="list.schedstat==1" class="badge bg-success">Active</span>
                                     <span v-else class="badge bg-danger">Inactive</span>
                                 </td>
                                 <td>

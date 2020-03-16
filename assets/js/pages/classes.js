@@ -77,14 +77,12 @@ var classsched = new Vue({
         },
         getClassSchedulesList(){
             var datas = {
-                select: "*",
+                select: "*, s.status as schedstat",
                 orderby: {
                     column: "c.class_title",
                     order: "ASC",
                 },
-                condition: {
-                    "s.status": 1
-                }
+                // condition: { "s.status": 1 }
             };
             var urls = window.App.baseUrl + "Classes/getClassSchedulesList";
             axios.post(urls, datas)
@@ -348,14 +346,15 @@ var classsched = new Vue({
             })
         },
         filterData(action){
-            var condition = { "s.status": 1, };
+            // var condition = { "s.status": 1, };
+            var condition = {};
             if(action=='filter'){
                 if(this.filterdetails.class_id!=0){ condition['s.class_id'] = this.filterdetails.class_id; }
                 if(this.filterdetails.branch_id!=0){ condition['s.branch_id'] = this.filterdetails.branch_id; }
                 if(this.filterdetails.sched_day!=0){ condition['s.sched_day'] = this.filterdetails.sched_day; }
 
                 var datas = {
-                    select: "*",
+                    select: "*,s.status as schedstat",
                     orderby: {
                         column: "c.class_title",
                         order: "ASC",
@@ -369,7 +368,7 @@ var classsched = new Vue({
                     sched_day: 0
                 };
                 var datas = {
-                    select: "*",
+                    select: "*,s.status as schedstat",
                     orderby: {
                         column: "c.class_title",
                         order: "ASC",
