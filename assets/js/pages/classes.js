@@ -37,8 +37,30 @@ var classsched = new Vue({
             attendance: []
         },
         classattendancestudents: [],
+        brancheslist: [],
+        classeslist: []
     },
     methods: {
+        getBranchesList(){
+            var urls = window.App.baseUrl + "Libraries/getBranches";
+            axios.post(urls, "")
+                .then(function (e) {
+                    classsched.brancheslist=e.data.data.brancheslist;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        getClassesList(){
+            var urls = window.App.baseUrl + "Libraries/getClassesList";
+            axios.post(urls, "")
+                .then(function (e) {
+                    classsched.classeslist=e.data.data.classeslist;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
         changeDateFormat(date){
             var d = new Date(date),
                 month = '' + (d.getMonth() + 1),
@@ -322,6 +344,8 @@ var classsched = new Vue({
         }
     }, mounted: function () {
         this.getClassSchedulesList();
+        this.getBranchesList();
+        this.getClassesList();
         if(this.schedule_id!=0){
             this.getclassSchedInfo();
             this.classschedlist=[];

@@ -17,22 +17,34 @@
                                 <input type="text" class="form-control smallerinput" placeholder="Search">
                                 </div>
                             </div>
+                            <?php if(sesdata('role')==1){ ?>
                             <div class="col-md-2">
                                 <select class="form-control smallerinput">
-                                    <option disabled selected>Select Branch</option>
-                                    <option>Sample 1</option>
+                                    <option value=0 disabled selected>Select Branch</option>
+                                    <template v-for="(list,index) in brancheslist">
+                                    <option :value="list.branch_id">{{list.branch_name}}</option>
+                                    </template>
                                 </select>
                             </div>
+                            <?php } ?>
                             <div class="col-md-2">
                                 <select class="form-control smallerinput">
                                     <option disabled selected>Select Class</option>
-                                    <option>Sample 1</option>
+                                    <template v-for="(list,index) in classeslist">
+                                    <option :value="list.class_id">{{list.class_title}}</option>
+                                    </template>
                                 </select>
                             </div>
                             <div class="col-md-2">
                                 <select class="form-control smallerinput">
                                     <option disabled selected>Select Class SchedDay</option>
                                     <option>Monday</option>
+                                    <option>Tuesday</option>
+                                    <option>Wednesday</option>
+                                    <option>Thursday</option>
+                                    <option>Friday</option>
+                                    <option>Saturday</option>
+                                    <option>Sunday</option>
                                 </select>
                             </div>
                             <div class="col-md-1">
@@ -44,7 +56,9 @@
                                 <tr>
                                 <th>#</th>
                                 <th>Class Title</th>
+                                <?php if(sesdata('role')==1){ ?>
                                 <th>Branch</th>
+                                <?php } ?>
                                 <th>Class Schedule</th>
                                 <th>Enrollees</th>
                                 <th>Status</th>
@@ -55,7 +69,9 @@
                                 <tr v-for="(list,index) in classschedlist" :value="list.class_id">
                                 <td>{{index+1}}</td>
                                 <td>{{list.class_title}}</td>
+                                <?php if(sesdata('role')==1){ ?>
                                 <td>{{list.branch_name}}</td>
+                                <?php } ?>
                                 <td>{{list.sched_day}} / {{list.sched_time}}</td>
                                 <td>000</td>
                                 <td>
