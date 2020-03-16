@@ -184,8 +184,8 @@ class Classes extends CI_Controller {
         $searchInput = $this->input->post('searchInput');
         $existing = $this->input->post('existing');
         $condition = "(firstname LIKE '%$searchInput%' OR middlename LIKE '%$searchInput%' OR lastname LIKE '%$searchInput%' OR reference_id LIKE '%$searchInput%')
-        AND s.student_id NOT IN ($existing)";
-        $students  = $this->classes->getStudentsEnrolled("s.student_id,reference_id,lastname,firstname,middlename,sex,studpack_id",$condition,"","","","");
+        AND sp.studpack_id NOT IN ($existing) AND packagetype!='Regular' AND DATE_ADD(sp.date_added, INTERVAL 30 DAY)>=NOW()";
+        $students  = $this->classes->getStudentsEnrolled("s.student_id,reference_id,lastname,firstname,middlename,sex,studpack_id,packagetype",$condition,"","","","");
         
         if(!empty($students)){
             $response = array(
@@ -257,8 +257,13 @@ class Classes extends CI_Controller {
     public function getClassAttendanceInfo()
     {
         $classsched_id = $this->input->post('classsched_id');
-        $classattendanceinfo = $this->Main->getDataOneJoin("*","tbl_classscheds","",["classsched_id"=>$classsched_id],"","","","row");
-        $select = "st.student_id,reference_id,lastname,firstname,middlename,sex,sp.details,sp.studpack_id";
+        $join = [
+            "table" => "tbl_studentattendance sa",
+            "key"   => "cs.classsched_id=sa.classsched_id",
+            "jointype" => "inner"
+        ];
+        $classattendanceinfo = $this->Main->getDataOneJoin("*","tbl_classscheds cs",$join,["cs.classsched_id"=>$classsched_id],"","","","row");
+        $select = "st.student_id, reference_id, lastname, firstname, middlename, sex, sp.details, sp.studpack_id, studatt_id";
         $classattendancestudents = $this->classes->getClassStudentsInfo($select,["ca.classsched_id"=>$classsched_id],"","","","");
 
         if(!empty($classattendanceinfo)){
@@ -284,27 +289,63 @@ class Classes extends CI_Controller {
 
         if(!empty($data)){
             $attendanceinfo = $data['attendanceinfo'];
+            $removedfromList = $data['removedfromList'];
             
             $classsched_id = $attendanceinfo['classsched_id'];
             unset($attendanceinfo['classsched_id']);
-            unset($attendanceinfo['schedule_id']);
-            unset($attendanceinfo['date_added']);
 
             foreach($attendanceinfo['attendance'] as $attk => $attv){
-                if(!empty($attv['origstat'])){
-                    unset($attv['origstat']);
+
+                $studpack_id = $attv['studpack_id'];
+                
+                $condition = [
+                    "student_id"    => $attv['student_id'],
+                    "studpack_id"   => $studpack_id,
+                    "classsched_id" => $classsched_id
+                ];
+                $count = $this->Main->count("tbl_studentattendance",$condition);
+
+                if($count>0){
+                    if(!empty($attv['studatt_id'])){
+                        $studatt_id = $attv['studatt_id'];
+                        $this->Main->update("tbl_studentattendance",['studatt_id'=>$studatt_id],['status'=>$attv['status']],"");
+
+                        if(!empty($attv['origstat'])){ unset($attv['origstat']);  }
+                        if(isset($attv['tmp_sessions_attended'])){
+                            $sessions_attended = $attv['tmp_sessions_attended'];
+                            $this->Main->raw("UPDATE tbl_studentpackages SET details = JSON_SET(details,'$.sessions_attended',$sessions_attended) WHERE studpack_id=$studpack_id","","update");
+                            unset($attv['tmp_sessions_attended']);
+                        }
+                    }
+                }else{
+                    $insertdata = [
+                        "student_id"    => $attv['student_id'],
+                        "classsched_id" => $classsched_id,
+                        "studpack_id"   => $studpack_id,
+                        "status"        => $attv['status'],
+                        "date_added"    => date("Y-m-d H:i:s")
+                    ];
+                    $this->Main->insert("tbl_studentattendance",$insertdata,"");
+                    $this->Main->raw("UPDATE tbl_studentpackages SET details = JSON_SET(details, '$.sessions_attended', JSON_EXTRACT(details, '$.sessions_attended') + 1) WHERE studpack_id=$studpack_id","","update");
                 }
-                if(!empty($attv['studpack_id'])){
-                    $studpack_id = $attv['studpack_id'];
-                    unset($attv['studpack_id']);
-                }
-                if(!empty($attv['tmp_sessions_attended'])){
-                    $sessions_attended = $attv['tmp_sessions_attended'];
-                    $this->Main->raw("UPDATE tbl_studentpackages SET details = JSON_SET(details,'$.sessions_attended',$sessions_attended) WHERE studpack_id=$studpack_id","","update");
-                    unset($attv['tmp_sessions_attended']);
-                }
+
                 $attendanceinfo['attendance'][$attk] = $attv;
             }
+
+            if(!empty($removedfromList)){
+                foreach($removedfromList as $rmk => $rmv){
+                    $condition = [
+                        "studpack_id"   => $rmv,
+                        "classsched_id" => $classsched_id
+                    ];
+                    $countexist = $this->Main->count("tbl_studentattendance",$condition);
+                    if($countexist>0){
+                        $this->Main->delete("tbl_studentattendance",$condition);
+                    }
+                }
+                $this->Main->raw("UPDATE tbl_studentpackages SET details = JSON_SET(details, '$.sessions_attended', JSON_EXTRACT(details, '$.sessions_attended') - 1) WHERE studpack_id=$rmv","","update");
+            }
+
             $attendanceinfo['attendance'] = json_encode($attendanceinfo['attendance']);
             $this->Main->update("tbl_classscheds",["classsched_id"=>$classsched_id],$attendanceinfo);
 

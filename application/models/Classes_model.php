@@ -121,11 +121,10 @@ class Classes_model extends CI_Model {
 	{
 		$this->db->select($select);
 		$this->db->from("tbl_studentattendance sa");
-		$this->db->join("tbl_classscheds ca","ca.`classsched_id` = sa.`classsched_id`","inner");
-		$this->db->join("tbl_schedules sc","sc.`schedule_id` = ca.`schedule_id`","inner");
-		$this->db->join("tbl_studentpackages sp","sp.`student_id`=sa.`student_id`","inner");
-		$this->db->join("tbl_students st","st.`student_id` = sa.`student_id`","inner");
-
+		$this->db->join("tbl_students st","st.`student_id`=sa.`student_id`","inner");
+		$this->db->join("tbl_classscheds ca","ca.`classsched_id`=sa.`classsched_id`","inner");
+		$this->db->join("tbl_studentpackages sp","sp.`studpack_id`=sa.`studpack_id`","inner");
+		
         if(!empty($condition)){
             $this->db->where($condition);
 		}

@@ -180,6 +180,7 @@
                     <th>Student Reference ID</th>
                     <th>Name</th>
                     <th>Sex</th>
+                    <th>Package Type</th>
                     <th>Add to List</th>
                   </tr></thead>
                   <tbody v-for="(list,index) in addStudent.searchstudentslist">
@@ -188,6 +189,7 @@
                       <td>{{list.reference_id}}</td>
                       <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
                       <td>{{list.sex}}</td>
+                      <td>{{list.packagetype}}</td>
                       <td><button class="btn btn-primary btn-xs" @click="addtoAttendance('add',index)">Add to Attendance List</button></td>
                     </tr>
                   </tbody>
@@ -233,7 +235,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(list,index) in classattendancestudents" :value="list.student_id">
+                      <tr v-for="(list,index) in classattendancestudents">
                         <td>{{index+1}}</td>
                         <td v-if="classattendanceinfo.attendance[index].student_id==list.student_id">
                           <button @click="changeAttendanceStat(index)" class="btn btn-primary btn-xs" v-if="classattendanceinfo.attendance[index].status">Present</button>
@@ -262,6 +264,7 @@
                     <th>Student Reference ID</th>
                     <th>Name</th>
                     <th>Sex</th>
+                    <th>Package Type</th>
                     <th>Add to List</th>
                   </tr></thead>
                   <tbody v-for="(list,index) in addStudent.searchstudentslist">
@@ -270,6 +273,7 @@
                       <td>{{list.reference_id}}</td>
                       <td>{{list.lastname}}, {{list.firstname}} {{list.middlename}}</td>
                       <td>{{list.sex}}</td>
+                      <td>{{list.packagetype}}</td>
                       <td><button class="btn btn-primary btn-xs" @click="addtoAttendance('edit',index)">Add to Attendance List</button></td>
                     </tr>
                   </tbody>

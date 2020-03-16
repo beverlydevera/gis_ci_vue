@@ -43,7 +43,8 @@ var classsched = new Vue({
             branch_id: 0,
             class_id: 0,
             sched_day: 0
-        }
+        },
+        removedfromList: [],
     },
     methods: {
         getBranchesList(){
@@ -155,11 +156,11 @@ var classsched = new Vue({
                 var existing = ["0"];
                 if(action=='add'){
                     this.newClassAttendance.attendance.forEach(e => {
-                        existing.push(e.student_id);
+                        existing.push(e.studpack_id);
                     });
                 }else if(action=='edit'){
                     this.classattendanceinfo.attendance.forEach(e => {
-                        existing.push(e.student_id);
+                        existing.push(e.studpack_id);
                     });
                 }
                 var datas = { 
@@ -203,12 +204,13 @@ var classsched = new Vue({
                 };
                 if(this.newClassAttendance!=null){ this.newClassAttendance.attendance.push(attendancedata); }
                 else{ this.newClassAttendance = [attendancedata]; }
-                
+
                 this.addStudent.searchstudentslist.splice(index, 1);
 
             }else if(action=='edit'){
-
+                
                 var studentsdata = {
+                    studpack_id    : this.addStudent.searchstudentslist[index].studpack_id,
                     student_id     : this.addStudent.searchstudentslist[index].student_id,
                     lastname       : this.addStudent.searchstudentslist[index].lastname,
                     firstname      : this.addStudent.searchstudentslist[index].firstname,
@@ -220,8 +222,8 @@ var classsched = new Vue({
                         sessions_attended: 0
                     }
                 };
-                if(this.classstudents!=null){ this.classstudents.push(studentsdata); }
-                else{ this.classstudents=studentsdata; }
+                if(this.classattendancestudents!=null){ this.classattendancestudents.push(studentsdata); }
+                else{ this.classattendancestudents = [studentsdata]; }
 
                 var attendancedata = {
                     studpack_id: this.addStudent.searchstudentslist[index].studpack_id,
@@ -229,11 +231,15 @@ var classsched = new Vue({
                     status: true,
                     remove: true
                 };
-                if(this.newClassAttendance!=null){ this.newClassAttendance.attendance.push(attendancedata); }
-                else{ this.newClassAttendance=attendancedata; }
+                if(this.classattendanceinfo!=null){ this.classattendanceinfo.attendance.push(attendancedata); }
+                else{ this.classattendanceinfo=attendancedata; }
+
+                if(this.removedfromList.includes(this.addStudent.searchstudentslist[index].studpack_id)){
+                    var ind = this.removedfromList.indexOf(this.addStudent.searchstudentslist[index].studpack_id);
+                    this.removedfromList.splice(ind, 1);
+                }
 
                 this.addStudent.searchstudentslist.splice(index, 1);
-
             }
         },
         removefromAttendance(action,index){
@@ -241,6 +247,7 @@ var classsched = new Vue({
                 this.classstudents.splice(index, 1);
                 this.newClassAttendance.attendance.splice(index, 1);
             }else if(action=="edit"){
+                this.removedfromList.push(this.classattendancestudents[index].studpack_id);
                 this.classattendancestudents.splice(index, 1);
                 this.classattendanceinfo.attendance.splice(index, 1);
             }
@@ -309,6 +316,7 @@ var classsched = new Vue({
                     attinfo.tmp_sessions_attended += 1;
                 }
             }
+            attinfo.studatt_id = this.classattendancestudents[index].studatt_id;
         },
         submitAttendanceChanges(){
             Swal.fire({
@@ -320,11 +328,13 @@ var classsched = new Vue({
                 confirmButtonText: 'Yes, save changes',
                 }).then((result) => {
                     if (result.value) {
-                        this.classattendancestudents.forEach((e,index) => {    
-                            this.classattendanceinfo.attendance[index].studpack_id = e.studpack_id
-                        });
                         var datas = {
-                            attendanceinfo: this.classattendanceinfo
+                            attendanceinfo: {
+                                attendance: this.classattendanceinfo.attendance,
+                                classsched_id: this.classattendanceinfo.classsched_id,
+                                schedule_date: this.classattendanceinfo.schedule_date
+                            },
+                            removedfromList: this.removedfromList
                         };
                         var urls = window.App.baseUrl + "classes/saveAttendanceChanges";
                         axios.post(urls, datas)
@@ -336,6 +346,7 @@ var classsched = new Vue({
                                     if(e.data.success){
                                         classsched.getclassSchedInfo();
                                     }
+                                    classsched.removedfromList = [];
                                     $('#editClassAttendanceModal').modal('hide');
                                 })
                             })
