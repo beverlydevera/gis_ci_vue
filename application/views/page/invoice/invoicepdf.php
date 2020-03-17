@@ -59,9 +59,10 @@ th {
         <div class="brandname">
             <h2 class="braveheartsname">BRAVEHEARTS MARTIAL ARTS INSTITUTE</h2>
             <p class="address">
-                Branch Name <br>
-                Address, Zip Code <br>
-                0912-345-6789 / www.braveheartsinstitute.com
+                <?=$invoicedetails->branch_name?> <br>
+                <?=$invoicedetails->branch_address?>, <?=$invoicedetails->branch_zipcode?> <br>
+                <?=$invoicedetails->branch_contactno?>
+                <!-- <?=$invoicedetails->branch_contactno?> / www.braveheartsinstitute.com -->
             </p>
         </div>
     </header>

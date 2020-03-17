@@ -434,8 +434,9 @@ class Students extends CI_Controller {
         if(!empty($data)){
             $student_id = $data["student_id"];
             $studentpackages = $data["studentpackages"];
-
-            $insert_studinvoice = $this->Main->insert("tbl_studentinvoice", ["student_id" => $student_id, "status"=>"unpaid", "amount"=>0], true);
+            
+            $branch_id = (sesdata('role')==2) ? sesdata('branch_id') : 1;
+            $insert_studinvoice = $this->Main->insert("tbl_studentinvoice", ["student_id" => $student_id, "status"=>"unpaid", "amount"=>0, "branch_id"=>$branch_id], true);
             $invoice_id = $insert_studinvoice['lastid'];
             $invoice_number = "INV".date("Y")."-".str_pad($invoice_id, 4, '0', STR_PAD_LEFT);
 
@@ -728,12 +729,12 @@ class Students extends CI_Controller {
             $reference_id = date("Y").$studentinfo['sex']."-".str_pad($studentid, 4, '0', STR_PAD_LEFT);
             $this->Main->update("tbl_students",['student_id'=>$studentid],['reference_id'=>$reference_id]);
             
-            $insert_studinvoice = $this->Main->insert("tbl_studentinvoice", ["student_id" => $studentid, "status"=>0, "amount"=>0], true);
+            $branch_id = (sesdata('role')==2) ? sesdata('branch_id') : 1;            
+            $insert_studinvoice = $this->Main->insert("tbl_studentinvoice", ["student_id" => $studentid, "status"=>0, "amount"=>0, "branch_id"=>$branch_id], true);
             $invoice_id = $insert_studinvoice['lastid'];
             $invoice_number = "INV".date("Y")."-".str_pad($invoice_id, 4, '0', STR_PAD_LEFT);
             $this->Main->update("tbl_studentinvoice",['invoice_id'=>$invoice_id],['invoice_number'=>$invoice_number]);
 
-            $branch_id = (sesdata('role')==2) ? sesdata('branch_id') : 1;
             $insert_membership_data = [
                 "student_id"      => $studentid,
                 "year"            => date("Y"),

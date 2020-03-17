@@ -36,6 +36,9 @@
                                     <th>Invoice Date</th>
                                     <th>Student Ref No.</th>
                                     <th>Student Name</th>
+                                    <?php if(sesdata('role')==1){ ?>
+                                    <th>Branch Name</th>
+                                    <?php } ?>
                                     <th>Status</th>
                                     <th>Amount</th>
                                     <th>Action</th>
@@ -48,6 +51,9 @@
                                     <td>{{list.date_added}}</td>
                                     <td>{{list.reference_id}}</td>
                                     <td>{{list.lastname}}, {{list.firstname}}</td>
+                                    <?php if(sesdata('role')==1){ ?>
+                                    <td>{{list.branch_name}}</td>
+                                    <?php } ?>
                                     <td>
                                         <span v-if="list.invstatus=='paid'" class="badge bg-success">PAID</span>
                                         <span v-else-if="list.invstatus=='partial'" class="badge bg-warning">PARTIAL</span>

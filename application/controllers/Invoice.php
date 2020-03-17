@@ -8,6 +8,7 @@ class Invoice extends CI_Controller {
         parent::__construct();
         checkLogin();
         $this->load->model("Main");
+        $this->load->model("Invoice_model","invoice");
 		$this->load->library('pdf');
 	}
 	
@@ -31,16 +32,16 @@ class Invoice extends CI_Controller {
             $condition = $data['condition'];
             if(!empty($condition['si.invoice_id'])){ $type="row"; }
         }
-        $join = [
-            "table"    => "tbl_students s",
-            "key"      => "s.student_id=si.student_id",
-            "jointype" => "inner"
-        ];
-        $invoicelist = $this->Main->getDataOneJoin("invoice_number, date_added, reference_id, lastname, firstname, amount, invoice_id, si.status as invstatus","tbl_studentinvoice si",$join,$condition,$pager,$orderby,$groupby,$type);
+
+        if(sesdata('role')==2){ $condition["si.branch_id"] = sesdata('branch_id'); }
+        $select = "invoice_number, si.date_added, reference_id, lastname, firstname, amount, invoice_id, si.status as invstatus,branch_name";
+        $invoicelist = $this->invoice->getInvoiceList($select,"tbl_studentinvoice si",$condition,$pager,$groupby,$type);
         
         if(!empty($invoicelist)){
             $invoicetotal = $this->Main->getDataOneJoin("SUM(amount) as totalinvoice_amt","tbl_studentinvoice si","",$condition,"","","","row")->totalinvoice_amt;
         }else{ $invoicetotal=0; }
+
+        unset($condition['si.branch_id']);
         $paymenttotal = $this->Main->getDataOneJoin("SUM(amount) as totalpayment_amt","tbl_paymentshistory si","",$condition,"","","","row");
         if(!empty($paymenttotal)){ $paymenttotal = $paymenttotal->totalpayment_amt; }else{ $paymenttotal=0; }
 
@@ -162,14 +163,10 @@ class Invoice extends CI_Controller {
     {
         $type = $groupby = ""; $condition = $orderby = $join = [];
         $condition = ["invoice_id"=>$invoice_id];
-        
+
         userLogs("Invoice","Printed Invoice (invoice_id #".$invoice_id.")");
-        $join = [
-            "table"    => "tbl_students s",
-            "key"      => "s.student_id=si.student_id",
-            "jointype" => "inner"
-        ];
-        $data['invoicedetails'] = $this->Main->getDataOneJoin("lastname,firstname,middlename,reference_id,invoice_number,amount,,si.status as invstatus,si.date_added as sidate_added","tbl_studentinvoice si",$join,$condition,"",$orderby,$groupby,"row");
+        $select = "lastname,firstname,middlename,reference_id,invoice_number,amount,,si.status as invstatus,si.date_added as sidate_added,branch_name,branch_address,branch_zipcode,branch_contactno";
+        $data['invoicedetails'] = $this->invoice->getInvoiceList($select,"tbl_studentinvoice si",$condition,"",$groupby,"row");
 
         $data['studentmembership'] = $this->Main->getDataOneJoin("*","tbl_studentmembership sm","",$condition,"","","","row");
         if(!empty($data['studentmembership'])){
