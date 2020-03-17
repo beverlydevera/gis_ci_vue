@@ -20,7 +20,9 @@ class Libraries extends CI_Controller {
         $data['activenav'] = "libraries";
         $data['vfile'] = "page/libraries/branches";
         $data['js'] = array('pages/libraries.js');
+        if(sesdata('role')==1){
         $this->load->view('layout/main', $data);
+        }else{ show_404(); }
     }
 	
 	public function classes()
@@ -30,7 +32,9 @@ class Libraries extends CI_Controller {
         $data['activenav'] = "libraries";
         $data['vfile'] = "page/libraries/classes";
         $data['js'] = array('pages/libraries.js');
+        if(sesdata('role')==1){
         $this->load->view('layout/main', $data);
+        }else{ show_404(); }
     }
 	
 	public function packages()
@@ -40,7 +44,9 @@ class Libraries extends CI_Controller {
         $data['activenav'] = "libraries";
         $data['vfile'] = "page/libraries/packages";
         $data['js'] = array('pages/libraries/packages.js');
+        if(sesdata('role')==1){
         $this->load->view('layout/main', $data);
+        }else{ show_404(); }
     }
 
     public function getPackageList()

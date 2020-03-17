@@ -21,7 +21,9 @@ class Users extends CI_Controller {
         $data['vueid'] = "users_page";
         $data['vfile'] = "page/users/index";
         $data['js'] = array('pages/users.js');
+        if(sesdata('role')==1){
         $this->load->view('layout/main', $data);
+        }else{ show_404(); }
     }
 
     public function getUsersList()
@@ -180,14 +182,15 @@ class Users extends CI_Controller {
     //end of users list
 
     //start of user logs
-
     public function logs()
 	{
         $data['title'] = "User Logs";
         $data['vueid'] = "userlogs_page";
         $data['vfile'] = "page/users/userlogs";
         $data['js'] = array('pages/userlogs.js');
+        if(sesdata('role')==1){
         $this->load->view('layout/main', $data);
+        }else{ show_404(); }
     }
 
     public function getUserLogs()
@@ -229,7 +232,6 @@ class Users extends CI_Controller {
         );
         response_json($response);
     }
-
     //end of user logs
 
     public function logout()

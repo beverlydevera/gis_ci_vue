@@ -12,12 +12,14 @@
         <p>Dashboard</p>
       </a>
     </li>
+    <?php if(sesdata('role')==1){ ?>
     <li class="nav-item">
       <a href="<?= base_url('announcements/') ?>" class="nav-link" v-bind:class="checkactive('announcements')">
         <i class="nav-icon fas fa-bullhorn"></i>
         <p>Announcements</p>
       </a>
     </li>
+    <?php } ?>
     <li class="nav-item">
       <a href="<?= base_url('schedules/') ?>" class="nav-link" v-bind:class="checkactive('schedules')">
         <i class="nav-icon fas fa-calendar-alt"></i>
@@ -66,6 +68,7 @@
         <p>Invoice Statements</p>
       </a>
     </li>
+    <?php if(sesdata('role')==1){ ?>
     <li class="nav-item has-treeview menu-close">
       <a href="#" class="nav-link" v-bind:class="checkactive('libraries')">
         <i class="nav-icon fas fa-book"></i>
@@ -112,6 +115,7 @@
         </li>
       </ul>
     </li>
+    <?php } ?>
     <li class="nav-item">
       <a href="<?= base_url('bravehearts-chat') ?>" class="nav-link">
         <i class="nav-icon fas fa-comments"></i>

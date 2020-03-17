@@ -16,7 +16,10 @@ class Announcements extends CI_Controller {
         $data['vueid'] = "announcements_page";
         $data['vfile'] = "page/announcements/index";
         $data['js'] = array('pages/announcements.js');
+        
+        if(sesdata('role')==1){
         $this->load->view('layout/main', $data);
+        }else{ show_404(); }
     }
 
     public function getAnnouncements()
