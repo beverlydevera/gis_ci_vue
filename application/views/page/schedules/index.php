@@ -1,12 +1,12 @@
 <section class="content">
     <div class="container-fluid">
+    <?php if(sesdata('role')==1){ ?>
     <div class="row">
         <div class="col-md-12">
         <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4">
-                        <!-- <label for="branch_select">Filter:</label> -->
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
                                 Select Branch
@@ -25,6 +25,7 @@
         </div>
         </div>
     </div>
+    <?php } ?>
     <div class="row">
         <div class="col-md-12">
             <div class="card">

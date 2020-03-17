@@ -14,8 +14,17 @@ class Schedules extends CI_Controller {
 	{
         $data['title'] = "Schedules";
         $data['vueid'] = "schedules_page";
-        $data['vfile'] = "page/schedules/index";
         // $data['js'] = array('pages/schedules/schedules.js');
+        
+        if(sesdata('role')==1){
+            $data['vfile'] = "page/schedules/index";
+        }else{ 
+            if(sesdata('branch_id')==1){ $data['vfile'] = "page/schedules/index"; }
+            else if(sesdata('branch_id')==2){ $data['vfile'] = "page/schedules/arcadian"; }
+            else if(sesdata('branch_id')==3){ $data['vfile'] = "page/schedules/buyagan"; }
+            else if(sesdata('branch_id')==4){ $data['vfile'] = "page/schedules/itogon"; }
+            else if(sesdata('branch_id')==5){ $data['vfile'] = "page/schedules/albergo"; }
+        }
         $this->load->view('layout/main', $data);
     }
 
