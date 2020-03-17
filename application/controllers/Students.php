@@ -60,7 +60,8 @@ class Students extends CI_Controller {
         else { $offset = ($page - 1) * $limit; }
         
         $condition = array();
-        $select = "s.student_id,reference_id,firstname,lastname,CONCAT(lastname, ',', firstname, ' ' ,middlename) AS fullname,sex,birthdate,s.status,membership_type,rank_title";
+        if(sesdata('role')==2){ $condition = ["sm.branch_id"=>sesdata('branch_id')]; }
+        $select = "s.student_id,reference_id,firstname,lastname,CONCAT(lastname, ',', firstname, ' ' ,middlename) AS fullname,sex,birthdate,s.status,membership_type,rank_title,sm.branch_id,b.branch_name";
         $order = array(
             'col'       => $orderBy,
             'order_by'  => $ascending,
@@ -732,6 +733,7 @@ class Students extends CI_Controller {
             $invoice_number = "INV".date("Y")."-".str_pad($invoice_id, 4, '0', STR_PAD_LEFT);
             $this->Main->update("tbl_studentinvoice",['invoice_id'=>$invoice_id],['invoice_number'=>$invoice_number]);
 
+            $branch_id = (sesdata('role')==2) ? sesdata('branch_id') : 1;
             $insert_membership_data = [
                 "student_id"      => $studentid,
                 "year"            => date("Y"),
@@ -739,7 +741,8 @@ class Students extends CI_Controller {
                 "membership_price"=> "500",
                 "insurance"       => 0,
                 "date_added"      => date('Y-m-d H:i:s'),
-                "invoice_id"      => $invoice_id
+                "invoice_id"      => $invoice_id,
+                "branch_id"       => $branch_id
             ];
             $insert_membership = $this->Main->insert("tbl_studentmembership",$insert_membership_data,true);
             

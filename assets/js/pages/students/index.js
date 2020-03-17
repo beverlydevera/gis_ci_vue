@@ -12,6 +12,7 @@ var students = new Vue({
                 "age",
                 "membership_type",
                 "rank_title",
+                "branch_name",
                 "status",
                 "action" ],
             data: [],
