@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="<?= base_url('assets/css/profile_promotion.css') ?>">
 
-<div class="container">
+<div class="container-fluid">
     <h6>PROMOTION
         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addNewPromotionModal" style="float:right;">Add Promotion</button>
     </h6>

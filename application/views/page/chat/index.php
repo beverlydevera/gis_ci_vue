@@ -14,6 +14,7 @@
 				"removeDOM": "",
 			};
 		</script>
+		
 	</head>
 	<body>
 		<div class="container-fluid h-100" id="chat_page">
@@ -34,25 +35,51 @@
 					<div class="card-body contacts_body">
 						<ul class="contacts">
 							<template v-for="(list,index) in userlist">
+								<!-- --------------------------------------------TEST NAP----------------------------------- -->
 								<li @click="getChatMessages(list.user_id)">
 									<div class="d-flex bd-highlight">
 										<div class="img_cont">
 											<img v-bind:src="'data:image/jpeg;base64,'+list.photo" class="rounded-circle user_img">
 											<span class="online_icon"></span>
 										</div>
-										<div class="user_info">
+										<div class="user_info_contact"> <!--Changed class name to 'user_info_contact' to avoid conflict with msg_head user_info design-->
 											<span>{{list.username}}</span>
 											<p>{{list.firstname}} {{list.lastname}}</p>
 										</div>
 									</div>
 								</li>
+								<li @click="getChatMessages(list.user_id)">
+									<div class="d-flex bd-highlight">
+										<div class="img_cont">
+											<img v-bind:src="'data:image/jpeg;base64,'+list.photo" class="rounded-circle user_img">
+											<span class="online_icon"></span>
+										</div>
+										<div class="user_info_contact">
+											<span>{{list.username}}</span>
+											<p>{{list.firstname}} {{list.lastname}}</p>
+										</div>
+									</div>
+								</li>
+								<li @click="getChatMessages(list.user_id)">
+									<div class="d-flex bd-highlight">
+										<div class="img_cont">
+											<img v-bind:src="'data:image/jpeg;base64,'+list.photo" class="rounded-circle user_img">
+											<span class="online_icon"></span>
+										</div>
+										<div class="user_info_contact">
+											<span>{{list.username}}</span>
+											<p>{{list.firstname}} {{list.lastname}}</p>
+										</div>
+									</div>
+								</li>
+								<!-- ---------------------------------TEST NAP-------------------------------------------- -->
 							</template>
 						</ul>
 					</div>
 					<div class="card-footer"></div>
 				</div></div>
 				<div class="col-md-8 col-xl-6 chat">
-					<div class="card">
+					<div class="card card_msg">
 						<div id="chat_header" class="card-header msg_head" style="display:none;">
 							<div class="d-flex bd-highlight">
 								<div class="img_cont">
@@ -115,5 +142,13 @@
 		<?php endforeach ?>
 	<?php endif ?>		
 
+	<script>
+		//   window.setInterval(function() {
+  		//   var elem = document.getElementById('data');
+  		//   $('chat_body').animate(elem.scrollTop = elem.scrollHeight);
+		//   }, 5000, "slow"); works but chatbox refreshes every 5 seconds
+		
+    	$("#chat_body").animate({scrollTop: $('#chat_body')[0].scrollHeight - $('#chat_body')[0].clientHeight}, 1000); //works, scrolls every new chat but does not auto scroll onload
+	</script>	
 	</body>
 </html>
