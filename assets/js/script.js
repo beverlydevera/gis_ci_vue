@@ -310,6 +310,8 @@ if ($('#header_nav').length) {
 												}
 											});
 
+											var audio = new Audio(window.App.baseUrl + "assets/audio/insight.mp3");
+											audio.play();
 											toastr.success('New Pre-Pregistration in Website (Name: '+el.lastname+', '+el.firstname+')');
 											systemconfigs.preregisteredlist.unshift(el);
 										}

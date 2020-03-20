@@ -123,7 +123,7 @@ var chat = new Vue({
                         })
                     }
                     if(chat.chatmessagescount!=0 && chat.chatmessagescount<e.data.data.chatmessagescount){
-                        var audio = new Audio(window.App.baseUrl + "assets/audio/insight.mp3")
+                        var audio = new Audio(window.App.baseUrl + "assets/audio/just-saying.mp3")
                         audio.play();
                     }
                     chat.chatmessagescount = e.data.data.chatmessagescount;
