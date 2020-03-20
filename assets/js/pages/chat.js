@@ -122,6 +122,10 @@ var chat = new Vue({
                             chat.chatmessages[index].proper_datetime = chat.format_datetime(el.date_added);
                         })
                     }
+                    if(chat.chatmessagescount!=0 && chat.chatmessagescount<e.data.data.chatmessagescount){
+                        var audio = new Audio(window.App.baseUrl + "assets/audio/insight.mp3")
+                        audio.play();
+                    }
                     chat.chatmessagescount = e.data.data.chatmessagescount;
                     $('#chat_header').css({'display': '',});
                     $('#chat_body').css({'display': '',});

@@ -48,7 +48,7 @@
 										</div>
 									</div>
 								</li>
-								<li @click="getChatMessages(list.user_id)">
+								<!-- <li @click="getChatMessages(list.user_id)">
 									<div class="d-flex bd-highlight">
 										<div class="img_cont">
 											<img v-bind:src="'data:image/jpeg;base64,'+list.photo" class="rounded-circle user_img">
@@ -71,7 +71,7 @@
 											<p>{{list.firstname}} {{list.lastname}}</p>
 										</div>
 									</div>
-								</li>
+								</li> -->
 								<!-- ---------------------------------TEST NAP-------------------------------------------- -->
 							</template>
 						</ul>
