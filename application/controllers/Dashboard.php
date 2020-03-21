@@ -32,13 +32,19 @@ class Dashboard extends CI_Controller {
                 "jointype" => "inner"
             ];
             $condition = [ "year" => date("Y") ];
-            $date = date('Y-m-d', strtotime('-5 day', strtotime(date("r"))));
+            if(sesdata('branch_id')>0) $condition['sm.branch_id'] = sesdata('branch_id');
             $students = $this->Main->getDataOneJoin("count(*) as count","tbl_students s",$join,$condition,$pager=array(),$orderby=array(),"","row")->count;
+
+            $date = date('Y-m-d', strtotime('-5 day', strtotime(date("r"))));
             $condition['registration_date >='] = $date;
             $newstudents = $this->Main->getDataOneJoin("count(*) as count","tbl_students s",$join,$condition,$pager=array(),$orderby=array(),"","row")->count;
+
             $condition = [ "sched_day" => date("l") ];
+            if(sesdata('branch_id')>0) $condition['branch_id'] = sesdata('branch_id');
             $classes = $this->Main->getDataOneJoin("count(*) as count","tbl_schedules sch",$join=array(),$condition,$pager=array(),$orderby=array(),"","row")->count;
-            $awards = $this->Main->getDataOneJoin("SUM(JSON_LENGTH(comp_awards)) AS count","tbl_studentcompetitions sc",$join=array(),$condition=[],$pager=array(),$orderby=array(),"","row")->count;
+            
+            if(sesdata('branch_id')>0) $condition['sm.branch_id'] = sesdata('branch_id');
+            $awards = $this->Main->getDataOneJoin("SUM(JSON_LENGTH(comp_awards)) AS count","tbl_studentcompetitions sc",$join,$condition=[],$pager=array(),$orderby=array(),"","row")->count;
 
             $response = [
                 "success" => true,
