@@ -155,10 +155,12 @@
     <script src="<?= base_url('assets/template/plugins/toastr/toastr.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/script.js') ?>"></script>
 
+    <?php if($title=="Dashboard"){ ?>
     <!-- DASHBOARD SCRIPTS -->
-    <!-- <script v-if="activenav='dashboard'" src="<?=base_url()?>assets/template/plugins/chart.js/Chart.min.js"></script>
-    <script v-if="activenav='dashboard'" src="<?=base_url()?>assets/template/dist/js/demo.js"></script>
-    <script v-if="activenav='dashboard'" src="<?=base_url()?>assets/template/dist/js/pages/dashboard3.js"></script> -->
+    <script src="<?=base_url()?>assets/template/plugins/chart.js/Chart.min.js"></script>
+    <script src="<?=base_url()?>assets/template/dist/js/demo.js"></script>
+    <script src="<?=base_url()?>assets/template/dist/js/pages/dashboard3.js"></script>
+    <?php } ?>
 
     <?php if (!empty($js)) : ?>
         <?php foreach ($js as $j) : ?>
