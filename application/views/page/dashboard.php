@@ -28,8 +28,8 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>{{reportsummary.classes}}<sup style="font-size: 20px">%</sup></h3>
-                        <p>Active Classes</p>
+                        <h3>{{reportsummary.classes}}</h3>
+                        <p>Classes for Today</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-calendar-alt"></i>
