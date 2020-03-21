@@ -37,7 +37,8 @@ class Dashboard extends CI_Controller {
             $condition['registration_date >='] = $date;
             $newstudents = $this->Main->getDataOneJoin("count(*) as count","tbl_students s",$join,$condition,$pager=array(),$orderby=array(),"","row")->count;
             $condition = [ "sched_day" => date("l") ];
-            $classes = $this->Main->getDataOneJoin("count(*) as count","tbl_schedules s",$join=array(),$condition,$pager=array(),$orderby=array(),"","row")->count;
+            $classes = $this->Main->getDataOneJoin("count(*) as count","tbl_schedules sch",$join=array(),$condition,$pager=array(),$orderby=array(),"","row")->count;
+            $awards = $this->Main->getDataOneJoin("SUM(JSON_LENGTH(comp_awards)) AS count","tbl_studentcompetitions sc",$join=array(),$condition=[],$pager=array(),$orderby=array(),"","row")->count;
 
             $response = [
                 "success" => true,
@@ -46,7 +47,7 @@ class Dashboard extends CI_Controller {
                         "students"      => $students,
                         "newstudents"   => $newstudents,
                         "classes"       => $classes,
-                        "medals"        => 0
+                        "awards"        => $awards
                     ]
                 ]
             ];

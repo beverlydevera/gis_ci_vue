@@ -40,8 +40,8 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>{{reportsummary.medals}}</h3>
-                        <p>Medals</p>
+                        <h3>{{reportsummary.awards}}</h3>
+                        <p>Awards and Medals</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-medal"></i>

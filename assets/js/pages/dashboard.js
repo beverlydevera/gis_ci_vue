@@ -6,7 +6,7 @@ var dashboard = new Vue({
             students: 0,
             newstudents: 0,
             classes: 0,
-            medals: 0
+            awards: 0
         },
     },
     methods: {
