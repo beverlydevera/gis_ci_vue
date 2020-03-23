@@ -69,7 +69,6 @@ class Dashboard extends CI_Controller {
         $branch_id = sesdata('branch_id');
 
         if(sesdata('role')==1){
-            //if admin, get breakdown per branch
             if($reporttype=="students"){
                 $join = [
                     "table" => "tbl_studentmembership sm",
@@ -94,13 +93,9 @@ class Dashboard extends CI_Controller {
                 $groupby = "b.branch_id";
                 $reportdata = $this->Main->getDataOneJoin("branch_name, COUNT(b.`branch_id`) AS count","tbl_branches b",$join,$condition,$pager=array(),$orderby=array(),$groupby,"");
             }else if($reporttype=="awards"){
-                $join = [
-                    "table" => "tbl_studentcompetitions sc",
-                    "key"   => "sc.branch_id=b.branch_id",
-                    "jointype" => "inner"
-                ];
                 $groupby = "b.branch_id";
-                $reportdata = $this->Main->getDataOneJoin("branch_name, SUM(JSON_LENGTH(comp_awards)) AS count","tbl_branches b",$join,$condition=[],$pager=array(),$orderby=array(),$groupby,"");
+                $condition = "(year(sc.date_added)=".date("Y")." OR sc.date_added IS NULL)";
+                $reportdata = $this->dashboard->getMedalsAwards_data("branch_name, SUM(JSON_LENGTH(comp_awards)) AS count","tbl_branches b",$condition,$groupby,"","");
             }
         }else{
             //if cashier, get names or class data or awards
