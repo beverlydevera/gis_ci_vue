@@ -7,6 +7,7 @@ class Dashboard extends CI_Controller {
     {
         parent::__construct();
         $this->load->model("Main");
+        $this->load->model("Dashboard_model","dashboard");
         date_default_timezone_set("Asia/Manila");
         checkLogin();
 	}
@@ -58,9 +59,62 @@ class Dashboard extends CI_Controller {
                 ]
             ];
             response_json($response);
-            // classes
-            // medals
         }
     }
     
+    public function getReportDetails()
+    {
+        $reporttype = jsondata()['reporttype'];
+        $role = sesdata('role');
+        $branch_id = sesdata('branch_id');
+
+        if(sesdata('role')==1){
+            //if admin, get breakdown per branch
+            if($reporttype=="students"){
+                $join = [
+                    "table" => "tbl_studentmembership sm",
+                    "key"   => "sm.branch_id=b.branch_id",
+                    "jointype" => "left"
+                ];
+                $condition = "(year=".date('Y')." OR year IS NULL)";
+                $groupby = "b.branch_id";
+                $reportdata = $this->Main->getDataOneJoin("branch_name, COUNT(sm.`branch_id`) AS count","tbl_branches b",$join,$condition,$pager=array(),$orderby=array(),$groupby,"");
+            }else if($reporttype=="newstudents"){
+                $date = date('Y-m-d', strtotime('-5 day', strtotime(date("r"))));
+                $condition = "(year=".date('Y')." OR year IS NULL) AND (registration_date>='$date' OR registration_date IS NULL)";
+                $groupby = "b.branch_id";
+                $reportdata = $this->dashboard->getNewStudents_data("branch_name, COUNT(sm.`branch_id`) AS count","tbl_branches b",$condition,$groupby,"","");
+            }else if($reporttype=="classes"){
+                $join = [
+                    "table" => "tbl_schedules sch",
+                    "key"   => "sch.branch_id=b.branch_id",
+                    "jointype" => "inner"
+                ];
+                $condition = [ "sched_day" => date("l") ];
+                $groupby = "b.branch_id";
+                $reportdata = $this->Main->getDataOneJoin("branch_name, COUNT(b.`branch_id`) AS count","tbl_branches b",$join,$condition,$pager=array(),$orderby=array(),$groupby,"");
+            }else if($reporttype=="awards"){
+                $join = [
+                    "table" => "tbl_studentcompetitions sc",
+                    "key"   => "sc.branch_id=b.branch_id",
+                    "jointype" => "inner"
+                ];
+                $groupby = "b.branch_id";
+                $reportdata = $this->Main->getDataOneJoin("branch_name, SUM(JSON_LENGTH(comp_awards)) AS count","tbl_branches b",$join,$condition=[],$pager=array(),$orderby=array(),$groupby,"");
+            }
+        }else{
+            //if cashier, get names or class data or awards
+        }
+        pdie($reportdata,1);
+
+        $response = [
+            "success" => true,
+            "data"    => [
+                "reportdata" => $reportdata,
+                "role"       => sesdata('role'),
+                "branch_id"  => $branch_id
+            ]
+        ];
+        response_json($response);
+    }
 }

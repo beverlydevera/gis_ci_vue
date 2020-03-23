@@ -8,6 +8,9 @@ var dashboard = new Vue({
             classes: 0,
             awards: 0
         },
+        reportdetails: {
+
+        }
     },
     methods: {
         getReportSummary(){
@@ -23,6 +26,19 @@ var dashboard = new Vue({
                     console.log(error)
                 });
         },
+        viewMoreInfo(reporttype){
+            var datas = {
+                "reporttype": reporttype
+            };
+            var urls = window.App.baseUrl + "Dashboard/getReportDetails";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    dashboard.reportdetails = e.data.data.reportdetails;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        }
     }, mounted: function () {
         this.getReportSummary();
     },
