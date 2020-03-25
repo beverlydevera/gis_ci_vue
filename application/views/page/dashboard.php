@@ -10,7 +10,7 @@
                     <div class="icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <a @click="viewMoreInfo('students')" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a @click="viewMoreInfo('Students')" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-6">
@@ -22,7 +22,7 @@
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
                     </div>
-                    <a @click="viewMoreInfo('newstudents')" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a @click="viewMoreInfo('Newstudents')" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-6">
@@ -34,7 +34,7 @@
                     <div class="icon">
                         <i class="fas fa-calendar-alt"></i>
                     </div>
-                    <a @click="viewMoreInfo('classes')" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a @click="viewMoreInfo('Classes')" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>            
             <div class="col-lg-3 col-6">
@@ -46,7 +46,7 @@
                     <div class="icon">
                         <i class="fas fa-medal"></i>
                     </div>
-                    <a @click="viewMoreInfo('awards')" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a @click="viewMoreInfo('Awards')" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
         </div>
@@ -242,4 +242,43 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="reportDetails_modal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{otherdata.reporttype}} Report Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <template v-if="otherdata.role==1">
+                    <table class="table table-bordered table-responsive-sm table-sm">
+                        <thead>
+                            <tr>
+                                <th>Branch Name</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(list,index) in reportdata">
+                                <th>{{list.branch_name}}</th>
+                                <td v-if="list.count!=null">{{list.count}}</td>
+                                <td v-else>0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </template>
+                    <template v-else>
+                        CASHIER
+                    </template>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </section>

@@ -69,7 +69,7 @@ class Dashboard extends CI_Controller {
         $branch_id = sesdata('branch_id');
 
         if(sesdata('role')==1){
-            if($reporttype=="students"){
+            if($reporttype=="Students"){
                 $join = [
                     "table" => "tbl_studentmembership sm",
                     "key"   => "sm.branch_id=b.branch_id",
@@ -78,12 +78,12 @@ class Dashboard extends CI_Controller {
                 $condition = "(year=".date('Y')." OR year IS NULL)";
                 $groupby = "b.branch_id";
                 $reportdata = $this->Main->getDataOneJoin("branch_name, COUNT(sm.`branch_id`) AS count","tbl_branches b",$join,$condition,$pager=array(),$orderby=array(),$groupby,"");
-            }else if($reporttype=="newstudents"){
+            }else if($reporttype=="Newstudents"){
                 $date = date('Y-m-d', strtotime('-5 day', strtotime(date("r"))));
                 $condition = "(year=".date('Y')." OR year IS NULL) AND (registration_date>='$date' OR registration_date IS NULL)";
                 $groupby = "b.branch_id";
                 $reportdata = $this->dashboard->getNewStudents_data("branch_name, COUNT(sm.`branch_id`) AS count","tbl_branches b",$condition,$groupby,"","");
-            }else if($reporttype=="classes"){
+            }else if($reporttype=="Classes"){
                 $join = [
                     "table" => "tbl_schedules sch",
                     "key"   => "sch.branch_id=b.branch_id",
@@ -92,15 +92,25 @@ class Dashboard extends CI_Controller {
                 $condition = [ "sched_day" => date("l") ];
                 $groupby = "b.branch_id";
                 $reportdata = $this->Main->getDataOneJoin("branch_name, COUNT(b.`branch_id`) AS count","tbl_branches b",$join,$condition,$pager=array(),$orderby=array(),$groupby,"");
-            }else if($reporttype=="awards"){
+            }else if($reporttype=="Awards"){
                 $groupby = "b.branch_id";
                 $condition = "(year(sc.date_added)=".date("Y")." OR sc.date_added IS NULL)";
                 $reportdata = $this->dashboard->getMedalsAwards_data("branch_name, SUM(JSON_LENGTH(comp_awards)) AS count","tbl_branches b",$condition,$groupby,"","");
             }
         }else{
             //if cashier, get names or class data or awards
+            $reportdata = "names list or class list";
+            if($reporttype=="Students"){
+                //queries
+            }else if($reporttype=="Newstudents"){
+                //queries
+            }else if($reporttype=="Classes"){
+                //queries
+            }else if($reporttype=="Awards"){
+                //queries
+            }
         }
-        pdie($reportdata,1);
+        // pdie($reportdata,1);
 
         $response = [
             "success" => true,

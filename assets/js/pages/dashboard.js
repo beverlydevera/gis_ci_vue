@@ -8,8 +8,11 @@ var dashboard = new Vue({
             classes: 0,
             awards: 0
         },
-        reportdetails: {
-
+        reportdata: [],
+        otherdata: {
+            role: 0,
+            branch_id: 0,
+            reporttype: ""
         }
     },
     methods: {
@@ -33,12 +36,16 @@ var dashboard = new Vue({
             var urls = window.App.baseUrl + "Dashboard/getReportDetails";
             axios.post(urls, datas)
                 .then(function (e) {
-                    dashboard.reportdetails = e.data.data.reportdetails;
+                    dashboard.reportdata = e.data.data.reportdata;
+                    dashboard.otherdata.role       = e.data.data.role;
+                    dashboard.otherdata.branch_id  = e.data.data.branch_id;
+                    dashboard.otherdata.reporttype  = reporttype;
+                    $('#reportDetails_modal').modal('show');
                 })
                 .catch(function (error) {
                     console.log(error)
                 });
-        }
+        },
     }, mounted: function () {
         this.getReportSummary();
     },
