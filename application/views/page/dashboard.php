@@ -155,10 +155,11 @@
                                 <p class="announcement-date">{{list.date_added}}</p>
                             </div>
                             <div class="col-md-12 announcement-contact">
-                                <span>{{list.text.substring(0,200)}}...
-                                </span>
+                                <span v-bind:id="'show_announcementtext-'+list.announcement_id">{{list.text.substring(0,200)}}...</span>
+                                <span v-bind:id="'hide_announcementtext-'+list.announcement_id" style="display:none;">{{list.text}}</span>
                                 <br>
-                                <a v-if="list.text.length>200" click="announcement_ReadMore(list.announcement_id)">Read More</a>
+                                <a v-if="list.text.length>200" v-bind:id="'readMore-'+list.announcement_id" @click="announcement_ReadMore(list.announcement_id)" style="color:blue;font-style:italic;">Read More</a>
+                                <a v-bind:id="'lessData-'+list.announcement_id" @click="announcement_ShowLess(list.announcement_id)" style="color:blue;font-style:italic;display:none;">Show Less</a>
                             </div>
                         </div>
                         <hr>

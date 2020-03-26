@@ -15,7 +15,8 @@ var dashboard = new Vue({
             branch_id: 0,
             reporttype: ""
         },
-        announcementslist: []
+        announcementslist: [],
+        announcementsdata: {}
     },
     methods: {
         changeDateFormat(date){
@@ -80,7 +81,16 @@ var dashboard = new Vue({
                 });
         },
         announcement_ReadMore(announcement_id){
-
+            $('#show_announcementtext-'+announcement_id).css({'display': 'none',});
+            $('#hide_announcementtext-'+announcement_id).css({'display': '',});
+            $('#readMore-'+announcement_id).css({'display': 'none',});
+            $('#lessData-'+announcement_id).css({'display': '',});
+        },
+        announcement_ShowLess(announcement_id){
+            $('#show_announcementtext-'+announcement_id).css({'display': '',});
+            $('#hide_announcementtext-'+announcement_id).css({'display': 'none',});
+            $('#readMore-'+announcement_id).css({'display': '',});
+            $('#lessData-'+announcement_id).css({'display': 'none',});
         }
     }, mounted: function () {
         this.getReportSummary();
