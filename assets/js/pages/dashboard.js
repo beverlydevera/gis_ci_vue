@@ -1,4 +1,5 @@
 // Vue.use(VueTables.ClientTable);
+var monthlist = [ "", "Jan", "Febr", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 var dashboard = new Vue({
     el: '#dashboard_page',
     data: {
@@ -13,9 +14,19 @@ var dashboard = new Vue({
             role: 0,
             branch_id: 0,
             reporttype: ""
-        }
+        },
+        announcementslist: []
     },
     methods: {
+        changeDateFormat(date){
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+            month = monthlist[month];
+            var returndateformat = month + ". " + day + ", " + year;
+            return returndateformat;
+        },
         getReportSummary(){
             var datas = {
                 "branch_id": 1
@@ -46,7 +57,33 @@ var dashboard = new Vue({
                     console.log(error)
                 });
         },
+        getNewAnnouncements(){
+            var d = new Date();
+            var datas = {
+                "select": "announcement_id,title,text,date_added",
+                "condition": "date_posted>="+d.setDate(d.getDate()-5),
+                "pager": {
+                    "limit": 5,
+                    "offset": ""
+                }
+            };
+            var urls = window.App.baseUrl + "Announcements/getAnnouncements";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    dashboard.announcementslist = e.data.data.announcementslist;
+                    dashboard.announcementslist.forEach((e,index) => {
+                        dashboard.announcementslist[index].date_added = dashboard.changeDateFormat(e.date_added);
+                    });
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
+        announcement_ReadMore(announcement_id){
+
+        }
     }, mounted: function () {
         this.getReportSummary();
+        this.getNewAnnouncements();
     },
 })

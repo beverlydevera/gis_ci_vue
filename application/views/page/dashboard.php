@@ -116,8 +116,6 @@
                             <span class="text-muted">Since last month</span>
                         </p>
                         </div>
-                        <!-- /.d-flex -->
-
                         <div class="position-relative mb-4">
                             <canvas id="sales-chart" height="200"></canvas>
                         </div>
@@ -143,99 +141,33 @@
                 </div>
             </div>
             <div class="col-md-4">
-
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Announcements</h3>
                     </div>
                     <div class="card-body">
+                        <template v-if="announcementslist.length>0" v-for="(list,index) in announcementslist">
                         <div class="row">
                             <div class="col-md-8">
-                                <h6 class="announcement-heading">Milo Summer Clinic 2019</h6>
+                                <h6 class="announcement-heading">{{list.title}}</h6>
                             </div>
                             <div class="col-md-4">
-                                <p class="announcement-date">Jan. 20, 2019</p>
+                                <p class="announcement-date">{{list.date_added}}</p>
                             </div>
                             <div class="col-md-12 announcement-contact">
-                                <span>Enroll now for free trial at your nearest Bravehearts Martial Arts Institute branch. 
-                                    Join us in the place where champions are made. For more information...
+                                <span>{{list.text.substring(0,200)}}...
                                 </span>
-                                <br><a href="">Read More</a>
+                                <br>
+                                <a v-if="list.text.length>200" click="announcement_ReadMore(list.announcement_id)">Read More</a>
                             </div>
                         </div>
                         <hr>
+                        </template>
+                        <template v-else>
                         <div class="row">
-                            <div class="col-md-8">
-                                <h6 class="announcement-heading">Vision / Mission</h6>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="announcement-date">Jan. 20, 2019</p>
-                            </div>
-                            <div class="col-md-12 announcement-contact">
-                                <label>Our Mission</label>
-                                <span>
-                                <br>
-                                    We commit to become the leading Martial Arts Institute by providing scientific, 
-                                    structured and top of the line martial arts instructions with core values of 
-                                    “Discipline, Character and Excellence,” in an environment where love, camaraderie 
-                                    and friendship emanates.
-                                </span>
-                                <br>
-                                <label>Our Vision</label>
-                                <span>
-                                <br>
-                                    We help every member of Bravehearts Martial Arts Institute experience satisfaction 
-                                    and by creating in them their desire to excel making sure that every student feels 
-                                    great about themselves as they quest for their personal best in an atmosphere of success 
-                                    and accomplishment through our carefully selected martial arts instructions and values.
-                                </span>
-                                <br>
-                            </div>
+                            <div class="col-md-12">No announcements yet.</div>
                         </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <h6 class="announcement-heading">Contact Numbers</h6>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="announcement-date">Jan. 18, 2019</p>
-                            </div>
-                            <div class="col-md-12 announcement-contact">
-                                <p class="announcement-text">
-                                    <label>ABANAO SQUARE MALL</label>
-                                    <br>
-                                    <span>Roofdeck, Abanao Square Mall
-                                    <br>Smart 0939 094 0117 / Globe 0926 733 8773
-                                    </span>
-                                    <br>
-                                    <label>KM 5, LA TRINIDAD</label>
-                                    <br>
-                                    <span>Rm. 212, 2nd Floor VC Arcadian Bldg Km 5
-                                    <br>Smart 0920 529 1056 / Landline: 422-8923
-                                    </span>
-                                    <br>
-                                    <label>UCAB ITOGON BENGUET</label>
-                                    <br>
-                                    <span>Lower Gomok Consumer Cooperative, Ucab Itogon Benguet
-                                    <br>Smart 0929 180 2642
-                                    <br>
-                                    </span>
-                                    <label>BUYAGAN, LA TRINIDAD</label>
-                                    <br>
-                                    <span>AE224 Western Buyagan, Poblacion, La Trinidad Benguet
-                                    <br>Smart: 0949 303 5571
-                                    </span>
-                                    <br>
-                                    <label>ALBERGO RESIDENCES</label>
-                                    <br>
-                                    <span>116 Albergo Residences, 01 Ignacio Villamor St., Baguio CIty
-                                    <br>Globe: 0967-211-5673 / ​Landline: 665-8193
-                                    </span>
-                                    <br>
-                                </p>
-                            </div>
-                        </div>
-                        <hr>
+                        </template>
                     </div>
                 </div>
 
