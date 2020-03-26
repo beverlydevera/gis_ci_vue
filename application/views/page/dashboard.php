@@ -253,8 +253,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <template v-if="otherdata.role==1">
                     <table class="table table-bordered table-responsive-sm table-sm">
+                    <template v-if="otherdata.role==1">
                         <thead>
                             <tr>
                                 <th>Branch Name</th>
@@ -268,11 +268,24 @@
                                 <td v-else>0</td>
                             </tr>
                         </tbody>
-                    </table>
                     </template>
                     <template v-else>
-                        CASHIER
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th v-if="otherdata.reporttype!='Classes'">Reference ID</th>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(list,index) in reportdata">
+                                <td>{{index+1}}</td>
+                                <td v-if="otherdata.reporttype!='Classes'">{{list.rdid}}</td>
+                                <td>{{list.name}}</td>
+                            </tr>
+                        </tbody>
                     </template>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
