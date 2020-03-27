@@ -1,4 +1,5 @@
 <section class="content">
+    <input type="hidden" value="<?=sesdata('role')?>" id="userrole"/>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8">
@@ -83,6 +84,8 @@
                         </div>
                     </div>
                 </div>
+                <?php }else{ ?>
+                    CASHIER
                 <?php } ?>
             </div>
             <div class="col-md-4">

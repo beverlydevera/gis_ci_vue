@@ -112,7 +112,7 @@ class Dashboard_model extends CI_Model {
 		return null;
 	}
 
-	public function getStudents_ChartData($select,$table,$condition,$groupby,$pager,$type){
+	public function getAdmin_ChartData($select,$table,$condition,$groupby,$pager,$type){
 		$this->db->select($select);
         $this->db->from($table);
         $this->db->join("tbl_studentmembership sm","sm.`student_id`=s.`student_id`","inner");
@@ -126,7 +126,7 @@ class Dashboard_model extends CI_Model {
 		$this->db->limit($pager['limit'],$pager['offset']);
 		}
 
-		$this->db->group_by("MONTH(registration_date)");
+		$this->db->group_by($groupby);
 		$this->db->group_by("branch_name");
 
 		$query = $this->db->get();

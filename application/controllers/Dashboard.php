@@ -124,7 +124,10 @@ class Dashboard extends CI_Controller {
     public function admin_studentsdata_chart()
     {
         $condition = "YEAR(registration_date)=".date('Y');
-        $summary_student = $this->dashboard->getStudents_ChartData("COUNT(s.`student_id`) AS datacount,MONTHNAME(registration_date) AS month_name, branch_name,b.branch_id","tbl_students s",$condition,"","","");
+        $summary_student = $this->dashboard->getAdmin_ChartData("COUNT(s.`student_id`) AS datacount,MONTHNAME(registration_date) AS month_name, branch_name,b.branch_id","tbl_students s",$condition,"MONTH(registration_date)","","");
+        
+        $condition = "YEAR(s.date_added)=".date('Y');
+        $summary_awards = $this->dashboard->getAdmin_ChartData("SUM(JSON_LENGTH(comp_awards)) AS datacount, MONTHNAME(s.date_added) AS month_name, branch_name, b.branch_id","tbl_studentcompetitions s",$condition,"MONTH(s.`date_added`)","","");
 
         $months = ["","January","February","March","April","May","June,","July","August","September","October","November","December"];
         if(date('n')<=3){ $monthlist=["January","February","March"]; }
@@ -136,6 +139,7 @@ class Dashboard extends CI_Controller {
 
         foreach($monthlist as $mlk => $mlv){
             $stud_abanao = $stud_arcadian = $stud_buyagan = $stud_albergo = $stud_itogon = 0;
+            $medals_abanao = $medals_arcadian = $medals_buyagan = $medals_albergo = $medals_itogon = 0;
 
             if(!empty($summary_student)){
                 foreach($summary_student as $ssk => $ssv){
@@ -158,10 +162,32 @@ class Dashboard extends CI_Controller {
                 'stud_itogon' => $stud_itogon,
                 'stud_albergo' => $stud_albergo,
             );
+
+            if(!empty($summary_awards)){
+                foreach($summary_awards as $sak => $sav){
+                    if($sav->month_name==$mlv){
+                        $counttotal = $sav->datacount;
+                        if($sav->branch_id==1){ $medals_abanao+=$counttotal; }
+                        else if($sav->branch_id==2){ $medals_arcadian+=$counttotal; }
+                        else if($sav->branch_id==3){ $medals_buyagan+=$counttotal; }
+                        else if($sav->branch_id==4){ $medals_itogon+=$counttotal; }
+                        else if($sav->branch_id==5){ $medals_albergo+=$counttotal; }
+                    }
+                }
+            }
+
+            $medals_data[] = array(
+                'medals_abanao' => $medals_abanao,
+                'medals_arcadian' => $medals_arcadian,
+                'medals_buyagan' => $medals_buyagan,
+                'medals_itogon' => $medals_itogon,
+                'medals_albergo' => $medals_albergo,
+            );
         }        
         
         $data = array(
-			'students_data'  => $students_data
+			'students_data'  => $students_data,
+			'medals_data'    => $medals_data
 		);
 		response_json($data);
     }
