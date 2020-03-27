@@ -53,91 +53,16 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
-                    <div class="card">
-                            <div class="card-header">
-                                <div class="d-flex justify-content-between">
-                                <h3 class="card-title">Students</h3>
-                                <a href="javascript:void(0);">View Report</a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex">
-                                <p class="d-flex flex-column">
-                                    <span class="text-bold text-lg">880</span>
-                                    <span>Enrollees</span>
-                                </p>
-                                <p class="ml-auto d-flex flex-column text-right">
-                                    <span class="text-success">
-                                    <i class="fas fa-arrow-up"></i> 33.1%
-                                    </span>
-                                    <span class="text-muted">Since last month</span>
-                                </p>
-                                </div>
-                                <div class="position-relative mb-4">
-                                    <canvas id="sales-chart" height="200"></canvas>
-                                </div>
-
-                                <div class="d-flex flex-row justify-content-end">
-                                    <span class="mr-2">
-                                        <i class="fas fa-square text-primary"></i> Abanao
-                                    </span>
-                                    <span>
-                                        <i class="fas fa-square text-gray"></i> Arcadian
-                                    </span>
-                                    <span>
-                                        <i class="fas fa-square text-success"></i> Buyagan
-                                    </span>
-                                    <span>
-                                        <i class="fas fa-square text-warning"></i> EGI Albergo
-                                    </span>
-                                    <span>
-                                        <i class="fas fa-square text-danger"></i> Itogon
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
+                    <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between">
-                                <h3 class="card-title">Medals and Awards</h3>
-                                <a href="javascript:void(0);">View Report</a>
+                                <h3 class="card-title">Students</h3>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="d-flex">
-                                <p class="d-flex flex-column">
-                                    <span class="text-bold text-lg">820</span>
-                                    <span>Enrollees Over Time</span>
-                                </p>
-                                <p class="ml-auto d-flex flex-column text-right">
-                                    <span class="text-success">
-                                    <i class="fas fa-arrow-up"></i> 12.5%
-                                    </span>
-                                    <span class="text-muted">Since last week</span>
-                                </p>
-                                </div>
                                 <div class="position-relative mb-4">
-                                    <canvas id="visitors-chart" height="200"></canvas>
-                                </div>
-
-                                <div class="d-flex flex-row justify-content-end">
-                                    <span class="mr-2">
-                                        <i class="fas fa-square text-primary"></i> Abanao
-                                    </span>
-                                    <span>
-                                        <i class="fas fa-square text-gray"></i> Arcadian
-                                    </span>
-                                    <span>
-                                        <i class="fas fa-square text-success"></i> Buyagan
-                                    </span>
-                                    <span>
-                                        <i class="fas fa-square text-warning"></i> EGI Albergo
-                                    </span>
-                                    <span>
-                                        <i class="fas fa-square text-danger"></i> Itogon
-                                    </span>
+                                    <canvas id="admin_studentschart" height="200"></canvas>
                                 </div>
                             </div>
                         </div>

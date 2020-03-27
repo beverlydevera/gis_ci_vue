@@ -112,6 +112,39 @@ class Dashboard_model extends CI_Model {
 		return null;
 	}
 
+	public function getStudents_ChartData($select,$table,$condition,$groupby,$pager,$type){
+		$this->db->select($select);
+        $this->db->from($table);
+        $this->db->join("tbl_studentmembership sm","sm.`student_id`=s.`student_id`","inner");
+        $this->db->join("tbl_branches b","b.`branch_id`=sm.`branch_id`","inner");
+		
+        if(!empty($condition)){
+            $this->db->where($condition);
+        }
+
+		if (!empty($pager)) {
+		$this->db->limit($pager['limit'],$pager['offset']);
+		}
+
+		$this->db->group_by("MONTH(registration_date)");
+		$this->db->group_by("branch_name");
+
+		$query = $this->db->get();
+		if ($query->num_rows()) {
+
+			if ($type =="row") {
+				return $query->row();
+			}elseif($type =="count_row"){
+				return $query->num_rows();
+			}elseif($type =="is_array") {
+				return $query->result_array();
+			}else{
+				return $query->result();
+			}
+		}
+		return null;
+	}
+
 }
 
 /* End of file Recruitment_model.php */

@@ -120,4 +120,49 @@ class Dashboard extends CI_Controller {
         ];
         response_json($response);
     }
+
+    public function admin_studentsdata_chart()
+    {
+        $condition = "YEAR(registration_date)=".date('Y');
+        $summary_student = $this->dashboard->getStudents_ChartData("COUNT(s.`student_id`) AS datacount,MONTHNAME(registration_date) AS month_name, branch_name,b.branch_id","tbl_students s",$condition,"","","");
+
+        $months = ["","January","February","March","April","May","June,","July","August","September","October","November","December"];
+        if(date('n')<=3){ $monthlist=["January","February","March"]; }
+        else if(date('n')>3){ 
+            $monthlist[0] = $months[date('n')-2];
+            $monthlist[1] = $months[date('n')-1];
+            $monthlist[2] = $months[date('n')];
+        }
+
+        foreach($monthlist as $mlk => $mlv){
+            $stud_abanao = $stud_arcadian = $stud_buyagan = $stud_albergo = $stud_itogon = 0;
+
+            if(!empty($summary_student)){
+                foreach($summary_student as $ssk => $ssv){
+                    if($ssv->month_name==$mlv){
+                        $counttotal = $ssv->datacount;
+                        if($ssv->branch_id==1){ $stud_abanao+=$counttotal; }
+                        else if($ssv->branch_id==2){ $stud_arcadian+=$counttotal; }
+                        else if($ssv->branch_id==3){ $stud_buyagan+=$counttotal; }
+                        else if($ssv->branch_id==4){ $stud_itogon+=$counttotal; }
+                        else if($ssv->branch_id==5){ $stud_albergo+=$counttotal; }
+                    }
+                }
+            }
+
+            $students_data[] = array(
+                'month_name' => $mlv,
+                'stud_abanao' => $stud_abanao,
+                'stud_arcadian' => $stud_arcadian,
+                'stud_buyagan' => $stud_buyagan,
+                'stud_itogon' => $stud_itogon,
+                'stud_albergo' => $stud_albergo,
+            );
+        }        
+        
+        $data = array(
+			'students_data'  => $students_data
+		);
+		response_json($data);
+    }
 }
