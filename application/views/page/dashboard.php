@@ -52,6 +52,7 @@
                         </div>
                     </div>
                 </div>
+                <?php if(sesdata('role')==1){ ?>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card">
@@ -62,12 +63,27 @@
                             </div>
                             <div class="card-body">
                                 <div class="position-relative mb-4">
-                                    <canvas id="admin_studentschart" height="200"></canvas>
+                                    <canvas id="admin_studentschart" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between">
+                                <h3 class="card-title">Medals</h3>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="position-relative mb-4">
+                                    <canvas id="admin_medalschart" height="300"></canvas>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <?php } ?>
             </div>
             <div class="col-md-4">
                 <div class="row">
