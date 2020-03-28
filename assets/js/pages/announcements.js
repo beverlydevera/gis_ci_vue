@@ -197,9 +197,9 @@ var announcements = new Vue({
                 var urls = window.App.baseUrl + "Announcements/getAnnouncements";
                 axios.post(urls, datas)
                     .then(function (e) {
-                        if(e.data!=null){
+                        if(e.data.data.announcementslist!=null){
                             announcements.announcementslist = e.data.data.announcementslist;
-                        }
+                        }else{ announcements.announcementslist = []; }
                     })
                     .catch(function (error) {
                         console.log(error)

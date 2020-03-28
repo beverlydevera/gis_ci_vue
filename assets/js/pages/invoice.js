@@ -2,6 +2,7 @@
 var invoice = new Vue({
     el: '#invoice_page',
     data: {
+        branch_id:$('#branch_id').val(),
         invoicelist: [],
         invoicedetails: {
             details: {
@@ -18,13 +19,33 @@ var invoice = new Vue({
             ordate: currentdate,
             paymentoption: "full",
             amount: 0,
-        }
+        },
+        filterdetails: {
+            searchInput: "",
+            invstatus: 0,
+            branch_id: 0,
+        },
+        brancheslist: [],
     },
     methods: {
+        getBranchesList(){
+            var urls = window.App.baseUrl + "Libraries/getBranches";
+            axios.post(urls, "")
+                .then(function (e) {
+                    invoice.brancheslist=e.data.data.brancheslist;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
         getInvoiceList(){
+            var datas = "";
+            if(this.branch_id>0){
+                datas = {"condition":"si.branch_id="+this.branch_id}
+            }
             var urls = window.App.baseUrl + "invoice/getInvoiceList";
             showloading("Loading Data");
-            axios.post(urls, "")
+            axios.post(urls, datas)
                 .then(function (e) {
                     swal.close();
                     invoice.invoicelist = e.data.data.invoicelist;
@@ -137,8 +158,52 @@ var invoice = new Vue({
         printInvoice(invoice_id){
             var urls = window.App.baseUrl + "Invoice/printInvoice/"+invoice_id;
             window.open(urls, "_blank");
-        }
+        },
+        searchInvoice(action){
+            var datas = "";
+            if(action=='filter'){
+                if(this.filterdetails.searchInput!=""){
+                    datas = { "condition": "invoice_number LIKE '%"+this.filterdetails.searchInput+"%' OR reference_id LIKE '%"+this.filterdetails.searchInput+"%' OR lastname LIKE '%"+this.filterdetails.searchInput+"%' OR firstname LIKE '%"+this.filterdetails.searchInput+"%'" }
+                }
+                if(this.filterdetails.invstatus!=0){
+                    if(datas!=""){
+                        datas = { "condition":"(invoice_number LIKE '%"+this.filterdetails.searchInput+"%' OR reference_id LIKE '%"+this.filterdetails.searchInput+"%' OR lastname LIKE '%"+this.filterdetails.searchInput+"%' OR firstname LIKE '%"+this.filterdetails.searchInput+"%') AND si.status='"+this.filterdetails.invstatus+"'" }
+                    }else{
+                        datas = {"condition":"si.status='"+this.filterdetails.invstatus+"'"}
+                    }
+                }
+                if(this.filterdetails.branch_id!=0){
+                    if(datas!=""){
+                        if(this.filterdetails.invstatus!=0){
+                            datas = { "condition":"(invoice_number LIKE '%"+this.filterdetails.searchInput+"%' OR reference_id LIKE '%"+this.filterdetails.searchInput+"%' OR lastname LIKE '%"+this.filterdetails.searchInput+"%' OR firstname LIKE '%"+this.filterdetails.searchInput+"%') AND si.status='"+this.filterdetails.invstatus+"' AND si.branch_id='"+this.filterdetails.branch_id+"'"}
+                        }else{
+                            datas = { "condition":"(invoice_number LIKE '%"+this.filterdetails.searchInput+"%' OR reference_id LIKE '%"+this.filterdetails.searchInput+"%' OR lastname LIKE '%"+this.filterdetails.searchInput+"%' OR firstname LIKE '%"+this.filterdetails.searchInput+"%') AND si.branch_id='"+this.filterdetails.branch_id+"'" }
+                        }
+                    }else{
+                        datas = {"condition":"si.branch_id='"+this.filterdetails.branch_id+"'"}
+                    }
+                }
+            }else{
+                this.filterdetails = {
+                    searchInput: "",
+                    invstatus: 0,
+                    branch_id: 0,
+                };
+            }
+
+            var urls = window.App.baseUrl + "invoice/getInvoiceList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    if(e.data.data.invoicelist!=null){
+                        invoice.invoicelist = e.data.data.invoicelist;
+                    }else{ invoice.invoicelist = []; }
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
     }, mounted: function () {
         this.getInvoiceList();
+        this.getBranchesList();
     },
 })

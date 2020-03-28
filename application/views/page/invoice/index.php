@@ -1,4 +1,5 @@
 <section class="content">
+    <input type="hidden" id="branch_id" value="<?=sesdata('branch_id')?>"/>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -13,19 +14,29 @@
                                 <div class="input-group-prepend smallerinput">
                                     <span class="input-group-text"><i class="fas fa-search"></i></span>
                                 </div>
-                                <input type="text" class="form-control smallerinput" placeholder="Search">
+                                <input type="text" class="form-control smallerinput" v-model="filterdetails.searchInput" @input="searchInvoice('filter')" placeholder="Search">
                                 </div>
-                            </div>
+                            </div>                            
+                            <?php if(sesdata('role')==1){ ?>
                             <div class="col-md-2">
-                                <select class="form-control smallerinput">
-                                    <option disabled selected>Select Payment Status</option>
+                                <select class="form-control smallerinput" v-model="filterdetails.branch_id" @change="searchInvoice('filter')">
+                                    <option value=0 disabled selected>Select Branch</option>
+                                    <template v-for="(list,index) in brancheslist">
+                                    <option :value=list.branch_id>{{list.branch_name}}</option>
+                                    </template>
+                                </select>
+                            </div>
+                            <?php } ?>
+                            <div class="col-md-2">
+                                <select class="form-control smallerinput" v-model="filterdetails.invstatus" @change="searchInvoice('filter')">
+                                    <option value="0" disabled selected>Select Payment Status</option>
                                     <option>Paid</option>
                                     <option>Partial</option>
                                     <option>Unpaid</option>
                                 </select>
                             </div>
-                            <div class="col-md-1">
-                                <button class="btn btn-primary btn-xs">Filter</button>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary btn-xs" @click="searchInvoice('clearfilter')">Clear Filter</button>
                             </div>
                         </div>
                         <table class="table table-bordered table-responsive-sm table-sm">

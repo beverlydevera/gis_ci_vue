@@ -25,6 +25,10 @@ class Invoice extends CI_Controller {
     {
         $type = $groupby=""; $condition = $pager = $orderby = [];
         $data = jsondata();
+        $pager = [
+            "limit" => 10,
+            "offset" => 0
+        ];
 
         if(!empty($data)){
             if(!empty($data['groupby'])){ $groupby = $data['groupby']; }
@@ -33,25 +37,25 @@ class Invoice extends CI_Controller {
             if(!empty($condition['si.invoice_id'])){ $type="row"; }
         }
 
-        if(sesdata('role')==2){ $condition["si.branch_id"] = sesdata('branch_id'); }
+        // if(sesdata('role')==2){ $condition["si.branch_id"] = sesdata('branch_id'); }
         $select = "invoice_number, si.date_added, reference_id, lastname, firstname, amount, invoice_id, si.status as invstatus,branch_name";
         $invoicelist = $this->invoice->getInvoiceList($select,"tbl_studentinvoice si",$condition,$pager,$groupby,$type);
         
-        if(!empty($invoicelist)){
-            $invoicetotal = $this->Main->getDataOneJoin("SUM(amount) as totalinvoice_amt","tbl_studentinvoice si","",$condition,"","","","row")->totalinvoice_amt;
-        }else{ $invoicetotal=0; }
+        // if(!empty($invoicelist)){
+        //     $invoicetotal = $this->Main->getDataOneJoin("SUM(amount) as totalinvoice_amt","tbl_studentinvoice si","",$condition,"","","","row")->totalinvoice_amt;
+        // }else{ $invoicetotal=0; }
 
-        unset($condition['si.branch_id']);
-        $paymenttotal = $this->Main->getDataOneJoin("SUM(amount) as totalpayment_amt","tbl_paymentshistory si","",$condition,"","","","row");
-        if(!empty($paymenttotal)){ $paymenttotal = $paymenttotal->totalpayment_amt; }else{ $paymenttotal=0; }
+        // unset($condition['si.branch_id']);
+        // $paymenttotal = $this->Main->getDataOneJoin("SUM(amount) as totalpayment_amt","tbl_paymentshistory si","",$condition,"","","","row");
+        // if(!empty($paymenttotal)){ $paymenttotal = $paymenttotal->totalpayment_amt; }else{ $paymenttotal=0; }
 
         $response = array(
             "success"   => true,
             "data"      => [
                 "invoicelist" => $invoicelist,
                 'invoiceinfo'       => [
-                    "totalinvoice"  => $invoicetotal,
-                    "totalpayment"  => $paymenttotal
+                    // "totalinvoice"  => $invoicetotal,
+                    // "totalpayment"  => $paymenttotal
                 ]
             ]
         );
