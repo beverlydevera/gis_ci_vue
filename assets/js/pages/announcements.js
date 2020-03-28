@@ -11,7 +11,8 @@ var announcements = new Vue({
         announcementdetails: {
             photo: null
         },
-        disabled_edit: false
+        disabled_edit: false,
+        searchInput: "",
     },
     methods: {
         newimageSelect(event){
@@ -181,6 +182,28 @@ var announcements = new Vue({
                         })
                     }
             })
+        },
+        searchAnnouncement(){
+            if(this.searchInput!=""){
+                var datas = {
+                    "select"    : "announcement_id,title,status,date_added",
+                    "condition" : "title LIKE '%"+this.searchInput+"%'"
+                };
+            }else{
+                var datas = {
+                    "select"    : "announcement_id,title,status,date_added"
+                };
+            }
+                var urls = window.App.baseUrl + "Announcements/getAnnouncements";
+                axios.post(urls, datas)
+                    .then(function (e) {
+                        if(e.data!=null){
+                            announcements.announcementslist = e.data.data.announcementslist;
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
         },
     }, mounted: function () {
         this.getAnnouncements();

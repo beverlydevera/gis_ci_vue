@@ -13,7 +13,7 @@
                                 <div class="input-group-prepend smallerinput">
                                     <span class="input-group-text"><i class="fas fa-search"></i></span>
                                 </div>
-                                <input type="text" class="form-control smallerinput" placeholder="Search Announcement">
+                                <input type="text" class="form-control smallerinput" placeholder="Search Announcement Title" v-model="searchInput" @input="searchAnnouncement()">
                                 </div>
                             </div>
                             <div class="col-md-6"></div>
