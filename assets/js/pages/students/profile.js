@@ -7,6 +7,8 @@ var profile = new Vue({
         disabled_everything: true,
         student_id:$('#student_id').val(),
         filterdetails: {
+            classes_packagetype: 0,
+            classes_year: 0,
             competitions_search: "",
             accounts_search: "",
             accounts_invstatus: 0
@@ -296,7 +298,7 @@ var profile = new Vue({
             }else if(table=="clearinvoice"){
                 this.filterdetails = {
                     accounts_search: "",
-                    accounts_invstatus: "0"
+                    accounts_invstatus: 0
                 }
                 datas = {
                     "student_id": this.student_id,
@@ -304,6 +306,24 @@ var profile = new Vue({
                     "invstatus": this.filterdetails.accounts_invstatus
                 };
                 urls = "Students/getInvoiceList"
+            }else if(table=="packages"){
+                datas = {
+                    "student_id": this.student_id,
+                    "packagetype": this.filterdetails.classes_packagetype,
+                    "year": this.filterdetails.classes_year
+                }
+                urls = "Students/getStudentPackages"
+            }else if(table=="clearpackages"){
+                this.filterdetails = {
+                    classes_packagetype: 0,
+                    classes_year: 0,
+                }
+                datas = {
+                    "student_id": this.student_id,
+                    "packagetype": this.filterdetails.classes_packagetype,
+                    "year": this.filterdetails.classes_year
+                }
+                urls = "Students/getStudentPackages"
             }
             var urls = window.App.baseUrl + urls;
             axios.post(urls, datas)
@@ -312,6 +332,13 @@ var profile = new Vue({
                         profile.competitionslist = e.data.data.competitionslist;
                     }else if(table=="invoice" || table=="clearinvoice"){
                         profile.invoicelist = e.data.data.invoicelist;
+                    }else if(table=="packages" || table=="clearpackages"){
+                        profile.studentpackages = e.data.data.studentpackages;
+                        if(profile.studentpackages!=null){
+                            profile.studentpackages.forEach((el,ind) => {
+                                profile.studentpackages[ind].details = JSON.parse(el.details);
+                            })
+                        }
                     }
                 })
                 .catch(function (error) {

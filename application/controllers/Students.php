@@ -374,14 +374,26 @@ class Students extends CI_Controller {
     public function getStudentPackages()
     {
         $student_id = $this->input->post('student_id');
-
+        $condition = [ 'student_id' => $student_id ];
+        $data = jsondata();
+        if(!empty($data)){
+            $condition = [ 'student_id' => $data['student_id'] ];
+            if($data['packagetype']!="0"){
+                // echo "type";
+                $condition['packagetype'] = $data['packagetype'];
+            }
+            if($data['year']!=0){
+                // echo "year";
+                $condition['year'] = $data['year'];
+            }
+        }
         $select = "studpack_id,student_id,invoice_id,sp.package_id,sp.details,p.packagetype,p.pricerate,p.year";
         $join = [
             "table"     => "tbl_packages p",
             "key"       => "p.package_id=sp.package_id",
             "jointype"  => "inner"
         ];
-        $studentpackages = $this->Main->getDataOneJoin($select,"tbl_studentpackages sp",$join,['student_id'=>$student_id],$pager=array(),$orderby=array(),$groupby="",$type="");
+        $studentpackages = $this->Main->getDataOneJoin($select,"tbl_studentpackages sp",$join,$condition,$pager=array(),$orderby=array(),$groupby="",$type="");
 
         if(!empty($studentpackages)){
             $response = array(

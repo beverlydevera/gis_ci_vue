@@ -15,7 +15,7 @@
     </div>
     <div class="col-md-4">
         <select class="form-control smallerinput" v-model="filterdetails.accounts_invstatus" @click="searchTable('invoice')">
-            <option value="0" disabled selected>Select Payment Status</option>
+            <option value=0 disabled selected>Select Payment Status</option>
             <option>Paid</option>
             <option>Partial</option>
             <option>Unpaid</option>

@@ -1,8 +1,28 @@
 <h6>CLASSES AND ATTENDANCE
 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#availNewPackage" style="float:right;">Avail New Package</button>
 </h6>
+<!-- <br> -->
+<div class="row">
+    <div class="col-md-2">
+        <select class="form-control smallerinput" v-model="filterdetails.classes_packagetype" @change="searchTable('packages')">
+            <option value="0" disabled selected>Select Package Type</option>
+            <option>Regular</option>
+            <option>Unlimited</option>
+            <option>Summer Promo</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select class="form-control smallerinput" v-model="filterdetails.classes_year" @change="searchTable('packages')">
+            <option value="0" disabled selected>Select Year</option>
+            <option>2020</option>
+            <option>2019</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-primary btn-xs" @click="searchTable('clearpackages')">Clear Filter</button>
+    </div>
+</div>
 <br>
-
 <div class="row" id="package_regular">
     <div class="col-md-12">
         <table class="table table-bordered table-responsive-sm table-sm">
