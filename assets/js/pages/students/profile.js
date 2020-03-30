@@ -6,6 +6,12 @@ var profile = new Vue({
         readonly_everything: true,
         disabled_everything: true,
         student_id:$('#student_id').val(),
+        filterdetails: {
+            classes_search: "",
+            competitions_search: "",
+            accounts_search: "",
+            accounts_invstatus: 0
+        },
         //first tab
         studentinfo:{
             telephoneno: "",
@@ -272,6 +278,35 @@ var profile = new Vue({
         }
     },
     methods: {
+        searchTable(table){
+            var datas = "";
+            var urls = "";
+            if(table=="classes"){
+                //classes
+            }else if(table=="competitions"){
+                datas = {
+                    "student_id": this.student_id,
+                    "searchinput": this.filterdetails.competitions_search
+                };
+                urls = "Students/getCompetitionsList"
+            }else if(table=="invoice"){
+                //inv
+            }
+            var urls = window.App.baseUrl + urls;
+            axios.post(urls, datas)
+                .then(function (e) {
+                    if(table=="classes"){
+                        //classes
+                    }else if(table=="competitions"){
+                        profile.competitionslist = e.data.data.competitionslist;
+                    }else if(table=="invoice"){
+                        //inv
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
         inputImage(){ 
             $("input[id='studentpicture']").click();
         },

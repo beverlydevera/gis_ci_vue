@@ -577,6 +577,28 @@ class Students extends CI_Controller {
         response_json($response);
     }
 
+    public function getCompetitionsList()
+    {
+        $data = jsondata();
+        $condition = "student_id = ".$data['student_id']." AND (comp_title LIKE '%".$data['searchinput']."%' OR comp_type LIKE '%".$data['searchinput']."%')";
+        $competitionslist = $this->Main->getDataOneJoin("studcomp_id,student_id,comp_title,comp_type,comp_date","tbl_studentcompetitions","",$condition,"","","","");
+
+        if(!empty($competitionslist)){
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    'competitionslist'  => $competitionslist
+                ],
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+
     //fourth tab
     public function saveStudentPromotion()
     {
