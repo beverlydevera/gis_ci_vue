@@ -7,6 +7,10 @@ var users = new Vue({
         userdetails: {
             photo: null,
             branch_id: 0
+        },
+        filterdetails: {
+            searchInput: "",
+            userrole: 0
         }
     },
     methods: {
@@ -26,11 +30,6 @@ var users = new Vue({
                 orderby: {
                     column: "u.lastname",
                     order: "ASC",
-                },
-                join: {
-                    table: "tbl_branches b",
-                    key: "b.branch_id=u.branch_id",
-                    jointype: "left",
                 },
                 condition: {
                     "u.status": 1
@@ -52,12 +51,7 @@ var users = new Vue({
                     "user_id": user_id,
                     "u.status": 1
                 },
-                type: "row",
-                join: {
-                    table: "tbl_branches b",
-                    key: "b.branch_id=u.branch_id",
-                    jointype: "left",
-                }
+                type: "row"
             };
             var urls = window.App.baseUrl + "users/getUsersList";
             showloading("Loading Data");
@@ -194,6 +188,39 @@ var users = new Vue({
                 reader.readAsDataURL(event.target.files[0]);
             }
         },
+        searchTable(){
+            if(this.filterdetails.searchInput!=""){
+                var searchinput = this.filterdetails.searchInput;
+                var condition = "u.status = 1 AND (username LIKE '%"+searchinput+"%' OR lastname LIKE '%"+searchinput+"%' OR firstname LIKE '%"+searchinput+"%' OR middlename LIKE '%"+searchinput+"%')"
+                var datas = {
+                    select: "user_id,username,lastname,firstname,middlename,contactno,emailadd,role,branch_name",
+                    orderby: {
+                        column: "u.lastname",
+                        order: "ASC",
+                    },
+                    condition: condition
+                };
+            }else{
+                var datas = {
+                    select: "user_id,username,lastname,firstname,middlename,contactno,emailadd,role,branch_name",
+                    orderby: {
+                        column: "u.lastname",
+                        order: "ASC",
+                    },
+                    condition: {
+                        "u.status": 1
+                    }
+                };
+            }
+            var urls = window.App.baseUrl + "users/getUsersList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    users.userslist=e.data.data;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        }
     }, mounted: function () {
         this.getUsers();
         this.getBranchesList();

@@ -33,9 +33,14 @@ class Users extends CI_Controller {
         $select = "*";
         $data = jsondata();
 
+        $join = [
+            "table" => "tbl_branches b",
+            "key" => "b.branch_id=u.branch_id",
+            "jointype" => "left",
+        ];
+
         if(!empty($data)){
             if(!empty($data['select'])){ $select = $data['select']; }
-            if(!empty($data['join'])){ $join = $data['join']; }
             if(!empty($data['condition'])){ $condition = $data['condition']; }
             if(!empty($data['pager'])){ $pager = $data['pager']; }
             if(!empty($data['orderby'])){ $orderby = $data['orderby']; }
