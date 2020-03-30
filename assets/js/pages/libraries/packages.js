@@ -32,9 +32,8 @@ var package = new Vue({
         disabled_showbtn: false,
         disabled_hidebtn: true,
         searchFilter:{
-            searchinput: "",
-            packagetype: "Select Package Type",
-            year: "Select Year"
+            packagetype: 0,
+            year: 0
         },
         inventorylist: [],
         classeslist: []
@@ -361,16 +360,55 @@ var package = new Vue({
                     console.log(error)
                 }); 
         },
-        searchTable(){
-            var datas = {
-                details:     this.searchFilter.searchinput,
-                remarks:     this.searchFilter.searchinput,
-                packagetype: this.searchFilter.packagetype,
-                year:        this.searchFilter.year,
+        searchTable(action){
+            var datas = "";
+            if(action=="filter"){
+                if(this.searchFilter.packagetype!=0){
+                    datas = { "packagetype": this.searchFilter.packagetype }
+                }
+                if(this.searchFilter.year!="0"){
+                    if(datas!=""){
+                        datas = {
+                            "packagetype": this.searchFilter.packagetype,
+                            "year": this.searchFilter.year
+                        }
+                    }else{
+                        datas = { "year": this.searchFilter.year }
+                    }
+                }
+            }else{
+                this.searchFilter = {
+                    packagetype: 0,
+                    year: 0
+                }
             }
+            
             var urls = window.App.baseUrl + "Libraries/getPackageList";
             axios.post(urls, datas)
                 .then(function (e) {
+                    package.packagelist = [];
+                    e.data.data.packagelist.forEach((e,index) => {
+                        if(e.packagetype!="Unlimited"){
+                            package.packagelist.push({
+                                package_id: e.package_id,
+                                packagetype: e.packagetype,
+                                packagedetails: JSON.parse(e.packagedetails),
+                                pricerate: e.pricerate,
+                                year: e.year,
+                                remarks: e.remarks,
+                            })
+                            if(e.packagetype=='Regular'){ package.getClassDetails(index); }
+                        }else{
+                            package.packagelist.push({
+                                package_id: e.package_id,
+                                packagetype: e.packagetype,
+                                packagedetails: e.packagedetails,
+                                pricerate: e.pricerate,
+                                year: e.year,
+                                remarks: e.remarks,
+                            })
+                        }
+                    });
                     //update table
                     //continue here
                 })

@@ -8,36 +8,29 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-3">
-                                <div class="input-group mb-3">
-                                <div class="input-group-prepend smallerinput">
-                                    <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                </div>
-                                    <input type="text" class="form-control smallerinput" placeholder="Search" @blur="searchTable()" v-model="searchFilter.searchinput">
-                                </div>
-                            </div>
                             <div class="col-md-2">
-                                <select class="form-control smallerinput" v-model="searchFilter.packagetype">
-                                    <option disabled selected>Select Package Type</option>
+                                <select class="form-control smallerinput" v-model="searchFilter.packagetype" @change="searchTable('filter')">
+                                    <option value="0" disabled selected>Select Package Type</option>
                                     <option>Regular</option>
                                     <option>Unlimited</option>
                                     <option>Summer Promo</option>
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <select class="form-control smallerinput" v-model="searchFilter.year">
-                                    <option disabled selected>Select Year</option>
+                                <select class="form-control smallerinput" v-model="searchFilter.year" @change="searchTable('filter')">
+                                    <option value="0" disabled selected>Select Year</option>
                                     <option>2020</option>
                                     <option>2019</option>
                                 </select>
                             </div>
-                            <div class="col-md-1">
-                                <button class="btn btn-primary btn-xs" @click="searchTable()">Filter</button>
+                            <div class="col-md-4">
+                                <button class="btn btn-primary btn-xs" @click="searchTable('clearfilter')">Clear Filter</button>
                             </div>
                             <div class="col-md-4">
                                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addNewPackageModal" style="float:right;">Add a New Package</button>
                             </div>
                         </div>
+                        <br>
                         <table class="table table-bordered table-responsive-sm table-sm">
                             <thead>
                                 <tr>
