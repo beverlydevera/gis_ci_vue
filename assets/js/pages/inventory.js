@@ -12,7 +12,8 @@ var inventory = new Vue({
             itemStockInfo: [],
             itemInfo: {}
         },
-        newStock: {}
+        newStock: {},
+        searchInput: ""
     },
     methods: {
         getBranches(){
@@ -95,7 +96,29 @@ var inventory = new Vue({
                 .catch(function (error) {
                     console.log(error)
                 });
-        }
+        },
+        searchTable(){
+            if(this.searchInput!=""){
+                var datas = {
+                    condition: "item_no LIKE '%"+this.searchInput+"%' OR item_name LIKE '%"+this.searchInput+"%' OR item_desc LIKE '%"+this.searchInput+"%'",
+                    groupby: "item_no"
+                };
+            }else{
+                var datas = {
+                    condition: "",
+                    groupby: "item_no"
+                };
+            }
+
+            var urls = window.App.baseUrl + "Inventory/getInventoryList";
+            axios.post(urls, datas)
+                .then(function (e) {
+                    inventory.inventorylist=e.data.data.inventorylist;
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        },
     }, mounted: function () {
         this.getBranches();
         this.getInventoryList();
