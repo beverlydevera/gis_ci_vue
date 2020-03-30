@@ -7,7 +7,6 @@ var profile = new Vue({
         disabled_everything: true,
         student_id:$('#student_id').val(),
         filterdetails: {
-            classes_search: "",
             competitions_search: "",
             accounts_search: "",
             accounts_invstatus: 0
@@ -281,26 +280,38 @@ var profile = new Vue({
         searchTable(table){
             var datas = "";
             var urls = "";
-            if(table=="classes"){
-                //classes
-            }else if(table=="competitions"){
+            if(table=="competitions"){
                 datas = {
                     "student_id": this.student_id,
                     "searchinput": this.filterdetails.competitions_search
                 };
                 urls = "Students/getCompetitionsList"
             }else if(table=="invoice"){
-                //inv
+                datas = {
+                    "student_id": this.student_id,
+                    "searchinput": this.filterdetails.accounts_search,
+                    "invstatus": this.filterdetails.accounts_invstatus
+                };
+                urls = "Students/getInvoiceList"
+            }else if(table=="clearinvoice"){
+                this.filterdetails = {
+                    accounts_search: "",
+                    accounts_invstatus: "0"
+                }
+                datas = {
+                    "student_id": this.student_id,
+                    "searchinput": this.filterdetails.accounts_search,
+                    "invstatus": this.filterdetails.accounts_invstatus
+                };
+                urls = "Students/getInvoiceList"
             }
             var urls = window.App.baseUrl + urls;
             axios.post(urls, datas)
                 .then(function (e) {
-                    if(table=="classes"){
-                        //classes
-                    }else if(table=="competitions"){
+                    if(table=="competitions"){
                         profile.competitionslist = e.data.data.competitionslist;
-                    }else if(table=="invoice"){
-                        //inv
+                    }else if(table=="invoice" || table=="clearinvoice"){
+                        profile.invoicelist = e.data.data.invoicelist;
                     }
                 })
                 .catch(function (error) {

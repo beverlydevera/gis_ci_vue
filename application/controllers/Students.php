@@ -730,6 +730,36 @@ class Students extends CI_Controller {
     }
     //end of profile
 
+    //fifth tab
+    public function getInvoiceList()
+    {
+        $data = jsondata();
+        $condition = "student_id=".$data['student_id'];
+        if($data['searchinput']!=""){
+            $condition.= " AND invoice_number LIKE '%".$data['searchinput']."%'";
+        }
+        if($data['invstatus']!="0"){
+            $condition.= " AND status = '".$data['invstatus']."'";
+        }
+        $invoicelist = $this->Main->getDataOneJoin("*, si.status as invstatus","tbl_studentinvoice si","",$condition,"","","","");
+
+        if(!empty($invoicelist)){
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    'invoicelist' => $invoicelist,
+                ],
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
+            );
+        }
+        response_json($response);
+    }
+    //end of accounts
+
     //enrollment functions
     public function newStudentRegistration()
     {

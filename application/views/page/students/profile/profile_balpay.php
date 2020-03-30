@@ -10,19 +10,19 @@
             <div class="input-group-prepend smallerinput">
                 <span class="input-group-text"><i class="fas fa-search"></i></span>
             </div>
-            <input type="text" class="form-control smallerinput" placeholder="Search">
+            <input type="text" class="form-control smallerinput" placeholder="Search" v-model="filterdetails.accounts_search" @input="searchTable('invoice')">
         </div>
     </div>
     <div class="col-md-4">
-        <select class="form-control smallerinput">
-            <option disabled selected>Select Payment Status</option>
+        <select class="form-control smallerinput" v-model="filterdetails.accounts_invstatus" @click="searchTable('invoice')">
+            <option value="0" disabled selected>Select Payment Status</option>
             <option>Paid</option>
             <option>Partial</option>
             <option>Unpaid</option>
         </select>
     </div>
-    <div class="col-md-1">
-        <button class="btn btn-primary btn-xs">Filter</button>
+    <div class="col-md-2">
+        <button class="btn btn-primary btn-xs" @click="searchTable('clearinvoice')">Clear Filter</button>
     </div>
 </div>
 <table class="table table-bordered table-responsive-sm table-sm">
