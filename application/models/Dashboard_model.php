@@ -112,7 +112,7 @@ class Dashboard_model extends CI_Model {
 		return null;
 	}
 
-	public function getAdmin_ChartData($select,$table,$condition,$groupby,$pager,$type){
+	public function getChartData($select,$table,$condition,$groupby,$pager,$type){
 		$this->db->select($select);
         $this->db->from($table);
         $this->db->join("tbl_studentmembership sm","sm.`student_id`=s.`student_id`","inner");

@@ -1,5 +1,6 @@
 <section class="content">
     <input type="hidden" value="<?=sesdata('role')?>" id="userrole"/>
+    <input type="hidden" value="<?=sesdata('branch_id')?>" id="branch_id"/>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8">
@@ -53,7 +54,6 @@
                         </div>
                     </div>
                 </div>
-                <?php if(sesdata('role')==1){ ?>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card">
@@ -64,7 +64,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="position-relative mb-4">
-                                    <canvas id="admin_studentschart" height="300"></canvas>
+                                    <canvas id="studentschart" height="300"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -78,15 +78,12 @@
                             </div>
                             <div class="card-body">
                                 <div class="position-relative mb-4">
-                                    <canvas id="admin_medalschart" height="300"></canvas>
+                                    <canvas id="medalschart" height="300"></canvas>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <?php }else{ ?>
-                    CASHIER
-                <?php } ?>
             </div>
             <div class="col-md-4">
                 <div class="row">

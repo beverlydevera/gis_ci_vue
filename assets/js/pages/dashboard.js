@@ -4,6 +4,7 @@ var dashboard = new Vue({
     el: '#dashboard_page',
     data: {
         userrole:$('#userrole').val(),
+        branch_id:$('#branch_id').val(),
         reportsummary: {
             students: 0,
             newstudents: 0,
@@ -100,14 +101,15 @@ var dashboard = new Vue({
 })
 
 $(function(){
-    if($('#userrole').val()==1){
-        $.ajax({
-            type: "POST",
-            url: window.App.baseUrl + 'Dashboard/admin_studentsdata_chart',
-            beforeSend: function () {
-            },
-            success: function (e) {
-                var labelMonths = [];
+    $.ajax({
+        type: "POST",
+        url: window.App.baseUrl + 'Dashboard/chartsdata',
+        beforeSend: function () {
+        },
+        success: function (e) {
+            var labelMonths = [];
+
+            if($('#userrole').val()==1){
                 var stud_abanao = [];
                 var stud_arcadian = [];
                 var stud_buyagan = [];
@@ -129,7 +131,7 @@ $(function(){
                     stud_itogon.push(el.stud_itogon);
                 });
                 admin_studentsdata_chart(labelMonths , stud_abanao , stud_arcadian , stud_buyagan , stud_albergo , stud_itogon);
-
+    
                 e.medals_data.forEach(el => {
                     medals_abanao.push(el.medals_abanao);
                     medals_arcadian.push(el.medals_arcadian);
@@ -138,113 +140,184 @@ $(function(){
                     medals_itogon.push(el.medals_itogon);
                 });
                 admin_medalsdata_chart(labelMonths , medals_abanao , medals_arcadian , medals_buyagan , medals_albergo , medals_itogon);
+            }else{
+                var stud_data = [];
+                var mdls_data = [];
+                var branch_name = "";
+
+                branch_name = e.branch_name;
+                e.students_data.forEach(el => {
+                    labelMonths.push(el.month_name);
+                    stud_data.push(el.stud_data);
+                });
+                cashier_studentsdata_chart(labelMonths , stud_data, branch_name);
+
+                e.medals_data.forEach(el => {
+                    mdls_data.push(el.mdls_data);
+                });
+                cashier_medalsdata_chart(labelMonths , mdls_data, branch_name);
             }
-        })
-
-        function admin_studentsdata_chart(labelMonths , stud_abanao , stud_arcadian , stud_buyagan , stud_albergo , stud_itogon) {
-            var ctx = document.getElementById("admin_studentschart").getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labelMonths,
-                    datasets: [{
-                        label: 'Abanao',
-                        data: stud_abanao,
-                        backgroundColor: '#007bff',
-                        borderColor: '#000',
-                        borderWidth: 0.5
-                    }, {
-                        label: 'Arcadian',
-                        data: stud_arcadian,
-                        backgroundColor: '#6c757d',
-                        borderColor: '#000',
-                        borderWidth: 0.5
-                    }, {
-                        label: 'Buyagan',
-                        data: stud_buyagan,
-                        backgroundColor: '#28a745',
-                        borderColor: '#000',
-                        borderWidth: 0.5
-                    }, {
-                        label: 'Albergo',
-                        data: stud_albergo,
-                        backgroundColor: '#ffc107',
-                        borderColor: '#000',
-                        borderWidth: 0.5
-                    }, {
-                        label: 'Itogon',
-                        data: stud_itogon,
-                        backgroundColor: '#dc3545',
-                        borderColor: '#000',
-                        borderWidth: 0.5
-                    }, ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    }
-                }
-            });
+            
         }
+    })
 
-        function admin_medalsdata_chart(labelMonths , medals_abanao , medals_arcadian , medals_buyagan , medals_albergo , medals_itogon) {
-            var ctx = document.getElementById("admin_medalschart").getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labelMonths,
-                    datasets: [{
-                        label: 'Abanao',
-                        data: medals_abanao,
-                        // backgroundColor: '#007bff',
-                        borderColor: '#007bff',
-                        borderWidth: 1
-                    }, {
-                        label: 'Arcadian',
-                        data: medals_arcadian,
-                        // backgroundColor: '#6c757d',
-                        borderColor: '#6c757d',
-                        borderWidth: 1
-                    }, {
-                        label: 'Buyagan',
-                        data: medals_buyagan,
-                        // backgroundColor: '#28a745',
-                        borderColor: '#28a745',
-                        borderWidth: 1
-                    }, {
-                        label: 'Albergo',
-                        data: medals_albergo,
-                        // backgroundColor: '#ffc107',
-                        borderColor: '#ffc107',
-                        borderWidth: 1
-                    }, {
-                        label: 'Itogon',
-                        data: medals_itogon,
-                        // backgroundColor: '#dc3545',
-                        borderColor: '#dc3545',
-                        borderWidth: 1
-                    }, ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    }
+    function admin_studentsdata_chart(labelMonths , stud_abanao , stud_arcadian , stud_buyagan , stud_albergo , stud_itogon) {
+        var ctx = document.getElementById("studentschart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labelMonths,
+                datasets: [{
+                    label: 'Abanao',
+                    data: stud_abanao,
+                    backgroundColor: '#007bff',
+                    borderColor: '#000',
+                    borderWidth: 0.5
+                }, {
+                    label: 'Arcadian',
+                    data: stud_arcadian,
+                    backgroundColor: '#6c757d',
+                    borderColor: '#000',
+                    borderWidth: 0.5
+                }, {
+                    label: 'Buyagan',
+                    data: stud_buyagan,
+                    backgroundColor: '#28a745',
+                    borderColor: '#000',
+                    borderWidth: 0.5
+                }, {
+                    label: 'Albergo',
+                    data: stud_albergo,
+                    backgroundColor: '#ffc107',
+                    borderColor: '#000',
+                    borderWidth: 0.5
+                }, {
+                    label: 'Itogon',
+                    data: stud_itogon,
+                    backgroundColor: '#dc3545',
+                    borderColor: '#000',
+                    borderWidth: 0.5
+                }, ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
                 }
-            });
-        }
-    }else{
-        //cashier
+            }
+        });
+    }
+
+    function admin_medalsdata_chart(labelMonths , medals_abanao , medals_arcadian , medals_buyagan , medals_albergo , medals_itogon) {
+        var ctx = document.getElementById("medalschart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labelMonths,
+                datasets: [{
+                    label: 'Abanao',
+                    data: medals_abanao,
+                    // backgroundColor: '#007bff',
+                    borderColor: '#007bff',
+                    borderWidth: 1
+                }, {
+                    label: 'Arcadian',
+                    data: medals_arcadian,
+                    // backgroundColor: '#6c757d',
+                    borderColor: '#6c757d',
+                    borderWidth: 1
+                }, {
+                    label: 'Buyagan',
+                    data: medals_buyagan,
+                    // backgroundColor: '#28a745',
+                    borderColor: '#28a745',
+                    borderWidth: 1
+                }, {
+                    label: 'Albergo',
+                    data: medals_albergo,
+                    // backgroundColor: '#ffc107',
+                    borderColor: '#ffc107',
+                    borderWidth: 1
+                }, {
+                    label: 'Itogon',
+                    data: medals_itogon,
+                    // backgroundColor: '#dc3545',
+                    borderColor: '#dc3545',
+                    borderWidth: 1
+                }, ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+
+    function cashier_studentsdata_chart(labelMonths , stud_data, branch_name) {
+        var ctx = document.getElementById("studentschart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labelMonths,
+                datasets: [{
+                    label: branch_name,
+                    data: stud_data,
+                    backgroundColor: '#007bff',
+                    borderColor: '#000',
+                    borderWidth: 0.5
+                }, ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+
+    function cashier_medalsdata_chart(labelMonths , mdls_data, branch_name) {
+        var ctx = document.getElementById("medalschart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labelMonths,
+                datasets: [{
+                    label: branch_name,
+                    data: mdls_data,
+                    // backgroundColor: '#007bff',
+                    borderColor: '#007bff',
+                    borderWidth: 1
+                }, ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
     }
 })
