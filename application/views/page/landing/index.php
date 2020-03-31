@@ -66,11 +66,6 @@
               <li data-target="#news-carousel" v-bind:data-slide-to="index" v-bind:class="index<1 ? 'active' : '' "></li>
             </template>
           </ol>
-          <!-- <ol class="carousel-indicators">
-            <li data-target="#news-carousel" data-slide-to="0" class="active"></li>
-            <li data-target="#news-carousel" data-slide-to="1"></li>
-            <li data-target="#news-carousel" data-slide-to="2"></li>
-          </ol> -->
           <div class="carousel-inner">
             <template v-for="(list,index) in newsarticles_list">
             <div v-bind:class="[index<1 ? 'carousel-item active container-fluid' : 'carousel-item container-fluid']">
@@ -81,23 +76,6 @@
               <p class="news-date">by Bravehearts Martial Arts Institute | {{list.date_added}}</p>
             </div>
             </template>
-            <!-- <div class="carousel-item active container-fluid">
-              <h2 class="news-text"><a href="">We are excited to announce the 2020 summer taekwondo clinic at Bravehearts Martial Arts Institute. Experience fun, fellowship and friendship in an atmosphere of discipline, character and
-                  excellence.
-                  See you all.
-                  Enrollment is on going!</a></h2>
-              <p class="news-date">by Bravehearts Martial Arts Institute | Februay 04, 2020</p>
-            </div>
-            <div class="carousel-item container-fluid">
-              <h2 class="news-text"><a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                  ut aliquip ex ea commodo consequat.</a></h2>
-              <p class="news-date">by Bravehearts Martial Arts Institute | Februay 04, 2020</p>
-            </div>
-            <div class="carousel-item container-fluid">
-              <h2 class="news-text"><a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus ab maxime accusamus explicabo. Iusto doloribus, placeat cupiditate vero quaerat? Dolorem corrupti nisi nam, illo ex nesciunt
-                  modisequi. Labore, libero. Labore, libero. Labore, libero.</a></h2>
-              <p class="news-date">by Bravehearts Martial Arts Institute | Februay 04, 2020</p>
-            </div> -->
           </div>
           <a class="carousel-control-prev" href="#news-carousel" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -121,11 +99,6 @@
                 <template v-for="(list,index) in newsimages_list">
                   <li data-target="#events-carousel" v-bind:data-slide-to="index" v-bind:class="index<1 ? 'active' : '' "></li>
                 </template>
-                <!-- <li data-target="#events-carousel" data-slide-to="0" class="active"></li>
-                <li data-target="#events-carousel" data-slide-to="1"></li>
-                <li data-target="#events-carousel" data-slide-to="2"></li>
-                <li data-target="#events-carousel" data-slide-to="3"></li>
-                <li data-target="#events-carousel" data-slide-to="4"></li> -->
               </ol>
               <div class="carousel-inner">
                 <template v-for="(list,index) in newsimages_list">
@@ -133,21 +106,6 @@
                   <img v-bind:src="'data:image/jpeg;base64,'+list.photos" class="hvr-push" alt="..." data-toggle="modal" :data-target="'#exampleModalScrollable'+index">
                 </div>
                 </template>
-                <!-- <div class="carousel-item active container-fluid">
-                  <img src="<?=base_url()?>assets/landing/images/img-news11.jpg" class="hvr-push" alt="..." data-toggle="modal" data-target="#exampleModalScrollable">
-                </div>
-                <div class="carousel-item container-fluid">
-                  <img src="<?=base_url()?>assets/landing/images/img-news22.jpg" class="hvr-push" alt="..." data-toggle="modal" data-target="#exampleModalScrollable1">
-                </div>
-                <div class="carousel-item container-fluid">
-                  <img src="<?=base_url()?>assets/landing/images/img-news33.jpg" class="hvr-push" alt="..." data-toggle="modal" data-target="#exampleModalScrollable2">
-                </div>
-                <div class="carousel-item container-fluid">
-                  <img src="<?=base_url()?>assets/landing/images/img-news44.jpg" class="hvr-push" alt="..." data-toggle="modal" data-target="#exampleModalScrollable3">
-                </div>
-                <div class="carousel-item container-fluid">
-                  <img src="<?=base_url()?>assets/landing/images/img-news55.jpg" class="hvr-push" alt="..." data-toggle="modal" data-target="#exampleModalScrollable4">
-                </div> -->
               </div>
               <a class="carousel-control-prev" href="#events-carousel" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -169,35 +127,6 @@
               </div>
               <div class="border-top my-3"></div>
               </template>
-              <!-- <div class="card-body">
-                <div class="card-img">
-                  <img src="<?=base_url()?>assets/landing/images/img-news11.jpg" class="hvr-push img-fluid" alt="..." data-toggle="modal" data-target="#exampleModalScrollable">
-                </div>
-              </div>
-              <div class="border-top my-3"></div>
-              <div class="card-body">
-                <div class="card-img">
-                  <img src="<?=base_url()?>assets/landing/images/img-news22.jpg" class="hvr-push img-fluid" alt="..." data-toggle="modal" data-target="#exampleModalScrollable1">
-                </div>
-              </div>
-              <div class="border-top my-3"></div>
-              <div class="card-body">
-                <div class="card-img">
-                  <img src="<?=base_url()?>assets/landing/images/img-news33.jpg" class="hvr-push img-fluid" alt="..." data-toggle="modal" data-target="#exampleModalScrollable2">
-                </div>
-              </div>
-              <div class="border-top my-3"></div>
-              <div class="card-body">
-                <div class="card-img">
-                  <img src="<?=base_url()?>assets/landing/images/img-news44.jpg" class="hvr-push img-fluid" alt="..." data-toggle="modal" data-target="#exampleModalScrollable3">
-                </div>
-              </div>
-              <div class="border-top my-3"></div>
-              <div class="card-body">
-                <div class="card-img">
-                  <img src="<?=base_url()?>assets/landing/images/img-news55.jpg" class="hvr-push img-fluid" alt="..." data-toggle="modal" data-target="#exampleModalScrollable4">
-                </div>
-              </div> -->
             </div>
           </div>
         </div>
@@ -549,101 +478,6 @@
       <p class="copyright">© Copyright 2020 Bravehearts Martial Arts Institute | Developed by Shiftbox Productions</p>
     </div>
   </footer>
-
-  <!-- <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <img src="<?=base_url()?>assets/landing/images/img-news11.jpg" alt="image-news" class="img-fluid">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="exampleModalScrollable1" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <img src="<?=base_url()?>assets/landing/images/img-news22.jpg" alt="image-news" class="img-fluid">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="exampleModalScrollable2" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <img src="<?=base_url()?>assets/landing/images/img-news33.jpg" alt="image-news" class="img-fluid">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="exampleModalScrollable3" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <img src="<?=base_url()?>assets/landing/images/img-news44.jpg" alt="image-news" class="img-fluid">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="exampleModalScrollable4" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <img src="<?=base_url()?>assets/landing/images/img-news55.jpg" alt="image-news" class="img-fluid">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div> -->
 
   <!-- commented to remove error -->
   <!-- <script type="text/javascript">
