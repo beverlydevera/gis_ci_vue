@@ -14,7 +14,7 @@ class Login extends CI_Controller {
 	
 	public function index()
 	{
-        $data['\tle'] = "Bravehearts | Login";
+        $data['title'] = "Bravehearts | Login";
         $data['vueid'] = "login";
         $data['js'] = array('pages/login.js');
         $this->load->view('page/login', $data);
