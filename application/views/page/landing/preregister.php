@@ -133,7 +133,6 @@
   <!-- AdminLTE -->
   <!-- <script src="<?= base_url("assets/template/dist/js/adminlte.js") ?>"></script> -->
   <script src="<?= base_url('assets/js/plugins/axios.min.js') ?>"></script>
-  <script src="<?= base_url('assets/js/plugins/vue-tables-2.min.js') ?>"></script>
   <!-- Ekko Lightbox -->
   <!-- <script src="<?=base_url()?>assets/template/plugins/ekko-lightbox/ekko-lightbox.min.js"></script> -->
   <script src="<?= base_url("assets/template/plugins/sweetalert2/sweetalert2.min.js") ?>"></script>
@@ -160,15 +159,6 @@
           showConfirmButton: false,
           timer: 3000
       });
-      
-      $(function () {
-          $(document).on('click', '[data-toggle="lightbox"]', function(event) {
-          event.preventDefault();
-          $(this).ekkoLightbox({
-              alwaysShowClose: true
-          });
-          });
-      })
   </script>
 
 </body>

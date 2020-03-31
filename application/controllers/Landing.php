@@ -14,7 +14,7 @@ class Landing extends CI_Controller {
 	public function index()
 	{
         $data['title'] = "Bravehearts";
-        // $data['js'] = array('pages/landing/index.js');
+        $data['js'] = array('pages/landing/index.js');
         $this->load->view('page/landing/index',$data);
     }
 
@@ -102,6 +102,44 @@ class Landing extends CI_Controller {
                 "type"      => "warning",
                 "title"     => "Registration Unsuccessful",
                 "message"   => "Please fill out the required details."
+            );
+        }
+        response_json($response);
+    }
+
+    public function getNewsAnnouncements()
+    {
+        $data = $this->input->post('data');
+        if($data=="articles"){
+            $select = "announcement_id,title,text,date_added";
+        }else{
+            $select = "photos";
+        }
+        $condition = "status = 1";
+        // $date = date('Y-m-d', strtotime('-5 day', strtotime(date("r"))));
+        // $condition = "status = 1 AND date_added>= '$date'";
+        $pager = [
+            "limit" => 5,
+            "offset" => 0
+        ];
+        $newslist = $this->Main->getDataOneJoin($select,"tbl_announcements",$join=array(),$condition,$pager,$orderby=array(),$groupby="",$type="");
+        if($data=="images" && !empty($newslist)){
+            foreach($newslist as $nlk => $nlv){
+                $newslist[$nlk]->photos = base64_encode($nlv->photos);
+            }
+        }
+        
+        if(!empty($newslist)){
+            $response = array(
+                "success"   => true,
+                "data"      => [
+                    "newslist" => $newslist
+                ]
+            );
+        }else{
+            $response = array(
+                "success"   => false,
+                "data"      => ""
             );
         }
         response_json($response);

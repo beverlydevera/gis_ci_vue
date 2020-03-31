@@ -12,6 +12,13 @@
   <link rel="stylesheet" href="<?=base_url("assets/landing/css/hover.css") ?>">
   <link rel="icon" href="<?=base_url("assets/landing/images/icon.png")?>">
 
+  <script src="<?= base_url('assets/js/plugins/vue.js') ?>"></script>
+  <script type="text/javascript">
+      window.App = {
+          "baseUrl": "<?= base_url() ?>",
+          "removeDOM": "",
+      };
+  </script>
 </head>
 
 <body id="page-top">
@@ -50,7 +57,6 @@
   </section>
   <!-- newss -->
   <section id="news">
-
     <div class="row">
       <div class="offset-lg-1"></div>
       <div class="col-lg-6 col-md-12 col-sm-12">
@@ -61,6 +67,13 @@
             <li data-target="#news-carousel" data-slide-to="2"></li>
           </ol>
           <div class="carousel-inner">
+            <!-- <template v-for="(list,index) in newsarticles_list">
+              <div v-if="index==0" class="carousel-item active container-fluid">
+              <div v-else class="carousel-item container-fluid">
+                <h2 class="news-text"><a href="">{{list.text}}</a></h2>
+                <p class="news-date">by Bravehearts Martial Arts Institute | {{list.date_added}}0</p>
+              </div>
+            </template> -->
             <div class="carousel-item active container-fluid">
               <h2 class="news-text"><a href="">We are excited to announce the 2020 summer taekwondo clinic at Bravehearts Martial Arts Institute. Experience fun, fellowship and friendship in an atmosphere of discipline, character and
                   excellence.
@@ -610,6 +623,15 @@
   <script src="<?=base_url()?>assets/landing/vendor/bootstrap/js/bootstrap.min.js"></script>
   <script src="<?=base_url()?>assets/landing/js/baguettebox.min.js"></script>
 
+  <!-- jQuery -->
+  <script src="<?= base_url("assets/template/plugins/jquery/jquery.min.js") ?>"></script>
+  <script src="<?= base_url('assets/js/plugins/axios.min.js') ?>"></script>
+  <script src="<?= base_url('assets/js/script.js') ?>"></script>
+  <?php if (!empty($js)) : ?>
+      <?php foreach ($js as $j) : ?>
+          <script src="<?= base_url('assets/js/' . $j . '?ver=') . filemtime(FCPATH) ?>"></script>
+      <?php endforeach ?>
+  <?php endif ?>
 
 <!-- Transition effect navbar scroll show/hide background -->
   <script type="text/javascript">
