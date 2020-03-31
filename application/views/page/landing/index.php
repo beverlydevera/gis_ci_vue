@@ -62,19 +62,25 @@
       <div class="col-lg-6 col-md-12 col-sm-12">
         <div id="news-carousel" class="carousel slide" data-ride="carousel">
           <ol class="carousel-indicators">
+            <template v-for="(list,index) in newsarticles_list">
+              <li data-target="#news-carousel" v-bind:data-slide-to="index" v-bind:class="index<1 ? 'active' : '' "></li>
+            </template>
+          </ol>
+          <!-- <ol class="carousel-indicators">
             <li data-target="#news-carousel" data-slide-to="0" class="active"></li>
             <li data-target="#news-carousel" data-slide-to="1"></li>
             <li data-target="#news-carousel" data-slide-to="2"></li>
-          </ol>
+          </ol> -->
           <div class="carousel-inner">
-            <!-- <template v-for="(list,index) in newsarticles_list">
-              <div v-if="index==0" class="carousel-item active container-fluid">
-              <div v-else class="carousel-item container-fluid">
-                <h2 class="news-text"><a href="">{{list.text}}</a></h2>
-                <p class="news-date">by Bravehearts Martial Arts Institute | {{list.date_added}}0</p>
-              </div>
-            </template> -->
-            <div class="carousel-item active container-fluid">
+            <template v-for="(list,index) in newsarticles_list">
+            <div v-bind:class="[index<1 ? 'carousel-item active container-fluid' : 'carousel-item container-fluid']">
+              <h2 class="news-text"><a href="">{{list.text.substring(0,240)}}</a>
+              <span v-if="list.text.length>240" style="color:blue;font-size:10pt;font-style:italic;">...Read More</span>
+              </h2>
+              <p class="news-date">by Bravehearts Martial Arts Institute | {{list.date_added}}</p>
+            </div>
+            </template>
+            <!-- <div class="carousel-item active container-fluid">
               <h2 class="news-text"><a href="">We are excited to announce the 2020 summer taekwondo clinic at Bravehearts Martial Arts Institute. Experience fun, fellowship and friendship in an atmosphere of discipline, character and
                   excellence.
                   See you all.
@@ -90,7 +96,7 @@
               <h2 class="news-text"><a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus ab maxime accusamus explicabo. Iusto doloribus, placeat cupiditate vero quaerat? Dolorem corrupti nisi nam, illo ex nesciunt
                   modisequi. Labore, libero. Labore, libero. Labore, libero.</a></h2>
               <p class="news-date">by Bravehearts Martial Arts Institute | Februay 04, 2020</p>
-            </div>
+            </div> -->
           </div>
           <a class="carousel-control-prev" href="#news-carousel" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
