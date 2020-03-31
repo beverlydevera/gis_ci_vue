@@ -74,9 +74,10 @@
           <div class="carousel-inner">
             <template v-for="(list,index) in newsarticles_list">
             <div v-bind:class="[index<1 ? 'carousel-item active container-fluid' : 'carousel-item container-fluid']">
-              <h2 class="news-text"><a href="">{{list.text.substring(0,240)}}</a>
+              <h2 class="news-text"><a data-toggle="modal" :data-target="'#exampleModalScrollable'+index">
+              {{list.text.substring(0,240)}}
               <span v-if="list.text.length>240" style="color:blue;font-size:10pt;font-style:italic;">...Read More</span>
-              </h2>
+              </a></h2>
               <p class="news-date">by Bravehearts Martial Arts Institute | {{list.date_added}}</p>
             </div>
             </template>
@@ -117,14 +118,22 @@
             <!-- Hidden carousel, will show upon mobile view START-->
             <div id="events-carousel" class="carousel slide" data-ride="carousel">
               <ol class="carousel-indicators">
-                <li data-target="#events-carousel" data-slide-to="0" class="active"></li>
+                <template v-for="(list,index) in newsimages_list">
+                  <li data-target="#events-carousel" v-bind:data-slide-to="index" v-bind:class="index<1 ? 'active' : '' "></li>
+                </template>
+                <!-- <li data-target="#events-carousel" data-slide-to="0" class="active"></li>
                 <li data-target="#events-carousel" data-slide-to="1"></li>
                 <li data-target="#events-carousel" data-slide-to="2"></li>
                 <li data-target="#events-carousel" data-slide-to="3"></li>
-                <li data-target="#events-carousel" data-slide-to="4"></li>
+                <li data-target="#events-carousel" data-slide-to="4"></li> -->
               </ol>
               <div class="carousel-inner">
-                <div class="carousel-item active container-fluid">
+                <template v-for="(list,index) in newsimages_list">
+                <div v-bind:class="[index<1 ? 'carousel-item active container-fluid' : 'carousel-item container-fluid']">
+                  <img v-bind:src="'data:image/jpeg;base64,'+list.photos" class="hvr-push" alt="..." data-toggle="modal" :data-target="'#exampleModalScrollable'+index">
+                </div>
+                </template>
+                <!-- <div class="carousel-item active container-fluid">
                   <img src="<?=base_url()?>assets/landing/images/img-news11.jpg" class="hvr-push" alt="..." data-toggle="modal" data-target="#exampleModalScrollable">
                 </div>
                 <div class="carousel-item container-fluid">
@@ -138,7 +147,7 @@
                 </div>
                 <div class="carousel-item container-fluid">
                   <img src="<?=base_url()?>assets/landing/images/img-news55.jpg" class="hvr-push" alt="..." data-toggle="modal" data-target="#exampleModalScrollable4">
-                </div>
+                </div> -->
               </div>
               <a class="carousel-control-prev" href="#events-carousel" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -151,8 +160,16 @@
             </div>
             <!-- Hidden carousel, will show upon mobile view END -->
 
-            <div class="card-body scrollbar" id="style-15">
+            <div class="card-body scrollbar" id="style-15">              
+            <template v-for="(list,index) in newsimages_list">
               <div class="card-body">
+                <div class="card-img">
+                  <img v-bind:src="'data:image/jpeg;base64,'+list.photos" class="hvr-push img-fluid" alt="..." data-toggle="modal" :data-target="'#exampleModalScrollable'+index">
+                </div>
+              </div>
+              <div class="border-top my-3"></div>
+              </template>
+              <!-- <div class="card-body">
                 <div class="card-img">
                   <img src="<?=base_url()?>assets/landing/images/img-news11.jpg" class="hvr-push img-fluid" alt="..." data-toggle="modal" data-target="#exampleModalScrollable">
                 </div>
@@ -180,16 +197,36 @@
                 <div class="card-img">
                   <img src="<?=base_url()?>assets/landing/images/img-news55.jpg" class="hvr-push img-fluid" alt="..." data-toggle="modal" data-target="#exampleModalScrollable4">
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Modal -->
+    <template v-for="(list,index) in newsimages_list">
+    <div class="modal fade" v-bind:id="'exampleModalScrollable'+index" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true" style="color:#000;">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalScrollableTitle">{{list.title}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {{list.text}}
+            <img v-bind:src="'data:image/jpeg;base64,'+list.photos" alt="image-news" class="img-fluid">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </template>
   </section>
-
-
-
 
   <section id="about">
     <div class="container-fluid">
@@ -215,7 +252,6 @@
       </div>
     </div>
   </section>
-
 
   <section id="about-us">
     <div class="container-fluid">
@@ -256,7 +292,7 @@
   <!-- programs -->
 
   <section id="programs">
-<div class="container-fluid">
+    <div class="container-fluid">
       <div class="program-heading program-logo hvr-float-shadow">
         <p><img class="prog-icon" src="<?=base_url()?>assets/landing/images/programs-logo.png" alt="programs-logo" width="48px" ; height="48px" ;></p>
         <h2 class="section-heading">PROGRAMS</h2>
@@ -304,7 +340,7 @@
         </a>
       </div>
     </div>
-<div class="container">
+      <div class="container">
       <div class="carouselnew">
           <div class="item a"><img src="<?=base_url()?>assets/landing/images/programs/mighty.png" class="img-fluid" alt=""></div>
           <div class="item b"><img src="<?=base_url()?>assets/landing/images/programs/kids.png" class="img-fluid" alt=""></div>
@@ -450,8 +486,6 @@
     </script>
   </section>
 
-
-
   <!-- Call to Action -->
 
   <section id="cta">
@@ -516,10 +550,7 @@
     </div>
   </footer>
 
-
-
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+  <!-- <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -612,9 +643,9 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
-    <!-- commented to remove error -->
+  <!-- commented to remove error -->
   <!-- <script type="text/javascript">
     $('#myModal').on('shown.bs.modal', function() {
       $('#myInput').trigger('focus')

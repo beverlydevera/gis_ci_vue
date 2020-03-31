@@ -113,7 +113,7 @@ class Landing extends CI_Controller {
         if($data=="articles"){
             $select = "announcement_id,title,text,date_added";
         }else{
-            $select = "photos";
+            $select = "title,text,photos";
         }
         $condition = "status = 1";
         // $date = date('Y-m-d', strtotime('-5 day', strtotime(date("r"))));
